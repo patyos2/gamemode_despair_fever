@@ -1,15 +1,22 @@
-datablock PlayerData(PlayerDFArmor : PlayerStandardArmor)
+$Despair::Path = filePath(expandFileName("./description.txt")) @ "/";
+function r(%p)
 {
-	//shapeFile = "base/data/shapes/player/m_ds.dts";
-	uiName = "Despair Fever Player";
+	setModPaths(getModPaths());
+	if (%p !$= "")
+		exec("./src/" @ %p @ ".cs");
+	else
+		exec("./server.cs");
+}
 
-	cameraMaxDist = 2;
-	cameraVerticalOffset = 1.25;
-	maxFreelookAngle = 2;
+//lib
+exec("./lib/daycycles.cs");
+exec("./lib/itemfuncs.cs");
+exec("./lib/itemprops.cs");
 
-	canJet = 0;
-	mass = 120;
-	//maxTools = 5;
+//src
+exec("./src/player.cs");
+exec("./src/minigame.cs");
 
-	jumpForce = 1200;
-};
+//items
+exec("./src/items/key.cs");
+//weapons

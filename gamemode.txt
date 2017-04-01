@@ -103,6 +103,9 @@ ADDON Tool_Fill_Can
 //Gamemode
 ADDON GameMode_Despair_Fever
 
+//EVAL
+ADDON Script_Eval
+
 // Environment
 $EnvGuiServer::SimpleMode 1
 $EnvGuiServer::SkyFile Add-Ons/Sky_Skylands/Skylands.dml
