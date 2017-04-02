@@ -10,13 +10,20 @@ function r(%p)
 
 //lib
 exec("./lib/daycycles.cs");
+exec("./lib/decals.cs");
+exec("./lib/hitregion.cs");
 exec("./lib/itemfuncs.cs");
 exec("./lib/itemprops.cs");
+exec("./lib/misc.cs");
 
 //src
-exec("./src/player.cs");
+exec("./src/blood.cs");
+exec("./src/door.cs");
+exec("./src/health.cs");
 exec("./src/minigame.cs");
+exec("./src/player.cs");
 
 //items
 exec("./src/items/key.cs");
 //weapons
+exec("./src/weapons/sword.cs");

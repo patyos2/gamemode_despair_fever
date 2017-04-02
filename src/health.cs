@@ -1,0 +1,97 @@
+package DespairHealth
+{
+	function Armor::onAdd(%data, %player)
+	{
+		parent::onAdd(%data, %player);
+		if(%player.health $= "")
+			%player.health = 100;
+	}
+
+	function Armor::damage(%data, %player, %src, %pos, %damage, %type)
+	{
+		%client = %player.client;
+		if (%client.miniGame != $DefaultMiniGame)
+			return Parent::damage(%data, %player, %src, %pos, %damage, %type);
+
+		if (%src.getType() & $TypeMasks::PlayerObjectType)
+			%sourceObject = %src;
+		else
+			%sourceObject = %src.sourceObject;
+
+		%normal = %sourceObject.getEyeVector();
+
+		if (%pos !$= "")
+		{
+			%region = %player.getRegion(%pos, true);
+			%color = 0.75 + 0.1 * getRandom() @ " 0 0 1"; //cool bloods
+			//switch$ (%region)
+			//{
+			//case "head":
+			//    %player.setNodeColor("headSkin", %color);
+			//case "rleg":
+			//	%player.setNodeColor("RShoe", %color);
+			//case "lleg":
+			//	%player.setNodeColor("LShoe", %color);
+			//case "rarm":
+			//	%player.setNodeColor("RArm", %color);
+			//	%player.setNodeColor("RHand", %color);
+			//case "larm":
+			//	%player.setNodeColor("LArm", %color);
+			//	%player.setNodeColor("LHand", %color);
+			//case "hip":
+			//	%player.setNodeColor("pants", %color);
+			//case "chest":
+			//	%player.setNodeColor("chest", %color);
+			//}
+		}
+
+		sprayBloodGush(%pos, VectorScale(%normal, 10)); //TODO: Do this in weapon funcs themselves
+
+		%player.playPain();
+		%player.setDamageFlash(%player.health / 100 * 0.5);
+		%player.health -= %damage;
+		if(%player.health <= 0)
+		{
+	        %p = new Projectile()
+	        {
+	            datablock = cubeHighExplosionProjectile;
+	            initialPosition = %pos;
+	            initialVelocity = vectorScale(%normal, 4);
+	        };
+	        %p.explode();
+			%player.setDamageLevel(100);
+		}
+	}
+
+	function Armor::onDisabled(%data, %player, %state)
+	{
+		%client = %player.client;
+		if (%client.miniGame != $DefaultMiniGame)
+			return Parent::onDisabled(%data, %player, %state);
+
+		if (isObject(%client))
+		{
+			// centerPrint(%client, "");
+			%client.camera.setMode("Corpse", %player);
+			%client.setControlObject(%client.camera);
+			%client.player = "";
+			%player.client = "";
+		}
+
+		%player.isDead = 1;
+		%player.playDeathCry();
+		%player.setDamageFlash(1);
+		%player.setImageTrigger(0, 0);
+		%player.playThread(0, "death1");
+		GameRoundCleanup.add(%player);
+
+		$DefaultMiniGame.checkLastManStanding();
+	}
+
+	function projectileData::onCollision(%this, %obj, %col, %pos, %fade, %normal)
+	{
+		%obj.normal = %normal;
+		parent::onCollision(%this, %obj, %col, %pos, %fade, %normal);
+	}
+};
+activatePackage("DespairHealth");

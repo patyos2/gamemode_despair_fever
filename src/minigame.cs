@@ -1,3 +1,7 @@
+
+$Despair::DayLength = 420; //7 minutes for a full cycle
+
+//MOTEL MAP PREFS:
 $Despair::RoomCount = 16;
 //male block
 $roomNum[1] = "16";
@@ -18,7 +22,7 @@ $roomNum[13] = "22";
 $roomNum[14] = "23";
 $roomNum[15] = "24";
 $roomNum[16] = "25";
-
+////
 
 if (!isObject(GameRoundCleanup))
 	new SimSet(GameRoundCleanup);
@@ -37,9 +41,7 @@ function roomPlayers()
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 	}
 
-	%clientCount = $DefaultMiniGame.numMembers;
-
-	for (%i = 0; %i < %clientCount && %freeCount; %i++)
+	for (%i = 0; %i < $DefaultMiniGame.numMembers && %freeCount; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
 
@@ -89,6 +91,7 @@ function despairPrepareGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
 	gameRoundCleanUp.deleteAll();
+	clearDecals();
 
 	// Close *all* doors
 	%count = BrickGroup_888888.getCount();
@@ -108,50 +111,77 @@ function despairPrepareGame()
 			%brick.doorMaxHits = 4;
 		}
 	}
-
 	roomPlayers();
 
-	if(!$EnvGuiServer::DayCycleEnabled)
+	%client = $DefaultMiniGame.member[getRandom(0, $DefaultMiniGame.numMembers - 1)];
+	%client.player.addTool(swordItem);
+	%client.centerPrint("wow you are killer go kill shit", 3);
+	echo(%client.getplayername() SPC "is killa");
+
+	$days = 0;
+	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
-		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_Youse/youse.daycycle";
+		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
 		loadDayCycle($EnvGuiServer::DayCycleFile);
-		$EnvGuiServer::DayLength = 300;
+		$EnvGuiServer::DayLength = $Despair::DayLength;
 		DayCycle.setDayLength($EnvGuiServer::DayLength);
+		$EnvGuiServer::DayCycleEnabled = 1;
+		DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	}
 	setDayCycleTime(0);
 }
 
-function fxDayCycle::timeSchedule(%this)
+function despairCycleStage(%stage)
+{
+	talk("It is now \c3" @ %stage);
+	if(%stage $= "NIGHT")
+		talk("GO SLEEP FUCKASSES");
+
+	if(%stage $= "MORNING")
+	{
+		$days++;
+		talk("DAY" SPC $days);
+	}
+
+	if(%stage $= "NOON")
+		talk("GO EAT ASSWITS");
+
+	if($days >= 2)
+	{
+		talk("wow survivors won you suck killer");
+		despairEndGame();
+	}
+}
+
+
+function fxDayCycle::timeSchedule(%this, %lastStage)
 {
 	cancel(%this.timeSchedule);
 
 	%time = getDayCycleTime();
 
-	//%stage = "ERROR";
-	//if(%time < 0.25)
-	//	%stage = "MORNING";
-	//else if(%time < 0.4) //12 AM
-	//	%stage = "NOON"; //Lunch time
-	//else if(%time < 0.5)
-	//	%stage = "EVENING";
-	//else if(%time < 0.55)
-	//	%stage = "SUNSET";
-	//else if(%time < 0.75)
-	//	%stage = "NIGHT";
-	//else if(%time < 0.95)
-	//	%stage = "MIDNIGHT";
-	//else
-	//	%stage = "LATENIGHT";
+	if(%time > 0.75)
+		%stage = "NIGHT";
+	else if(%time > 0.4)
+		%stage = "EVENING";
+	else if(%time > 0.25)
+		%stage = "NOON";
+	else
+		%stage = "MORNING";
 
-	%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins at 0 fraction
+	if(%stage !$= %lastStage)
+		despairCycleStage(%stage);
+
+	%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
 	%time = %time - mFloor(%time); //get rid of excess stuff
 
 	%str = getDayCycleTimeString(%time, 1);
-
+	%mod12 = getWord(%str, 1);
+	%str = "<font:Verdana:26>\c6" @ getWord(%str, 0) SPC (%mod12 $= "PM" ? "\c1" : "\c3") @ %mod12;
 	commandToAll('bottomPrint', %str);
 
-	%sched = getMin(100, (%this.DayLength * 60) / 86400) *1000; //insanely weird and complicated thingy to make schedule happen every time a "second" actually passes
-	%this.timeSchedule = %this.schedule(%sched, timeSchedule);
+	%sched = getMax(50, (%this.DayLength * 60) / 86400); //insanely weird and complicated thingy to make schedule happen every time a "second" actually passes
+	%this.timeSchedule = %this.schedule(%sched, timeSchedule, %stage);
 }
 
 package DespairFever
@@ -186,8 +216,8 @@ package DespairFever
 		// Play nice with the default rate limiting.
 		if (getSimTime() - %this.lastResetTime < 5000)
 			return;
-		Parent::reset(%this, %client);
 
+		Parent::reset(%this, %client);
 		despairPrepareGame();
 	}
 
@@ -228,32 +258,6 @@ package DespairFever
 	{
 		if (%miniGame.owner)
 			return Parent::pickSpawnPoint(%miniGame, %client);
-	}
-
-	function Armor::onDisabled(%data, %player, %state)
-	{
-		%client = %player.client;
-		if (%client.miniGame != $DefaultMiniGame)
-			return Parent::onDisabled(%data, %player, %state);
-
-		if (isObject(%client))
-		{
-			// centerPrint(%client, "");
-			%client.camera.setMode("Corpse", %player);
-			%client.schedule(2000, setControlObject, %client.camera);
-			%client.player = "";
-			%player.client = "";
-		}
-
-		%player.isDead = 1;
-		%player.playDeathCry();
-		%player.emote("cubeHighExplosionProjectile", "1");
-		%player.setDamageFlash("1");
-		%player.setImageTrigger("0", "0");
-		%player.playThread("0", "death1");
-		GameRoundCleanup.add(%player);
-
-		$DefaultMiniGame.checkLastManStanding();
 	}
 
 	function serverCmdLight(%client)
