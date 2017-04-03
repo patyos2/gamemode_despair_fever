@@ -17,3 +17,16 @@ function getRandomScalar(%magnitude)
 {
 	return (getRandom() * 2 - 1) * %magnitude;
 }
+
+function Player::getAimVector(%player)
+{
+	%fwd = %player.getForwardVector();
+	%eye = %player.getEyeVector();
+	
+	%scale = vectorLen(setWord(%eye, 2, 0));
+
+	return
+		getWord(%fwd, 0) * %scale SPC
+		getWord(%fwd, 1) * %scale SPC
+		getWord(%eye, 2);
+}

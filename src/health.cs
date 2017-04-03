@@ -4,7 +4,10 @@ package DespairHealth
 	{
 		parent::onAdd(%data, %player);
 		if(%player.health $= "")
+		{
+			%player.maxhealth = 100;
 			%player.health = 100;
+		}
 	}
 
 	function Armor::damage(%data, %player, %src, %pos, %damage, %type)
@@ -24,32 +27,34 @@ package DespairHealth
 		{
 			%region = %player.getRegion(%pos, true);
 			%color = 0.75 + 0.1 * getRandom() @ " 0 0 1"; //cool bloods
-			//switch$ (%region)
-			//{
-			//case "head":
-			//    %player.setNodeColor("headSkin", %color);
-			//case "rleg":
-			//	%player.setNodeColor("RShoe", %color);
-			//case "lleg":
-			//	%player.setNodeColor("LShoe", %color);
-			//case "rarm":
-			//	%player.setNodeColor("RArm", %color);
-			//	%player.setNodeColor("RHand", %color);
-			//case "larm":
-			//	%player.setNodeColor("LArm", %color);
-			//	%player.setNodeColor("LHand", %color);
-			//case "hip":
-			//	%player.setNodeColor("pants", %color);
-			//case "chest":
-			//	%player.setNodeColor("chest", %color);
-			//}
+			switch$ (%region)
+			{
+			case "head":
+			    %player.bloody["head"] = true;
+				if (isObject(%player.client))
+					%player.client.applyBodyParts();
+			case "rleg":
+				%player.setNodeColor("RShoe", %color);
+			case "lleg":
+				%player.setNodeColor("LShoe", %color);
+			case "rarm":
+				%player.setNodeColor("RArm", %color);
+				%player.setNodeColor("RHand", %color);
+			case "larm":
+				%player.setNodeColor("LArm", %color);
+				%player.setNodeColor("LHand", %color);
+			case "hip":
+				%player.setNodeColor("pants", %color);
+			case "chest":
+				%player.bloody["chest_front"] = true;
+				if (isObject(%player.client))
+					%player.client.applyBodyParts();
+			}
 		}
 
-		sprayBloodGush(%pos, VectorScale(%normal, 10)); //TODO: Do this in weapon funcs themselves
-
 		%player.playPain();
-		%player.setDamageFlash(%player.health / 100 * 0.5);
 		%player.health -= %damage;
+		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		if(%player.health <= 0)
 		{
 	        %p = new Projectile()

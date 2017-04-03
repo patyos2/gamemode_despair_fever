@@ -1,8 +1,8 @@
 //Datablocks at the bottom
 $SprayBloodMask = $TypeMasks::FxBrickObjectType
 				| $TypeMasks::TerrainObjectType;
-$SprayBloodGravity = VectorScale("0 0 -5", 0.05);
-$SprayBloodDrag = 0.05 * 1;
+$SprayBloodGravity = "0 0 -0.1";
+$SprayBloodDrag = 0.05;
 
 function sprayBloodTick(%position, %velocity, %i)
 {
@@ -27,16 +27,19 @@ function sprayBloodTick(%position, %velocity, %i)
 		// spawnDecal(BloodDecalShape @ getRandom(1, 2), %rayPosition, %rayNormal, %size, %color);
 		// play3D(BloodSplatSound @ 1, %rayPosition);
 
-		if (%i >= 5)
+		if (%i >= 7)
+		{
 			%node = blood @ getRandom(3, 4);
+			%size += (%i - 7) / 10;
+		}
 		else
-			%node = blood2; //blood @ getRandom(1, 2);
+			%node = blood @ getRandom(1, 2);
 
 		%decal = spawnDecal(NewBloodDecal, %rayPosition, %rayNormal, %size, %color, %angle, %i < 5 ? "blood" : "", %i >= 5);
 		%decal.hideNode("ALL");
 		%decal.unHideNode(%node);
 		if(getRandom() < 0.45)
-		serverPlay3d(BloodSplat @ getRandom(1,3), %rayPosition);
+			serverPlay3d(BloodSplat @ getRandom(1,3), %rayPosition);
 		return;
 	}
 

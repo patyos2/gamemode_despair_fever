@@ -11,12 +11,18 @@ datablock ItemData(BatItem)
 	colorShiftColor = "0.47 0.35 0.2 1";
 	uiName = "Baseball Bat";
 	canDrop = true;
+
+	itemPropsClass = "MeleeProps";
+	itemPropsAlways = true;
 };
 
 function BatItem::onAdd(%this, %obj)
 {
 	parent::onAdd(%this, %obj);
-	%obj.playThread(0, "root");
+	if(%obj.itemProps.bloody)
+		%obj.playThread(0, "blood");
+	else
+		%obj.playThread(0, "root");
 }
 
 datablock ShapeBaseImageData(BatImage)
@@ -28,16 +34,29 @@ datablock ShapeBaseImageData(BatImage)
 	doColorShift = true;
 	colorShiftColor = "0.47 0.35 0.2 1";
 
+	useCustomStates = true;
 	type = "blunt";
 
-	raycastEnabled = 1;
-	raycastRange = 4;
-	raycastFromEye = true;
+	armReady = false;
+
+	fireManual = true;
+
+	windUp = 0.3;
+	fireDelay = 0.4;
+	fireScript = "onWindUp";
+	meleeRange = 4;
+
+	damage = 40;
 
 	stateName[0]					= "Activate";
 	stateAllowImageChange[0]		= 1;
 	stateSequence[0]				= "root";
-	stateTransitionOnAmmo[0]		= "Blood";
+	stateTimeoutValue[0]			= 0.01;
+	stateTransitionOnTimeOut[0]		= "CheckBlood";
+
+	stateName[1]					= "CheckBlood";
+	stateTransitionOnAmmo[1]		= "Blood";
+	stateSequence[1]				= "root";
 
 	stateName[2]					= "Blood";
 	stateSequence[2]				= "blood";
@@ -45,5 +64,67 @@ datablock ShapeBaseImageData(BatImage)
 
 function BatImage::onMount(%image, %player, %slot)
 {
-	%player.setImageAmmo(%slot, %player.bloody);
+	%props = %player.getItemProps();
+	%player.setImageAmmo(%slot, %props.bloody);
+	if(!%player.updateBloody)
+	{
+		%player.playThread(1, "1hpre1");
+		%player.schedule(32, stopThread, 1);
+	}
+	%player.updateBloody = 0;
+}
+
+function BatImage::onUnMount(%image, %player, %slot)
+{
+	cancel(%player.windUpSchedule);
+}
+
+function BatImage::onWindUp(%image, %player)
+{
+	%player.swingType = getRandom(1, 2);
+	%player.playThread(1, "1hpre" @ %player.swingType);
+	%windUp = %image.windUp*1000;
+	%player.lastFireTime = $Sim::Time + %windUp;
+	%player.windUpSchedule = %image.schedule(%windUp, onFire, %player);
+}
+
+function BatImage::onFire(%image, %player)
+{
+	cancel(%player.windUpSchedule);
+	if(%player.getMountedImage(0) != %image)
+		return;
+	%player.playThread(1, "1hswing" @ %player.swingType);
+	%player.lastFireTime = $Sim::Time;
+	fireMelee(%image, %player);
+}
+
+function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
+{
+	if (!isObject(%object))
+		return;
+
+	%damage = %image.damage;
+	%props = %player.getItemProps();
+	if (%object.getType() & $TypeMasks::PlayerObjectType)
+	{
+		sprayBloodWide(%position, VectorScale(%normal, -10));
+		if(!%props.bloody)
+		{
+			%props.bloody = %object.health - %damage <= 0 || getRandom() < 0.3; //low chance to get bloody
+			if(%props.bloody)
+			{
+				%player.updateBloody = 1;
+				%player.unMountImage(0); %player.mountImage(%image, 0); //update blood
+			}
+		}
+
+		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
+		{
+			%player.bloody["rhand"] = true;
+			if (isObject(%player.client))
+				%player.client.applyBodyParts();
+		}
+
+		return %object.damage(%player, %position, %damage, %image.type);
+	}
 }

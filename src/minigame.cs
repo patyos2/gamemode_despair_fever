@@ -113,8 +113,8 @@ function despairPrepareGame()
 	}
 	roomPlayers();
 
-	%client = $DefaultMiniGame.member[getRandom(0, $DefaultMiniGame.numMembers - 1)];
-	%client.player.addTool(swordItem);
+	%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
+	%client.player.addTool(batItem);
 	%client.centerPrint("wow you are killer go kill shit", 3);
 	echo(%client.getplayername() SPC "is killa");
 

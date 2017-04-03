@@ -15,7 +15,6 @@ exec("./lib/hitregion.cs");
 exec("./lib/itemfuncs.cs");
 exec("./lib/itemprops.cs");
 exec("./lib/misc.cs");
-exec("./lib/raycastweapons.cs");
 //src
 exec("./src/blood.cs");
 exec("./src/door.cs");
@@ -28,4 +27,4 @@ exec("./src/items/key.cs");
 //weapons
 exec("./src/weapons/sword.cs");
 exec("./src/weapons/bat.cs");
-//exec("./src/weapons/wrench.cs");
+exec("./src/weapons/wrench.cs");
