@@ -44,8 +44,8 @@ datablock ShapeBaseImageData(PipewrenchImage)
 	fireManual = true;
 
 	windUp = 0.4;
-	fireDelay = 0.4;
-	fireScript = "onWindUp";
+	fireDelay = 0.6;
+	fireScript = "onFire";
 	meleeRange = 4;
 
 	damage = 50;
@@ -95,6 +95,7 @@ function PipewrenchImage::onFire(%image, %player)
 	cancel(%player.windUpSchedule);
 	if(%player.getMountedImage(0) != %image)
 		return;
+	%player.swingType = getRandom(1, 2);
 	%player.playThread(1, "1hswing" @ %player.swingType);
 	%player.lastFireTime = $Sim::Time;
 	fireMelee(%image, %player);
@@ -123,6 +124,7 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
 		{
 			%player.bloody["rhand"] = true;
+			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}
@@ -130,6 +132,7 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 		if(%props.bloody && getRandom() < 0.6) //And random chance to get some blood on chest
 		{
 			%player.bloody["chest_front"] = true;
+			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}

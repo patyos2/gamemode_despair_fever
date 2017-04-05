@@ -143,15 +143,21 @@ package _temp_DespairPlayerPackage
 	{
 		parent::applyBodyColors(%cl,%o);
 		if(isObject(%pl = %cl.player))
+		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
 				%pl.fixAppearance(%cl);
+			%pl.gender = (%pl.client.chest ? "female" : "male");
+		}
 	}
 	function gameConnection::applyBodyParts(%cl,%o) 
 	{
 		parent::applyBodyParts(%cl,%o);
 		if(isObject(%pl = %cl.player))
+		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
 				%pl.fixAppearance(%cl);
+			%pl.gender = (%pl.client.chest ? "female" : "male");
+		}
 	}
 };
 activatePackage(_temp_DespairPlayerPackage);

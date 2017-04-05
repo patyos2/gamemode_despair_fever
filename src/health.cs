@@ -1,3 +1,9 @@
+datablock AudioProfile(HeartBeatSound) {
+	fileName = $Despair::Path @ "res/sounds/heartbeat.wav";
+	description = AudioDefault3d;
+	preload = true;
+};
+
 package DespairHealth
 {
 	function Armor::onAdd(%data, %player)

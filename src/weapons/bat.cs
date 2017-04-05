@@ -45,7 +45,7 @@ datablock ShapeBaseImageData(BatImage)
 
 	windUp = 0.3;
 	fireDelay = 0.4;
-	fireScript = "onWindUp";
+	fireScript = "onFire";
 	meleeRange = 4;
 
 	damage = 40;
@@ -93,8 +93,7 @@ function BatImage::onWindUp(%image, %player)
 function BatImage::onFire(%image, %player)
 {
 	cancel(%player.windUpSchedule);
-	if(%player.getMountedImage(0) != %image)
-		return;
+	%player.swingType = getRandom(1, 2);
 	%player.playThread(1, "1hswing" @ %player.swingType);
 	%player.lastFireTime = $Sim::Time;
 	fireMelee(%image, %player);
@@ -123,6 +122,7 @@ function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
 		{
 			%player.bloody["rhand"] = true;
+			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}

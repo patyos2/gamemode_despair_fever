@@ -61,6 +61,7 @@ function roomPlayers()
 
 		//Create character
 		//Assign character to client
+		%client.killer = 0;
 		%client.spawnPlayer();
 		%player = %client.player;
 
@@ -116,6 +117,7 @@ function despairPrepareGame()
 	%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
 	%client.player.addTool(batItem);
 	%client.centerPrint("wow you are killer go kill shit", 3);
+	%client.killer = true;
 	echo(%client.getplayername() SPC "is killa");
 
 	$days = 0;
@@ -238,7 +240,7 @@ package DespairFever
 			if (!%player)
 				continue;
 
-			if (%player.killer)
+			if (%client.killer)
 				%killerAlive = 1;
 			else
 				%otherAlive = 1;
@@ -246,9 +248,14 @@ package DespairFever
 			%alive++;
 			%last = %client;
 		}
-		if(%alive <= 1)
+		if(!%otherAlive)
 		{
-			talk("1 or less guy remains, resetting");
+			talk("Everybody is dead dave");
+			despairEndGame();
+		}
+		if(!%killerAlive)
+		{
+			talk("Killer is dead, rip");
 			despairEndGame();
 		}
 		return 0;
@@ -264,6 +271,21 @@ package DespairFever
 	{
 		if (%client.miniGame != $DefaultMiniGame)
 			Parent::serverCmdLight(%client);
+
+		if(%client.player && %client.killer)
+		{
+			if ($Sim::Time - %client.lastKillerScan < 3)
+				return;
+			%client.lastKillerScan = $Sim::Time;
+
+			for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+			{
+				%member = $DefaultMiniGame.member[%i];
+
+				if (%member.player && %member.player != %client.player)
+					%client.play3d(HeartBeatSound, %member.player.getEyePoint());
+			}
+		}
 	}
 
 	function serverCmdSuicide(%client)

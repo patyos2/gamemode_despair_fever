@@ -142,7 +142,7 @@ function serverCmdAlarm(%client)
 		%scream = false;
 
 		%center = %player.getEyePoint();
-		initContainerRadiusSearch(%center, 128, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType);
+		initContainerRadiusSearch(%center, 64, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType);
 		while (isObject(%obj = containerSearchNext()))
 		{
 			if(%obj == %player)
