@@ -34,6 +34,8 @@ datablock ShapeBaseImageData(BatImage)
 	doColorShift = true;
 	colorShiftColor = "0.47 0.35 0.2 1";
 
+	isWeapon = true;
+
 	useCustomStates = true;
 	type = "blunt";
 
@@ -126,5 +128,10 @@ function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		}
 
 		return %object.damage(%player, %position, %damage, %image.type);
+	}
+	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
+	{
+		ServerPlay3D(WoodHitSound, %position);
+		return %object.doorDamage(1);
 	}
 }

@@ -14,6 +14,7 @@ exec("./lib/decals.cs");
 exec("./lib/hitregion.cs");
 exec("./lib/itemfuncs.cs");
 exec("./lib/itemprops.cs");
+exec("./lib/los.cs");
 exec("./lib/misc.cs");
 //src
 exec("./src/blood.cs");
@@ -21,6 +22,7 @@ exec("./src/door.cs");
 exec("./src/health.cs");
 exec("./src/minigame.cs");
 exec("./src/player.cs");
+exec("./src/vocal.cs");
 exec("./src/weapons.cs");
 //items
 exec("./src/items/key.cs");

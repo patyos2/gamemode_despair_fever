@@ -170,6 +170,7 @@ datablock staticShapeData(NewBloodDecal)
 {
 	shapeFile = $Despair::Path @ "res/shapes/newblood.dts";
 	decalCombine = "blood";
+	isBlood = true;
 };
 
 datablock ParticleData(CubeBlood23Particle)

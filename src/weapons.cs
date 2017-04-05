@@ -55,7 +55,7 @@ function fireMelee(%image, %player)
 	// if (%angle $= "") %angle = 1.57079 * 0.5;
 	if (%angle $= "") %angle = 1.57079 * 0.75;
 	if (%range $= "") %range = 3.5;
-	if (%count $= "") %count = 4; // 3;
+	if (%count $= "") %count = 3; // 3;
 
 	%start = %angle * -0.5;
 	%i = %count;

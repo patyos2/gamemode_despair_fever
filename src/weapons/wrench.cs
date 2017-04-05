@@ -34,6 +34,8 @@ datablock ShapeBaseImageData(PipewrenchImage)
 	doColorShift = true;
 	colorShiftColor = "0.5 0.5 0.5 1";
 
+	isWeapon = true;
+
 	useCustomStates = true;
 	type = "blunt";
 
@@ -133,5 +135,10 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 		}
 
 		return %object.damage(%player, %position, %damage, %image.type);
+	}
+	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
+	{
+		ServerPlay3D(WoodHitSound, %position);
+		return %object.doorDamage(1);
 	}
 }

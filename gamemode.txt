@@ -1,5 +1,5 @@
 //Default Add-Ons
-ADDON Emote_Alarm
+//ADDON Emote_Alarm //we overwrite the servercmd
 ADDON Emote_Confusion
 ADDON Emote_Hate
 ADDON Emote_Love

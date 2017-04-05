@@ -30,7 +30,7 @@ package DespairHealth
 			switch$ (%region)
 			{
 			case "head":
-			    %player.bloody["head"] = true;
+				%player.bloody["head"] = true;
 				if (isObject(%player.client))
 					%player.client.applyBodyParts();
 			case "rleg":
@@ -50,22 +50,24 @@ package DespairHealth
 				if (isObject(%player.client))
 					%player.client.applyBodyParts();
 			}
+			%player.bloody = true;
 		}
 
-		%player.playPain();
 		%player.health -= %damage;
-		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		if(%player.health <= 0)
 		{
-	        %p = new Projectile()
-	        {
-	            datablock = cubeHighExplosionProjectile;
-	            initialPosition = %pos;
-	            initialVelocity = vectorScale(%normal, 4);
-	        };
-	        %p.explode();
+			%p = new Projectile()
+			{
+				datablock = cubeHighExplosionProjectile;
+				initialPosition = %pos;
+				initialVelocity = vectorScale(%normal, 4);
+			};
+			%p.explode();
 			%player.setDamageLevel(100);
+			return;
 		}
+		%player.playPain();
+		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 	}
 
 	function Armor::onDisabled(%data, %player, %state)
@@ -88,6 +90,9 @@ package DespairHealth
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
 		%player.playThread(0, "death1");
+		%player.stopThread(1);
+		%player.stopThread(2);
+		%player.stopThread(3);
 		GameRoundCleanup.add(%player);
 
 		$DefaultMiniGame.checkLastManStanding();
