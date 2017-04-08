@@ -30,3 +30,66 @@ function Player::getAimVector(%player)
 		getWord(%fwd, 1) * %scale SPC
 		getWord(%eye, 2);
 }
+
+function commafy(%s)
+{
+    %i = %L = strlen(%s);
+    while (%i-- >= 0)
+        %o = (%i == 0 ? "" : ((%L - %i) % 3 ? "" : ",")) @ getSubStr(%s, %i, 1) @ %o;
+    return %o;
+}
+
+datablock StaticShapeData(PrimitiveLineC)
+{
+	shapeFile = $Despair::Path @ "res/shapes/line.dts";
+};
+
+if (!isObject(LinePool))
+	new SimSet(LinePool);
+
+if (!isObject(PrimitiveSet))
+	new SimSet(PrimitiveSet);
+
+function freeLine(%ref)
+{
+	if (isObject(%ref))
+	{
+		%ref.setScale("0 0 0");
+		%ref.setTransform("0 0 -100");
+		LinePool.add(%ref);
+	}
+	return 0;
+}
+
+function drawLine(%ref, %a, %b, %color)
+{
+	if (!isObject(%ref))
+	{
+		if (%count = LinePool.getCount())
+		{
+			%ref = LinePool.getObject(%count - 1);
+			LinePool.remove(%ref);
+		}
+		else
+		{
+			%ref = new StaticShape()
+			{
+				datablock = PrimitiveLineC;
+			};
+			
+			PrimitiveSet.add(%ref);
+		}
+	}
+	
+	if (%ref.color !$= %color)
+		%ref.setNodeColor("ALL", %ref.color = %color);
+	
+	%vector = VectorNormalize(VectorSub(%b, %a));
+	%axis = VectorNormalize(VectorCross("0 1 0", %vector));
+	%mag = mACos(VectorDot("0 1 0", %vector)) * -1;
+
+	%ref.setTransform(VectorScale(VectorAdd(%a, %b), 0.5) SPC %axis SPC %mag);
+	%ref.setScale("0.5 " @ VectorDist(%a, %b) @ " 0.5");
+
+	return %ref;
+}

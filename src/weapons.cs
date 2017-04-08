@@ -62,7 +62,7 @@ function fireMelee(%image, %player)
 	%count--;
 	while (%i-- >= 0)
 	{
-		%time = 100 * ((1 - %i) / %count);
+		%time = mAbs(100 * ((1 - %i) / %count));
 		%yaw = %start + %angle * (%i / %count);
 		schedule(%time, %player, fireMeleeCheck, %image, %player, %range, %yaw);
 	}
@@ -83,7 +83,7 @@ function fireMeleeCheck(%image, %player, %range, %yaw)
 
 	%ray = containerRayCast(%a, %b, $TypeMasks::PlayerObjectType | $TypeMasks::FxBrickObjectType, %player);
 	%col = firstWord(%ray);
-	// schedule(1500, 0, freeLine, drawLine("", %a, %b, "1 0 0 1"));
+	//schedule(1500, 0, freeLine, drawLine("", %a, %b, "1 0 0 1"));
 
 	if (!%col)
 		return;

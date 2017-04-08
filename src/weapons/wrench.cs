@@ -43,12 +43,12 @@ datablock ShapeBaseImageData(PipewrenchImage)
 
 	fireManual = true;
 
-	windUp = 0.4;
-	fireDelay = 0.6;
+	windUp = 0.3;
+	fireDelay = 0.8;
 	fireScript = "onFire";
 	meleeRange = 4;
 
-	damage = 50;
+	damage = 40;
 
 	stateName[0]					= "Activate";
 	stateAllowImageChange[0]		= 1;

@@ -27,6 +27,9 @@ $roomNum[16] = "25";
 if (!isObject(GameRoundCleanup))
 	new SimSet(GameRoundCleanup);
 
+if (!isObject(GameCharacters))
+	new SimSet(GameCharacters);
+
 function roomPlayers()
 {
 	%freeCount = $Despair::RoomCount;
@@ -60,11 +63,27 @@ function roomPlayers()
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 
 		//Create character
+		%gender = getRandomGender();
+		%character = new ScriptObject()
+		{
+			gender = %gender;
+			name = getRandomName(%gender);
+			appearance = getRandomAppearance(%gender);
+			room = %room;
+
+			client = %client;
+			clientName = %client.getPlayerName();
+			player = %player;
+		};
+
+		GameCharacters.add(%character);
+		%client.character = %character;
+
 		//Assign character to client
 		%client.killer = 0;
 		%client.spawnPlayer();
 		%player = %client.player;
-
+		%player.gender = %gender; //so screams are correct post-death
 		%player.setDatablock(PlayerDespairArmor);
 		%player.room = %room;
 		%player.setShapeNameDistance(0);
@@ -74,11 +93,17 @@ function roomPlayers()
 		centerPrint(%client, "");
 		commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
 
+		//Hat icon for hats
+		%data = noHatIcon.getID();
+		%player.hatSlot = %player.getDataBlock().maxTools - 1;
+		%player.tool[%player.hatSlot] = %data;
+
 		%props = KeyItem.newItemProps(%player, 0);
 		%props.name = "Room #" @ $roomNum[%room] @ " Key";
 		%props.id = %roomDoor.lockId;
 
 		%player.addTool(KeyItem, %props);
+		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, %data, true);
 	}
 }
 
@@ -91,7 +116,8 @@ function despairEndGame()
 function despairPrepareGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
-	gameRoundCleanUp.deleteAll();
+	GameRoundCleanup.deleteAll();
+	GameCharacters.deleteAll();
 	clearDecals();
 
 	// Close *all* doors
@@ -111,11 +137,18 @@ function despairPrepareGame()
 			%brick.setDataBlock(%brick.isCCW ? %data.closedCCW : %data.closedCW);
 			%brick.doorMaxHits = 4;
 		}
+		//Consistent item spawns
+		if(isObject(%brick.itemData))
+			%brick.setItem(%brick.itemData);
+		if(isObject(%brick.item))
+			%brick.itemData = %brick.item.getDataBlock().getName();
 	}
 	roomPlayers();
 
 	%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
-	%client.player.addTool(batItem);
+
+	%itemList = "axeItem batItem katanaItem knifeItem leadpipeItem macheteItem shovelItem sledgehammerItem umbrellaItem pipewrenchItem";
+	%client.player.addTool(getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)));
 	%client.centerPrint("wow you are killer go kill shit", 3);
 	%client.killer = true;
 	echo(%client.getplayername() SPC "is killa");
@@ -131,6 +164,12 @@ function despairPrepareGame()
 		DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	}
 	setDayCycleTime(0);
+}
+
+function despairOnKill(%victim, %attacker)
+{
+	if(isObject(%victim) && !%victim.killer && isObject(%attacker) && !%attacker.killer && %victim != %attacker)
+		talk("WOW" SPC %attacker.getplayername() SPC "RDMed WHAT A FAGGOT");
 }
 
 function despairCycleStage(%stage)

@@ -22,16 +22,35 @@ package DespairHealth
 		if (%client.miniGame != $DefaultMiniGame)
 			return Parent::damage(%data, %player, %src, %pos, %damage, %type);
 
+		if(%player.isCrouched())
+			%damage *= 3;
+
 		if (%src.getType() & $TypeMasks::PlayerObjectType)
+		{
 			%sourceObject = %src;
+			%attacker = %sourceObject.client;
+		}
 		else
+		{
 			%sourceObject = %src.sourceObject;
+			%attacker = %sourceObject.sourceClient;
+		}
 
 		%normal = %sourceObject.getEyeVector();
+		%dot = vectorDot(%player.getForwardVector(), %normal);
+
+		%player.attackCount++;
+		%player.attackType[%player.attackCount] = %type;
+		%player.attackSource[%player.attackCount] = %src;
+		%player.attackDot[%player.attackCount] = %dot;
+		%player.attackClient[%player.attackCount] = %attacker;
+		%player.attackTime[%player.attackCount] = $Sim::Time;
 
 		if (%pos !$= "")
 		{
 			%region = %player.getRegion(%pos, true);
+			%player.attackRegion[%player.attackCount] = %region;
+
 			%color = 0.75 + 0.1 * getRandom() @ " 0 0 1"; //cool bloods
 			switch$ (%region)
 			{
@@ -62,6 +81,8 @@ package DespairHealth
 		%player.health -= %damage;
 		if(%player.health <= 0)
 		{
+			if (isObject(%player.client))
+				despairOnKill(%player.client, %attacker);
 			%p = new Projectile()
 			{
 				datablock = cubeHighExplosionProjectile;

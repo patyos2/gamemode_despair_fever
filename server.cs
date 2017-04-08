@@ -26,10 +26,15 @@ exec("./lib/los.cs");
 exec("./lib/misc.cs");
 //src
 exec("./src/blood.cs");
+exec("./src/character.cs");
+exec("./src/chat.cs");
 exec("./src/display.cs");
 exec("./src/door.cs");
+exec("./src/events.cs");
+exec("./src/hats.cs");
 exec("./src/health.cs");
 exec("./src/minigame.cs");
+exec("./src/namelist.cs");
 exec("./src/player.cs");
 exec("./src/vocal.cs");
 exec("./src/weapons.cs");
@@ -38,8 +43,11 @@ exec("./src/items/key.cs");
 //weapons
 exec("./src/weapons/axe.cs");
 exec("./src/weapons/bat.cs");
+exec("./src/weapons/katana.cs");
 exec("./src/weapons/knife.cs");
+exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
 exec("./src/weapons/wrench.cs");
+exec("./src/weapons/sledgehammer.cs");
 exec("./src/weapons/shovel.cs");
 exec("./src/weapons/umbrella.cs");

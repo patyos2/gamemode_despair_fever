@@ -1,5 +1,6 @@
 function GameConnection::updateBottomprint(%this)
 {
+	%time = getDayCycleTime();
 	%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
 	%time = %time - mFloor(%time); //get rid of excess stuff
 

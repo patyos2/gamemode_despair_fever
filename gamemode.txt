@@ -60,6 +60,8 @@ ADDON Weapon_Gun
 
 //Add-ons required for the build
 
+ADDON Event_doPlayerTeleport
+
 ADDON Brick_DemiansBP_1x
 ADDON Brick_DemiansBP_1x_half
 ADDON Brick_DemiansBP_2x_half
@@ -98,7 +100,6 @@ ADDON Light_Toxic
 ADDON Light_Ambient
 
 ADDON Tool_NewDuplicator
-ADDON Tool_Fill_Can
 
 //Gamemode
 ADDON GameMode_Despair_Fever
