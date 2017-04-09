@@ -83,8 +83,17 @@ function player::applyAppearance(%pl,%cl)
 	%shoesColor = getField(%app, 6);
 	%hairColor = getField(%app, 7);
 
-	if(isObject(%pl.tool[%pl.hatSlot]) && %pl.tool[%pl.hatSlot].hideHair)
-		%hairName = "";
+	if(isObject(%hat = %pl.tool[%pl.hatSlot]) && isObject(%pl.getMountedImage(2)) && %pl.getMountedImage(2) == nameToID(%hat.image))
+	{
+		if(%hat.hideHair)
+			%hairName = "";
+		if(%hat.disguise)
+			%faceName = "smiley";
+		if(%hat.replaceHair !$= "")
+			%hairName = %hat.replaceHair;
+		if(%hat.replaceHair[%char.gender] !$= "")
+			%hairName = %hat.replaceHair[%char.gender];
+	}
 
 	%pl.unHideNode((%female ? "femChest" : "chest"));
 	
@@ -206,7 +215,7 @@ package _temp_DespairPlayerPackage
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)
 	{
 		Parent::onCollision(%this, %obj, %col, %velocity, %speed);
-		if (isObject(%col) && %col.getClassName() $= "Item" && %col.getDatablock().onPickUp(%col, %obj) && %obj.client.miniGame == $defaultMiniGame)
+		if (isObject(%col) && %col.getClassName() $= "Item" && isObject(%col.spawnBrick) && %col.getDatablock().onPickUp(%col, %obj) && %obj.client.miniGame == $defaultMiniGame)
 			%col.delete();
 	}
 };

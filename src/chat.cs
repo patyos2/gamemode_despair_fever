@@ -17,6 +17,11 @@ function DespairEmptyFloatItem::onPickup() {}
 
 package DespairChat
 {
+	function serverCmdStartTalking(%client)
+	{
+		if (%client.miniGame != $DefaultMiniGame)
+			Parent::serverCmdStopTalking(%client);
+	}
 	function serverCmdMessageSent(%client, %text)
 	{
 		%player = %client.player;

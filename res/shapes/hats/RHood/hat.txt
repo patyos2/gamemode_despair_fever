@@ -1,2 +1,0 @@
-disguise 0
-hidehair 1

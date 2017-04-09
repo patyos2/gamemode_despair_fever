@@ -151,7 +151,10 @@ function serverCmdAlarm(%client)
 			if(%obj.getType() & $TypeMasks::PlayerObjectType)
 				%point = %obj.getEyePoint();
 			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
-			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.getDataBlock().isBlood || %obj.isDead || %obj.bloody || (isObject(%img = %obj.getMountedImage(0)) && %img.isWeapon)))
+
+			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.isWeapon;
+			%disguised = isObject(%obj.tool[%obj.hatSlot]) && %obj.tool[%obj.hatSlot].disguise;
+			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.getDataBlock().isBlood || %obj.isDead || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;
 				break;
