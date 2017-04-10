@@ -2,6 +2,7 @@ datablock TSShapeConstructor(mDespairDts) {
 	baseShape = "base/data/shapes/player/m_df.dts";
 	sequence0 = "base/data/shapes/player/default.dsq";
 	sequence1 = "base/data/shapes/player/player_anim_1h.dsq";
+	sequence2 = "base/data/shapes/player/player_anim_misc.dsq";
 };
 
 datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
@@ -74,7 +75,8 @@ function player::applyAppearance(%pl,%cl)
 	%app = %char.appearance;
 	%female = %char.gender $= "Female";
 
-	%skinColor = getField(%app, 0);
+	%handColor = getField(%app, 0);
+	%headColor = %handColor;
 	%faceName = getField(%app, 1);
 	%decalName = getField(%app, 2);
 	%hairName = getField(%app, 3);
@@ -83,24 +85,40 @@ function player::applyAppearance(%pl,%cl)
 	%shoesColor = getField(%app, 6);
 	%hairColor = getField(%app, 7);
 
+	if(isObject(%pl.getMountedImage(3)) && %pl.getMountedImage(3).item.hideAppearance)
+		%hideApp = true;
 	if(isObject(%hat = %pl.tool[%pl.hatSlot]) && isObject(%pl.getMountedImage(2)) && %pl.getMountedImage(2) == nameToID(%hat.image))
 	{
-		if(%hat.hideHair)
-			%hairName = "";
-		if(%hat.disguise)
-			%faceName = "smiley";
 		if(%hat.replaceHair !$= "")
 			%hairName = %hat.replaceHair;
 		if(%hat.replaceHair[%char.gender] !$= "")
 			%hairName = %hat.replaceHair[%char.gender];
+		if(%hat.hideHair)
+			%hairName = "";
+		if(%hat.disguise)
+		{
+			%faceName = "smiley";
+			if(%hideApp)
+			{
+				%shoesColor = "0.25 0.25 0.25 1";
+				%handColor = "0.25 0.25 0.25 1";
+			}
+		}
+		if(%hat.nodeColor !$= "")
+			%headColor = %hat.nodeColor SPC "1";
 	}
 
-	%pl.unHideNode((%female ? "femChest" : "chest"));
-	
+	if(!%hideApp)
+	{
+		%pl.unHideNode((%female ? "femChest" : "chest"));
+
+		%pl.unHideNode((%female ? "rarmSlim" : "rarm"));
+		%pl.unHideNode((%female ? "larmSlim" : "larm"));
+	}
+
 	%pl.unHideNode((%rhook ? "rhook" : "rhand"));
 	%pl.unHideNode((%lhook ? "lhook" : "lhand"));
-	%pl.unHideNode((%female ? "rarmSlim" : "rarm"));
-	%pl.unHideNode((%female ? "larmSlim" : "larm"));
+
 	%pl.unHideNode("headskin");
 
 	if (%hairName !$= "")
@@ -122,7 +140,8 @@ function player::applyAppearance(%pl,%cl)
 	//	%pl.unHideNode($hat[%cl.hat]);
 	//	%pl.setNodeColor($hat[%cl.hat],%cl.hatColor);
 	//}
-	if(%hip)
+	
+	if(%hip && !%hideApp)
 	{
 		%pl.unHideNode("skirthip");
 		%pl.unHideNode("skirttrimleft");
@@ -130,7 +149,8 @@ function player::applyAppearance(%pl,%cl)
 	}
 	else
 	{
-		%pl.unHideNode("pants");
+		if(!%hideApp)
+			%pl.unHideNode("pants");
 		%pl.unHideNode((%rpeg ? "rpeg" : "rshoe"));
 		%pl.unHideNode((%lpeg ? "lpeg" : "lshoe"));
 	}
@@ -153,7 +173,7 @@ function player::applyAppearance(%pl,%cl)
 	%pl.setFaceName(%faceName);
 	%pl.setDecalName(%decalName);
 	
-	%pl.setNodeColor("headskin",%skinColor);
+	%pl.setNodeColor("headskin", %headColor);
 	//hair color
 	if(%hairName !$= "")
 		%pl.setNodeColor(%hairName, %hairColor);
@@ -168,8 +188,8 @@ function player::applyAppearance(%pl,%cl)
 	%pl.setNodeColor("rarmSlim",%shirtColor);
 	%pl.setNodeColor("larmSlim",%shirtColor);
 	
-	%pl.setNodeColor("rhand",%skinColor);
-	%pl.setNodeColor("lhand",%skinColor);
+	%pl.setNodeColor("rhand",%handColor);
+	%pl.setNodeColor("lhand",%handColor);
 	%pl.setNodeColor("rhook","0.35 0.35 0.35 1");
 	%pl.setNodeColor("lhook","0.35 0.35 0.35 1");
 	

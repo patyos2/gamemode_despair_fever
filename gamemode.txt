@@ -61,6 +61,7 @@ ADDON Weapon_Gun
 //Add-ons required for the build
 
 ADDON Event_doPlayerTeleport
+ADDON Event_Camera_Control
 
 ADDON Brick_DemiansBP_1x
 ADDON Brick_DemiansBP_1x_half

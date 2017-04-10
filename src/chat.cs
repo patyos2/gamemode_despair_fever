@@ -48,10 +48,11 @@ package DespairChat
 					messageClient(%member, '', '<color:808080>%1\c6<color:b0b0b0>: %2', %name, %text);
 				}
 			}
+			echo("(DEAD) " @ %name @ ": " @ %text);
 			return;
 		}
 		%name = %client.character.name;
-		if(isObject(%player.tool[%player.hatSlot]) && %player.tool[%player.hatSlot].disguise)
+		if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
 			%name = "Unknown";
 
 		serverPlay3D(DespairChatSound, %player.getHackPosition());
@@ -66,7 +67,7 @@ package DespairChat
 		%shape.setShapeName(%text);
 		%shape.setVelocity("0 0 0.5");
 		%shape.deleteSchedule = %shape.schedule(3000, delete);
-
+		echo(%name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 		messageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
 	}
 };

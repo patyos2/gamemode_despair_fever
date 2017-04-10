@@ -44,26 +44,33 @@ function Hat::onWear(%this, %player)
 		%player.client.applyBodyParts();
 }
 
+function Hat::onDrop(%this, %player, %index)
+{
+	%player.tool[%player.hatSlot] = NoHatIcon.getID();
+	%player.unMountImage(2);
+
+	if(isObject(%client = %player.client))
+	{
+		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, NoHatIcon.getID(), true);
+		%client.applyBodyParts();
+	}
+}
+
 package DespairHats
 {
 	function serverCmdDropTool(%client, %index)
 	{
-		if(isObject(%player = %client.player) && isObject(%hat = %player.tool[%index]) && %hat.classname $= "Hat")
-			%a = true;
+		if(isObject(%client.player))
+			%item = %client.player.tool[%index];
 		Parent::serverCmdDropTool(%client, %index);
-		if(%a)
-		{
-			%player.tool[%player.hatSlot] = NoHatIcon.getID();
-			messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, NoHatIcon.getID(), true);
-			%player.unMountImage(2);
-			%client.applyBodyParts();
-		}
+		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
+			%item.onDrop(%client.player, %index);
 	}
 
 	function Player::activateStuff(%this)
 	{
 		%item = %this.tool[%this.currTool];
-		if (!isObject(%item) || %item.classname !$= "Hat")
+		if (!isObject(%item) || !isFunction(%item.getName(), "onWear"))
 		{
 			Parent::activateStuff(%this);
 			return;

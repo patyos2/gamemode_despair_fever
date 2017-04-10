@@ -8,14 +8,6 @@ function r(%p)
 		exec("./server.cs");
 }
 
-package NoObserversPackage
-{
-  function SimObject::onCameraEnterOrbit(%obj, %camera) {}
-  function SimObject::onCameraLeaveOrbit(%obj, %camera) {}
-};
-
-activatePackage("NoObserversPackage");
-
 //lib
 exec("./lib/daycycles.cs");
 exec("./lib/decals.cs");
@@ -24,6 +16,7 @@ exec("./lib/itemfuncs.cs");
 exec("./lib/itemprops.cs");
 exec("./lib/los.cs");
 exec("./lib/misc.cs");
+exec("./lib/noObservers.cs");
 //src
 exec("./src/blood.cs");
 exec("./src/character.cs");
@@ -36,9 +29,11 @@ exec("./src/health.cs");
 exec("./src/minigame.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
+exec("./src/trial.cs");
 exec("./src/vocal.cs");
 exec("./src/weapons.cs");
 //items
+exec("./src/items/coat.cs");
 exec("./src/items/key.cs");
 //weapons
 exec("./src/weapons/axe.cs");

@@ -1,5 +1,5 @@
 //Blood event
-registerOutputEvent(Player, setBloody, "list ALL 0 chest 1 left_hand 2 right_hand 3 left_shoe 4 right_shoe 5 head 6" TAB "list ALL 0 front 1 back 2" TAB "bool 0", 1);
+registerOutputEvent(Player, setBloody, "list ALL 0 chest 1 hands 2 shoes 3 head 4" TAB "list ALL 0 front 1 back 2" TAB "bool 0", 1);
 function Player::setBloody(%this, %type, %dir, %bool, %client)
 {
 	switch(%type)
@@ -16,7 +16,6 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 			}
 		case 2:
 			%this.bloody["lhand"] = %bool;
-		case 3:
 			%this.bloody["rhand"] = %bool;
 			if(isObject(%this.getMountedImage(0)) && (%props = %this.getItemProps()).bloody)
 			{
@@ -24,15 +23,12 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 				%this.updateBloody = 1;
 				%this.unMountImage(0); %this.schedule(32, mountImage, %image, 0); //update blood
 			}
-		case 4:
+		case 3:
 			%this.bloody["lshoe"] = %bool;
-			if(!%bool)
-				%this.bloodyFootprints = 0;
-		case 5:
 			%this.bloody["rshoe"] = %bool;
 			if(!%bool)
 				%this.bloodyFootprints = 0;
-		case 6:
+		case 4:
 			%this.bloody["head"] = %bool;
 		default:
 			%this.bloody["lshoe"] = %bool;
@@ -56,3 +52,54 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 	if (isObject(%client))
 		%client.applyBodyParts();
 }
+
+//Set camera from brick to direction
+
+registerOutputEvent("fxDTSBrick", "setCameraDir", "list North 0 East 1 South 2 West 3", 1);
+function fxDTSBrick::setCameraDir(%brick, %dir, %client)
+{
+	%camera = %client.camera;
+	if(!isObject(%camera))
+		return;
+
+	%pos = %brick.getPosition();
+
+	switch (%dir)
+	{
+		case 0: // North
+			%aa = "1 0 0 0";
+		case 1: // East
+			%aa = "0 0 1 1.57079";
+		case 2: // South
+			%aa = "0 0 1 3.14159";
+		case 3: // West
+			%aa = "0 0 1 -1.57079";
+	}
+
+	%camera.setTransform(%pos SPC %aa);
+	%camera.setFlyMode();
+	%camera.mode = "Observer";
+
+	//client controls camera
+	%client.setControlObject(%camera);
+	%camera.setControlObject(%client.dummyCamera);
+	%client.player.inCameraEvent = true;
+}
+
+package DespairEvents
+{
+	function Observer::onTrigger(%this, %obj, %trig, %tog)
+	{
+		%client = %obj.getControllingClient();
+
+		if(isObject(%client.player) && %client.player.inCameraEvent && %tog)
+		{
+			%client.player.inCameraEvent = false;
+			%client.setControlObject(%client.player);
+			return;
+		}
+
+		parent::onTrigger(%this, %obj, %trig, %tog);
+	}
+};
+activatePackage("DespairEvents");

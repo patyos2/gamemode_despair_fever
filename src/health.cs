@@ -117,9 +117,9 @@ package DespairHealth
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
 		%player.playThread(0, "death1");
-		%player.stopThread(1);
-		%player.stopThread(2);
-		%player.stopThread(3);
+		%player.playThread(1, "root");
+		%player.playThread(2, "root");
+		%player.playThread(3, "root");
 		GameRoundCleanup.add(%player);
 
 		$DefaultMiniGame.checkLastManStanding();
