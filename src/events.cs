@@ -17,7 +17,7 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 		case 2:
 			%this.bloody["lhand"] = %bool;
 			%this.bloody["rhand"] = %bool;
-			if(isObject(%this.getMountedImage(0)) && (%props = %this.getItemProps()).bloody)
+			if(isObject(%image = %this.getMountedImage(0)) && (%props = %this.getItemProps()).bloody)
 			{
 				%props.bloody = 0;
 				%this.updateBloody = 1;
@@ -35,7 +35,7 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 			%this.bloody["rshoe"] = %bool;
 			%this.bloody["lhand"] = %bool;
 			%this.bloody["rhand"] = %bool;
-			if(isObject(%this.getMountedImage(0)) && (%props = %this.getItemProps()).bloody)
+			if(isObject(%image = %this.getMountedImage(0)) && (%props = %this.getItemProps()).bloody)
 			{
 				%props.bloody = 0;
 				%this.updateBloody = 1;

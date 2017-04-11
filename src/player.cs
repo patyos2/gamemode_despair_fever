@@ -55,43 +55,55 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 
 function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 {
-	if(%slot == 0 && %state && !%obj.tool[%obj.currTool]) //pick items up if we don't have any active inventory items selected
+	if(%slot == 0 && %state) //pick items up if we don't have any active inventory items selected
 	{
-		%a = %obj.getEyePoint();
-		%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
-
-		%mask =
-			$TypeMasks::FxBrickObjectType |
-			$TypeMasks::PlayerObjectType |
-			$TypeMasks::CorpseObjectType |
-			$TypeMasks::ItemObjectType;
-
-		%ray = containerRayCast(%a, %b, %mask, %obj);
-
-		if(isObject(%ray) && %ray.getClassName() $= "Item")
+		%item = %obj.tool[%obj.currTool];
+		if(%item)
 		{
-			%data = %ray.getDataBlock();
-			if(%data.className $= "DespairWeapon")
+			if(isFunction(%item.getName(), "onWear"))
 			{
-				if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+				%item.onWear(%obj);
+				return;
+			}
+		}
+		else
+		{
+			%a = %obj.getEyePoint();
+			%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
+
+			%mask =
+				$TypeMasks::FxBrickObjectType |
+				$TypeMasks::PlayerObjectType |
+				$TypeMasks::CorpseObjectType |
+				$TypeMasks::ItemObjectType;
+
+			%ray = containerRayCast(%a, %b, %mask, %obj);
+
+			if(isObject(%ray) && %ray.getClassName() $= "Item")
+			{
+				%data = %ray.getDataBlock();
+				if(%data.className $= "DespairWeapon")
 				{
-					%obj.setTool(%obj.weaponSlot, %data, %ray.itemProps, 1, 0);
+					if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+					{
+						%obj.setTool(%obj.weaponSlot, %data, %ray.itemProps, 1, 0);
+						%ray.itemProps = "";
+						%ray.delete();
+					}
+					return;
+				}
+				if(%data.className $= "Hat")
+				{
+					%data.onPickup(%ray, %obj);
+					return;
+				}
+				if (%obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
+				{
 					%ray.itemProps = "";
 					%ray.delete();
+					return;
 				}
-				return;
-			}
-			if(%data.className $= "Hat")
-			{
-				%data.onPickup(%ray, %obj);
-				return;
-			}
-			if (%obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
-			{
-				%ray.itemProps = "";
-				%ray.delete();
-				return;
-			}
+			}			
 		}
 	}
 	Parent::onTrigger(%this, %obj, %slot, %state);
@@ -203,10 +215,13 @@ function player::applyAppearance(%pl,%cl)
 		%pl.unHideNode("rhand_blood");
 	if (%pl.bloody["head"])
 		%pl.unHideNode("blood_head");
-	if (%pl.bloody["chest_front"])
-		%pl.unHideNode((%female ? "fem" : "") @ "chest_blood_front");
-	if (%pl.bloody["chest_back"])
-		%pl.unHideNode((%female ? "fem" : "") @ "chest_blood_back");
+	if(!%hideApp)
+	{
+		if (%pl.bloody["chest_front"])
+			%pl.unHideNode((%female ? "fem" : "") @ "chest_blood_front");
+		if (%pl.bloody["chest_back"])
+			%pl.unHideNode((%female ? "fem" : "") @ "chest_blood_back");
+	}
 
 	%pl.setFaceName(%faceName);
 	%pl.setDecalName(%decalName);
@@ -275,6 +290,14 @@ package _temp_DespairPlayerPackage
 		if (isObject(%col) && %col.getClassName() $= "Item" && %obj.client.miniGame == $defaultMiniGame)
 			return;
 		Parent::onCollision(%this, %obj, %col, %velocity, %speed);
+	}
+	function serverCmdDropTool(%client, %index)
+	{
+		if(isObject(%client.player))
+			%item = %client.player.tool[%index];
+		Parent::serverCmdDropTool(%client, %index);
+		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
+			%item.onDrop(%client.player, %index);
 	}
 };
 activatePackage(_temp_DespairPlayerPackage);

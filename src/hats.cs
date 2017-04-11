@@ -63,28 +63,3 @@ function Hat::onDrop(%this, %player, %index)
 		%client.applyBodyParts();
 	}
 }
-
-package DespairHats
-{
-	function serverCmdDropTool(%client, %index)
-	{
-		if(isObject(%client.player))
-			%item = %client.player.tool[%index];
-		Parent::serverCmdDropTool(%client, %index);
-		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
-			%item.onDrop(%client.player, %index);
-	}
-
-	function Player::activateStuff(%this)
-	{
-		%item = %this.tool[%this.currTool];
-		if (!isObject(%item) || !isFunction(%item.getName(), "onWear"))
-		{
-			Parent::activateStuff(%this);
-			return;
-		}
-		%item.onWear(%this);
-	}
-
-};
-activatePackage(DespairHats);
