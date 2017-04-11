@@ -35,7 +35,16 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 	showEnergyBar = 1;
 
 	airControl = 0.05;
+
+	jumpSound = "";
 };
+
+function PlayerDespairArmor::doDismount(%this, %obj)
+{
+	if(%obj.getObjectMount().getDatablock() == nameToID(DespairStand))
+		return;
+	parent::doDismount(%this, %obj);
+}
 
 function PlayerDespairArmor::killerDash(%this, %obj, %end)
 {
@@ -58,13 +67,10 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 	if(%slot == 0 && %state) //pick items up if we don't have any active inventory items selected
 	{
 		%item = %obj.tool[%obj.currTool];
-		if(%item)
+		if(%item && isFunction(%item.getName(), "onWear"))
 		{
-			if(isFunction(%item.getName(), "onWear"))
-			{
-				%item.onWear(%obj);
-				return;
-			}
+			%item.onWear(%obj);
+			return;
 		}
 		else
 		{
@@ -97,7 +103,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 					%data.onPickup(%ray, %obj);
 					return;
 				}
-				if (%obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
+				if (%ray.canPickup && %obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
 				{
 					%ray.itemProps = "";
 					%ray.delete();
@@ -293,6 +299,12 @@ package _temp_DespairPlayerPackage
 	}
 	function serverCmdDropTool(%client, %index)
 	{
+		if($DespairTrial)
+		{
+			DespairTrialDropTool(%client, %index);
+			return;
+		}
+
 		if(isObject(%client.player))
 			%item = %client.player.tool[%index];
 		Parent::serverCmdDropTool(%client, %index);

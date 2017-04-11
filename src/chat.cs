@@ -10,7 +10,7 @@ datablock ItemData(DespairEmptyFloatItem)
 {
 	shapeFile = "base/data/shapes/empty.dts";
 	gravityMod = 0;
-	canPickup = 1;
+	canPickup = 0;
 };
 
 function DespairEmptyFloatItem::onPickup() {}
@@ -65,6 +65,7 @@ package DespairChat
 
 		%shape.setCollisionTimeout(%player);
 		%shape.setShapeName(%text);
+		%shape.setShapeNameDistance(30);
 		%shape.setVelocity("0 0 0.5");
 		%shape.deleteSchedule = %shape.schedule(3000, delete);
 		echo(%name @ " (" @ %client.getPlayerName() @ "): " @ %text);

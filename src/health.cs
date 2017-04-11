@@ -108,6 +108,7 @@ package DespairHealth
 			// centerPrint(%client, "");
 			%client.camera.setMode("Corpse", %player);
 			%client.setControlObject(%client.camera);
+			%client.camera.setControlObject(%client.camera);
 			%client.player = "";
 			%player.client = "";
 		}

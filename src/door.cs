@@ -22,9 +22,9 @@ package DespairDoors
 		{
 			%client.centerPrint("\c2The door is locked.", 2);
 			serverPlay3d(DoorJiggleSound, %this.getWorldBoxCenter(), 1);
+			return;
 		}
-		else
-			Parent::door(%this, %state, %client);
+		Parent::door(%this, %state, %client);
 	}
 };
 

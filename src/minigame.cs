@@ -73,17 +73,17 @@ function roomPlayers()
 
 			client = %client;
 			clientName = %client.getPlayerName();
-			player = %player;
 		};
 
 		GameCharacters.add(%character);
 		%client.character = %character;
 
 		//Assign character to client
-		%client.killer = 0;
+		%client.killer = false;
 		%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
 		%player = %client.player;
-		%player.gender = %gender; //so screams are correct post-death
+		%player.character = %character; //post-death reference to character
+		%character.player = %player;
 		%player.setDatablock(PlayerDespairArmor);
 		%player.room = %room;
 		%player.setShapeNameDistance(0);
@@ -116,6 +116,8 @@ function roomPlayers()
 function despairEndGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
+	cancel($DefaultMiniGame.eventSchedule);
+	$DespairTrial = false;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(5000, reset, 0);
 }
 
@@ -163,14 +165,16 @@ function despairPrepareGame()
 
 	roomPlayers();
 
-	%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
-
-	%itemList = "axeItem batItem katanaItem knifeItem leadpipeItem macheteItem shovelItem sledgehammerItem umbrellaItem pipewrenchItem";
-	%client.player.setTool(%client.player.weaponSlot, getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)));
-	%client.centerPrint("wow you are killer go kill shit", 3);
-	%client.killer = true;
-	echo(%client.getplayername() SPC "is killa");
-
+	//Killer Pickin' is done at night time
+	//%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
+	//%client.centerPrint("wow you are killer go kill shit", 3);
+	//%client.killer = true;
+	//echo(%client.getplayername() SPC "is killa");
+	//%itemList = "axeItem batItem katanaItem knifeItem leadpipeItem macheteItem shovelItem sledgehammerItem umbrellaItem pipewrenchItem";
+	//%pick = getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)).getID();
+	//%client.player.tool[%client.player.weaponSlot] = %pick;
+	//messageClient(%client, 'MsgItemPickup', '', %client.player.weaponSlot, %pick, 1);
+	$pickedKiller = false;
 	$days = 0;
 	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
@@ -181,35 +185,77 @@ function despairPrepareGame()
 		$EnvGuiServer::DayCycleEnabled = 1;
 		DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	}
-	setDayCycleTime(0);
-}
-
-function despairOnKill(%victim, %attacker)
-{
-	if(isObject(%victim) && !%victim.killer && isObject(%attacker) && !%attacker.killer && %victim != %attacker)
-		talk("WOW" SPC %attacker.getplayername() SPC "RDMed WHAT A FAGGOT");
+	setDayCycleTime(0.5); //Starts at late evening
+	if(!isEventPending(DayCycle.timeSchedule))
+		DayCycle.timeSchedule();
 }
 
 function despairCycleStage(%stage)
 {
 	talk("It is now \c3" @ %stage);
 	if(%stage $= "NIGHT")
-		talk("GO SLEEP FUCKASSES");
+	{
+		despairOnNight();
+	}
 
 	if(%stage $= "MORNING")
 	{
 		$days++;
 		talk("DAY" SPC $days);
+		despairOnMorning();
 	}
 
 	if(%stage $= "NOON")
-		talk("GO EAT ASSWITS");
-
-	if($days >= 2)
 	{
-		talk("wow survivors won you suck killer");
-		despairEndGame();
+		despairOnNoon();
 	}
+
+	if($days > 2)
+	{
+		courtPlayers();
+	}
+}
+
+function despairOnKill(%victim, %attacker)
+{
+	if(isObject(%victim) && !%victim.killer && isObject(%attacker) && !%attacker.killer && %victim != %attacker)
+		talk(%attacker.getplayername() SPC "RDMed");
+}
+
+function despairOnMorning()
+{
+
+}
+
+function despairOnNoon()
+{
+	
+}
+
+function despairOnNight()
+{
+	%max = $DefaultMiniGame.numMembers;
+	// prepare
+	for (%i = 0; %i < %max; %i++)
+		%a[%i] = %i;
+	// shuffle
+	while (%i--)
+	{
+		%j = getRandom(%i);
+		%x = %a[%i - 1];
+		%a[%i - 1] = %a[%j];
+		%a[%j] = %x;
+	}
+	for (%i = 0; %i < %max; %i++)
+	{
+		%client = $DefaultMiniGame.member[%a[%i]];
+		if(isObject(%client.player))
+			break;
+	}
+	%client.centerPrint("wow you are killer go kill shit", 3);
+	%client.killer = true;
+	echo(%client.getplayername() SPC "is killa");
+	$pickedKiller = true;
 }
 
 
@@ -244,10 +290,6 @@ package DespairFever
 	function fxDayCycle::setEnabled(%this, %bool)
 	{
 		parent::setEnabled(%this, %bool);
-		if(%bool)
-			%this.timeSchedule();
-		else
-			cancel(%this.timeSchedule);
 	}
 
 	function Player::removeBody(%player)
@@ -306,9 +348,14 @@ package DespairFever
 			talk("Everybody is dead dave");
 			despairEndGame();
 		}
-		if(!%killerAlive)
+		if(!%killerAlive && $pickedKiller)
 		{
 			talk("Killer is dead, rip");
+			despairEndGame();
+		}
+		if(%alive == 1)
+		{
+			talk("I AM THE ONE AND ONLY");
 			despairEndGame();
 		}
 		return 0;
@@ -350,6 +397,13 @@ package DespairFever
 	function Item::schedulePop(%this)
 	{
 		GameRoundCleanup.add(%this);
+	}
+
+	function ItemData::onAdd(%this, %item)
+	{
+		Parent::onAdd(%this, %item);
+		if (%this.canPickUp !$= "")
+			%item.canPickUp = %this.canPickUp;
 	}
 };
 activatePackage("DespairFever");

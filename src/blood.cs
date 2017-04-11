@@ -26,11 +26,12 @@ function sprayBloodTick(%position, %velocity, %i)
 		// spawnDecal(PlaneShape, %rayPosition, %rayNormal, %size, %color);
 		// spawnDecal(BloodDecalShape @ getRandom(1, 2), %rayPosition, %rayNormal, %size, %color);
 		// play3D(BloodSplatSound @ 1, %rayPosition);
-
+		%freshness = 3;
 		if (%i >= 7)
 		{
 			%node = blood @ getRandom(3, 4);
 			%size += (%i - 7) / 10;
+			%freshness = 0;
 		}
 		else
 			%node = blood @ getRandom(1, 2);
@@ -38,6 +39,8 @@ function sprayBloodTick(%position, %velocity, %i)
 		%decal = spawnDecal(NewBloodDecal, %rayPosition, %rayNormal, %size, %color, %angle, %i < 5 ? "blood" : "", %i >= 5);
 		%decal.hideNode("ALL");
 		%decal.unHideNode(%node);
+		%decal.spillTime = $Sim::Time;
+		%decal.freshness = %freshness;
 		if(getRandom() < 0.45)
 			serverPlay3d(BloodSplat @ getRandom(1,3), %rayPosition);
 		return;
@@ -120,6 +123,8 @@ function updateCorpseBloodPool(%player, %offset, %slowTime, %size)
 			if (!%ray)
 				return;
 			%player.pool = spawnDecalFromRayCast(NewBloodDecal, %ray);
+			%player.pool.spillTime = $Sim::Time;
+			%player.pool.freshness = 3;
 			%player.pool.noUnclutter = true;
 			%player.pool.hideNode("ALL");
 			%player.pool.unHideNode("blood5");
@@ -139,6 +144,36 @@ function updateCorpseBloodPool(%player, %offset, %slowTime, %size)
 	}
 
 	schedule(30, %player, updateCorpseBloodPool, %player, %offset, %slowTime, %size);
+}
+
+function Player::doBloodyFootprint(%this, %ray, %foot, %alpha)
+{
+	if(%alpha $= "")
+		%alpha = 1;
+	if(%alpha <= 0)
+		return;
+	%datablock = footprintDecal;
+	%rayPosition = getWords(%ray, 1, 3);
+	%rayNormal = getWords(%ray, 4, 6);
+	%rayPosition = VectorAdd(%rayPosition, VectorScale(%rayNormal, 0.01));
+
+	%color = 0.75 + 0.1 * getRandom() SPC "0 0" SPC %alpha;
+	%forward = %this.getForwardVector();
+	%angle = mATan(getWord(%forward, 0), getWord(%forward, 1));
+	%decal = spawnDecal(%datablock, %rayPosition, %rayNormal, 1, %color, %angle, "", 1);
+	%decal.spillTime = $Sim::Time;
+	%decal.freshness = 0.5; //freshness < 1 means can't get bloody footprints from it
+}
+
+function Player::setBloodyFootprints(%this, %val, %bloodclient)
+{
+	%this.bloodyFootprints = %val;
+	%this.bloodyFootprintsLast = %val;
+	%this.bloodClient = %bloodclient;
+	%this.bloody["lshoe"] = true;
+	%this.bloody["rshoe"] = true;
+	if (%this.client)
+		%this.client.applyBodyParts();
 }
 
 //
@@ -170,6 +205,18 @@ datablock staticShapeData(NewBloodDecal)
 {
 	shapeFile = $Despair::Path @ "res/shapes/newblood.dts";
 	decalCombine = "blood";
+	isBlood = true;
+};
+
+datablock StaticShapeData(footprintDecal)
+{
+	shapeFile = $Despair::Path @ "res/shapes/footprint.dts";
+	isBlood = true;
+};
+
+datablock StaticShapeData(pegprintDecal)
+{
+	shapeFile = $Despair::Path @ "res/shapes/pegprint.dts";
 	isBlood = true;
 };
 

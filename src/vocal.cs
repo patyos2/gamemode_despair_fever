@@ -129,7 +129,8 @@ datablock AudioProfile(VoiceCheese2Female) {
 
 function Player::playShock(%player)
 {
-	%gender = %player.gender;
+	if(isObject(%player.character))
+		%gender = %player.character.gender;
 	if(%gender $= "")
 		%gender = "male";
 	%player.playAudio(0, VoiceShock @ getRandom(1,$shockCount[%gender]) @ %gender);
@@ -173,7 +174,8 @@ package DespairVoice
 {
 	function Player::playPain(%player)
 	{
-		%gender = %player.gender;
+		if(isObject(%player.character))
+			%gender = %player.character.gender;
 		if(%gender $= "")
 			%gender = "male";
 		%player.stopAudio(0);
@@ -181,7 +183,8 @@ package DespairVoice
 	}
 	function Player::playDeathCry(%player)
 	{
-		%gender = %player.gender;
+		if(isObject(%player.character))
+			%gender = %player.character.gender;
 		if(%gender $= "")
 			%gender = "male";
 		%player.stopAudio(0);
