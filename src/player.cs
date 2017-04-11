@@ -55,11 +55,49 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 
 function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 {
-	Parent::onTrigger(%this, %obj, %slot, %state);
+	if(%slot == 0 && %state && !%obj.tool[%obj.currTool]) //pick items up if we don't have any active inventory items selected
+	{
+		%a = %obj.getEyePoint();
+		%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
 
+		%mask =
+			$TypeMasks::FxBrickObjectType |
+			$TypeMasks::PlayerObjectType |
+			$TypeMasks::CorpseObjectType |
+			$TypeMasks::ItemObjectType;
+
+		%ray = containerRayCast(%a, %b, %mask, %obj);
+
+		if(isObject(%ray) && %ray.getClassName() $= "Item")
+		{
+			%data = %ray.getDataBlock();
+			if(%data.className $= "DespairWeapon")
+			{
+				if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+				{
+					%obj.setTool(%obj.weaponSlot, %data, %ray.itemProps, 1, 0);
+					%ray.itemProps = "";
+					%ray.delete();
+				}
+				return;
+			}
+			if(%data.className $= "Hat")
+			{
+				%data.onPickup(%ray, %obj);
+				return;
+			}
+			if (%obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
+			{
+				%ray.itemProps = "";
+				%ray.delete();
+				return;
+			}
+		}
+	}
+	Parent::onTrigger(%this, %obj, %slot, %state);
 	if(%obj.client.killer && %slot == 4 && %state)
 	{
-		if(isObject(%obj.getMountedImage(0)) && !%obj.getMountedImage(0).isWeapon)
+		if(isObject(%img = %obj.getMountedImage(0)) && %img.item.className !$= "DespairWeapon")
 			return;
 		if($Sim::Time - %obj.lastKillerDash < 5)
 			return;
@@ -234,9 +272,9 @@ package _temp_DespairPlayerPackage
 	}
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)
 	{
+		if (isObject(%col) && %col.getClassName() $= "Item" && %obj.client.miniGame == $defaultMiniGame)
+			return;
 		Parent::onCollision(%this, %obj, %col, %velocity, %speed);
-		if (isObject(%col) && %col.getClassName() $= "Item" && isObject(%col.spawnBrick) && %col.getDatablock().onPickUp(%col, %obj) && %obj.client.miniGame == $defaultMiniGame)
-			%col.delete();
 	}
 };
 activatePackage(_temp_DespairPlayerPackage);

@@ -12,22 +12,30 @@ datablock ItemData(noHatIcon)
 	uiName = "No Hat";
 };
 
+function noHatIcon::onUse(%this, %obj, %slot)
+{
+	%obj.currtool = -1;
+	fixArmReady(%obj);
+}
+
 function Hat::onPickup(%this, %obj, %player)
 {
 	if(%player.tool[%player.hatSlot] != nameToID(noHatIcon))
-		return 0;
+		return false;
 
 	%id = %this.getId();
 	%player.tool[%player.hatSlot] = %id;
 	if (isObject(%player.client))
-		messageClient(%player.client, 'MsgItemPickup', '', %player.hatSlot, %id, true);
+		messageClient(%player.client, 'MsgItemPickup', '', %player.hatSlot, %id, false);
 	%obj.delete();
+	return true;
 }
 
 function Hat::onUse(%this, %obj, %slot)
 {
 	%obj.unMountImage(0);
 	%obj.currtool = %slot;
+	fixArmReady(%obj);
 }
 
 function Hat::onWear(%this, %player)
@@ -48,7 +56,7 @@ function Hat::onDrop(%this, %player, %index)
 {
 	%player.tool[%player.hatSlot] = NoHatIcon.getID();
 	%player.unMountImage(2);
-
+	%player.currtool = -1;
 	if(isObject(%client = %player.client))
 	{
 		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, NoHatIcon.getID(), true);

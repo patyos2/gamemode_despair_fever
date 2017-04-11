@@ -1,5 +1,6 @@
-function Player::addTool(%this, %data, %props)
+function Player::addTool(%this, %data, %props, %ignoreProps, %stealth)
 {
+	if(%stealth $= "") %stealth = 1;
 	%data = %data.getID();
 	%maxTools = %this.getDataBlock().maxTools;
 
@@ -10,14 +11,16 @@ function Player::addTool(%this, %data, %props)
 
 		if (!%data.customPickupMultiple && %this.tool[%i] == %data)
 		{
-			%props.delete();
+			if (!%ignoreProps && isObject(%props))
+				%props.delete();
 			return -1;
 		}
 	}
 
 	if (%i == %maxTools)
 	{
-		%props.delete();
+		if (!%ignoreProps && isObject(%props))
+			%props.delete();
 		return -1;
 	}
 
@@ -29,7 +32,7 @@ function Player::addTool(%this, %data, %props)
 
 	if (isObject(%this.client))
 	{
-		messageClient(%this.client, 'MsgItemPickup', '', %i, %data, true);
+		messageClient(%this.client, 'MsgItemPickup', '', %i, %data, %stealth);
 
 		if (%this.currTool == %i)
 			serverCmdUseTool(%this.client, %i);
@@ -38,15 +41,16 @@ function Player::addTool(%this, %data, %props)
 	return %i;
 }
 
-function Player::removeTool(%this, %index, %ignoreProps)
+function Player::removeTool(%this, %index, %ignoreProps, %stealth)
 {
+	if(%stealth $= "") %stealth = 1;
 	%this.tool[%index] = 0;
 
 	if (!%ignoreProps && isObject(%this.itemProps[%index]))
 		%this.itemProps[%index].delete();
 
 	if (isObject(%this.client))
-		messageClient(%this.client, 'MsgItemPickup', '', %index, 0, true);
+		messageClient(%this.client, 'MsgItemPickup', '', %index, 0, %stealth);
 
 	if (%this.currTool == %index)
 		%this.unMountImage(0);

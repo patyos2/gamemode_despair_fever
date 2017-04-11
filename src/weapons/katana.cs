@@ -1,6 +1,10 @@
 datablock ItemData(KatanaItem)
 {
+	category = "DespairWeapon";
+	classname = "DespairWeapon";
+
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Katana.dts";
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_sword";
 	image = KatanaImage;
 	mass = 1;
 	drag = 0.3;
@@ -33,8 +37,6 @@ datablock ShapeBaseImageData(KatanaImage)
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Katana.dts";
 	doColorShift = true;
 	colorShiftColor = "0.75 0.75 0.75 1";
-
-	isWeapon = true;
 
 	useCustomStates = true;
 	type = "sharp";

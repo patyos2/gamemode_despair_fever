@@ -81,7 +81,7 @@ function roomPlayers()
 
 		//Assign character to client
 		%client.killer = 0;
-		%client.spawnPlayer();
+		%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
 		%player = %client.player;
 		%player.gender = %gender; //so screams are correct post-death
 		%player.setDatablock(PlayerDespairArmor);
@@ -97,13 +97,19 @@ function roomPlayers()
 		%data = noHatIcon.getID();
 		%player.hatSlot = %player.getDataBlock().maxTools - 1;
 		%player.tool[%player.hatSlot] = %data;
+		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, %data, true);
+
+		//Weapon icon for weapons
+		%data = noWeaponIcon.getID();
+		%player.weaponSlot = 0;
+		%player.tool[%player.weaponSlot] = %data;
+		messageClient(%client, 'MsgItemPickup', '', %player.weaponSlot, %data, true);
 
 		%props = KeyItem.newItemProps(%player, 0);
 		%props.name = "Room #" @ $roomNum[%room] @ " Key";
 		%props.id = %roomDoor.lockId;
 
 		%player.addTool(KeyItem, %props);
-		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, %data, true);
 	}
 }
 
@@ -143,12 +149,24 @@ function despairPrepareGame()
 		if(isObject(%brick.item))
 			%brick.itemData = %brick.item.getDataBlock().getName();
 	}
+
+	//Hats!
+	%choices = "HatBlindItem HatCatItem HatChefItem HatClownItem HatCowboyItem HatDisguiseItem HatDogeItem HatDuckItem HatFancyItem HatFedoraItem HatFoxItem HatGangsterItem HatGasmaskItem HatMountyItem HatMummyItem HatNinjaItem HatPartyhatItem HatRHoodItem HatRichardItem HatSkimaskItem HatStrawItem HatSunglassesItem HatTophatItem HatWizardItem";
+	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_hatSpawn"]; %i++)
+	{
+		%brick = BrickGroup_888888.NTObject["_hatSpawn", %i];
+		%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
+		if(isObject(%pick))
+			%brick.setItem(%pick);
+		%choices = removeWord(%choices, %index); //Only one of a kind
+	}
+
 	roomPlayers();
 
 	%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
 
 	%itemList = "axeItem batItem katanaItem knifeItem leadpipeItem macheteItem shovelItem sledgehammerItem umbrellaItem pipewrenchItem";
-	%client.player.addTool(getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)));
+	%client.player.setTool(%client.player.weaponSlot, getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)));
 	%client.centerPrint("wow you are killer go kill shit", 3);
 	%client.killer = true;
 	echo(%client.getplayername() SPC "is killa");

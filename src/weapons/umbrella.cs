@@ -1,6 +1,10 @@
 datablock ItemData(UmbrellaItem)
 {
+	category = "DespairWeapon";
+	classname = "DespairWeapon";
+
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Umbrella.dts";
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_sword";
 	image = UmbrellaImage;
 	mass = 1;
 	drag = 0.3;
@@ -33,8 +37,6 @@ datablock ShapeBaseImageData(UmbrellaImage)
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Umbrella.dts";
 	doColorShift = true;
 	colorShiftColor = "0 0.1 0.5 1";
-
-	isWeapon = true;
 
 	useCustomStates = true;
 	type = "blunt";

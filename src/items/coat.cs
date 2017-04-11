@@ -25,8 +25,8 @@ datablock ShapeBaseImageData(CoatImage)
 function CoatItem::onUse(%this, %obj, %slot)
 {
 	%obj.unMountImage(0);
+	fixArmReady(%obj);
 }
-
 
 //Functions defined by hats.cs
 function CoatItem::onWear(%this, %player)

@@ -1,6 +1,10 @@
 datablock ItemData(MacheteItem)
 {
+	category = "DespairWeapon";
+	classname = "DespairWeapon";
+
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Machete.dts";
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_sword";
 	image = MacheteImage;
 	mass = 1;
 	drag = 0.3;
@@ -33,8 +37,6 @@ datablock ShapeBaseImageData(MacheteImage)
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Machete.dts";
 	doColorShift = true;
 	colorShiftColor = "0.75 0.75 0.75 1";
-
-	isWeapon = true;
 
 	useCustomStates = true;
 	type = "sharp";

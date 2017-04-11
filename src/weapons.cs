@@ -1,3 +1,26 @@
+datablock ItemData(noWeaponIcon)
+{
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_noWeapon";
+	uiName = "No Weapon";
+};
+
+function noWeaponIcon::onUse(%this, %obj, %slot)
+{
+	%obj.currtool = -1;
+	fixArmReady(%obj);
+}
+
+function DespairWeapon::onDrop(%this, %player, %index)
+{
+	%player.tool[%player.weaponSlot] = noWeaponIcon.getID();
+	%player.currtool = -1;
+	if(isObject(%client = %player.client))
+	{
+		messageClient(%client, 'MsgItemPickup', '', %player.weaponSlot, noWeaponIcon.getID(), true);
+		//%client.applyBodyParts();
+	}
+}
+
 function MeleeProps::onAdd(%this)
 {
 	%this.bloody = false;

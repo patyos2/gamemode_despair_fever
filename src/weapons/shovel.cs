@@ -1,6 +1,10 @@
 datablock ItemData(ShovelItem)
 {
+	category = "DespairWeapon";
+	classname = "DespairWeapon";
+
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Shovel.dts";
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_sword";
 	image = ShovelImage;
 	mass = 1;
 	drag = 0.3;
@@ -33,8 +37,6 @@ datablock ShapeBaseImageData(ShovelImage)
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Shovel.dts";
 	doColorShift = true;
 	colorShiftColor = "0.5 0.5 0.5 1";
-
-	isWeapon = true;
 
 	useCustomStates = true;
 	type = "blunt";

@@ -116,6 +116,8 @@ package ItemPropsPackage
 		%client = %obj.client;
 		%i = $complexI;
 		$complexI = "";
+		if(%i $= "")
+			return 0;
 
 		%data = %col.getDataBlock();
 		%obj.tool[%i] = %data;

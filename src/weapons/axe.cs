@@ -1,6 +1,10 @@
 datablock ItemData(AxeItem)
 {
+	category = "DespairWeapon";
+	classname = "DespairWeapon";
+
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Axe.dts";
+	iconName = $Despair::Path @ "res/shapes/weapons/icon_sword";
 	image = AxeImage;
 	mass = 1;
 	drag = 0.3;
@@ -33,8 +37,6 @@ datablock ShapeBaseImageData(AxeImage)
 	shapeFile = $Despair::Path @ "res/shapes/weapons/Axe.dts";
 	doColorShift = true;
 	colorShiftColor = "0.5 0.5 0.5 1";
-
-	isWeapon = true;
 
 	useCustomStates = true;
 	type = "sharp";
