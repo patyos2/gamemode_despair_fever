@@ -1,6 +1,6 @@
 
-$Despair::DayLength = 420; //7 minutes for a full cycle
-
+$Despair::DayLength = 300; //5 minutes for a full cycle
+$Despair::InvestigationLength = 300; //5 mins
 //MOTEL MAP PREFS:
 $Despair::RoomCount = 16;
 //male block
@@ -117,7 +117,6 @@ function despairEndGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
-	$DespairTrial = false;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(5000, reset, 0);
 }
 
@@ -165,15 +164,9 @@ function despairPrepareGame()
 
 	roomPlayers();
 
-	//Killer Pickin' is done at night time
-	//%client = $DefaultMiniGame.member[getRandom(1, $DefaultMiniGame.numMembers) - 1];
-	//%client.centerPrint("wow you are killer go kill shit", 3);
-	//%client.killer = true;
-	//echo(%client.getplayername() SPC "is killa");
-	//%itemList = "axeItem batItem katanaItem knifeItem leadpipeItem macheteItem shovelItem sledgehammerItem umbrellaItem pipewrenchItem";
-	//%pick = getWord(%itemList, getRandom(0, getWordCount(%itemList) - 1)).getID();
-	//%client.player.tool[%client.player.weaponSlot] = %pick;
-	//messageClient(%client, 'MsgItemPickup', '', %client.player.weaponSlot, %pick, 1);
+	$DespairTrial = false;
+	$announcements = 0;
+	$investigationStart = "";
 	$pickedKiller = false;
 	$days = 0;
 	if($EnvGuiServer::DayCycleEnabled <= 0)
@@ -185,79 +178,25 @@ function despairPrepareGame()
 		$EnvGuiServer::DayCycleEnabled = 1;
 		DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	}
-	setDayCycleTime(0.5); //Starts at late evening
+	setDayCycleTime(0.4); //Starts at evening
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
+	DespairSetWeapons(1);
 }
 
-function despairCycleStage(%stage)
+function DespairSetWeapons(%tog)
 {
-	talk("It is now \c3" @ %stage);
-	if(%stage $= "NIGHT")
+	$DefaultMiniGame.noWeapons = !%tog;
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
-		despairOnNight();
-	}
-
-	if(%stage $= "MORNING")
-	{
-		$days++;
-		talk("DAY" SPC $days);
-		despairOnMorning();
-	}
-
-	if(%stage $= "NOON")
-	{
-		despairOnNoon();
-	}
-
-	if($days > 2)
-	{
-		courtPlayers();
+		%member = $DefaultMiniGame.member[%i];
+		%player = %member.player;
+		if (!isObject(%player))
+			continue;
+		if (%player.getMountedImage(0) && %player.getMountedImage(0).item.className $= "DespairWeapon")
+			%player.unMountImage(0);
 	}
 }
-
-function despairOnKill(%victim, %attacker)
-{
-	if(isObject(%victim) && !%victim.killer && isObject(%attacker) && !%attacker.killer && %victim != %attacker)
-		talk(%attacker.getplayername() SPC "RDMed");
-}
-
-function despairOnMorning()
-{
-
-}
-
-function despairOnNoon()
-{
-	
-}
-
-function despairOnNight()
-{
-	%max = $DefaultMiniGame.numMembers;
-	// prepare
-	for (%i = 0; %i < %max; %i++)
-		%a[%i] = %i;
-	// shuffle
-	while (%i--)
-	{
-		%j = getRandom(%i);
-		%x = %a[%i - 1];
-		%a[%i - 1] = %a[%j];
-		%a[%j] = %x;
-	}
-	for (%i = 0; %i < %max; %i++)
-	{
-		%client = $DefaultMiniGame.member[%a[%i]];
-		if(isObject(%client.player))
-			break;
-	}
-	%client.centerPrint("wow you are killer go kill shit", 3);
-	%client.killer = true;
-	echo(%client.getplayername() SPC "is killa");
-	$pickedKiller = true;
-}
-
 
 function fxDayCycle::timeSchedule(%this, %lastStage)
 {
@@ -287,6 +226,16 @@ function fxDayCycle::timeSchedule(%this, %lastStage)
 
 package DespairFever
 {
+	function Player::mountImage(%this, %image, %slot, %loaded, %skinTag)
+	{
+		if (isObject(%this.client) && %this.client.miniGame == $DefaultMiniGame && (%image.item.className $= "DespairWeapon" && $DefaultMiniGame.noWeapons))
+		{
+			fixArmReady(%this);
+			return;
+		}
+		parent::mountImage(%this, %image, %slot, %loaded, %skinTag);
+	}
+
 	function fxDayCycle::setEnabled(%this, %bool)
 	{
 		parent::setEnabled(%this, %bool);
@@ -297,11 +246,11 @@ package DespairFever
 		%player.delete();
 	}
 
-	function MiniGameSO::addMember(%miniGame, %client)
+	function MiniGameSO::addMember($DefaultMiniGame, %client)
 	{
-		Parent::addMember(%miniGame, %client);
+		Parent::addMember($DefaultMiniGame, %client);
 
-		if (!%miniGame.owner && %miniGame.numMembers == 1)
+		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 	}
 
@@ -318,18 +267,18 @@ package DespairFever
 		despairPrepareGame();
 	}
 
-	function MiniGameSO::checkLastManStanding(%miniGame)
+	function MiniGameSO::checkLastManStanding($DefaultMiniGame)
 	{
-		if (%miniGame.owner)
-			return Parent::checkLastManStanding(%miniGame);
+		if ($DefaultMiniGame.owner)
+			return Parent::checkLastManStanding($DefaultMiniGame);
 		
 		%alive = 0;
 		%killerAlive = 0;
 		%otherAlive = 0;
 		
-		for (%i = 0; %i < %miniGame.numMembers; %i++)
+		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		{
-			%client = %miniGame.member[%i];
+			%client = $DefaultMiniGame.member[%i];
 			%player = %client.player;
 
 			if (!%player)
@@ -361,10 +310,10 @@ package DespairFever
 		return 0;
 	}
 
-	function MiniGameSO::pickSpawnPoint(%miniGame, %client)
+	function MiniGameSO::pickSpawnPoint($DefaultMiniGame, %client)
 	{
-		if (%miniGame.owner)
-			return Parent::pickSpawnPoint(%miniGame, %client);
+		if ($DefaultMiniGame.owner || $DefaultMiniGame.numMembers < 2)
+			return Parent::pickSpawnPoint($DefaultMiniGame, %client);
 	}
 
 	function serverCmdLight(%client)
@@ -390,7 +339,7 @@ package DespairFever
 
 	function serverCmdSuicide(%client)
 	{
-		//if (%client.miniGame != $DefaultMiniGame)
+		if (%client.miniGame != $DefaultMiniGame)
 			return Parent::serverCmdSuicide(%client);
 	}
 

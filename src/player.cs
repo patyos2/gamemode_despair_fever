@@ -46,6 +46,15 @@ function PlayerDespairArmor::doDismount(%this, %obj)
 	parent::doDismount(%this, %obj);
 }
 
+function PlayerDespairArmor::onUnMount(%this, %obj, %mount, %slot)
+{
+	Parent::onUnMount(%this, %obj, %mount, %slot);
+	if (!isObject(%mount.heldCorpse) || %mount.heldCorpse != %obj)
+		return;
+	%mount.heldCorpse = "";
+	%mount.playThread(2, "root");
+}
+
 function PlayerDespairArmor::killerDash(%this, %obj, %end)
 {
 	if(%end)
@@ -271,7 +280,7 @@ function player::applyAppearance(%pl,%cl)
 	%pl.setNodeColor("femchest_blood_back", "0.7 0 0 1");
 }
 
-package _temp_DespairPlayerPackage
+package DespairPlayerPackage
 {
 	function gameConnection::applyBodyColors(%cl,%o) 
 	{
@@ -312,4 +321,4 @@ package _temp_DespairPlayerPackage
 			%item.onDrop(%client.player, %index);
 	}
 };
-activatePackage(_temp_DespairPlayerPackage);
+activatePackage(DespairPlayerPackage);

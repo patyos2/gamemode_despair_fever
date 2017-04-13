@@ -48,9 +48,12 @@ package DespairChat
 					messageClient(%member, '', '<color:808080>%1\c6<color:b0b0b0>: %2', %name, %text);
 				}
 			}
-			echo("(DEAD) " @ %name @ ": " @ %text);
+			echo("-+ (DEAD) " @ %name @ ": " @ %text);
 			return;
 		}
+		%player.playThread(0, "talk");
+		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
+
 		%name = %client.character.name;
 		if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
 			%name = "Unknown";
@@ -68,8 +71,11 @@ package DespairChat
 		%shape.setShapeNameDistance(30);
 		%shape.setVelocity("0 0 0.5");
 		%shape.deleteSchedule = %shape.schedule(3000, delete);
-		echo(%name @ " (" @ %client.getPlayerName() @ "): " @ %text);
+		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 		messageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+	}
+	function serverCmdTeamMessageSent(%client, %text) //OOC
+	{
 	}
 };
 

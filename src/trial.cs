@@ -72,10 +72,159 @@ function createCourtroom()
 if (!isObject(MissionCleanup))
 	schedule("0", "0", "createCourtroom");
 
+function despairCycleStage(%stage)
+{
+	talk("It is now \c3" @ %stage);
+	if(%stage $= "NIGHT")
+	{
+		despairOnNight();
+	}
+
+	if(%stage $= "MORNING")
+	{
+		$days++;
+		talk("DAY" SPC $days);
+		despairOnMorning();
+	}
+
+	if(%stage $= "NOON")
+	{
+		despairOnNoon();
+	}
+
+	if($days >= 3) //Court 'em on the third day no matter what
+	{
+		courtPlayers();
+	}
+}
+
+function despairOnKill(%victim, %attacker)
+{
+	if(!isObject(%victim) || !isObject(%attacker))
+		return;
+
+	if(%victim == %attacker)
+	{
+		//check for killer-induced suicide by comparing logs
+		return;
+	}
+
+	if(!%victim.killer && !%attacker.killer)
+	{
+		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed";
+		echo("-+ " @ %msg);
+		%count = ClientGroup.getCount();
+		for (%i = 0; %i < %count; %i++)
+		{
+			%other = ClientGroup.getObject(%i);
+			if (%other.isAdmin)
+			{
+				messageClient(%other, '', %msg);
+			}
+		}
+		return;
+	}
+
+	if(%victim.killer || %attacker.killer)
+	{
+		echo("-+ Killer murdered! Yay!");
+		$deathCount++;
+		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
+		if ($deathCount >= %maxDeaths)
+			DespairSetWeapons(0);
+		return;
+	}
+}
+
+function despairCheckInvestigation(%player, %corpse)
+{
+	if(!%corpse.checkedBy[%player])
+	{
+		%corpse.checkedBy[%player] = true;
+		%corpse.checked++;
+		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
+		{
+			despairStartInvestigation(1);
+			despairMakeBodyAnnouncement();
+			%corpse.discovered = true;
+		}
+	}
+}
+
+function despairMakeBodyAnnouncement(%multiple)
+{
+	serverPlay2d(AnnouncementSound);
+	if (!%multiple)
+		$announcements++;
+	$DefaultMiniGame.messageAll('', '\c0%2 on school premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
+		MCeil(($investigationStart - $Sim::Time)/60), %multiple ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
+}
+
+function despairStartInvestigation(%no_announce)
+{
+	%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
+	if ($deathCount >= %maxDeaths)
+		DespairSetWeapons(0);
+	if ($deathCount > 0 && $investigationStart $= "")
+	{
+		$investigationStart = $Sim::Time + $Despair::InvestigationLength;
+		if (!%no_announce)
+			%this.makeBodyAnnouncement($DefaultMiniGame, $deathCount > 0);
+		cancel($DefaultMiniGame.eventSchedule);
+		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
+	}
+}
+
+function despairOnMorning()
+{
+
+}
+
+function despairOnNoon()
+{
+	
+}
+
+function despairOnNight()
+{
+	if(!$pickedKiller)
+	{
+		%max = $DefaultMiniGame.numMembers;
+		// prepare
+		for (%i = 0; %i < %max; %i++)
+			%a[%i] = %i;
+		// shuffle
+		while (%i--)
+		{
+			%j = getRandom(%i);
+			%x = %a[%i - 1];
+			%a[%i - 1] = %a[%j];
+			%a[%j] = %x;
+		}
+		for (%i = 0; %i < %max; %i++) //Why a for loop? So we can skip dead/unfit players and only pick live ones, duh.
+		{
+			%client = $DefaultMiniGame.member[%a[%i]];
+			if(!isObject(%client.player))
+				continue;
+			if($KillerBlacklistBLID[%client.getBLID()]) //Blacklisted. Must be a stealth blacklist, otherwise confirmed innocent.
+				continue;
+			break; //We got our man
+		}
+		%client.play2d(KillerJingleSound);
+		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
+		messageClient(%client, '', "<font:impact:30>" @ %msg);
+		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
+		%client.killer = true;
+		echo(%client.getplayername() SPC "is killa");
+		$pickedKiller = true;
+	}
+}
+
 function courtPlayers()
 {
+	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
-	DayCycle.setDayLength(600); //10 mins
+	DayCycle.setDayLength(900); //15 mins
 	setDayCycleTime(0.25);
 	%charCount = GameCharacters.getCount();
 	// prepare
@@ -129,6 +278,7 @@ function courtPlayers()
 	$DefaultMiniGame.eventSchedule = schedule($Despair::DiscussPeriod * 1000, 0, DespairStartVote);
 
 	$DespairTrial = true;
+	DespairSetWeapons(0);
 }
 
 function DespairStartVote()
@@ -230,6 +380,7 @@ function DespairUpdateCastVote(%player)
 
 function DespairTrialDropTool(%cl, %slot)
 {
+	%pl = %cl.player;
 	if (!isObject(%pl.tool[%slot]))
 		return;
 	%tool = %pl.tool[%slot];
