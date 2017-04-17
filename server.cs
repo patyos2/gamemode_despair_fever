@@ -8,6 +8,8 @@ function r(%p)
 		exec("./server.cs");
 }
 
+exec("./config.cs");
+
 //lib
 exec("./lib/daycycles.cs");
 exec("./lib/decals.cs");

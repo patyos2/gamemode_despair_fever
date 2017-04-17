@@ -1,29 +1,3 @@
-
-$Despair::DayLength = 240; //4 minutes for a full cycle
-$Despair::InvestigationLength = 240; //4 mins
-//MOTEL MAP PREFS:
-$Despair::RoomCount = 16;
-//male block
-$roomNum[1] = "16";
-$roomNum[2] = "17";
-$roomNum[3] = "18";
-$roomNum[4] = "26";
-$roomNum[5] = "27";
-$roomNum[6] = "28";
-
-//female block
-$roomNum[7] = "11";
-$roomNum[8] = "12";
-$roomNum[9] = "13";
-$roomNum[10] = "14";
-$roomNum[11] = "15";
-$roomNum[12] = "21";
-$roomNum[13] = "22";
-$roomNum[14] = "23";
-$roomNum[15] = "24";
-$roomNum[16] = "25";
-////
-
 if (!isObject(GameRoundCleanup))
 	new SimSet(GameRoundCleanup);
 
@@ -80,7 +54,6 @@ function roomPlayers()
 
 		//Assign character to client
 		%client.killer = false;
-		%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
 		%player = %client.player;
 		%player.character = %character; //post-death reference to character
 		%character.player = %player;
@@ -241,6 +214,37 @@ function fxDayCycle::timeSchedule(%this, %lastStage)
 
 	%sched = getMax(50, (%this.DayLength * 60) / 86400); //insanely weird and complicated thingy to make schedule happen every time a "second" actually passes
 	%this.timeSchedule = %this.schedule(%sched, timeSchedule, %stage);
+}
+
+function despairCycleStage(%stage)
+{
+	talk("It is now \c3" @ %stage);
+	if(%stage $= "NIGHT")
+	{
+		despairOnNight();
+	}
+
+	if(%stage $= "EVENING")
+	{
+		despairOnEvening();
+	}
+
+	if(%stage $= "NOON")
+	{
+		despairOnNoon();
+	}
+
+	if(%stage $= "MORNING")
+	{
+		$days++;
+		talk("DAY" SPC $days);
+		despairOnMorning();
+	}
+
+	if($days >= 3) //Court 'em on the third day no matter what
+	{
+		courtPlayers();
+	}
 }
 
 package DespairFever

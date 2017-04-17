@@ -1,6 +1,3 @@
-$Despair::DiscussPeriod = 240; //4 mins
-$Despair::MissingLength = 180; //3 mins until body announcement is made automatically
-
 datablock StaticShapeData(DespairStand)
 {
 	shapeFile = $Despair::Path @ "res/shapes/stand.dts";
@@ -72,32 +69,6 @@ function createCourtroom()
 }
 if (!isObject(MissionCleanup))
 	schedule("0", "0", "createCourtroom");
-
-function despairCycleStage(%stage)
-{
-	talk("It is now \c3" @ %stage);
-	if(%stage $= "NIGHT")
-	{
-		despairOnNight();
-	}
-
-	if(%stage $= "MORNING")
-	{
-		$days++;
-		talk("DAY" SPC $days);
-		despairOnMorning();
-	}
-
-	if(%stage $= "NOON")
-	{
-		despairOnNoon();
-	}
-
-	if($days >= 3) //Court 'em on the third day no matter what
-	{
-		courtPlayers();
-	}
-}
 
 function despairOnKill(%victim, %attacker)
 {
@@ -256,6 +227,10 @@ function despairOnNoon()
 	
 }
 
+function despairOnEvening()
+{
+}
+
 function despairOnNight()
 {
 	if(!$pickedKiller)
@@ -288,6 +263,19 @@ function despairOnNight()
 		%client.killer = true;
 		echo(%client.getplayername() SPC "is killa");
 		$pickedKiller = %client;
+	}
+
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%player = %client.player;
+		if(isObject(%player))
+		{
+			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			if(!%client.killer && %player.statusEffect[$SE_sleepSlot] $= "")
+				%player.statusEffect[$SE_sleepSlot] = "tired";
+			%client.updateBottomprint();
+		}
 	}
 }
 
