@@ -37,6 +37,7 @@ function sprayBloodTick(%position, %velocity, %i)
 			%node = blood @ getRandom(1, 2);
 
 		%decal = spawnDecal(NewBloodDecal, %rayPosition, %rayNormal, %size, %color, %angle, %i < 5 ? "blood" : "", %i >= 5);
+		%decal.color = %color;
 		%decal.hideNode("ALL");
 		%decal.unHideNode(%node);
 		%decal.spillTime = $Sim::Time;
@@ -128,7 +129,8 @@ function updateCorpseBloodPool(%player, %offset, %slowTime, %size)
 			%player.pool.noUnclutter = true;
 			%player.pool.hideNode("ALL");
 			%player.pool.unHideNode("blood5");
-			%player.pool.setNodeColor("blood5", 0.6 + 0.2 * getRandom() @ " 0 0 1");
+			%player.pool.color = 0.6 + 0.2 * getRandom() @ " 0 0 1";
+			%player.pool.setNodeColor(%player.pool.color);
 		}
 
 		if (!isObject(%player.pool))
@@ -163,6 +165,7 @@ function Player::doBloodyFootprint(%this, %ray, %foot, %alpha)
 	%decal = spawnDecal(%datablock, %rayPosition, %rayNormal, 1, %color, %angle, "", 1);
 	%decal.spillTime = $Sim::Time;
 	%decal.freshness = 0.5; //freshness < 1 means can't get bloody footprints from it
+	%decal.color = %color;
 }
 
 function Player::setBloodyFootprints(%this, %val, %bloodclient)

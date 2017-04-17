@@ -1,4 +1,5 @@
-$Despair::DiscussPeriod = 300;
+$Despair::DiscussPeriod = 240; //4 mins
+$Despair::MissingLength = 180; //3 mins until body announcement is made automatically
 
 datablock StaticShapeData(DespairStand)
 {
@@ -127,11 +128,24 @@ function despairOnKill(%victim, %attacker)
 
 	if(%victim.killer || %attacker.killer)
 	{
+		%player = %victim.player;
+		if(!isObject(%player))
+			%player = %victim.character.player;
+		%player.isMurdered = true;
 		echo("-+ Killer murdered! Yay!");
+		if(%victim.killer)
+		{
+			%attacker.killer = true;
+			%attacker.play2d(KillerJingleSound);
+			%msg = "<color:FF0000>You murdered the killer in cold blood! It's no self defence. You become the murderer yourself!";
+			messageClient(%attacker, '', "<font:impact:30>" @ %msg);
+		}
 		$deathCount++;
 		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 		if ($deathCount >= %maxDeaths)
 			DespairSetWeapons(0);
+		if(!isEventPending($DefaultMiniGame.eventSchedule))
+			$DefaultMiniGame.eventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 		return;
 	}
 }
@@ -140,6 +154,8 @@ function despairCheckInvestigation(%player, %corpse)
 {
 	if(!%corpse.checkedBy[%player])
 	{
+		if(isObject(%player.client))
+			%player.client.play2d(BodyDiscoverySound @ getRandom(1, 2));
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
 		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
@@ -151,13 +167,13 @@ function despairCheckInvestigation(%player, %corpse)
 	}
 }
 
-function despairMakeBodyAnnouncement(%multiple)
+function despairMakeBodyAnnouncement(%unfound)
 {
 	serverPlay2d(AnnouncementSound);
-	if (!%multiple)
+	if (!%unfound)
 		$announcements++;
 	$DefaultMiniGame.messageAll('', '\c0%2 on school premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
-		MCeil(($investigationStart - $Sim::Time)/60), %multiple ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
+		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
 }
 
 function despairStartInvestigation(%no_announce)
@@ -169,7 +185,7 @@ function despairStartInvestigation(%no_announce)
 	{
 		$investigationStart = $Sim::Time + $Despair::InvestigationLength;
 		if (!%no_announce)
-			%this.makeBodyAnnouncement($DefaultMiniGame, $deathCount > 0);
+			%this.makeBodyAnnouncement(1);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
 	}
@@ -177,7 +193,62 @@ function despairStartInvestigation(%no_announce)
 
 function despairOnMorning()
 {
+	if($deathCount > 0) //No evidence will spawn if there were deaths
+		return;
 
+	%count = BrickGroup_888888.NTObjectCount["_evidence"];
+	if(%count <= 0)
+		return;
+	// prepare
+	for (%i = 0; %i < %count; %i++)
+		%a[%i] = %i;
+	// shuffle
+	while (%i--)
+	{
+		%j = getRandom(%i);
+		%x = %a[%i - 1];
+		%a[%i - 1] = %a[%j];
+		%a[%j] = %x;
+	}
+
+	%evidencePapers = $days;
+	%tipsPapers = getRandom(3, 6);
+	%trashPapers = getRandom(3, 6);
+	//Spawn evidence
+	for (%i = 0; %i < %count; %i++)
+	{
+		%brick = BrickGroup_888888.NTObject["_evidence", %a[%i]];
+		%brick.setItem(PaperItem);
+		%props = %brick.item.getItemProps();
+
+		if(%evidencePapers >= 0)
+		{
+			%props.name = "Daily News";
+			if(getRandom() < 0.6) //Only 60% accurate
+				%char = $pickedKiller.character;
+			else
+				%char = GameCharacters.getObject(getRandom(0, GameCharacters.getCount()-1)); //Unless it accidentaly picks killer again, oops.
+
+			%props.contents = getPaperEvidence(%char);
+			%evidencePapers--;
+			continue;
+		}
+		else if(%tipsPapers >= 0)
+		{
+			%props.name = "lifeHaxx0r";
+			%props.contents = getPaperTips();
+			%tipsPapers--;
+			continue;
+		}
+		else if(%trashPapers >= 0)
+		{
+			%props.name = "Paper";
+			%props.contents = getPaperTrash();
+			%trashPapers--;
+			continue;
+		}
+		return;
+	}
 }
 
 function despairOnNoon()
@@ -216,7 +287,7 @@ function despairOnNight()
 		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
 		%client.killer = true;
 		echo(%client.getplayername() SPC "is killa");
-		$pickedKiller = true;
+		$pickedKiller = %client;
 	}
 }
 
@@ -256,9 +327,21 @@ function courtPlayers()
 		%character = GameCharacters.getObject(%a[%i]);
 		%player = %character.player;
 		%client = %character.client;
+		%transform = $stand[%i].getSlotTransform(1);
 		if(!isObject(%client) || !isObject(%player) || %player.isDead)
 		{
-			$memorial[%i].setTransform($stand[%i].getSlotTransform(0));
+			$memorial[%i].setTransform(%transform);
+			%state = "LEFT";
+			if(isObject(%player))
+			{
+				if(%player.isMurdered)
+					%state = "MURDER";
+				else if(%player.suicide)
+					%state = "SUICIDE";
+				else
+					%state = "RDM";
+			}
+			$memorial[%i].setShapeName(%character.name SPC "(" @ %state @ ")");
 		}
 		else
 		{
@@ -268,8 +351,10 @@ function courtPlayers()
 				%client.setControlObject(%player);
 			}
 
-			$stand[%i].mountObject(%player, 1);
+			%player.setTransform(vectorAdd(getWords(%transform, 0, 2), "0 0 0.1") SPC getWords(%transform, 3, 6));
+			%player.changeDataBlock(playerFrozenArmor);
 			%player.playThread(0, "standing");
+			%player.setVelocity("0 0 0");
 		}
 	}
 	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ $Despair::DiscussPeriod / 60 @ " minutes\c5 to discuss and reveal the killer.");
@@ -405,6 +490,8 @@ function DespairTrialDropTool(%cl, %slot)
 	%item.setTransform(vectorAdd(%pl.getPosition(), %offset));
 	if (%tool.getName() $= "KeyItem")
 		%item.setShapeName(%item.itemProps.name);
+	else if (%tool.getName() $= "PaperItem")
+		%item.setShapeName("\"" @ %item.itemProps.contents @ "\"");
 	else
 		%item.setShapeName(%tool.uiName);
 	%item.canPickUp = false;

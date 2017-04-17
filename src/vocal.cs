@@ -207,7 +207,7 @@ function serverCmdAlarm(%client)
 		%scream = false;
 
 		%center = %player.getEyePoint();
-		initContainerRadiusSearch(%center, 64, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType);
+		initContainerRadiusSearch(%center, 64, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType | $TypeMasks::ItemObjectType);
 		while (isObject(%obj = containerSearchNext()))
 		{
 			if(%obj == %player)
@@ -218,18 +218,25 @@ function serverCmdAlarm(%client)
 			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
 
 			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
-			%disguised = isObject(%obj.tool[%obj.hatSlot]) && %obj.tool[%obj.hatSlot].disguise;
-			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.getDataBlock().isBlood || %obj.isDead || %obj.bloody || %hasweapon || %disguised))
+			%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
+			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.getDataBlock().isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isDead || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;
-				if(%obj.isDead)
+				if(%obj.isDead && !%obj.suicide)
 					%foundCorpse = %obj;
 			}
 		}
 
-		if (!%scream || $Sim::Time - %player.lastScream < 3)
+		if (!%scream || $Sim::Time - %player.lastScream < %player.screamDelay)
 			return;
-		//todo: screaming when seeing fucked up shit
+
+		if ($Sim::Time - %player.lastScream < %player.screamDelay * 1.5)
+			%player.screamDelay *= 1.5;
+		else
+			%player.screamDelay = 3;
+
+		%player.screamDelay = getMin(%player.screamDelay, 10);
+
 		%player.lastScream = $Sim::Time;
 		%player.playShock();
 

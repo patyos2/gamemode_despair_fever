@@ -28,6 +28,9 @@ function MeleeProps::onAdd(%this)
 
 function Player::tryStartFireWeapon(%player, %manual)
 {
+	if ($DefaultMiniGame.noWeapons)
+		return;
+
 	%image = %player.getMountedImage(0);
 
 	if (%manual || (!%image.fireManual && %player.getImageTrigger(0)))
@@ -37,6 +40,9 @@ function Player::tryStartFireWeapon(%player, %manual)
 function Player::fireWeapon(%player, %ignoreTime, %manual)
 {
 	cancel(%player.fireSchedule);
+
+	if ($DefaultMiniGame.noWeapons)
+		return;
 
 	if (%player.health <= 0 || (!%player.getImageTrigger(0) && !%manual))
 		return;

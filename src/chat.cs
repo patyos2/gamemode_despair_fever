@@ -72,7 +72,21 @@ package DespairChat
 		%shape.setVelocity("0 0 0.5");
 		%shape.deleteSchedule = %shape.schedule(3000, delete);
 		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
-		messageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+
+		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		{
+			%member = $DefaultMiniGame.member[%i];
+			if (!isObject(%member.player))
+			{
+				messageClient(%member, '', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+				continue;
+			}
+			%a = %player.getEyePoint();
+			%b = %member.player.getEyePoint();
+			if (vectorDist(%a, %b) > 32)
+				continue;
+			messageClient(%member, '', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+		}
 	}
 	function serverCmdTeamMessageSent(%client, %text) //OOC
 	{

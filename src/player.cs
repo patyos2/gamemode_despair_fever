@@ -37,6 +37,30 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 	airControl = 0.05;
 
 	jumpSound = "";
+
+	maxTools = 6;
+};
+
+datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
+{
+	shapeFile = "base/data/shapes/player/m_df.dts";
+	uiName = "Frozen Player";
+
+	canJet = 0;
+	mass = 120;
+	maxTools = 5;
+
+	maxForwardSpeed = 0;
+	maxBackwardSpeed = 0;
+	maxSideSpeed = 0;
+
+	maxForwardCrouchSpeed = 0;
+	maxBackwardCrouchSpeed = 0;
+	maxSideCrouchSpeed = 0;
+
+	jumpForce = 0;
+
+	maxTools = 6;
 };
 
 function PlayerDespairArmor::doDismount(%this, %obj)
@@ -81,7 +105,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 			%item.onWear(%obj);
 			return;
 		}
-		else
+		else if(!isObject(%obj.getMountedImage(0)))
 		{
 			%a = %obj.getEyePoint();
 			%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
@@ -112,8 +136,10 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 					%data.onPickup(%ray, %obj);
 					return;
 				}
-				if (%ray.canPickup && %obj.addTool(%data, %ray.itemProps, 1, 0) != -1)
+				if (%ray.canPickup && (%slot = %obj.addTool(%data, %ray.itemProps, 1, 0)) != -1)
 				{
+					if(%data.getName() $= "MopItem")
+						%data.onPickup(%ray, %obj, %slot);
 					%ray.itemProps = "";
 					%ray.delete();
 					return;

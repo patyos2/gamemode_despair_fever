@@ -1,6 +1,6 @@
 
-$Despair::DayLength = 300; //5 minutes for a full cycle
-$Despair::InvestigationLength = 300; //5 mins
+$Despair::DayLength = 240; //4 minutes for a full cycle
+$Despair::InvestigationLength = 240; //4 mins
 //MOTEL MAP PREFS:
 $Despair::RoomCount = 16;
 //male block
@@ -162,6 +162,19 @@ function despairPrepareGame()
 		%choices = removeWord(%choices, %index); //Only one of a kind
 	}
 
+	//Reset papers
+	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_evidence"]; %i++)
+	{
+		%brick = BrickGroup_888888.NTObject["_evidence", %i];
+		%brick.setItem("");
+	}
+
+	for (%i = 0; %i < 16; %i++)
+	{
+		$stand[%i].setTransform("0 0 -300");
+		$memorial[%i].setTransform("0 0 -300");
+	}
+
 	roomPlayers();
 
 	$DespairTrial = false;
@@ -169,6 +182,7 @@ function despairPrepareGame()
 	$investigationStart = "";
 	$pickedKiller = false;
 	$days = 0;
+	$deathCount = 0;
 	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
 		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
@@ -193,14 +207,19 @@ function DespairSetWeapons(%tog)
 		%player = %member.player;
 		if (!isObject(%player))
 			continue;
-		if (%player.getMountedImage(0) && %player.getMountedImage(0).item.className $= "DespairWeapon")
-			%player.unMountImage(0);
+		if (%member.killer && !%tog)
+			messageClient(%member, '', "<font:impact:24>\c5You will be unable to swing your weapons anymore.");
+		//if (%player.getMountedImage(0) && %player.getMountedImage(0).item.className $= "DespairWeapon")
+		//	%player.unMountImage(0);
 	}
 }
 
 function fxDayCycle::timeSchedule(%this, %lastStage)
 {
 	cancel(%this.timeSchedule);
+
+	if($DespairTrial)
+		return;
 
 	%time = getDayCycleTime();
 
@@ -228,11 +247,11 @@ package DespairFever
 {
 	function Player::mountImage(%this, %image, %slot, %loaded, %skinTag)
 	{
-		if (isObject(%this.client) && %this.client.miniGame == $DefaultMiniGame && (%image.item.className $= "DespairWeapon" && $DefaultMiniGame.noWeapons))
-		{
-			fixArmReady(%this);
-			return;
-		}
+		//if (isObject(%this.client) && %this.client.miniGame == $DefaultMiniGame && (%image.item.className $= "DespairWeapon" && $DefaultMiniGame.noWeapons))
+		//{
+		//	fixArmReady(%this);
+		//	return;
+		//}
 		parent::mountImage(%this, %image, %slot, %loaded, %skinTag);
 	}
 
