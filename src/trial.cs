@@ -164,6 +164,17 @@ function despairStartInvestigation(%no_announce)
 
 function despairOnMorning()
 {
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%player = %client.player;
+		if(isObject(%player))
+		{
+			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			%client.updateBottomprint();
+		}
+	}
+
 	if($deathCount > 0) //No evidence will spawn if there were deaths
 		return;
 
@@ -182,7 +193,7 @@ function despairOnMorning()
 		%a[%j] = %x;
 	}
 
-	%evidencePapers = $days;
+	%evidencePapers = $days + (getRandom(0, 2) - 1);
 	%tipsPapers = getRandom(3, 6);
 	%trashPapers = getRandom(3, 6);
 	//Spawn evidence

@@ -1,11 +1,53 @@
 $SE_sleepSlot = 0; //reserved sleepo
-$SE_maxStatusEffects = 3;
+$SE_passiveSlot = 1;
+$SE_maxStatusEffects = 4;
 
 function Player::clearStatusEffects(%player)
 {
 	for(%i=0; %i<$SE_maxStatusEffects; %i++)
 	{
 		%player.statusEffect[%i] = "";
+	}
+}
+
+function Player::onAddStatusEffect(%player, %slot)
+{
+	%effect = %player.statusEffect[%slot];
+	switch$ (%effect)
+	{
+		//Sleep-related
+		case "tired":
+			//minor slowdown
+		case "exhausted":
+			//major slowdown
+		case "sleeping":
+			//%player.sleep() handles this
+
+		//passive buffs/debuffs
+		case "drowsy":
+			//moderate slowdown
+		case "sore back":
+			//fuck 'em up somehow
+		case "fresh":
+			//nothing particulary exciting, scheduled update
+		case "shining":
+			//ooo good shit
+
+		//damage-related
+		case "bleeding":
+			//start bleeding schedule
+		case "shock":
+			//slowdown
+
+		//damage modelling
+		case "wounded arm":
+			//
+		case "wounded leg":
+			//
+		case "concussion":
+			//
+		case "abdominal trauma":
+			//
 	}
 }
 
@@ -18,12 +60,13 @@ function Player::updateStatusEffect(%player, %slot)
 		case "tired":
 			%player.statusEffect[%slot] = "exhausted";
 		case "exhausted":
-			cancel(%player.sleepSchedule);
-			%player.sleepSchedule = %player.schedule(15000, "sleep");
+			%player.sleep(true);
 		case "sleeping":
 			//%player.sleep() handles this
+
+		//passive buffs/debuffs
 		case "drowsy":
-			//
+			//onAdd, set player speeds
 		case "sore back":
 			//
 		case "fresh":
@@ -32,6 +75,12 @@ function Player::updateStatusEffect(%player, %slot)
 			//
 
 		//damage-related
+		case "bleeding":
+			//boop
+		case "shock":
+			//beep
+
+		//damage modelling
 		case "wounded arm":
 			//
 		case "wounded leg":
@@ -40,8 +89,6 @@ function Player::updateStatusEffect(%player, %slot)
 			//
 		case "abdominal trauma":
 			//
-
-		//misc
 	}
 }
 
@@ -79,7 +126,7 @@ function getStatusEffectColor(%effect)
 	return %color;
 }
 
-function Player::sleep(%player)
+function Player::sleep(%player, %exhausted)
 {
-
+	//snore snore
 }
