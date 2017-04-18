@@ -62,7 +62,7 @@ function Player::KnockOut(%this, %duration)
 		%this.knockoutStart = getSimTime();
 		%this.knockoutLength = %duration;
 	}
-	%this.statusEffect[$SE_sleepSlot] = "sleeping";
+	%this.setStatusEffect($SE_sleepSlot, "sleeping");
 	%this.KnockOutTick(%duration);
 }
 
@@ -110,11 +110,11 @@ function Player::WakeUp(%this)
 	%this.setArmThread(look);
 	%this.unconscious = false;
 	%this.isBody = false;
-	%this.statusEffect[$SE_sleepSlot] = "";
+	%this.setStatusEffect($SE_sleepSlot, "");
 	//%this.setShapeNameDistance($defaultMinigame.shapeNameDistance);
 	%this.changeDataBlock(PlayerDespairArmor);
 	%this.playThread(0, "root");
-	%this.updateBottomPrint();
+	%client.updateBottomPrint();
 }
 
 function serverCmdSleep(%this, %bypass)
@@ -127,7 +127,7 @@ function serverCmdSleep(%this, %bypass)
 		%this.chatMessage("\c6You can't sleep yet - you don't feel tired!");
 		return;
 	}
-	%sec = "exhausted" ? 80 : 60;
+	%sec = %se $= "exhausted" ? 80 : 60;
 	if (%bypass)
 	{
 		if (%pl.unconscious)

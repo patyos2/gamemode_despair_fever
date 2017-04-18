@@ -19,7 +19,9 @@ exec("./lib/itemprops.cs");
 exec("./lib/los.cs");
 exec("./lib/misc.cs");
 exec("./lib/noObservers.cs");
+exec("./lib/slowdown.cs");
 //src
+exec("./src/admin.cs");
 exec("./src/blood.cs");
 exec("./src/character.cs");
 exec("./src/chat.cs");
@@ -33,6 +35,7 @@ exec("./src/health.cs");
 exec("./src/minigame.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
+exec("./src/queuechooser.cs");
 exec("./src/sleep.cs");
 exec("./src/statuseffects.cs");
 exec("./src/sounds.cs");

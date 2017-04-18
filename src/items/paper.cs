@@ -74,9 +74,9 @@ function getPaperEvidence(%character)
 			switch$ (%decal)
 			{
 				case "Mod-Suit":
-					%msg = %msg SPC "classy";
+					%msg = %msg SPC "a wealthy progeny";
 				case "Mod-Pilot":
-					%msg = %msg SPC "a pilot";
+					%msg = %msg SPC "an aspiring aviator";
 				case "Mod-Army":
 					%msg = %msg SPC "an US Army fanatic";
 				case "Meme-Mongler":
@@ -106,7 +106,14 @@ function getPaperEvidence(%character)
 
 		case 3:
 			%msg = "Initials of criminal revealed to be";
-			%msg = %msg SPC getSubStr(getWord(%character.name, 0), 0, 1) @ "." @ getSubStr(getWord(%character.name, 1), 0, 1) @ ".";
+			%a = getSubStr(getWord(%character.name, 0), 0, 1);
+			%b = getSubStr(getWord(%character.name, 1), 0, 1);
+			%rng = getRandom(0, 2);
+			if(%rng == 1)
+				%a = "#";
+			if(%rng == 2)
+				%b = "#";
+			%msg = %msg SPC %a @ "." @ %b @ ".";
 	}
 	return %msg;
 }
@@ -135,12 +142,13 @@ function getPaperTips()
 {
 	%high = -1;
 
-	%choice[%high++] = "Paper evidence is only 60% accurate.";
+	%choice[%high++] = "Stuff you see in the news is sometimes inaccurate. Be sure to double-check!";
 	%choice[%high++] = "Spilled Coke on your shirt? Just throw a coat on - nobody will see your dirty shirt from under it!";
-	%choice[%high++] = "Did you know you can look at yourself in the mirror? Shocking, right?";
-	%choice[%high++] = "Blunt weapons leave less blood than sharp ones. Moreover, sharp weapons leave blood behind you, too!";
-	%choice[%high++] = "You can disguise your name with hats or masks that cover your face!";
+	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can’t otherwise see.";
+	%choice[%high++] = "A shower will not only completely clean you off, but will leave you feeling fresh and good about yourself!";
+	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won’t know it’s you!";
 	%choice[%high++] = "If you see something suspicious, scream! If you scream you'll be heard much farther.";
+	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you’ll be in a constant state of internal conflict.";
 
 	return %choice[getRandom(%high)];
 }

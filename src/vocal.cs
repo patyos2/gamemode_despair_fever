@@ -228,7 +228,7 @@ function serverCmdAlarm(%client)
 			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.getDataBlock().isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isDead || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;
-				if(%obj.isDead && !%obj.suicide)
+				if(%obj.isDead && %obj.isMurdered)
 					%foundCorpse = %obj;
 			}
 		}

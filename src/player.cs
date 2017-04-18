@@ -71,6 +71,8 @@ datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
 	shapeFile = "base/data/shapes/player/m_df.dts";
 	uiName = "Frozen Player";
 
+	crouchBoundingBox = "5 5 10.6"; //no dodging votes fucko
+
 	canJet = 0;
 	mass = 120;
 	maxTools = 5;
@@ -108,15 +110,11 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 {
 	if(%end)
 	{
-		%obj.setMaxForwardSpeed(%this.maxForwardSpeed);
-		%obj.setMaxBackwardSpeed(%this.maxBackwardSpeed);
-		%obj.setMaxSideSpeed(%this.maxSideSpeed);
+		%obj.setSpeedScale(1);
 		return;
 	}
 	%obj.setWhiteOut(0.1);
-	%obj.setMaxForwardSpeed(%this.maxForwardSpeed * 1.3);
-	%obj.setMaxBackwardSpeed(%this.maxBackwardSpeed * 1.3);
-	%obj.setMaxSideSpeed(%this.maxSideSpeed * 1.3);
+	%obj.setSpeedScale(1.3);
 	%this.schedule(1000, killerDash, %obj, 1);
 }
 
@@ -385,6 +383,12 @@ package DespairPlayerPackage
 		Parent::serverCmdDropTool(%client, %index);
 		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
 			%item.onDrop(%client.player, %index);
+	}
+	function serverCmdSit(%client)
+	{
+		if($DespairTrial)
+			return;
+		parent::serverCmdSit(%client);
 	}
 };
 activatePackage(DespairPlayerPackage);

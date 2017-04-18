@@ -77,7 +77,7 @@ function despairOnKill(%victim, %attacker)
 
 	if(%victim == %attacker)
 	{
-		//check for killer-induced suicide by comparing logs
+		%victim.player.suicide = true;
 		return;
 	}
 
@@ -99,6 +99,7 @@ function despairOnKill(%victim, %attacker)
 
 	if(%victim.killer || %attacker.killer)
 	{
+		$deathCount++;
 		%player = %victim.player;
 		if(!isObject(%player))
 			%player = %victim.character.player;
@@ -111,7 +112,6 @@ function despairOnKill(%victim, %attacker)
 			%msg = "<color:FF0000>You murdered the killer in cold blood! It's no self defence. You become the murderer yourself!";
 			messageClient(%attacker, '', "<font:impact:30>" @ %msg);
 		}
-		$deathCount++;
 		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 		if ($deathCount >= %maxDeaths)
 			DespairSetWeapons(0);
@@ -149,8 +149,8 @@ function despairMakeBodyAnnouncement(%unfound)
 
 function despairStartInvestigation(%no_announce)
 {
-	%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
-	if ($deathCount >= %maxDeaths)
+	//%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
+	//if ($deathCount >= %maxDeaths)
 		DespairSetWeapons(0);
 	if ($deathCount > 0 && $investigationStart $= "")
 	{
@@ -241,33 +241,23 @@ function despairOnNoon()
 
 function despairOnEvening()
 {
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%player = %client.player;
+		if(isObject(%player))
+		{
+			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			%client.updateBottomprint();
+		}
+	}
 }
 
 function despairOnNight()
 {
 	if(!$pickedKiller)
 	{
-		%max = $DefaultMiniGame.numMembers;
-		// prepare
-		for (%i = 0; %i < %max; %i++)
-			%a[%i] = %i;
-		// shuffle
-		while (%i--)
-		{
-			%j = getRandom(%i);
-			%x = %a[%i - 1];
-			%a[%i - 1] = %a[%j];
-			%a[%j] = %x;
-		}
-		for (%i = 0; %i < %max; %i++) //Why a for loop? So we can skip dead/unfit players and only pick live ones, duh.
-		{
-			%client = $DefaultMiniGame.member[%a[%i]];
-			if(!isObject(%client.player))
-				continue;
-			if($KillerBlacklistBLID[%client.getBLID()]) //Blacklisted. Must be a stealth blacklist, otherwise confirmed innocent.
-				continue;
-			break; //We got our man
-		}
+		%client = chooseNextClient("Killer");
 		%client.play2d(KillerJingleSound);
 		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
 		messageClient(%client, '', "<font:impact:30>" @ %msg);
@@ -285,7 +275,7 @@ function despairOnNight()
 		{
 			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
 			if(!%client.killer && %player.statusEffect[$SE_sleepSlot] $= "")
-				%player.statusEffect[$SE_sleepSlot] = "tired";
+				%player.setStatusEffect(%slot, "tired");
 			%client.updateBottomprint();
 		}
 	}
@@ -438,13 +428,33 @@ function DespairEndVote()
 	}
 	else if (isObject(%unfortunate))
 	{
-		$DefaultMiniGame.chatMessageAll('', "\c5The person with the most votes has been eliminated.");
-		%unfortunate.kill();
+		if(%unfortunate.client.killer)
+		{
+			$DefaultMiniGame.chatMessageAll('', "\c5The killer has been eliminated! Innocents won.");
+			%unfortunate.kill();
+			%win = 1;
+		}
+		else
+		{
+			$DefaultMiniGame.chatMessageAll('', "\c5Majority vote is not the killer. Killer wins.");
+		}
 	}
 	else
 	{
 		$DefaultMiniGame.chatMessageAll('', "\c5Nobody voted. Killer wins.");
 	}
+
+	if(!%win)
+	{
+		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		{
+			%client = $DefaultMiniGame.member[%i];
+			%player = %client.player;
+			if(!%client.killer)
+				%player.kill();
+		}		
+	}
+
 	despairEndGame();
 }
 

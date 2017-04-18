@@ -10,18 +10,18 @@ function Player::clearStatusEffects(%player)
 	}
 }
 
-function Player::onAddStatusEffect(%player, %slot)
+function Player::setStatusEffect(%player, %slot, %effect)
 {
-	%effect = %player.statusEffect[%slot];
+	%player.statusEffect[%slot] = %effect;
+	//onAdd, essentially
 	switch$ (%effect)
 	{
 		//Sleep-related
 		case "tired":
-			//minor slowdown
+			%player.setSpeedScale(0.9);
 		case "exhausted":
-			//major slowdown
+			%player.setSpeedScale(0.8);
 		case "sleeping":
-			//%player.sleep() handles this
 
 		//passive buffs/debuffs
 		case "drowsy":
@@ -48,6 +48,9 @@ function Player::onAddStatusEffect(%player, %slot)
 			//
 		case "abdominal trauma":
 			//
+
+		default:
+			%player.setSpeedScale(1);
 	}
 }
 
@@ -58,7 +61,7 @@ function Player::updateStatusEffect(%player, %slot)
 	{
 		//Sleep-related
 		case "tired":
-			%player.statusEffect[%slot] = "exhausted";
+			%player.setStatusEffect(%slot, "exhausted");
 		case "exhausted":
 			%player.sleep(true);
 		case "sleeping":
