@@ -118,6 +118,7 @@ package DespairHealth
 		}
 
 		%player.isDead = 1;
+		%player.isBody = 1;
 		%player.playDeathCry();
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);

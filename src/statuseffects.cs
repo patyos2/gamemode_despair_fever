@@ -125,8 +125,3 @@ function getStatusEffectColor(%effect)
 	}
 	return %color;
 }
-
-function Player::sleep(%player, %exhausted)
-{
-	//snore snore
-}

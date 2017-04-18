@@ -51,6 +51,9 @@ package DespairChat
 			echo("-+ (DEAD) " @ %name @ ": " @ %text);
 			return;
 		}
+		if(%player.unconscious)
+			return;
+
 		%player.playThread(0, "talk");
 		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
 

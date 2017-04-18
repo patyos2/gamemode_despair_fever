@@ -33,6 +33,7 @@ exec("./src/health.cs");
 exec("./src/minigame.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
+exec("./src/sleep.cs");
 exec("./src/statuseffects.cs");
 exec("./src/sounds.cs");
 exec("./src/trial.cs");

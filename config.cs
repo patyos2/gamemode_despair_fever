@@ -1,6 +1,6 @@
 //Base
-$Despair::DayLength = 240; //4 minutes for a full cycle
-$Despair::InvestigationLength = 240; //4 mins
+$Despair::DayLength = 300; //4 minutes for a full cycle
+$Despair::InvestigationLength = 300; //4 mins
 //MOTEL MAP PREFS:
 $Despair::RoomCount = 16;
 //male block
@@ -24,5 +24,5 @@ $roomNum[15] = "24";
 $roomNum[16] = "25";
 
 //Trial
-$Despair::DiscussPeriod = 240; //4 mins
-$Despair::MissingLength = 180; //3 mins until body announcement is made automatically
+$Despair::DiscussPeriod = 300; //4 mins
+$Despair::MissingLength = 120; //2 mins until body announcement is made automatically

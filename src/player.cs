@@ -41,6 +41,31 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 	maxTools = 6;
 };
 
+datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
+{
+	shapeFile = "base/data/shapes/player/m_df.dts";
+	uiName = "Corpse Player";
+
+	boundingBox = "5 5 4";
+	crouchBoundingBox = "5 5 4";
+
+	canJet = 0;
+	mass = 120;
+	maxTools = 5;
+
+	maxForwardSpeed = 0;
+	maxBackwardSpeed = 0;
+	maxSideSpeed = 0;
+
+	maxForwardCrouchSpeed = 0;
+	maxBackwardCrouchSpeed = 0;
+	maxSideCrouchSpeed = 0;
+
+	jumpForce = 0;
+
+	maxTools = 6;
+};
+
 datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
 {
 	shapeFile = "base/data/shapes/player/m_df.dts";
@@ -176,7 +201,7 @@ function player::applyAppearance(%pl,%cl)
 	%shoesColor = getField(%app, 6);
 	%hairColor = getField(%app, 7);
 
-	if(isObject(%pl.getMountedImage(3)) && %pl.getMountedImage(3).item.hideAppearance)
+	if(isObject(%pl.getMountedImage(1)) && %pl.getMountedImage(1).item.hideAppearance)
 		%hideApp = true;
 	if(isObject(%hat = %pl.tool[%pl.hatSlot]) && isObject(%pl.getMountedImage(2)) && %pl.getMountedImage(2) == nameToID(%hat.image))
 	{
@@ -308,6 +333,21 @@ function player::applyAppearance(%pl,%cl)
 
 package DespairPlayerPackage
 {
+	function Observer::onTrigger(%this, %obj, %slot, %state)
+	{
+		%client = %obj.getControllingClient();
+		if (isObject(%pl = %client.player))
+		{
+			if (%pl.currResting && %state)
+			{
+				%pl.currResting = 0;
+				%pl.WakeUp();
+			}
+			if (%pl.unconscious)
+				return;
+		}
+		Parent::onTrigger(%this, %obj, %slot, %state);
+	}
 	function gameConnection::applyBodyColors(%cl,%o) 
 	{
 		parent::applyBodyColors(%cl,%o);

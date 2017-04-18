@@ -202,8 +202,14 @@ function Player::playShock(%player)
 
 function serverCmdAlarm(%client)
 {
+	if($DespairTrial) //fuck that noise
+		return;
+
 	if(isObject(%player = %client.player))
 	{
+		if(%player.unconscious)
+			return;
+
 		%scream = false;
 
 		%center = %player.getEyePoint();
@@ -212,7 +218,7 @@ function serverCmdAlarm(%client)
 		{
 			if(%obj == %player)
 				continue;
-			%point = %obj.getPosition();
+			%point = vectorAdd(%obj.getPosition(), "0 0 1");
 			if(%obj.getType() & $TypeMasks::PlayerObjectType)
 				%point = %obj.getEyePoint();
 			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);

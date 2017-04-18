@@ -115,8 +115,8 @@ function despairOnKill(%victim, %attacker)
 		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 		if ($deathCount >= %maxDeaths)
 			DespairSetWeapons(0);
-		if(!isEventPending($DefaultMiniGame.eventSchedule))
-			$DefaultMiniGame.eventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
+		//if(!isEventPending($DefaultMiniGame.missingSchedule))
+		//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 		return;
 	}
 }
@@ -143,7 +143,7 @@ function despairMakeBodyAnnouncement(%unfound)
 	serverPlay2d(AnnouncementSound);
 	if (!%unfound)
 		$announcements++;
-	$DefaultMiniGame.messageAll('', '\c0%2 on school premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
+	$DefaultMiniGame.messageAll('', '\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
 }
 
@@ -156,7 +156,8 @@ function despairStartInvestigation(%no_announce)
 	{
 		$investigationStart = $Sim::Time + $Despair::InvestigationLength;
 		if (!%no_announce)
-			%this.makeBodyAnnouncement(1);
+			despairMakeBodyAnnouncement(1);
+		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
 	}
@@ -292,6 +293,7 @@ function despairOnNight()
 
 function courtPlayers()
 {
+	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
 	DayCycle.setDayLength(900); //15 mins
@@ -344,6 +346,11 @@ function courtPlayers()
 		}
 		else
 		{
+			if(%player.unconscious)
+			{
+				%player.WakeUp();
+			}
+
 			if(%player.inCameraEvent)
 			{
 				%player.inCameraEvent = false;

@@ -109,43 +109,47 @@ function sprayBloodGush(%position, %velocity)
 		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
 }
 
-//TODO: Redo this function so it allows multiple "corpse drag" pools
-function updateCorpseBloodPool(%player, %offset, %slowTime, %size)
+function updateCorpseBloodPool(%pos)
 {
-	if (VectorLen(%player.getVelocity()) < 1)
+	%ray = containerRayCast(%pos, VectorSub(%pos, "0 0 1"), $SprayBloodMask);
+	if(%ray)
 	{
-		if (%player.pool $= "")
+		initContainerRadiusSearch(getWords(%ray, 1, 3), 0.25,
+			$TypeMasks::ShapeBaseObjectType);
+
+		while (isObject(%col = containerSearchNext()))
 		{
-			%a = VectorAdd(%player.position, "0 0 0.1");
-			%a = VectorAdd(%a, MatrixMulVector("0 0 0 " @ getWords(%player.getTransform(), 3, 6), %offset));
-			%b = VectorSub(%a, "0 0 1");
-			%ray = containerRayCast(%a, %b, $TypeMasks::FxBrickObjectType);
-			// drawLine("", %a, %b, "1 0 1 1");
-			if (!%ray)
-				return;
-			%player.pool = spawnDecalFromRayCast(NewBloodDecal, %ray);
-			%player.pool.spillTime = $Sim::Time;
-			%player.pool.freshness = 3;
-			%player.pool.noUnclutter = true;
-			%player.pool.hideNode("ALL");
-			%player.pool.unHideNode("blood5");
-			%player.pool.color = 0.6 + 0.2 * getRandom() @ " 0 0 1";
-			%player.pool.setNodeColor(%player.pool.color);
+			if (%col.isPool)
+			{
+				%decal = %col;
+				break;
+			}
 		}
-
-		if (!isObject(%player.pool))
-			return;
-		
-		%player.pool.setScale(%size SPC %size SPC %size);
-		%add = 0.025;
-		if (%size >= 4)
-			%add *= 1 - (%size - 4) / %slowTime;
-		if (%add < 0.0005)
-			return;
-		%size += %add;
+		if(%decal)
+		{
+			%size = getWord(%decal.getScale(), 0);
+			%add = 0.015;
+			if (%size >= 4)
+				%add *= 1 - (%size - 4);
+			if (%add < 0.0005)
+				return;
+			%size += %add;
+			%decal.setScale(%size SPC %size SPC %size);
+			%decal.freshness = %size * 3;
+		}
+		else
+		{
+			%decal = spawnDecalFromRayCast(NewBloodDecal, %ray);
+			%decal.isPool = true;
+			%decal.spillTime = $Sim::Time;
+			%decal.freshness = 3;
+			%decal.noUnclutter = true;
+			%decal.hideNode("ALL");
+			%decal.unHideNode("blood5");
+			%decal.color = 0.6 + 0.2 * getRandom() @ " 0 0 1";
+			%decal.setNodeColor("ALL", %decal.color);
+		}
 	}
-
-	schedule(30, %player, updateCorpseBloodPool, %player, %offset, %slowTime, %size);
 }
 
 function Player::doBloodyFootprint(%this, %ray, %foot, %alpha)

@@ -54,6 +54,7 @@ function roomPlayers()
 
 		//Assign character to client
 		%client.killer = false;
+		%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
 		%player = %client.player;
 		%player.character = %character; //post-death reference to character
 		%character.player = %player;
@@ -88,6 +89,7 @@ function roomPlayers()
 
 function despairEndGame()
 {
+	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(5000, reset, 0);
@@ -160,11 +162,11 @@ function despairPrepareGame()
 	{
 		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
 		loadDayCycle($EnvGuiServer::DayCycleFile);
-		$EnvGuiServer::DayLength = $Despair::DayLength;
-		DayCycle.setDayLength($EnvGuiServer::DayLength);
 		$EnvGuiServer::DayCycleEnabled = 1;
 		DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	}
+	$EnvGuiServer::DayLength = $Despair::DayLength;
+	DayCycle.setDayLength($EnvGuiServer::DayLength);
 	setDayCycleTime(0.4); //Starts at evening
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
