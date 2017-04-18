@@ -79,7 +79,11 @@ package DespairHealth
 		}
 
 		%player.health -= %damage;
-		if(%player.health <= 0)
+		//if(%player.health <= 0)
+		//{
+			//critical state
+		//}
+		if(%player.health <= 0) //-100
 		{
 			if (isObject(%player.client))
 				despairOnKill(%player.client, %attacker);
