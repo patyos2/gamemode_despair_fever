@@ -84,6 +84,9 @@ function roomPlayers()
 		%props.id = %roomDoor.lockId;
 
 		%player.addTool(KeyItem, %props);
+
+		%client.playPath(IntroPath);
+		%client.schedule(6000, setControlObject, %player);
 	}
 }
 
@@ -171,6 +174,7 @@ function despairPrepareGame()
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
 	DespairSetWeapons(1);
+	ServerPlaySong("MusicGameStart");
 }
 
 function DespairSetWeapons(%tog)

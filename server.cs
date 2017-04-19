@@ -19,6 +19,7 @@ exec("./lib/itemprops.cs");
 exec("./lib/los.cs");
 exec("./lib/misc.cs");
 exec("./lib/noObservers.cs");
+exec("./lib/pathCamera.cs");
 exec("./lib/slowdown.cs");
 //src
 exec("./src/admin.cs");
@@ -33,6 +34,7 @@ exec("./src/footsteps.cs");
 exec("./src/hats.cs");
 exec("./src/health.cs");
 exec("./src/minigame.cs");
+exec("./src/music.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
 exec("./src/queuechooser.cs");
@@ -60,3 +62,12 @@ exec("./src/weapons/wrench.cs");
 exec("./src/weapons/sledgehammer.cs");
 exec("./src/weapons/shovel.cs");
 exec("./src/weapons/umbrella.cs");
+
+if (!isObject(IntroPath))
+	exec("./src/campaths/intro.cs");
+
+if (!isObject(TrialIntroPath))
+	exec("./src/campaths/TrialIntro.cs");
+
+if (!isObject(TrialDiscussionPath))
+	exec("./src/campaths/TrialDiscussion.cs");

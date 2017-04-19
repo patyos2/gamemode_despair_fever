@@ -1,7 +1,7 @@
 function GameConnection::updateBottomprint(%this)
 {
 	%client = %this;
-	if (isObject(%cam = %this.getControlObject()) && %cam.getType() & $Typemasks::CameraObjectType && isObject(%targ = %cam.getOrbitObject().client))
+	if (isObject(%cam = %this.getControlObject()) && %cam.getClassName() $= "Camera" && isObject(%cam.getOrbitObject().client))
 	{
 		%client = %targ;
 		%isSpectate = 1;

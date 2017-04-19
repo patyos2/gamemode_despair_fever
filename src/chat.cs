@@ -36,14 +36,17 @@ package DespairChat
 		if (%text $= "")
 			return;
 
+		if(DespairSpecialChat(%client, %text))
+			return;
+
 		%name = %client.getPlayerName();
 		if (!isObject(%player))
 		{
-			for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
-				%member = $DefaultMiniGame.member[%i];
+				%member = ClientGroup.getObject(%i);
 
-				if (!isObject(%member.player))
+				if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 				{
 					messageClient(%member, '', '<color:808080>%1\c6<color:b0b0b0>: %2', %name, %text);
 				}
@@ -76,10 +79,10 @@ package DespairChat
 		%shape.deleteSchedule = %shape.schedule(3000, delete);
 		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 
-		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
-			%member = $DefaultMiniGame.member[%i];
-			if (!isObject(%member.player))
+			%member = ClientGroup.getObject(%i);
+			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
 				messageClient(%member, '', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
 				continue;

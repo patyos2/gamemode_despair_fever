@@ -160,6 +160,7 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
+		ServerPlaySong("MusicInvestigationStart");
 	}
 }
 
@@ -281,12 +282,48 @@ function despairOnNight()
 	}
 }
 
+function DespairSpecialChat(%client, %text)
+{
+	if(!$DespairTrial)
+		return 0;
+	if(!isObject(%player = %client.player))
+		return 0;
+
+	if($DespairTrialOpening && %client != $DespairTrialCurrSpeaker)
+	{
+		messageClient(%client, '', "\c0You cannot talk yet! \c5Wait for your turn.");
+		return 1;
+	}
+
+	%player.playThread(0, "talk");
+	%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
+
+	%name = %client.character.name;
+	serverPlay3D(DespairChatSound, %player.getHackPosition());
+
+	%shape = new Item()
+	{
+		datablock = DespairEmptyFloatItem;
+		position = VectorAdd(%player.position, "0 0 2");
+	};
+
+	%shape.setCollisionTimeout(%player);
+	%shape.setShapeName(%text);
+	%shape.setShapeNameDistance(30);
+	%shape.setVelocity("0 0 0.5");
+	%shape.deleteSchedule = %shape.schedule(3000, delete);
+	echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
+
+	$DefaultMiniGame.chatMessageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+	return 1;
+}
+
 function courtPlayers()
 {
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
-	DayCycle.setDayLength(900); //15 mins
+	DayCycle.setDayLength(1200); //20 mins
 	setDayCycleTime(0.25);
 	%charCount = GameCharacters.getCount();
 	// prepare
@@ -318,6 +355,7 @@ function courtPlayers()
 		%character = GameCharacters.getObject(%a[%i]);
 		%player = %character.player;
 		%client = %character.client;
+
 		%transform = $stand[%i].getSlotTransform(1);
 		if(!isObject(%client) || !isObject(%player) || %player.isDead)
 		{
@@ -344,22 +382,95 @@ function courtPlayers()
 			if(%player.inCameraEvent)
 			{
 				%player.inCameraEvent = false;
-				%client.setControlObject(%player);
 			}
 
+			$stand[%i].player = %player;
 			%player.setTransform(vectorAdd(getWords(%transform, 0, 2), "0 0 0.1") SPC getWords(%transform, 3, 6));
 			%player.changeDataBlock(playerFrozenArmor);
-			%player.playThread(0, "standing");
+			%player.playThread(3, "standing");
 			%player.setVelocity("0 0 0");
+
+			%client.playPath(TrialIntroPath);
 		}
 	}
+
+	ServerPlaySong("MusicOpeningPre");
+	$DefaultMiniGame.chatMessageAll('', "\c5<font:impact:30>Everyone now has 30 seconds to prepare their opening statements! Before that, nobody can talk.");
+	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairStartOpeningStatements);
+
+	$DespairTrialCurrSpeaker = "";
+	$DespairTrial = true;
+	$DespairTrialOpening = true;
+	DespairSetWeapons(0);
+}
+
+function DespairStartOpeningStatements()
+{
+	cancel($DefaultMiniGame.eventSchedule);
+	ServerPlaySong("MusicOpeningStatements");
+	$DefaultMiniGame.chatMessageAll('', "\c5Let's hear everybody out.");
+	$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairCycleOpeningStatements, 0);
+}
+
+function DespairCycleOpeningStatements(%j)
+{
+	if(%j >= $DefaultMiniGame.numMembers)
+	{
+		$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairStartDiscussion);
+		return;
+	}
+	%player = $stand[%j].player;
+	%client = %player.client;
+	if(isObject(%player))
+	{
+		$DespairTrialCurrSpeaker = %client;
+		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		{
+			%targ = $DefaultMiniGame.member[%i];
+			%camera = %targ.camera;
+			//aim the camera at the target
+			%pos = vectorAdd(%player.getHackPosition(), vectorScale(%player.getForwardVector(), 2));
+			%delta = vectorSub(%player.getHackPosition(), %pos);
+			%deltaX = getWord(%delta, 0);
+			%deltaY = getWord(%delta, 1);
+			%deltaZ = getWord(%delta, 2);
+			%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
+
+			%rotZ = mAtan(%deltaX, %deltaY) * -1; 
+			%rotX = mAtan(%deltaZ, %deltaXYHyp);
+
+			%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
+
+			%camera.setTransform(%pos SPC %aa);
+			%camera.setFlyMode();
+			%camera.mode = "Observer";
+			%targ.setControlObject(%camera);
+			%camera.setControlObject(%targ.dummyCamera);
+		}
+		$DefaultMiniGame.chatMessageAll('', "\c5What will" SPC %player.character.name SPC "say?");
+		$DefaultMiniGame.eventSchedule = schedule(10000, 0, DespairCycleOpeningStatements, %j+1);
+	}
+	else
+	{
+		DespairCycleOpeningStatements(%j+1);
+	}
+}
+
+function DespairStartDiscussion()
+{
+	cancel($DefaultMiniGame.eventSchedule);
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%client.playPath(TrialDiscussionPath);
+		%client.schedule(5000, setControlObject, %client.player);
+	}
+	$DespairTrialOpening = false;
+	ServerPlaySong("MusicTrialDiscussion");
 	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ $Despair::DiscussPeriod / 60 @ " minutes\c5 to discuss and reveal the killer.");
 	$DefaultMiniGame.chatMessageAll('', "\c5After time has passed you will have to \c0eliminate the killer\c5 by \c3voting.");
 	$DefaultMiniGame.chatMessageAll('', "\c0You cannot afford a mistake. \c5Choose wrong, and everyone but the killer will die.");
 	$DefaultMiniGame.eventSchedule = schedule($Despair::DiscussPeriod * 1000, 0, DespairStartVote);
-
-	$DespairTrial = true;
-	DespairSetWeapons(0);
 }
 
 function DespairStartVote()
@@ -375,13 +486,14 @@ function DespairStartVote()
 			%player.voteTarget = "0";
 			%player.canReceiveVote = "1";
 			%player.canCastVote = "1";
-			%player.playThread(1, armReadyRight);
+			%player.playThread(2, armReadyRight);
 			DespairUpdateCastVote(%player);
 		}
 	}
 
+	ServerPlaySong("MusicVoteStart");
 	$DefaultMiniGame.chatMessageAll('', "\c5Look at the person you think is the killer within 30 seconds. The person with the most votes \c0will die.");
-	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairEndVote);
+	$DefaultMiniGame.eventSchedule = schedule(35000, 0, DespairEndVote);
 }
 
 function DespairEndVote()
@@ -395,7 +507,7 @@ function DespairEndVote()
 		if (%player.canCastVote)
 		{
 			%votes[%player.voteTarget]++;
-			%player.playThread(1, root);
+			%player.playThread(2, root);
 			cancel(%player.DespairUpdateCastVote);
 			%player.canCastVote = "";
 			%player.voteTarget = "";
