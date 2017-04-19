@@ -1,13 +1,25 @@
 $SE_sleepSlot = 0; //reserved sleepo
 $SE_passiveSlot = 1;
-$SE_maxStatusEffects = 4;
+$SE_damageSlot = 2;
+$SE_maxStatusEffects = 6;
 
 function Player::clearStatusEffects(%player)
 {
 	for(%i=0; %i<$SE_maxStatusEffects; %i++)
 	{
-		%player.statusEffect[%i] = "";
+		%player.setStatusEffect(%slot, "");
 	}
+	if(isObject(%player.client))
+		%player.client.updateBottomPrint();
+}
+
+function Player::removeStatusEffect(%player, %slot, %effect)
+{
+	if(%player.statusEffect[%slot] !$= %effect) //it changed
+		return;
+	%player.setStatusEffect(%slot, "");
+	if(isObject(%player.client))
+		%player.client.updateBottomPrint();
 }
 
 function Player::setStatusEffect(%player, %slot, %effect)
@@ -17,17 +29,24 @@ function Player::setStatusEffect(%player, %slot, %effect)
 	switch$ (%effect)
 	{
 		//Sleep-related
+		case "sleepy":
+			//nothing happens
 		case "tired":
 			%player.setSpeedScale(0.9);
+			%player.swingSpeedMod = 1.1;
 		case "exhausted":
-			%player.setSpeedScale(0.8);
+			%player.setSpeedScale(0.6);
+			%player.swingSpeedMod = 1.6;
 		case "sleeping":
 
 		//passive buffs/debuffs
 		case "drowsy":
 			//moderate slowdown
 		case "sore back":
-			//fuck 'em up somehow
+			%player.setSpeedScale(0.8);
+			%player.swingSpeedMod = 1.1;
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
 		case "fresh":
 			//nothing particulary exciting, scheduled update
 		case "shining":
@@ -51,6 +70,7 @@ function Player::setStatusEffect(%player, %slot, %effect)
 
 		default:
 			%player.setSpeedScale(1);
+			%player.swingSpeedMod = 1;
 	}
 }
 
@@ -60,10 +80,12 @@ function Player::updateStatusEffect(%player, %slot)
 	switch$ (%effect)
 	{
 		//Sleep-related
+		case "sleepy":
+			%player.setStatusEffect(%slot, "tired");
 		case "tired":
 			%player.setStatusEffect(%slot, "exhausted");
 		case "exhausted":
-			%player.sleep(true);
+			%player.KnockOut(90);
 		case "sleeping":
 			//%player.sleep() handles this
 
@@ -101,20 +123,24 @@ function getStatusEffectColor(%effect)
 	switch$ (%effect)
 	{
 		//Sleep-related
+		case "sleepy":
+			%color = "<color:4169E8>";
 		case "tired":
-			%color = "<color:605292>";
+			%color = "<color:4C47FF>";
 		case "exhausted":
-			%color = "<color:605292>";
+			%color = "<color:7241E8>";
 		case "sleeping":
-			%color = "<color:172457>";
+			%color = "<color:B14CFF>";
+
+		//passive
 		case "drowsy":
-			%color = "<color:172457>";
+			%color = "<color:4CA6FF>";
 		case "sore back":
-			%color = "<color:41817F\>";
+			%color = "<color:41817F>";
 		case "fresh":
-			%color = "<color:4C996B>";
+			%color = "<color:8EFFFE>";
 		case "shining":
-			%color = "<color:FFFFAA>";
+			%color = "<color:FFF39D>";
 
 		//damage-related
 		case "wounded arm":

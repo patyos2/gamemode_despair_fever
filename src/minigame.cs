@@ -4,98 +4,110 @@ if (!isObject(GameRoundCleanup))
 if (!isObject(GameCharacters))
 	new SimSet(GameCharacters);
 
+function createPlayer(%client)
+{
+	if(!$freeCount)
+		return;
+
+	$freeCount--;
+	%freeIndex = getRandom($freeCount);
+	%room = $freeRoom[%freeIndex];
+	for (%j = %freeIndex; %j < $freeCount; %j++)
+		$freeRoom[%j] = $freeRoom[%j + 1];
+
+	$freeRoom[$freeCount] = "";
+
+	%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
+	%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+	//Create character
+	%gender = getRandomGender();
+	%character = new ScriptObject()
+	{
+		gender = %gender;
+		name = getRandomName(%gender);
+		appearance = getRandomAppearance(%gender);
+		room = %room;
+
+		client = %client;
+		clientName = %client.getPlayerName();
+	};
+
+	GameCharacters.add(%character);
+	%client.character = %character;
+
+	//Assign character to client
+	%client.killer = false;
+	%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
+	%player = %client.player;
+	%player.character = %character; //post-death reference to character
+	%character.player = %player;
+	%player.setDatablock(PlayerDespairArmor);
+	%player.room = %room;
+	%player.setShapeNameDistance(0);
+	%player.setShapeNameColor("1 1 1");
+	%player.setTransform(%roomSpawn.getSpawnPoint());
+
+	centerPrint(%client, "");
+	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
+
+	//Hat icon for hats
+	%data = noHatIcon.getID();
+	%player.hatSlot = %player.getDataBlock().maxTools - 1;
+	%player.tool[%player.hatSlot] = %data;
+	messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, %data, true);
+
+	//Weapon icon for weapons
+	%data = noWeaponIcon.getID();
+	%player.weaponSlot = 0;
+	%player.tool[%player.weaponSlot] = %data;
+	messageClient(%client, 'MsgItemPickup', '', %player.weaponSlot, %data, true);
+
+	%props = KeyItem.newItemProps(%player, 0);
+	%props.name = "Room #" @ $roomNum[%room] @ " Key";
+	%props.id = %roomDoor.lockId;
+
+	%player.addTool(KeyItem, %props);
+	return %player;
+}
+
 function roomPlayers()
 {
-	%freeCount = $Despair::RoomCount;
+	$freeCount = $Despair::RoomCount;
 
-	for (%i = 0; %i < %freeCount; %i++)
+	for (%i = 0; %i < $freeCount; %i++)
 	{
 		%room = %i + 1;
-		%freeRoom[%i] = %room;
+		$freeRoom[%i] = %room;
 		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 		%roomDoor.lockId = "R"@%room;
 		%roomDoor.lockState = true;
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 	}
 
-	for (%i = 0; %i < $DefaultMiniGame.numMembers && %freeCount; %i++)
+	for (%i = 0; %i < $DefaultMiniGame.numMembers && $freeCount; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
 
 		if (%client.player)
 			%client.player.delete();
 
-		%freeCount--;
-		%freeIndex = getRandom(%freeCount);
-		%room = %freeRoom[%freeIndex];
-		for (%j = %freeIndex; %j < %freeCount; %j++)
-			%freeRoom[%j] = %freeRoom[%j + 1];
-
-		%freeRoom[%freeCount] = "";
-
-		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
-		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
-
-		//Create character
-		%gender = getRandomGender();
-		%character = new ScriptObject()
-		{
-			gender = %gender;
-			name = getRandomName(%gender);
-			appearance = getRandomAppearance(%gender);
-			room = %room;
-
-			client = %client;
-			clientName = %client.getPlayerName();
-		};
-
-		GameCharacters.add(%character);
-		%client.character = %character;
-
-		//Assign character to client
-		%client.killer = false;
-		%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
-		%player = %client.player;
-		%player.character = %character; //post-death reference to character
-		%character.player = %player;
-		%player.setDatablock(PlayerDespairArmor);
-		%player.room = %room;
-		%player.setShapeNameDistance(0);
-		%player.setShapeNameColor("1 1 1");
-		%player.setTransform(%roomSpawn.getSpawnPoint());
-
-		centerPrint(%client, "");
-		commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
-
-		//Hat icon for hats
-		%data = noHatIcon.getID();
-		%player.hatSlot = %player.getDataBlock().maxTools - 1;
-		%player.tool[%player.hatSlot] = %data;
-		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, %data, true);
-
-		//Weapon icon for weapons
-		%data = noWeaponIcon.getID();
-		%player.weaponSlot = 0;
-		%player.tool[%player.weaponSlot] = %data;
-		messageClient(%client, 'MsgItemPickup', '', %player.weaponSlot, %data, true);
-
-		%props = KeyItem.newItemProps(%player, 0);
-		%props.name = "Room #" @ $roomNum[%room] @ " Key";
-		%props.id = %roomDoor.lockId;
-
-		%player.addTool(KeyItem, %props);
+		%player = createPlayer(%client);
 
 		%client.playPath(IntroPath);
 		%client.schedule(6000, setControlObject, %player);
+		%client.camera.schedule(6000, setControlObject, %client.camera);
 	}
 }
 
 function despairEndGame()
 {
+	if (isEventPending($DefaultMiniGame.restartSchedule))
+		return;
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
-	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(5000, reset, 0);
+	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $pickedKiller.getPlayerName(), $pickedKiller.character.name);
+	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
 
 function despairPrepareGame()
@@ -200,10 +212,15 @@ function fxDayCycle::timeSchedule(%this, %lastStage)
 	if($DespairTrial)
 		return;
 
+	if(isEventPending($bottomPrintSchedule))
+		cancel($bottomPrintSchedule);
+
 	%time = getDayCycleTime();
 
 	if(%time > 0.75)
 		%stage = "NIGHT";
+	else if(%time > 0.583333) //8 PM
+		%stage = "LATE EVENING";
 	else if(%time > 0.4)
 		%stage = "EVENING";
 	else if(%time > 0.25)
@@ -235,6 +252,11 @@ function despairCycleStage(%stage)
 		despairOnEvening();
 	}
 
+	if(%stage $= "LATE EVENING")
+	{
+		despairOnLateEvening();
+	}
+
 	if(%stage $= "NOON")
 	{
 		despairOnNoon();
@@ -255,21 +277,6 @@ function despairCycleStage(%stage)
 
 package DespairFever
 {
-	function Player::mountImage(%this, %image, %slot, %loaded, %skinTag)
-	{
-		//if (isObject(%this.client) && %this.client.miniGame == $DefaultMiniGame && (%image.item.className $= "DespairWeapon" && $DefaultMiniGame.noWeapons))
-		//{
-		//	fixArmReady(%this);
-		//	return;
-		//}
-		parent::mountImage(%this, %image, %slot, %loaded, %skinTag);
-	}
-
-	function fxDayCycle::setEnabled(%this, %bool)
-	{
-		parent::setEnabled(%this, %bool);
-	}
-
 	function Player::removeBody(%player)
 	{
 		%player.delete();
@@ -281,6 +288,9 @@ package DespairFever
 
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
+
+		if($days < 1)
+			createPlayer(%client);
 	}
 
 	function MiniGameSO::Reset(%this, %client)
@@ -300,7 +310,8 @@ package DespairFever
 	{
 		if ($DefaultMiniGame.owner)
 			return Parent::checkLastManStanding($DefaultMiniGame);
-		
+		if (isEventPending($DefaultMiniGame.restartSchedule))
+			return;
 		%alive = 0;
 		%killerAlive = 0;
 		%otherAlive = 0;

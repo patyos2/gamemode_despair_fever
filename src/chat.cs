@@ -48,7 +48,7 @@ package DespairChat
 
 				if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 				{
-					messageClient(%member, '', '<color:808080>%1\c6<color:b0b0b0>: %2', %name, %text);
+					messageClient(%member, '', '<color:808080>%1<color:b0b0b0>: %2', %name, %text);
 				}
 			}
 			echo("-+ (DEAD) " @ %name @ ": " @ %text);
@@ -84,18 +84,30 @@ package DespairChat
 			%member = ClientGroup.getObject(%i);
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
-				messageClient(%member, '', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+				messageClient(%member, '', '<color:ffff80>%1<color:fffff0>: %2', %name, %text);
 				continue;
 			}
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
 			if (vectorDist(%a, %b) > 32)
 				continue;
-			messageClient(%member, '', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+			messageClient(%member, '', '<color:ffff80>%1<color:fffff0>: %2', %name, %text);
 		}
 	}
 	function serverCmdTeamMessageSent(%client, %text) //OOC
 	{
+		if(!%client.isAdmin)
+			return;
+		if (%text $= "")
+			return;
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%member = ClientGroup.getObject(%i);
+			if(%member.isAdmin)
+			{
+				messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %client.getPlayerName(), %text);
+			}
+		}
 	}
 };
 

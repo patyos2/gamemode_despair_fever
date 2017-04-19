@@ -9,11 +9,6 @@ package DespairHealth
 	function Armor::onAdd(%data, %player)
 	{
 		parent::onAdd(%data, %player);
-		if(%player.health $= "")
-		{
-			%player.maxhealth = 100;
-			%player.health = 100;
-		}
 	}
 
 	function Armor::damage(%data, %player, %src, %pos, %damage, %type)
@@ -85,16 +80,22 @@ package DespairHealth
 		//}
 		if(%player.health <= 0) //-100
 		{
-			if (isObject(%player.client))
-				despairOnKill(%player.client, %attacker);
-			%p = new Projectile()
+			if(despairOnKill(%player.client, %attacker))
 			{
-				datablock = cubeHighExplosionProjectile;
-				initialPosition = %pos;
-				initialVelocity = vectorScale(%normal, 4);
-			};
-			%p.explode();
-			%player.setDamageLevel(100);
+				%p = new Projectile()
+				{
+					datablock = cubeHighExplosionProjectile;
+					initialPosition = %pos;
+					initialVelocity = vectorScale(%normal, 4);
+				};
+				%p.explode();
+				%player.setDamageLevel(100);
+			}
+			else
+			{
+				%player.health = %player.maxhealth;
+				%player.KnockOut(30);
+			}
 			return;
 		}
 		%player.playPain();

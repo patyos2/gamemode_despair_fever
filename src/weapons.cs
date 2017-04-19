@@ -28,7 +28,7 @@ function MeleeProps::onAdd(%this)
 
 function Player::tryStartFireWeapon(%player, %manual)
 {
-	if ($DefaultMiniGame.noWeapons)
+	if ($DefaultMiniGame.noWeapons || %player.noWeapons)
 		return;
 
 	%image = %player.getMountedImage(0);
@@ -41,7 +41,7 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 {
 	cancel(%player.fireSchedule);
 
-	if ($DefaultMiniGame.noWeapons)
+	if ($DefaultMiniGame.noWeapons || %player.noWeapons)
 		return;
 
 	if (%player.health <= 0 || (!%player.getImageTrigger(0) && !%manual))
@@ -52,7 +52,7 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 	if (!%image)
 		return;
 	
-	%time = %image.fireDelay;
+	%time = %image.fireDelay * %player.swingSpeedMod;
 	if ($Sim::Time - %player.lastFireTime < %time && !%ignoreTime)
 	{
 		if (!%image.fireManual)

@@ -1,5 +1,5 @@
 //Base
-$Despair::DayLength = 300; //4 minutes for a full cycle
+$Despair::DayLength = 360; //6 minutes for a full cycle
 $Despair::InvestigationLength = 300; //4 mins
 //MOTEL MAP PREFS:
 $Despair::RoomCount = 16;

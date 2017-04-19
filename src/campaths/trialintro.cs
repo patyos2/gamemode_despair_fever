@@ -43,15 +43,5 @@ new Path(TrialIntroPath) {
       smoothingType = "Linear";
          speed = "1";
    };
-   new Marker() {
-      position = "-0.146097 7.90626 98.7742";
-      rotation = "0.999233 0.0276838 -0.0276837 90.0443";
-      scale = "1 1 1";
-      seqNum = "5";
-      type = "Normal";
-      msToNext = "1000";
-      smoothingType = "Linear";
-         speed = "1";
-   };
 };
 //--- OBJECT WRITE END ---

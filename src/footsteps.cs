@@ -43,7 +43,7 @@ function Player::playFootsteps(%this, %foot)
 {
 	cancel(%this.playFootsteps);
 
-	if (%this.getState() $= "Dead" || %this.isDead)
+	if (%this.getState() $= "Dead" || %this.isDead || %this.isBody)
 	{
 		return;
 	}

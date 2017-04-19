@@ -8,6 +8,12 @@ function Player::findCorpseRayCast(%obj)
 	%center = vectorScale(vectorAdd(%a, %b), 0.5); //Get middle of raycast
 	%length = vectorDist(%a, %b) / 2;
 
+	if(%ray && %ray.getType() & $TypeMasks::playerObjectType)
+	{
+		if(%ray.isBody)
+			return %ray;
+	}
+
 	%maxdist = 1; //how fatass our fat raycast is
 	initContainerRadiusSearch(%center, %length + %maxdist, $TypeMasks::CorpseObjectType); //Scale radius search so it searches the entirety of raycast
 	while (isObject(%col = containerSearchNext()))
@@ -36,9 +42,9 @@ function Player::findCorpseRayCast(%obj)
 function Player::carryTick(%this)
 {
 	cancel(%this.carrySchedule);
+	%player = %this.carryPlayer;
 	if (!%this.isBody)
 	{
-		%player = %this.carryPlayer;
 		%this.lastTosser = %player;
 		%this.carryEnd = $Sim::Time;
 		%this.carryPlayer = 0;
@@ -46,7 +52,6 @@ function Player::carryTick(%this)
 		%player.playThread(2, "root");
 		return;
 	}
-	%player = %this.carryPlayer;
 
 	if(%this.isDead && getRandom() < 0.45 && %this.pools < 1000) //blood
 	{
@@ -99,7 +104,7 @@ package DespairCorpses
 {
 	function Armor::onTrigger(%this, %obj, %slot, %state)
 	{
-		if(%slot == 0)
+		if(%slot == 0 && %obj.currTool == -1)
 		{
 			%item = %obj.carryObject;
 			if (isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj)
@@ -114,24 +119,33 @@ package DespairCorpses
 			}
 			if(%state && isObject(%col = %obj.findCorpseRayCast()))
 			{
-				if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
-					%col.carryPlayer.playThread(2, "root");
-				%obj.carryObject = %col;
-				%col.carryPlayer.carryObject = 0;
-				%col.carryPlayer = %obj;
-				%col.carryStart = $Sim::Time;
-				%col.carryTick();
-				if (%col.bloody["chest_front"] || %col.bloody["chest_back"])
+				if (($investigationStart $= "" || %obj.client.killer) && $Sim::Time - %obj.lastBodyClick < 0.3)
 				{
-					%obj.bloody["rhand"] = true;
-					%obj.bloody["lhand"] = true;
+					if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
+						%col.carryPlayer.playThread(2, "root");
+					%obj.carryObject = %col;
+					%col.carryPlayer.carryObject = 0;
+					%col.carryPlayer = %obj;
+					%col.carryStart = $Sim::Time;
+					%col.carryTick();
+					if (%col.bloody["chest_front"] || %col.bloody["chest_back"])
+					{
+						%obj.bloody["rhand"] = true;
+						%obj.bloody["lhand"] = true;
+					}
+					if (isObject(%obj.client))
+					{
+						%obj.client.applyBodyParts();
+						%obj.client.applyBodyColors();
+					}
+					%obj.playThread(2, "armReadyBoth");
 				}
-				if (isObject(%obj.client))
+				else
 				{
-					%obj.client.applyBodyParts();
-					%obj.client.applyBodyColors();
+					if(isObject(%obj.client))
+						%obj.client.examineObject(%col);
+					%obj.lastBodyClick = $sim::time;
 				}
-				%obj.playThread(2, "armReadyBoth");
 				return; //so we don't call anything else
 			}
 		}

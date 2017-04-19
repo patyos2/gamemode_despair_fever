@@ -1,7 +1,7 @@
 $Despair::Path = filePath(expandFileName("./description.txt")) @ "/";
 function r(%p)
 {
-	setModPaths(getModPaths());
+	//setModPaths(getModPaths());
 	if (%p !$= "")
 		exec("./src/" @ %p @ ".cs");
 	else

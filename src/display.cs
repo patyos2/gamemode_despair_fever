@@ -1,7 +1,18 @@
+function despairBottomPrintLoop()
+{
+	cancel($bottomPrintSchedule);
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%client.updateBottomprint();
+	}
+	$bottomPrintSchedule = schedule(1000, 0, despairBottomPrintLoop);
+}
+
 function GameConnection::updateBottomprint(%this)
 {
 	%client = %this;
-	if (isObject(%cam = %this.getControlObject()) && %cam.getClassName() $= "Camera" && isObject(%cam.getOrbitObject().client))
+	if (isObject(%cam = %this.getControlObject()) && %cam.getClassName() $= "Camera" && isObject(%targ = %cam.getOrbitObject().client))
 	{
 		%client = %targ;
 		%isSpectate = 1;
@@ -39,12 +50,26 @@ function GameConnection::updateBottomprint(%this)
 			%color = getStatusEffectColor(%se);
 			%stats = %stats SPC %color @ %se;
 		}
+
+		if(%player.bloody)
+			%cosmetics = %cosmetics @ "\c0bloody";
+		if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
+			%cosmetics = %cosmetics SPC "\c5disguised";
 	}
 
 	if(%isSpectate)
 		%a = "\c3 (Spectating)";
 
-	%str = "<font:Verdana:26><tab:120,240><color:FFFFFF>" @ %timestr @ "<just:right>" @ %stats @ "<just:left>\n" @ %name @ %a;
+	if(!%isSpectate || %this.isAdmin)
+	{
+		if(!$pickedKiller)
+			%role = "\c7Unknown";
+		else if(%client.killer)
+			%role = "\c0Killer";
+		else
+			%role = "\c2Innocent";
+	}
+	%str = "<font:Verdana:26><tab:120,240><color:FFFFFF>" @ %timestr @ "<just:right>" @ %stats @ "<just:left>\n" @ %name @ %a @ "<just:right>" @ %cosmetics @ "<just:left>\n\c6Role: " @ %role;
 
 	commandToClient(%this, 'bottomPrint', %str, 0, 1);
 }

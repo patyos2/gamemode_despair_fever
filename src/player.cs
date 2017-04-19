@@ -41,6 +41,20 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 	maxTools = 6;
 };
 
+function PlayerDespairArmor::onAdd(%data, %player)
+{
+	parent::onAdd(%data, %player);
+	if(%player.health $= "")
+	{
+		%player.maxhealth = 100;
+		%player.health = 100;
+	}
+	if(%player.swingSpeedMod $= "")
+	{
+		%player.swingSpeedMod = 1;
+	}
+}
+
 datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 {
 	shapeFile = "base/data/shapes/player/m_df.dts";
@@ -130,8 +144,12 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 		}
 		else if(!isObject(%obj.getMountedImage(0)))
 		{
+			%range = 6;
+			if($DespairTrial)
+				%range = 16;
+
 			%a = %obj.getEyePoint();
-			%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
+			%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), %range));
 
 			%mask =
 				$TypeMasks::FxBrickObjectType |
@@ -143,6 +161,11 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 
 			if(isObject(%ray) && %ray.getClassName() $= "Item")
 			{
+				if(!%ray.canPickup) //examine
+				{
+					%obj.client.examineObject(%ray);
+					return;
+				}
 				%data = %ray.getDataBlock();
 				if(%data.className $= "DespairWeapon")
 				{
@@ -167,7 +190,12 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 					%ray.delete();
 					return;
 				}
-			}			
+			}
+			else if(isObject(%ray) && %ray.getType() & $TypeMasks::PlayerObjectType)
+			{
+				if(isObject(%obj.client))
+					%obj.client.examineObject(%ray);
+			}
 		}
 	}
 	Parent::onTrigger(%this, %obj, %slot, %state);
@@ -180,6 +208,11 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 		%obj.lastKillerDash = $Sim::Time;
 		%this.killerDash(%obj);
 	}
+}
+
+function PlayerFrozenArmor::onTrigger(%this, %obj, %slot, %state)
+{
+	PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state);
 }
 
 function player::applyAppearance(%pl,%cl)

@@ -8,7 +8,7 @@ function chooseNextClient(%queueName)
 	for (%i = 0; %i < %count; %i++)
 	{
 		%cl = ClientGroup.getObject(%i);
-		if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame)
+		if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons) //RDMed
 			continue;
 		%bl_id = %cl.bl_id;
 		%chance = 1;

@@ -43,12 +43,11 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 			}
 			%this.bloody["chest_front"] = %bool;
 			%this.bloody["chest_back"] = %bool;
-			%this.bloody["chest_lside"] = %bool;
-			%this.bloody["chest_rside"] = %bool;
 			%this.bloody["head"] = %bool;
 			if(!%bool)
 				%this.bloodyFootprints = 0;
 	}
+	%this.bloody = %this.bloody["lhand"] || %this.bloody["rhand"] || %this.bloody["chest_front"] || %this.bloody["chest_back"] || %this.bloody["head"];
 	if (isObject(%client))
 		%client.applyBodyParts();
 }

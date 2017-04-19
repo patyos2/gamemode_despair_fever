@@ -10,8 +10,8 @@ function Player::KnockOut(%this, %duration)
 	if (isObject(%client) && isObject(%client.camera))
 	{
 		//messageClient(%client, '', 'You will be unconscious for %1 seconds.', %duration / 1000);
-		if (%client.getControlObject() != %client.camera)
-		{
+		//if (%client.getControlObject() != %client.camera)
+		//{
 			// %client.camera.setMode("Corpse", %this);
 			// %client.setControlObject(%client.camera);
 			if (!isObject($KOScreenShape))
@@ -43,7 +43,7 @@ function Player::KnockOut(%this, %duration)
 			%camera.mode = "Observer";
 			%client.setControlObject(%camera);
 			%camera.setControlObject(%client.dummyCamera);
-		}
+		//}
 	}
 
 	%this.setArmThread(land);
@@ -114,6 +114,12 @@ function Player::WakeUp(%this)
 	//%this.setShapeNameDistance($defaultMinigame.shapeNameDistance);
 	%this.changeDataBlock(PlayerDespairArmor);
 	%this.playThread(0, "root");
+
+	%pos = %this.getPosition();
+
+	%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
+	if(!%ray || %ray.getName() !$= "_bed")
+		%this.setStatusEffect($SE_passiveSlot, "sore back");
 	%client.updateBottomPrint();
 }
 

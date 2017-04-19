@@ -144,11 +144,11 @@ function getPaperTips()
 
 	%choice[%high++] = "Stuff you see in the news is sometimes inaccurate. Be sure to double-check!";
 	%choice[%high++] = "Spilled Coke on your shirt? Just throw a coat on - nobody will see your dirty shirt from under it!";
-	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can’t otherwise see.";
+	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can't otherwise see.";
 	%choice[%high++] = "A shower will not only completely clean you off, but will leave you feeling fresh and good about yourself!";
-	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won’t know it’s you!";
+	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won't know it's you!";
 	%choice[%high++] = "If you see something suspicious, scream! If you scream you'll be heard much farther.";
-	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you’ll be in a constant state of internal conflict.";
+	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you'll be in a constant state of internal conflict.";
 
 	return %choice[getRandom(%high)];
 }

@@ -78,11 +78,13 @@ function despairOnKill(%victim, %attacker)
 	if(%victim == %attacker)
 	{
 		%victim.player.suicide = true;
-		return;
+		return 1;
 	}
 
 	if(!%victim.killer && !%attacker.killer)
 	{
+		%attacker.player.setSpeedScale(0.1);
+		%attacker.player.noWeapons = true;
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed";
 		echo("-+ " @ %msg);
 		%count = ClientGroup.getCount();
@@ -94,7 +96,7 @@ function despairOnKill(%victim, %attacker)
 				messageClient(%other, '', %msg);
 			}
 		}
-		return;
+		return 0;
 	}
 
 	if(%victim.killer || %attacker.killer)
@@ -117,7 +119,7 @@ function despairOnKill(%victim, %attacker)
 			DespairSetWeapons(0);
 		//if(!isEventPending($DefaultMiniGame.missingSchedule))
 		//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
-		return;
+		return 1;
 	}
 }
 
@@ -177,9 +179,6 @@ function despairOnMorning()
 		}
 	}
 
-	if($deathCount > 0) //No evidence will spawn if there were deaths
-		return;
-
 	%count = BrickGroup_888888.NTObjectCount["_evidence"];
 	if(%count <= 0)
 		return;
@@ -195,7 +194,7 @@ function despairOnMorning()
 		%a[%j] = %x;
 	}
 
-	%evidencePapers = $days + (getRandom(0, 2) - 1);
+	%evidencePapers = $deathCount > 0 ? 0 : ($days + (getRandom(0, 2) - 1));
 	%tipsPapers = getRandom(3, 6);
 	%trashPapers = getRandom(3, 6);
 	//Spawn evidence
@@ -254,6 +253,20 @@ function despairOnEvening()
 	}
 }
 
+function despairOnLateEvening()
+{
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+	{
+		%client = $DefaultMiniGame.member[%i];
+		%player = %client.player;
+		if(isObject(%player))
+		{
+			if(!%client.killer && %player.statusEffect[$SE_sleepSlot] $= "")
+				%player.setStatusEffect($SE_sleepSlot, "sleepy");
+		}
+	}
+}
+
 function despairOnNight()
 {
 	if(!$pickedKiller)
@@ -266,6 +279,10 @@ function despairOnNight()
 		%client.killer = true;
 		echo(%client.getplayername() SPC "is killa");
 		$pickedKiller = %client;
+		ServerPlaySong("MusicOpeningPre");
+
+		if(%client.player.unconscious)
+			%client.player.WakeUp();
 	}
 
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
@@ -275,8 +292,6 @@ function despairOnNight()
 		if(isObject(%player))
 		{
 			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
-			if(!%client.killer && %player.statusEffect[$SE_sleepSlot] $= "")
-				%player.setStatusEffect(%slot, "tired");
 			%client.updateBottomprint();
 		}
 	}
@@ -323,7 +338,7 @@ function courtPlayers()
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
-	DayCycle.setDayLength(1200); //20 mins
+	DayCycle.setDayLength(1800); //30 mins
 	setDayCycleTime(0.25);
 	%charCount = GameCharacters.getCount();
 	// prepare
@@ -402,6 +417,8 @@ function courtPlayers()
 	$DespairTrial = true;
 	$DespairTrialOpening = true;
 	DespairSetWeapons(0);
+
+	despairBottomPrintLoop();
 }
 
 function DespairStartOpeningStatements()
@@ -414,6 +431,7 @@ function DespairStartOpeningStatements()
 
 function DespairCycleOpeningStatements(%j)
 {
+	talk(%j);
 	if(%j >= $DefaultMiniGame.numMembers)
 	{
 		$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairStartDiscussion);
@@ -427,9 +445,11 @@ function DespairCycleOpeningStatements(%j)
 		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		{
 			%targ = $DefaultMiniGame.member[%i];
+			if(!isObject(%targ.player))
+				continue;
 			%camera = %targ.camera;
 			//aim the camera at the target
-			%pos = vectorAdd(%player.getHackPosition(), vectorScale(%player.getForwardVector(), 2));
+			%pos = vectorAdd(%player.getHackPosition(), vectorScale(%player.getForwardVector(), 3));
 			%delta = vectorSub(%player.getHackPosition(), %pos);
 			%deltaX = getWord(%delta, 0);
 			%deltaY = getWord(%delta, 1);
@@ -462,8 +482,9 @@ function DespairStartDiscussion()
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
-		%client.playPath(TrialDiscussionPath);
-		%client.schedule(5000, setControlObject, %client.player);
+		//%client.playPath(TrialDiscussionPath);
+		%client.schedule(0, setControlObject, %client.player);
+		%client.camera.schedule(0, setControlObject, %client.camera);
 	}
 	$DespairTrialOpening = false;
 	ServerPlaySong("MusicTrialDiscussion");
@@ -578,7 +599,7 @@ function DespairUpdateCastVote(%player)
 		return;
 
 	%a = %player.getEyePoint();
-	%v = %player.getEyeVector();
+	%v = %player.getAimVector();
 	%b = VectorAdd(%a, VectorScale(%v, 100));
 	%mask = $TypeMasks::PlayerObjectType;
 	%ray = containerRayCast(%a, %b, %mask, %player);
@@ -588,6 +609,10 @@ function DespairUpdateCastVote(%player)
 		%col = "0";
 	
 	%player.voteTarget = %col;
+	if(isObject(%col) && isObject(%col.client) && isObject(%col.character))
+		commandToClient(%player.client, 'CenterPrint', "\c3You are voting against\c6" SPC %col.character.name, 1);
+	else
+		commandToClient(%player.client, 'ClearCenterPrint');
 	%player.DespairUpdateCastVote = schedule(32, %player, "DespairUpdateCastVote", %player);
 }
 
@@ -619,7 +644,7 @@ function DespairTrialDropTool(%cl, %slot)
 	if (%tool.getName() $= "KeyItem")
 		%item.setShapeName(%item.itemProps.name);
 	else if (%tool.getName() $= "PaperItem")
-		%item.setShapeName("\"" @ %item.itemProps.contents @ "\"");
+		%item.setShapeName(%item.itemProps.name);
 	else
 		%item.setShapeName(%tool.uiName);
 	%item.canPickUp = false;
