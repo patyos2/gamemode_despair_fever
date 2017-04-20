@@ -46,7 +46,7 @@ datablock ShapeBaseImageData(SledgehammerImage)
 	fireManual = true;
 
 	windUp = 0.3;
-	fireDelay = 1;
+	fireDelay = 1.5;
 	fireScript = "onFire";
 	meleeRange = 4;
 
@@ -76,6 +76,7 @@ function SledgehammerImage::onMount(%image, %player, %slot)
 		%player.schedule(32, stopThread, 1);
 	}
 	%player.updateBloody = 0;
+	%player.playAudio(1, "bluntEquipSound");
 }
 
 function SledgehammerImage::onUnMount(%image, %player, %slot)
@@ -99,6 +100,7 @@ function SledgehammerImage::onFire(%image, %player)
 	%player.playThread(1, "1hswing" @ %player.swingType);
 	%player.lastFireTime = $Sim::Time;
 	fireMelee(%image, %player);
+	%player.playAudio(1, "bluntSwingSound" @ getRandom(1, 3));
 }
 
 function SledgehammerImage::onMeleeHit(%image, %player, %object, %position, %normal)
@@ -136,7 +138,7 @@ function SledgehammerImage::onMeleeHit(%image, %player, %object, %position, %nor
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}
-
+		ServerPlay3D("BluntHitSound" @ getRandom(1, 3), %position);
 		return %object.damage(%player, %position, %damage, %image.type);
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)

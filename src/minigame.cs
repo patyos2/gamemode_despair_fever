@@ -23,6 +23,8 @@ function createPlayer(%client)
 	%gender = getRandomGender();
 	%character = new ScriptObject()
 	{
+		class = "Character";
+
 		gender = %gender;
 		name = getRandomName(%gender);
 		appearance = getRandomAppearance(%gender);
@@ -289,7 +291,7 @@ package DespairFever
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 
-		if($days < 1)
+		if(!$pickedKiller)
 			createPlayer(%client);
 	}
 

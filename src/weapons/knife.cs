@@ -1,3 +1,22 @@
+datablock AudioProfile(KnifeHitSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/KnifeStab1.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(KnifeHitSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/KnifeStab2.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(KnifeHitSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/KnifeStab3.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
 datablock ItemData(KnifeItem)
 {
 	category = "DespairWeapon";
@@ -136,7 +155,7 @@ function KnifeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}
-
+		ServerPlay3D("KnifeHitSound" @ getRandom(1, 3), %position);
 		return %object.damage(%player, %position, %damage, %image.type);
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)

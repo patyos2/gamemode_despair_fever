@@ -36,11 +36,11 @@ package DespairHealth
 
 		%player.attackCount++;
 		%player.attackType[%player.attackCount] = %type;
-		%player.attackSource[%player.attackCount] = %src;
 		%player.attackDot[%player.attackCount] = %dot;
+		%player.attackSource[%player.attackCount] = %src;
 		%player.attackClient[%player.attackCount] = %attacker;
+		%player.attackCharacter[%player.attackCount] = %attacker.character;
 		%player.attackTime[%player.attackCount] = $Sim::Time;
-
 		if (%pos !$= "")
 		{
 			%region = %player.getRegion(%pos, true);

@@ -36,10 +36,9 @@ function GameConnection::playPath(%this, %path)
 			%marker.type,
 			%marker.smoothingType
 		);
-
 		if (!%i)
 		{
-			%this.pathCamera.setPosition(0);
+			%this.pathCamera.setPosition(1);
 			%this.pathCamera.popFront();
 		}
 	}

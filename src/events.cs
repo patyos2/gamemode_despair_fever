@@ -53,7 +53,6 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 }
 
 //Set camera from brick to direction
-
 registerOutputEvent("fxDTSBrick", "setCameraDir", "list North 0 East 1 South 2 West 3", 1);
 function fxDTSBrick::setCameraDir(%brick, %dir, %client)
 {
@@ -83,6 +82,15 @@ function fxDTSBrick::setCameraDir(%brick, %dir, %client)
 	%client.setControlObject(%camera);
 	%camera.setControlObject(%client.dummyCamera);
 	%client.player.inCameraEvent = true;
+}
+
+registerOutputEvent(Player, _setStatusEffect, "int 0" SPC $SE_maxStatusEffects TAB "string 50 80", 1);
+function Player::_setStatusEffect(%this, %slot, %effect)
+{
+	if(%effect $= "")
+		%this.removeStatusEffect(%slot, %effect);
+	else
+		%this.setStatusEffect(%slot, %effect);
 }
 
 package DespairEvents

@@ -2,6 +2,8 @@
 $Despair::DayLength = 360; //6 minutes for a full cycle
 $Despair::InvestigationLength = 300; //4 mins
 //MOTEL MAP PREFS:
+$mapCenter = "-87.7265 -20.5779 0.20202";
+$boundaries = 170;
 $Despair::RoomCount = 16;
 //male block
 $roomNum[1] = "16";

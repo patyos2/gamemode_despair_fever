@@ -113,6 +113,10 @@ function despairOnKill(%victim, %attacker)
 			%attacker.play2d(KillerJingleSound);
 			%msg = "<color:FF0000>You murdered the killer in cold blood! It's no self defence. You become the murderer yourself!";
 			messageClient(%attacker, '', "<font:impact:30>" @ %msg);
+			if(%attacker.player.unconscious)
+				%attacker.player.WakeUp();
+			if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
+					%attacker.player.removeStatusEffect($SE_sleepSlot);
 		}
 		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 		if ($deathCount >= %maxDeaths)
@@ -283,6 +287,8 @@ function despairOnNight()
 
 		if(%client.player.unconscious)
 			%client.player.WakeUp();
+		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
+				%client.player.removeStatusEffect($SE_sleepSlot);
 	}
 
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
@@ -329,7 +335,7 @@ function DespairSpecialChat(%client, %text)
 	%shape.deleteSchedule = %shape.schedule(3000, delete);
 	echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 
-	$DefaultMiniGame.chatMessageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
+	MessageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
 	return 1;
 }
 
@@ -404,9 +410,8 @@ function courtPlayers()
 			%player.changeDataBlock(playerFrozenArmor);
 			%player.playThread(3, "standing");
 			%player.setVelocity("0 0 0");
-
-			%client.playPath(TrialIntroPath);
 		}
+		%client.playPath(TrialIntroPath);
 	}
 
 	ServerPlaySong("MusicOpeningPre");
@@ -445,8 +450,6 @@ function DespairCycleOpeningStatements(%j)
 		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		{
 			%targ = $DefaultMiniGame.member[%i];
-			if(!isObject(%targ.player))
-				continue;
 			%camera = %targ.camera;
 			//aim the camera at the target
 			%pos = vectorAdd(%player.getHackPosition(), vectorScale(%player.getForwardVector(), 3));
@@ -468,6 +471,7 @@ function DespairCycleOpeningStatements(%j)
 			%camera.setControlObject(%targ.dummyCamera);
 		}
 		$DefaultMiniGame.chatMessageAll('', "\c5What will" SPC %player.character.name SPC "say?");
+		%client.chatMessage("\c5(It's your turn!)");
 		$DefaultMiniGame.eventSchedule = schedule(10000, 0, DespairCycleOpeningStatements, %j+1);
 	}
 	else
@@ -482,9 +486,12 @@ function DespairStartDiscussion()
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
-		//%client.playPath(TrialDiscussionPath);
-		%client.schedule(0, setControlObject, %client.player);
-		%client.camera.schedule(0, setControlObject, %client.camera);
+		%client.playPath(TrialDiscussionPath);
+		%client.camera.schedule(5000, setControlObject, %client.camera);
+		if(isObject(%client.player))
+			%client.schedule(5000, setControlObject, %client.player);
+		else
+			%client.schedule(5000, setControlObject, %client.camera);
 	}
 	$DespairTrialOpening = false;
 	ServerPlaySong("MusicTrialDiscussion");

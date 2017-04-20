@@ -15,7 +15,7 @@ $EnvGuiServer::AmbientLightColor 0.584112 0.565421 0.546729 1.000000
 $EnvGuiServer::ShadowColor 0.457944 0.434579 0.448598 1.000000
 $EnvGuiServer::SunFlareColor 0.102804 0.093458 0.084112 1.000000
 $EnvGuiServer::SunFlareSize 2.38775
-$EnvGuiServer::VisibleDistance 692
+$EnvGuiServer::VisibleDistance 430
 $EnvGuiServer::FogDistance 0
 $EnvGuiServer::FogHeight 
 $EnvGuiServer::FogColor 0.869159 0.691589 0.485981 1.000000

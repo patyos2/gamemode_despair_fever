@@ -50,7 +50,7 @@ datablock ShapeBaseImageData(MacheteImage)
 	fireScript = "onFire";
 	meleeRange = 4;
 
-	damage = 50;
+	damage = 40;
 
 	stateName[0]					= "Activate";
 	stateAllowImageChange[0]		= 1;
@@ -76,6 +76,7 @@ function MacheteImage::onMount(%image, %player, %slot)
 		%player.schedule(32, stopThread, 1);
 	}
 	%player.updateBloody = 0;
+	%player.playAudio(1, "bladeEquipSound");
 }
 
 function MacheteImage::onUnMount(%image, %player, %slot)
@@ -99,6 +100,7 @@ function MacheteImage::onFire(%image, %player)
 	%player.playThread(1, "1hswing" @ %player.swingType);
 	%player.lastFireTime = $Sim::Time;
 	fireMelee(%image, %player);
+	%player.playAudio(1, "bladeSwingSound" @ getRandom(1, 3));
 }
 
 function MacheteImage::onMeleeHit(%image, %player, %object, %position, %normal)
@@ -136,7 +138,7 @@ function MacheteImage::onMeleeHit(%image, %player, %object, %position, %normal)
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}
-
+		ServerPlay3D("BladeHitSound" @ getRandom(1, 2), %position);
 		return %object.damage(%player, %position, %damage, %image.type);
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)

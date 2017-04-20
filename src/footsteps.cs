@@ -89,10 +89,13 @@ function Armor::onLand(%this, %obj)
 			continue;
 		}
 
-		if (%obj.bloodyFootprints > 0)
+		if($FOOTSTEPS_BLOODYFOOTPRINTS && $investigationStart $= "")
 		{
-			%obj.doBloodyFootprint(%ray, %i, %obj.bloodyFootprints / %obj.bloodyFootprintsLast);
-			%obj.bloodyFootprints--;
+			if (%obj.bloodyFootprints > 0)
+			{
+				%obj.doBloodyFootprint(%ray, %i, %obj.bloodyFootprints / %obj.bloodyFootprintsLast);
+				%obj.bloodyFootprints--;
+			}
 		}
 
 		%color = -1;
@@ -139,7 +142,7 @@ function Armor::onFootstep(%this, %obj, %foot)
 		return;
 	}
 
-	if($FOOTSTEPS_BLOODYFOOTPRINTS)
+	if($FOOTSTEPS_BLOODYFOOTPRINTS && $investigationStart $= "")
 	{
 		initContainerRadiusSearch(getWords(%ray, 1, 3), 0.4, $TypeMasks::ShapeBaseObjectType);
 		while (%col = containerSearchNext())

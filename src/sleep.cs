@@ -63,6 +63,11 @@ function Player::KnockOut(%this, %duration)
 		%this.knockoutLength = %duration;
 	}
 	%this.setStatusEffect($SE_sleepSlot, "sleeping");
+	if(%this.statusEffect[$SE_passiveSlot] $= "fresh")
+	{
+		%this.freshSleep = true;
+		%this.removeStatusEffect($SE_passiveSlot);
+	}
 	%this.KnockOutTick(%duration);
 }
 
@@ -110,16 +115,18 @@ function Player::WakeUp(%this)
 	%this.setArmThread(look);
 	%this.unconscious = false;
 	%this.isBody = false;
-	%this.setStatusEffect($SE_sleepSlot, "");
 	//%this.setShapeNameDistance($defaultMinigame.shapeNameDistance);
 	%this.changeDataBlock(PlayerDespairArmor);
 	%this.playThread(0, "root");
 
+	%this.removeStatusEffect($SE_sleepSlot);
 	%pos = %this.getPosition();
-
 	%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
 	if(!%ray || %ray.getName() !$= "_bed")
 		%this.setStatusEffect($SE_passiveSlot, "sore back");
+	else if(%this.freshSleep)
+		%this.setStatusEffect($SE_passiveSlot, "shining");
+	%this.freshSleep = "";
 	%client.updateBottomPrint();
 }
 
@@ -134,6 +141,14 @@ function serverCmdSleep(%this, %bypass)
 		return;
 	}
 	%sec = %se $= "exhausted" ? 80 : 60;
+	%pos = %pl.getPosition();
+
+	%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
+	if(!%ray || %ray.getName() !$= "_bed")
+	{
+		%sec += 10;
+		%cold = "<color:FF0000>on the cold floor";
+	}
 	if (%bypass)
 	{
 		if (%pl.unconscious)
@@ -142,7 +157,7 @@ function serverCmdSleep(%this, %bypass)
 		%this.updateBottomPrint();
 		return;
 	}
-	%message = "\c2Are you sure you want to sleep?\nYou will be unconscious for" SPC %sec SPC "seconds!";
+	%message = "Are you sure you want to sleep\n" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:AAAA00>" SPC %sec SPC "<color:0000FF>seconds!";
 	commandToClient(%this, 'messageBoxYesNo', "Sleep Prompt", %message, 'SleepAccept');
 }
 

@@ -1,3 +1,87 @@
+datablock AudioProfile(BladeHitSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeHit1.wav";
+	description = audioClose3D;
+	preload = true;
+};
+datablock AudioProfile(BladeHitSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeHit2.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(BladeSwingSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeSwing1.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(BladeSwingSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeSwing2.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(BladeSwingSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeSwing3.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BladeEquipSound)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BladeEquip.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BluntHitSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/PipeHit1.wav";
+	description = audioClose3D;
+	preload = true;
+};
+datablock AudioProfile(BluntHitSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/PipeHit2.wav";
+	description = audioClose3D;
+	preload = true;
+};
+datablock AudioProfile(BluntHitSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/PipeHit3.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(BluntSwingSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BluntSwing1.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(BluntSwingSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BluntSwing2.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+datablock AudioProfile(BluntSwingSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BluntSwing3.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BluntEquipSound)
+{
+	fileName = $Despair::Path @ "res/sounds/weapons/BluntEquip.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
 datablock ItemData(noWeaponIcon)
 {
 	iconName = $Despair::Path @ "res/shapes/weapons/icon_noWeapon";

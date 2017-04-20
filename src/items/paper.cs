@@ -2,9 +2,9 @@ datablock ItemData(PaperItem)
 {
 	shapeFile = $Despair::Path @ "res/shapes/items/Paper.dts";
 	image = PaperImage;
-	mass = 1;
-	drag = 0.3;
-	density = 0.2;
+	mass = 0.5;
+	drag = 0.8;
+	density = 0;
 	elasticity = 0;
 	friction = 1;
 	doColorShift = true;
