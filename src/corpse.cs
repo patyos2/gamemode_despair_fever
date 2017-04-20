@@ -118,11 +118,11 @@ function Player::carryTick(%this)
 		return;
 	}
 	%eyePoint = %player.getEyePoint();
-	%eyeVector = %player.getAimVector();
+	%normal = %player.getAimVector();
+	%eyeVector = getWords(%normal, 0, 1) SPC getWord(%normal, 2) * 0.5;
 
 	%center = %this.getPosition();
 	%target = vectorAdd(%eyePoint, vectorScale(%eyeVector, 3));
-	%target = getWords(%target, 0, 1) SPC vectorScale(getWord(%target, 2), 0.5);
 
 	if (vectorDist(%center, %target) > 4)
 	{
@@ -162,7 +162,7 @@ package DespairCorpses
 			}
 			if(%state && isObject(%col = %obj.findCorpseRayCast()))
 			{
-				if ((%col.isDead && ($investigationStart $= "" || %obj.client.killer)) && $Sim::Time - %obj.lastBodyClick < 0.3)
+				if ((!%col.isDead || ($investigationStart $= "" || %obj.client.killer)) && $Sim::Time - %obj.lastBodyClick < 0.3)
 				{
 					if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
 						%col.carryPlayer.playThread(2, "root");

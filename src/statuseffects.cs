@@ -98,6 +98,8 @@ function Player::updateStatusEffect(%player, %slot)
 		case "tired":
 			%player.setStatusEffect(%slot, "exhausted");
 		case "exhausted":
+			if(isObject(%player.client))
+				%player.client.chatMessage("\c5You pass out...");
 			%player.KnockOut(90);
 		case "sleeping":
 			//%player.sleep() handles this
