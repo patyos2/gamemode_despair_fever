@@ -155,46 +155,65 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 				$TypeMasks::FxBrickObjectType |
 				$TypeMasks::PlayerObjectType |
 				$TypeMasks::CorpseObjectType |
+				$TypeMasks::StaticShapeObjectType |
 				$TypeMasks::ItemObjectType;
 
 			%ray = containerRayCast(%a, %b, %mask, %obj);
-
-			if(isObject(%ray) && %ray.getClassName() $= "Item")
+			if(isObject(%ray))
 			{
-				if(!%ray.canPickup) //examine
+				if(%ray.getClassName() $= "Item")
 				{
-					%obj.client.examineObject(%ray);
-					return;
-				}
-				%data = %ray.getDataBlock();
-				if(%data.className $= "DespairWeapon")
-				{
-					if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+					if(!%ray.canPickup) //examine
 					{
-						%obj.setTool(%obj.weaponSlot, %data, %ray.itemProps, 1, 0);
+						%obj.client.examineObject(%ray);
+						return;
+					}
+					%data = %ray.getDataBlock();
+					if(%data.className $= "DespairWeapon")
+					{
+						if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+						{
+							%obj.setTool(%obj.weaponSlot, %data, %ray.itemProps, 1, 0);
+							%ray.itemProps = "";
+							%ray.delete();
+						}
+						return;
+					}
+					if(%data.className $= "Hat")
+					{
+						%data.onPickup(%ray, %obj);
+						return;
+					}
+					if(%data.getName() $= "PaperstackItem")
+					{
+						%data.onPickUp(%ray, %obj);
+						return;
+					}
+					if (%ray.canPickup && (%slot = %obj.addTool(%data, %ray.itemProps, 1, 0)) != -1)
+					{
+						if(%data.getName() $= "MopItem")
+							%data.onPickup(%ray, %obj, %slot);
 						%ray.itemProps = "";
 						%ray.delete();
+						return;
 					}
-					return;
 				}
-				if(%data.className $= "Hat")
+				else if(%ray.getType() & $TypeMasks::PlayerObjectType)
 				{
-					%data.onPickup(%ray, %obj);
-					return;
-				}
-				if (%ray.canPickup && (%slot = %obj.addTool(%data, %ray.itemProps, 1, 0)) != -1)
-				{
-					if(%data.getName() $= "MopItem")
-						%data.onPickup(%ray, %obj, %slot);
-					%ray.itemProps = "";
-					%ray.delete();
+					if(isObject(%obj.client))
+						%obj.client.examineObject(%ray);
 					return;
 				}
 			}
-			else if(isObject(%ray) && %ray.getType() & $TypeMasks::PlayerObjectType)
+
+			initContainerRadiusSearch(getWords(%ray, 1, 3), 0.1,
+				$TypeMasks::StaticShapeObjectType);
+
+			if (isObject(%col = containerSearchNext()))
 			{
 				if(isObject(%obj.client))
-					%obj.client.examineObject(%ray);
+					%obj.client.examineObject(%col);
+				return;
 			}
 		}
 	}

@@ -33,7 +33,7 @@ function GameConnection::updateBottomprint(%this)
 
 		%time = getDayCycleTimeString(%time, 1);
 		%mod12 = getWord(%time, 1);
-		%time = getWord(%time, 0) SPC (%mod12 $= "PM" ? "\c1" : "\c3") @ %mod12;
+		%time = getWord(%time, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
 		%timestr = %time TAB %subtimer;
 	}

@@ -15,7 +15,7 @@ package DespairHealth
 	{
 		%client = %player.client;
 		if (%client.miniGame != $DefaultMiniGame)
-			return Parent::damage(%data, %player, %src, %pos, %damage, %type);
+			return;
 
 		if(%player.isCrouched())
 			%damage *= 3;
@@ -71,6 +71,7 @@ package DespairHealth
 					%player.client.applyBodyParts();
 			}
 			%player.bloody = true;
+			%player.bloodyWriting = 2;
 		}
 
 		%player.health -= %damage;
@@ -96,10 +97,11 @@ package DespairHealth
 				%player.health = %player.maxhealth;
 				%player.KnockOut(30);
 			}
-			return;
+			return 1;
 		}
 		%player.playPain();
 		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
+		return 1;
 	}
 
 	function Armor::onDisabled(%data, %player, %state)
@@ -116,6 +118,7 @@ package DespairHealth
 			%client.camera.setControlObject(%client.camera);
 			%client.player = "";
 			%player.client = "";
+			commandToClient(%client, 'ClearCenterPrint');
 		}
 
 		%player.isDead = 1;

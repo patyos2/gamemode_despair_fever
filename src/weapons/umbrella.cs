@@ -76,7 +76,8 @@ function UmbrellaImage::onMount(%image, %player, %slot)
 		%player.schedule(32, stopThread, 1);
 	}
 	%player.updateBloody = 0;
-	%player.playAudio(1, "bluntEquipSound");
+	if(isObject(%player.client))
+		%player.client.play3d("bluntEquipSound", %player.getSlotTransform(0));
 }
 
 function UmbrellaImage::onUnMount(%image, %player, %slot)
@@ -125,6 +126,7 @@ function UmbrellaImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))
@@ -132,10 +134,5 @@ function UmbrellaImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		}
 		ServerPlay3D("BluntHitSound" @ getRandom(1, 3), %position);
 		return %object.damage(%player, %position, %damage, %image.type);
-	}
-	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
-	{
-		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(1);
 	}
 }

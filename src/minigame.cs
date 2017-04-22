@@ -105,10 +105,11 @@ function despairEndGame()
 {
 	if (isEventPending($DefaultMiniGame.restartSchedule))
 		return;
+	cancel($musicSchedule);
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
-	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $pickedKiller.getPlayerName(), $pickedKiller.character.name);
+	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currKiller.getPlayerName(), $currKiller.character.name);
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
 
@@ -154,6 +155,16 @@ function despairPrepareGame()
 		%choices = removeWord(%choices, %index); //Only one of a kind
 	}
 
+	//Random items!
+	%choices = "RepairkitItem LockpickItem PenItem FlashlightItem";
+	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
+	{
+		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
+		%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
+		if(isObject(%pick))
+			%brick.setItem(%pick);
+	}
+
 	//Reset papers
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_evidence"]; %i++)
 	{
@@ -169,10 +180,11 @@ function despairPrepareGame()
 
 	roomPlayers();
 
-	$DespairTrial = false;
+	$DespairTrial = "";
 	$announcements = 0;
 	$investigationStart = "";
-	$pickedKiller = false;
+	$pickedKiller = "";
+	$currentKiller = "";
 	$days = 0;
 	$deathCount = 0;
 	if($EnvGuiServer::DayCycleEnabled <= 0)

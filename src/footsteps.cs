@@ -99,7 +99,7 @@ function Armor::onLand(%this, %obj)
 		}
 
 		%color = -1;
-		%material = "stone";
+		%material = "concrete";
 		if (%ray.getType() & $TypeMasks::FxBrickObjectType)
 		{
 			%color = %ray.getColorID();
@@ -144,10 +144,10 @@ function Armor::onFootstep(%this, %obj, %foot)
 
 	if($FOOTSTEPS_BLOODYFOOTPRINTS && $investigationStart $= "")
 	{
-		initContainerRadiusSearch(getWords(%ray, 1, 3), 0.4, $TypeMasks::ShapeBaseObjectType);
+		initContainerRadiusSearch(getWords(%ray, 1, 3), 0.4, $TypeMasks::StaticShapeObjectType);
 		while (%col = containerSearchNext())
 		{
-			if (%col.getDataBlock().isBlood && %col.freshness >= 1 && $Sim::Time - %col.spillTime < 150) //2.5 minutes dry time
+			if (%col.isBlood && %col.freshness >= 1 && $Sim::Time - %col.spillTime < 150) //2.5 minutes dry time
 			{
 				%obj.setBloodyFootprints(getMin(%obj.bloodyFootprints + mCeil(%col.freshness * 2.5), $FOOTSTEPS_MAXBLOODSTEPS), %col.sourceClient); //Default freshness for splatter blood is 3, so 6 footsteps for fresh step.
 				%col.freshness--; //Decrease blood freshness
@@ -165,7 +165,7 @@ function Armor::onFootstep(%this, %obj, %foot)
 	}
 
 	%color = -1;
-	%material = "stone";
+	%material = "concrete";
 	if (%ray.getType() & $TypeMasks::FxBrickObjectType)
 	{
 		%color = %ray.getColorID();
@@ -310,5 +310,5 @@ loadFootstepSounds();
 
 function getMaterial(%color)
 {
-	return "stone";
+	return "concrete";
 }

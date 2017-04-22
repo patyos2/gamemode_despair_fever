@@ -41,7 +41,7 @@ function Player::findCorpseRayCast(%obj)
 {
 	%a = %obj.getEyePoint();
 	%b = vectorAdd(vectorScale(%obj.getEyeVector(), 5), %a);
-	%ray = containerRayCast(%a, %b, $TypeMasks::All ^ $TypeMasks::fxAlwaysBrickObjectType, %obj);
+	%ray = containerRayCast(%a, %b, $TypeMasks::fxBrickObjectType | $TypeMasks::playerObjectType, %obj);
 	if(%ray)
 		%b = getWords(%ray, 1, 3);
 	%center = vectorScale(vectorAdd(%a, %b), 0.5); //Get middle of raycast
@@ -119,7 +119,7 @@ function Player::carryTick(%this)
 	}
 	%eyePoint = %player.getEyePoint();
 	%normal = %player.getAimVector();
-	%eyeVector = getWords(%normal, 0, 1) SPC getWord(%normal, 2) * 0.5;
+	%eyeVector = getWords(%normal, 0, 1) SPC (getWord(%normal, 2) * 0.5) - 0.5;
 
 	%center = %this.getPosition();
 	%target = vectorAdd(%eyePoint, vectorScale(%eyeVector, 3));
@@ -132,7 +132,7 @@ function Player::carryTick(%this)
 		return;
 	}
 
-	%vel = vectorScale(vectorSub(%target, %center), 3);
+	%vel = vectorScale(vectorSub(%target, %center), 4);
 
 	%this.setVelocity(%vel);
 
@@ -162,7 +162,7 @@ package DespairCorpses
 			}
 			if(%state && isObject(%col = %obj.findCorpseRayCast()))
 			{
-				if ((!%col.isDead || ($investigationStart $= "" || %obj.client.killer)) && $Sim::Time - %obj.lastBodyClick < 0.3)
+				if ($Sim::Time - %obj.lastBodyClick < 0.3 && (%col.unconscious || ($investigationStart $= "" || %obj.client.killer)))
 				{
 					if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
 						%col.carryPlayer.playThread(2, "root");
@@ -176,6 +176,7 @@ package DespairCorpses
 					{
 						%obj.bloody["rhand"] = true;
 						%obj.bloody["lhand"] = true;
+						%player.bloodyWriting = 2;
 					}
 					if (isObject(%obj.client))
 					{

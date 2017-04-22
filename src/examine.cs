@@ -15,11 +15,10 @@ function GameConnection::examineObject(%client, %col)
 		%gender = %col.character.gender;
 		if (%col.isDead)
 		{
-			%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " dead.";
 			if(!%client.killer)
-			{
 				DespairCheckInvestigation(%player, %col);
-			}
+
+			%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " dead.";
 		}
 		else
 		{
@@ -32,7 +31,9 @@ function GameConnection::examineObject(%client, %col)
 			{
 				%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " bloody.";
 			}
-		}		
+		}
+		if(isObject(%img = %col.getMountedImage(0)))
+			%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " has a \c3" @ %img.item.uiName;
 	}
 
 	if(%col.getType() & $TypeMasks::itemObjectType)
@@ -55,6 +56,19 @@ function GameConnection::examineObject(%client, %col)
 				%b = "\n\c0It's bloody.";
 		}
 		%text = %text @ "This is \c3" @ %name @ "\n\c6" @ %b;
+	}
+
+	if(%col.getType() & $TypeMasks::StaticShapeObjectType)
+	{
+		if(%col.getDataBlock().getID() == nameToID("writingDecal"))
+		{
+			%text = %text @ "This is a " @ (%col.isBlood ? "\c0bloody" : "") SPC "scribble.";
+			%text = %text @ "\n" @ %col.contents;
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	commandToClient(%client, 'CenterPrint', %text, 3);

@@ -76,7 +76,8 @@ function KatanaImage::onMount(%image, %player, %slot)
 		%player.schedule(32, stopThread, 1);
 	}
 	%player.updateBloody = 0;
-	%player.playAudio(1, "bladeEquipSound");
+	if(isObject(%player.client))
+		%player.client.play3d("bladeEquipSound", %player.getSlotTransform(0));
 }
 
 function KatanaImage::onUnMount(%image, %player, %slot)
@@ -125,6 +126,7 @@ function KatanaImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.7) //Another random chance to get bloody hand
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))
@@ -133,6 +135,7 @@ function KatanaImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.7) //And random chance to get some blood on chest
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["chest_front"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))

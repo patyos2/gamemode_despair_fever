@@ -11,7 +11,19 @@ datablock itemData(PenItem)
 	colorShiftColor = "0 0 1 1";
 	uiName = "Pen";
 	canDrop = true;
+
+	itemPropsClass = "PenProps";
+	itemPropsAlways = true;
+
+	customPickupAlways = true;
+	customPickupMultiple = false;
 };
+
+function PenProps::onAdd(%this)
+{
+	%this.ink = 10;
+	%this.maxink = 10;
+}
 
 datablock ShapeBaseImageData(PenImage)
 {

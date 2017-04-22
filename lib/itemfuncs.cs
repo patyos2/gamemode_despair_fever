@@ -81,3 +81,24 @@ function Player::removeTool(%this, %index, %ignoreProps, %stealth)
 	if (%this.currTool == %index)
 		%this.unMountImage(0);
 }
+
+function Player::findTool(%this, %item)
+{
+	if(!isObject(%this) || !isObject(%item.getID()))
+		return;
+
+	%data = %item.getID();
+
+	for(%i=0;%i<%this.getDatablock().maxTools;%i++)
+	{
+		if(isObject(%this.tool[%i]))
+		{
+			%tool=%this.tool[%i].getID();
+			if(%tool==%data)
+			{
+				return %i;
+			}
+		}
+	}
+	return -1;
+}

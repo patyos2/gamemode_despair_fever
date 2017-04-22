@@ -76,7 +76,8 @@ function BatImage::onMount(%image, %player, %slot)
 		%player.schedule(32, stopThread, 1);
 	}
 	%player.updateBloody = 0;
-	%player.playAudio(1, "bluntEquipSound");
+	if(isObject(%player.client))
+		%player.client.play3d("bluntEquipSound", %player.getSlotTransform(0));
 }
 
 function BatImage::onUnMount(%image, %player, %slot)
@@ -125,6 +126,7 @@ function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))
@@ -136,6 +138,6 @@ function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
 	{
 		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(1);
+		return %object.doorDamage(0.5);
 	}
 }

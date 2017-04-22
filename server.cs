@@ -3,7 +3,7 @@ function r(%p)
 {
 	//setModPaths(getModPaths());
 	if (%p !$= "")
-		exec("./src/" @ %p @ ".cs");
+		exec("./" @ %p @ ".cs");
 	else
 		exec("./server.cs");
 }
@@ -29,7 +29,6 @@ exec("./src/chat.cs");
 exec("./src/corpse.cs");
 exec("./src/display.cs");
 exec("./src/door.cs");
-exec("./src/events.cs");
 exec("./src/examine.cs");
 exec("./src/footsteps.cs");
 exec("./src/hats.cs");
@@ -46,12 +45,16 @@ exec("./src/trial.cs");
 exec("./src/vocal.cs");
 exec("./src/weapons.cs");
 exec("./src/write.cs");
+exec("./src/events.cs"); //exec events last 'cuz it takes some variables from statuseffects.cs
 //items
 exec("./src/items/coat.cs");
+exec("./src/items/flashlight.cs");
 exec("./src/items/key.cs");
+exec("./src/items/lockpick.cs");
 exec("./src/items/mop.cs");
 exec("./src/items/paper.cs");
 exec("./src/items/pen.cs");
+exec("./src/items/repairkit.cs");
 //weapons
 exec("./src/weapons/axe.cs");
 exec("./src/weapons/bat.cs");

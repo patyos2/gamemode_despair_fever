@@ -134,6 +134,24 @@ function serverCmdSleep(%this, %bypass)
 {
 	if(!isObject(%pl = %this.player) || %this.miniGame != $defaultMinigame || $DespairTrial)
 		return;
+
+	if(%this.killer)
+	{
+		%pl.changeDatablock(PlayerCorpseArmor);
+		%pl.setArmThread(land);
+		%pl.setImageTrigger(0, 0);
+		%pl.playThread(0, "root");
+		%pl.playThread(1, "root");
+		%pl.playThread(2, "root");
+		%pl.playThread(3, "death1");
+		%pl.setActionThread("root");
+		%pl.unconscious = 1;
+		%pl.currResting = 1;
+		%pl.isBody = true;
+		%this.chatMessage("\c6You are faking sleep. Press any key to get up.");
+		return;
+	}
+
 	%se = %pl.statusEffect[$SE_sleepSlot];
 	if (%se !$= "sleepy" && %se !$= "tired" && %se !$= "exhausted")
 	{
@@ -157,7 +175,7 @@ function serverCmdSleep(%this, %bypass)
 		%this.updateBottomPrint();
 		return;
 	}
-	%message = "Are you sure you want to sleep\n" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:AAAA00>" SPC %sec SPC "<color:0000FF>seconds!";
+	%message = "Are you sure you want to sleep\n" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!";
 	commandToClient(%this, 'messageBoxYesNo', "Sleep Prompt", %message, 'SleepAccept');
 }
 

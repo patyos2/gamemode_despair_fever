@@ -85,7 +85,7 @@ function despairOnKill(%victim, %attacker)
 	{
 		%attacker.player.setSpeedScale(0.1);
 		%attacker.player.noWeapons = true;
-		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed";
+		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
 		echo("-+ " @ %msg);
 		%count = ClientGroup.getCount();
 		for (%i = 0; %i < %count; %i++)
@@ -110,8 +110,9 @@ function despairOnKill(%victim, %attacker)
 		if(%victim.killer)
 		{
 			%attacker.killer = true;
+			$currentKiller = %attacker;
 			%attacker.play2d(KillerJingleSound);
-			%msg = "<color:FF0000>You murdered the killer in cold blood! It's no self defence. You become the murderer yourself!";
+			%msg = "<color:FF0000>You murdered the killer in cold blood! Now it's your turn to get away with it...";
 			messageClient(%attacker, '', "<font:impact:30>" @ %msg);
 			if(%attacker.player.unconscious)
 				%attacker.player.WakeUp();
@@ -149,8 +150,13 @@ function despairMakeBodyAnnouncement(%unfound)
 	serverPlay2d(AnnouncementSound);
 	if (!%unfound)
 		$announcements++;
-	$DefaultMiniGame.messageAll('', '\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
-		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
+	%time = getDayCycleTime();
+	%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+	%time = %time - mFloor(%time); //get rid of excess stuff
+
+	%time = getDayCycleTimeString(%time, 1);
+	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
+		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 }
 
 function despairStartInvestigation(%no_announce)
@@ -167,6 +173,7 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
 		ServerPlaySong("MusicInvestigationStart");
+		$musicSchedule = schedule(15000, 0, ServerPlaySong, "MusicInvestigationIntro1");
 	}
 }
 
@@ -283,6 +290,7 @@ function despairOnNight()
 		%client.killer = true;
 		echo(%client.getplayername() SPC "is killa");
 		$pickedKiller = %client;
+		$currentKiller = %client;
 		ServerPlaySong("MusicOpeningPre");
 
 		if(%client.player.unconscious)
@@ -316,27 +324,7 @@ function DespairSpecialChat(%client, %text)
 		return 1;
 	}
 
-	%player.playThread(0, "talk");
-	%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
-
-	%name = %client.character.name;
-	serverPlay3D(DespairChatSound, %player.getHackPosition());
-
-	%shape = new Item()
-	{
-		datablock = DespairEmptyFloatItem;
-		position = VectorAdd(%player.position, "0 0 2");
-	};
-
-	%shape.setCollisionTimeout(%player);
-	%shape.setShapeName(%text);
-	%shape.setShapeNameDistance(30);
-	%shape.setVelocity("0 0 0.5");
-	%shape.deleteSchedule = %shape.schedule(3000, delete);
-	echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
-
-	MessageAll('', '<color:ffff80>%1\c6<color:fffff0>: %2', %name, %text);
-	return 1;
+	return 0;
 }
 
 function courtPlayers()
@@ -419,7 +407,7 @@ function courtPlayers()
 	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairStartOpeningStatements);
 
 	$DespairTrialCurrSpeaker = "";
-	$DespairTrial = true;
+	$DespairTrial = $Sim::Time;
 	$DespairTrialOpening = true;
 	DespairSetWeapons(0);
 
@@ -437,9 +425,10 @@ function DespairStartOpeningStatements()
 function DespairCycleOpeningStatements(%j)
 {
 	talk(%j);
-	if(%j >= $DefaultMiniGame.numMembers)
+	if(%j > $DefaultMiniGame.numMembers)
 	{
 		$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairStartDiscussion);
+		talk("All statements have been heard...");
 		return;
 	}
 	%player = $stand[%j].player;
@@ -476,6 +465,7 @@ function DespairCycleOpeningStatements(%j)
 	}
 	else
 	{
+		talk("Skipping: no player object");
 		DespairCycleOpeningStatements(%j+1);
 	}
 }

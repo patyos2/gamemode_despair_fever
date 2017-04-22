@@ -1,3 +1,9 @@
+datablock StaticShapeData(writingDecal)
+{
+	shapeFile = $Despair::Path @ "res/shapes/writing.dts";
+	canClean = true;
+};
+
 function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a10, %a11, %a12, %a13, %a14, %a15, %a16, %a17, %a18, %a19, %a20, %a20, %a22, %a23, %a24)
 {
 	if(!isObject(%player = %client.player))
@@ -10,24 +16,52 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 	if (%text $= "")
 		return;
 
-	if (%player.tool[%player.currTool] == nameToID(PaperItem))
+	if((%slot = %player.findTool("PenItem")) != -1)
 	{
-		//wow
+		%props = %player.getItemProps(%slot);
+		if(%props.ink <= 0)
+		{
+			messageClient(%client, '', "\c5Your pen ran out of ink!");
+			return;
+		}
+		%pen = true;
+		%prob = getMax(0, 1 - ((%props.ink*2)/%props.maxink));
+		%text = muffleText(%text, %prob);
+		%props.ink--;
+	}
+	else if(%player.bloodyWriting > 0)
+	{
+		%blood = true;
+		%text = muffleText(%text, 0.2);
+		%player.bloodyWriting--;
+	}
+
+	if(!%blood && !%pen)
+	{
+		messageClient(%client, '', "\c5You need something to write with!");
 		return;
 	}
 
-	//if %player is in critical health
-	//	...do stuff
-	//	return;
+	if (%player.tool[%player.currTool] == nameToID(PaperItem))
+	{
+		%props = %player.getItemProps();
+		%color = %pen ? "\c6" : "\c0";
+		if(%props.name $= "Daily News")
+			messageClient(%client, '', "\c5You are unable to write on this paper!");
+		else
+			%props.contents = %props.contents @ %color @ %text;
+		PaperImage.onMount(%player, 0);
+		return;
+	}
 
-	%a = %obj.getEyePoint();
-	%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 6));
+	%a = %player.getEyePoint();
+	%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
 
 	%mask =
 		$TypeMasks::FxBrickObjectType |
 		$TypeMasks::ItemObjectType;
 
-	%ray = containerRayCast(%a, %b, %mask, %obj);
+	%ray = containerRayCast(%a, %b, %mask, %player);
 
 	if(isObject(%ray))
 	{
@@ -35,12 +69,30 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		{
 			if (%ray.getDataBlock() == nameToID(PaperItem))
 			{
-				//wew
+				%props = %ray.itemProps;
+				%color = %pen ? "\c6" : "\c0";
+				if(%props.name $= "Daily News")
+					messageClient(%client, '', "\c5You are unable to write on this paper!");
+				else
+					%props.contents = %props.contents @ %color @ %text;
+				return;
 			}
 		}
 		else
 		{
-			//GRAFFITI
+			%rayPosition = getWords(%ray, 1, 3);
+			%rayNormal = getWords(%ray, 4, 6);
+			%rayPosition = VectorAdd(%rayPosition, VectorScale(%rayNormal, 0.01));
+			%forward = vectorScale(%player.getForwardVector(), getWord(%rayNormal, 2));
+			%angle = mATan(getWord(%forward, 0), getWord(%forward, 1));
+			%color = %pen ? "0 0 1 1" : (0.75 + 0.1 * getRandom() @ " 0 0 1");
+			%decal = spawnDecal(writingDecal, %rayPosition, %rayNormal, 1, %color, %angle, "", 1);
+			%decal.color = %color;
+			%decal.spillTime = $Sim::Time;
+			%decal.freshness = 1;
+			%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
+			if(%blood)
+				%decal.isBlood = true;
 		}
 	}
 }

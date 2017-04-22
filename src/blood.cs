@@ -42,6 +42,7 @@ function sprayBloodTick(%position, %velocity, %i)
 		%decal.unHideNode(%node);
 		%decal.spillTime = $Sim::Time;
 		%decal.freshness = %freshness;
+		%decal.isBlood = true;
 		if(getRandom() < 0.45)
 			serverPlay3d(BloodSplat @ getRandom(1,3), %rayPosition);
 		return;
@@ -115,7 +116,7 @@ function updateCorpseBloodPool(%pos)
 	if(%ray)
 	{
 		initContainerRadiusSearch(getWords(%ray, 1, 3), 0.25,
-			$TypeMasks::ShapeBaseObjectType);
+			$TypeMasks::StaticShapeObjectType);
 
 		while (isObject(%col = containerSearchNext()))
 		{
@@ -143,6 +144,7 @@ function updateCorpseBloodPool(%pos)
 			%decal.isPool = true;
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 3;
+			%decal.isBlood = true;
 			%decal.noUnclutter = true;
 			%decal.hideNode("ALL");
 			%decal.unHideNode("blood5");
@@ -170,6 +172,7 @@ function Player::doBloodyFootprint(%this, %ray, %foot, %alpha)
 	%decal.spillTime = $Sim::Time;
 	%decal.freshness = 0.5; //freshness < 1 means can't get bloody footprints from it
 	%decal.color = %color;
+	%decal.isBlood = true;
 }
 
 function Player::setBloodyFootprints(%this, %val, %bloodclient)
@@ -213,18 +216,21 @@ datablock staticShapeData(NewBloodDecal)
 	shapeFile = $Despair::Path @ "res/shapes/newblood.dts";
 	decalCombine = "blood";
 	isBlood = true;
+	canClean = true;
 };
 
 datablock StaticShapeData(footprintDecal)
 {
 	shapeFile = $Despair::Path @ "res/shapes/footprint.dts";
 	isBlood = true;
+	canClean = true;
 };
 
 datablock StaticShapeData(pegprintDecal)
 {
 	shapeFile = $Despair::Path @ "res/shapes/pegprint.dts";
 	isBlood = true;
+	canClean = true;
 };
 
 datablock ParticleData(CubeBlood23Particle)

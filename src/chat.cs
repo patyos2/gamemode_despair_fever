@@ -39,6 +39,18 @@ package DespairChat
 		if(DespairSpecialChat(%client, %text))
 			return;
 
+		if(!$despairTrial)
+		{
+			%time = getDayCycleTime();
+			%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+			%time = %time - mFloor(%time); //get rid of excess stuff
+
+			%time = getDayCycleTimeString(%time, 1);
+		}
+		else
+		{
+			%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
+		}
 		%name = %client.getPlayerName();
 		if (!isObject(%player))
 		{
@@ -48,7 +60,7 @@ package DespairChat
 
 				if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 				{
-					messageClient(%member, '', '<color:808080>%1<color:b0b0b0>: %2', %name, %text);
+					messageClient(%member, '', '\c7[%1]<color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
 				}
 			}
 			echo("-+ (DEAD) " @ %name @ ": " @ %text);
@@ -57,47 +69,72 @@ package DespairChat
 		if(%player.unconscious)
 			return;
 
+		%type = "says";
+		%range = 32;
+		if(getSubStr(%text, 0, 1) $= "@") //Whispering
+		{
+			%text = getSubStr(%text, 1, strLen(%text));
+			%type = "whispers";
+			%range = 4;
+		}
+
 		%player.playThread(0, "talk");
 		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
 
 		%name = %client.character.name;
-		if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
-			%name = "Unknown";
-
-		serverPlay3D(DespairChatSound, %player.getHackPosition());
-
-		%shape = new Item()
+		if(!$despairTrial)
 		{
-			datablock = DespairEmptyFloatItem;
-			position = VectorAdd(%player.position, "0 0 2");
-		};
+			if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
+				%name = "Unknown";
+		}
+		if(%type !$= "whispers")
+		{
+			serverPlay3D(DespairChatSound, %player.getHackPosition());
 
-		%shape.setCollisionTimeout(%player);
-		%shape.setShapeName(%text);
-		%shape.setShapeNameDistance(30);
-		%shape.setVelocity("0 0 0.5");
-		%shape.deleteSchedule = %shape.schedule(3000, delete);
+			%shape = new Item()
+			{
+				datablock = DespairEmptyFloatItem;
+				position = VectorAdd(%player.position, "0 0 2");
+			};
+
+			%shape.setCollisionTimeout(%player);
+			%shape.setShapeName(%text);
+			%shape.setShapeNameDistance(30);
+			%shape.setVelocity("0 0 0.5");
+			%shape.deleteSchedule = %shape.schedule(3000, delete);
+		}
+
 		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
-
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
-				messageClient(%member, '', '<color:ffff80>%1<color:fffff0>: %2', %name, %text);
+				messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
 				continue;
 			}
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
-			if (vectorDist(%a, %b) > 32)
+			if (vectorDist(%a, %b) > %range)
 				continue;
-			messageClient(%member, '', '<color:ffff80>%1<color:fffff0>: %2', %name, %text);
+			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
 		}
 	}
-	function serverCmdTeamMessageSent(%client, %text) //OOC
+	function serverCmdTeamMessageSent(%client, %text) //Adminchat
 	{
-		if(!%client.isAdmin)
+		if(!%client.isAdmin && !%client.killer)
 			return;
+		%name = %client.getPlayerName();
+		if(%client.killer && !%client.isAdmin)
+		{
+			%killer = true;
+			%name = "Killer";
+		}
+		if(getSubStr(%text, 0, 2) $= "@k") //Killer chat
+		{
+			%text = getSubStr(%text, 2, strLen(%text));
+			%killer = true;
+		}
 		if (%text $= "")
 			return;
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
@@ -105,8 +142,13 @@ package DespairChat
 			%member = ClientGroup.getObject(%i);
 			if(%member.isAdmin)
 			{
-				messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %client.getPlayerName(), %text);
+				if(%killer)
+					messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
+				else
+					messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
 			}
+			if(%killer && %member.killer)
+				messageClient(%member, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
 		}
 	}
 };

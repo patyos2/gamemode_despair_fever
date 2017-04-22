@@ -97,7 +97,7 @@ function mopImage::onFire(%this, %obj, %slot)
 
 	%ray = containerRayCast(%point, %stop,
 		$TypeMasks::FxBrickObjectType |
-		$TypeMasks::ShapeBaseObjectType |
+		$TypeMasks::StaticShapeObjectType |
 		$TypeMasks::TerrainObjectType |
 		$TypeMasks::ItemObjectType,
 		%obj
@@ -111,11 +111,11 @@ function mopImage::onFire(%this, %obj, %slot)
 	}
 
 	initContainerRadiusSearch(%pos, 0.75,
-		$TypeMasks::ShapeBaseObjectType);
+		$TypeMasks::StaticShapeObjectType);
 
 	while (isObject(%col = containerSearchNext()))
 	{
-		if (!%col.getDataBlock().isBlood)
+		if (!%col.getDataBlock().canClean)
 			continue;
 
 		%clean = getMin(%col.freshness, 0.5);

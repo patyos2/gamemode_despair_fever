@@ -84,7 +84,9 @@ function fxDTSBrick::setCameraDir(%brick, %dir, %client)
 	%client.player.inCameraEvent = true;
 }
 
-registerOutputEvent(Player, _setStatusEffect, "int 0" SPC $SE_maxStatusEffects TAB "string 50 80", 1);
+$str = "int 0" SPC $SE_maxStatusEffects TAB "string 50 80";
+registerOutputEvent(Player, _setStatusEffect, $str, 1);
+$str = "";
 function Player::_setStatusEffect(%this, %slot, %effect)
 {
 	if(%effect $= "")

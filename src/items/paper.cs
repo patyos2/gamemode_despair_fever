@@ -1,12 +1,45 @@
+datablock ItemData(PaperstackItem)
+{
+	shapeFile = $Despair::Path @ "res/shapes/items/Paperstack.dts";
+	mass = 1;
+	drag = 0.3;
+	density = 0.2;
+	elasticity = 0;
+	friction = 1;
+	doColorShift = true;
+	colorShiftColor = "1 1 1 1";
+	uiName = "Paper Stack";
+	canDrop = true;
+};
+
+function PaperstackItem::onAdd(%this, %obj)
+{
+	parent::onAdd(%this, %obj);
+	%obj.papers = 10;
+}
+
+function PaperstackItem::onPickUp(%this, %obj, %player)
+{
+	if(%player.addTool(PaperItem) == -1)
+		return;
+	%obj.papers--;
+	if(%obj.papers <= 0)
+	{
+		%obj.delete();
+		return;
+	}
+}
+
 datablock ItemData(PaperItem)
 {
 	shapeFile = $Despair::Path @ "res/shapes/items/Paper.dts";
 	image = PaperImage;
 	mass = 0.5;
-	drag = 0.8;
+	drag = 7;
 	density = 0;
 	elasticity = 0;
 	friction = 1;
+	gravityMod = 0.5;
 	doColorShift = true;
 	colorShiftColor = "1 1 1 1";
 	uiName = "Paper";
@@ -108,7 +141,7 @@ function getPaperEvidence(%character)
 			%msg = "Initials of criminal revealed to be";
 			%a = getSubStr(getWord(%character.name, 0), 0, 1);
 			%b = getSubStr(getWord(%character.name, 1), 0, 1);
-			%rng = getRandom(0, 2);
+			%rng = getRandom(1, 2);
 			if(%rng == 1)
 				%a = "#";
 			if(%rng == 2)
@@ -149,6 +182,7 @@ function getPaperTips()
 	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won't know it's you!";
 	%choice[%high++] = "If you see something suspicious, scream! If you scream you'll be heard much farther.";
 	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you'll be in a constant state of internal conflict.";
+	%choice[%high++] = "News sources are outdated! They don't report on any new developments.";
 
 	return %choice[getRandom(%high)];
 }

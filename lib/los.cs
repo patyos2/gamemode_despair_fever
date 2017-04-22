@@ -23,3 +23,17 @@ function Player::isWithinView(%this, %b, %angle)
 
 	return isWithinView(%this.getEyePoint(), %b, %this.getEyeVector(), %angle);
 }
+
+//check if muzzle is obstructed by environment
+function Player::getLOSPoint(%this, %pos, %vec, %mask, %dist)
+{
+	%endPoint = vectorAdd(%pos, vectorScale(%vec, %dist));
+	%ray = containerRayCast(%pos, %endPoint, %mask, %this);
+
+	if (%ray)
+	{
+		return getWords(%ray, 1, 3);
+	}
+
+	return %endPoint;
+}

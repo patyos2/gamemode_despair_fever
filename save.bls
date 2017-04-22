@@ -65,7 +65,7 @@ This is a Blockland save file.  You probably shouldn't modify it cause you'll sc
 0.419608 0.258824 0.149020 1.000000
 0.247059 0.137255 0.066667 1.000000
 1.000000 0.000000 1.000000 0.000000
-Linecount 24005
+Linecount 24013
 1x8F" 143.75 -277.5 0.1 0 1 46  0 0 1 1 1
 +-OWNER 888888
 1x4x2 Fence" 48 -114.75 0.6 0 1 39  0 0 1 1 1
@@ -2983,10 +2983,22 @@ Linecount 24005
 +-OWNER 888888
 1x1x2" 49.25 -114.75 0.6 1 1 39  0 0 1 1 1
 +-OWNER 888888
-3x3F Tile" -240.25 -3.25 0.7 1 0 50  0 0 1 1 1
-1x1 Round" 165.25 -268.75 0.5 2 0 43  0 0 1 1 1
-3x3F Tile" -235.75 -6.25 0.7 1 0 45  0 0 1 1 1
-1x3F Tile" -229.75 -4.25 0.7 0 0 50  0 0 1 1 1
+2x4 Small Ramp" -20 -98.5 2 2 1 49  0 0 0 0 0
++-OWNER 29019
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -24.5 -99.25 2.5 3 1 49  0 0 0 0 0
++-OWNER 29019
++-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+2x4 Small Ramp" -24 -98.5 2 2 1 49  0 0 0 0 0
++-OWNER 29019
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -20.5 -99.25 2.5 3 1 49  0 0 0 0 0
++-OWNER 29019
++-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
 1x10F" 76.75 -47 1.3 2 0 39  0 0 1 1 1
 2x3F Tile" -237 -7.75 0.7 1 0 45  0 0 1 1 1
 1x16x3" -121.75 -4.5 1.5 0 0 25  0 0 1 1 1
@@ -4007,14 +4019,30 @@ Glassiest Door" -120 -8.75 2.4 2 0 26  0 0 1 1 1
 1x1F" 39.25 -82.25 0.3 0 0 45  0 0 1 1 1
 1x1F" 39.75 -82.75 0.3 0 0 45  0 0 1 1 1
 0.25x1" -223.75 -11.75 0.9 3 0 49  0 0 1 1 1
-1x1F Wedge" -101.75 -59.25 0.5 0 0 48  0 0 1 1 1
-2x2F Tile" -101.5 -93 0.5 3 0 40  0 0 1 1 1
-1x6F" -103.5 -59.25 0.5 1 0 48  0 0 1 1 1
-3x4F" -247.5 3.25 0.9 1 0 49  0 0 1 1 1
-1x1x2" -82.75 -32.25 2 0 0 39  0 0 1 1 1
-1x1F Wedge" -113.25 -73.75 0.5 2 0 48  0 0 1 1 1
-2x2F Tile" -114.5 -91 0.5 3 0 40  0 0 1 1 1
-1x1F Wedge" -113.25 -71.75 0.5 3 0 48  0 0 1 1 1
+2x6F" -24.5 -98.5 1.7 3 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
++-EVENT	1	0	onRelay	0	Self		disappear	-1			
++-EVENT	2	1	onRelay	0	Self		disappear	0			
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+3x3F Tile" -235.75 -6.25 0.7 1 0 45  0 0 1 1 1
+1x1 Round" 165.25 -268.75 0.5 2 0 43  0 0 1 1 1
+1x6" -20.5 -99.25 1.9 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		fireRelayUp				
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x6F" -20.5 -98.5 1.7 3 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
++-EVENT	1	0	onRelay	0	Self		disappear	-1			
++-EVENT	2	1	onRelay	0	Self		disappear	0			
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+3x3F Tile" -240.25 -3.25 0.7 1 0 50  0 0 1 1 1
+1x3F Tile" -229.75 -4.25 0.7 0 0 50  0 0 1 1 1
+1x6" -24.5 -99.25 1.9 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		fireRelayUp				
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x2" -118.5 -8.75 1.5 1 0 25  0 0 1 1 1
 3x10F" -104 -60.25 0.5 1 0 48  0 0 1 1 1
 1x4x2 Fence" -82.75 -71 2 3 0 39  0 0 1 1 1
@@ -4461,7 +4489,7 @@ Stripe Window Door" -243.5 6.75 2.6 3 0 49  0 0 1 1 1
 1x2 Vertical TOP Ramp" -240.25 -1.25 1.3 0 0 28  0 0 1 1 1
 3 Pane Glass Door" -227.25 -2 2.6 2 0 28  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Self		door	0			
-1x1F Round" -237.75 8.25 0.5 1 0 50  0 0 1 1 1
+1x1F Round" -241.25 10.75 0.5 1 0 50  0 0 1 1 1
 1x12F" 159.25 -295.5 0.5 2 0 50  0 0 1 1 1
 1x4x2 Fence" 33 -114.75 2 0 0 39  0 0 1 1 1
 0.25x0.25 Edge" -323.75 -11.25 1.5 1 0 49  0 0 1 1 1
@@ -4477,7 +4505,7 @@ Stripe Window Door" -243.5 6.75 2.6 3 0 49  0 0 1 1 1
 2x3x2" -107 -72.75 1 0 0 56  0 0 1 1 1
 2x2F Tile" -118.5 -88 0.5 3 0 45  0 0 1 1 1
 1x2 Vertical TOP Ramp" -242.25 -1.25 1.3 0 0 28  0 0 1 1 1
-1x1F Round" -237.75 10.75 0.5 1 0 50  0 0 1 1 1
+1x1F Round" -237.75 8.25 0.5 1 0 50  0 0 1 1 1
 1x16F" -109 -73.75 0.5 1 0 48  0 0 1 1 1
 1x4x2 Fence" 76.75 -111 2 3 0 39  0 0 1 1 1
 0.25x1" 22.75 -11.75 1.5 1 0 49  0 0 1 1 1
@@ -4874,7 +4902,7 @@ Stripe Window Door" -238.25 4.5 2.6 2 0 28  0 0 1 1 1
 3x4F" -235.25 3.5 1.9 0 0 28  0 0 1 1 1
 1x1 Cone" -139.25 -49.25 1.1 3 0 43  0 0 1 1 1
 6x32F" 27 -59.5 0.5 0 0 48  0 0 1 1 1
-1x1F Round" -241.25 10.75 0.5 1 0 50  0 0 1 1 1
+1x1F Round" -241.25 8.25 0.5 1 0 50  0 0 1 1 1
 6x10F" -11 -88.5 0.5 0 0 48  0 0 1 1 1
 1x3F Tile" -133.75 -59.25 1.3 0 0 43  0 0 1 1 1
 1x1 Round" -132.25 -56.75 1.5 3 0 43  0 0 1 1 1
@@ -4893,7 +4921,8 @@ Stripe Window Door" -238.25 4.5 2.6 2 0 28  0 0 1 1 1
 1x1 Inverted Ramp" -118.25 -31.75 0.6 2 0 50  0 0 1 1 1
 2x32F" 3 -57.5 0.5 0 0 8  0 0 1 1 1
 2x2F Tile" -109.5 -91 0.5 3 0 40  0 0 1 1 1
-1x1F Round" -241.25 8.25 0.5 1 0 50  0 0 1 1 1
+4x6" -24.5 -98.5 1.3 3 0 37  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
 2x2F Tile" -117.5 -88 0.5 3 0 45  0 0 1 1 1
 2x2F Tile" -111.5 -88 0.5 3 0 40  0 0 1 1 1
 1x8x2" -230.75 -6.5 1.4 0 0 48  0 0 1 1 1
@@ -5344,6 +5373,7 @@ Stripe Window Door" -238.25 4.5 2.6 2 0 28  0 0 1 1 1
 1x1x2" -122.75 -102.25 2 1 0 39  0 0 1 1 1
 1x4x2" -22.75 -98.5 1 2 0 31  0 0 1 1 1
 1x1F" -239.75 2.75 0.9 1 0 0  0 0 0 0 0
++-ITEM Mop"  2 1000
 2x32F" 30 -97 0.5 0 0 8  0 0 1 1 1
 1x1x2" -30.75 -89.75 2 2 0 39  0 0 1 1 1
 2x24F" 12 -32 0.5 1 0 48  0 0 1 1 1
@@ -5351,7 +5381,7 @@ Stripe Window Door" -238.25 4.5 2.6 2 0 28  0 0 1 1 1
 1x4x2 Fence" -119 -102.25 2 0 0 39  0 0 1 1 1
 1x1F" -239.25 2.75 0.9 1 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
-+-ITEM NONE" 0 3 4000
++-ITEM Machete" 0 3 4000
 16x32 Base" 25.5 -97 0.5 0 0 8  0 0 1 1 1
 6x10F" 27 -49 0.5 0 0 48  0 0 1 1 1
 1x4x2 Fence" -30.75 -91 2 1 0 39  0 0 1 1 1
@@ -5359,30 +5389,26 @@ Stripe Window Door" -238.25 4.5 2.6 2 0 28  0 0 1 1 1
 16x32 Base" 35.5 -97 0.5 0 0 8  0 0 1 1 1
 1x1F Wedge" -101.75 -61.25 0.5 1 0 48  0 0 1 1 1
 1x1x2" -82.75 -87.25 2 0 0 39  0 0 1 1 1
-2x2 Small Ramp" -21.5 -97.5 1.8 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+4x6" -20.5 -98.5 1.3 3 0 37  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
+2x2F Tile" -114.5 -91 0.5 3 0 40  0 0 1 1 1
+1x1F Wedge" -113.25 -73.75 0.5 2 0 48  0 0 1 1 1
+1x1x2" -82.75 -32.25 2 0 0 39  0 0 1 1 1
+3x4F" -247.5 3.25 0.9 1 0 49  0 0 1 1 1
+2x2 Small Ramp" -21.5 -98.5 2 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-1x12x2" 60.25 -59.5 1.2 0 0 22  0 0 1 1 1
-4x4F Tile" 55 -67.5 0.7 2 0 8  0 0 1 1 1
-2x2 Small Ramp" -20.5 -97.5 1.8 1 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+1x6F" -103.5 -59.25 0.5 1 0 48  0 0 1 1 1
+2x2F Tile" -101.5 -93 0.5 3 0 40  0 0 1 1 1
+1x1F Wedge" -101.75 -59.25 0.5 0 0 48  0 0 1 1 1
+1x1F Round" -237.75 10.75 0.5 1 0 50  0 0 1 1 1
+1x1F Wedge" -113.25 -71.75 0.5 3 0 48  0 0 1 1 1
+2x2 Small Ramp" -25.5 -98.5 2 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
-1x12x2" 59.75 -59.5 1.2 0 0 54  0 0 1 1 1
-0.5x1F" 142.25 -240.75 0.7 0 0 61  0 0 1 1 1
-2x4F Tile" 51 -65 0.7 0 0 47  0 0 1 1 1
-2x4F Tile" 49 -65 0.7 0 0 0  0 0 1 1 1
-1x10x2" 62.5 -56.25 1.2 1 0 22  0 0 1 1 1
-4x4F Tile" 51 -67.5 0.7 2 0 5  0 0 1 1 1
-4x4F Tile" 49 -67.5 0.7 2 0 8  0 0 1 1 1
-4x4F Tile" 53 -69.5 0.7 2 0 5  0 0 1 1 1
-2x2 Small Ramp" -19.5 -97.5 1.8 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x2 Small Ramp" -117.75 -97.5 1.8 3 0 49  0 0 1 1 1
 4x4F Tile" 55 -69.5 0.7 2 0 8  0 0 1 1 1
 1x8" -20.5 -99.75 1.9 3 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
@@ -5929,19 +5955,14 @@ Plain Door" 63 -52.25 2.4 0 0 36  0 0 1 1 1
 1x2F" -26.25 -98.5 1.7 2 0 49  0 0 1 1 1
 1x8" -24.5 -99.75 1.9 3 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
-2x2 Small Ramp" -23.5 -97.5 1.8 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+6x8F" -239.5 9.5 0.7 3 0 37  0 0 1 1 1
+2x2 Small Ramp" -105 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-2x2 Small Ramp" -24.5 -97.5 1.8 1 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
-2x2 Small Ramp" -25.5 -97.5 1.8 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -107 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 2x2F Tile" 64 -64 0.7 3 0 45  0 0 1 1 1
 2x2F Tile" 61 -65 0.7 3 0 45  0 0 1 1 1
@@ -6211,6 +6232,7 @@ Plain Door" 33.5 -101.75 2.4 0 0 57  0 0 1 1 1
 0.5x2F" -235.75 3 2.1 1 0 48  0 0 1 1 1
 1x1F" -249.75 5.25 1.1 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
++-ITEM Knife"  2 1000
 0.5x2" -238.75 -7 1.7 3 0 29  0 0 1 1 1
 1x1F Round" -113.75 -7.75 1.1 3 0 39  0 0 1 1 1
 0.5x2" -238.75 -8 1.7 3 0 29  0 0 1 1 1
@@ -6348,17 +6370,17 @@ Plain Door" 33.5 -101.75 2.4 0 0 57  0 0 1 1 1
 1x1F Round" -110.75 -96.25 0.7 2 0 39  0 0 0 0 1
 2x2x5" -116.5 -93 3.7 0 0 45  0 0 1 1 1
 1x1F Round" -112.25 -96.75 0.7 2 0 30  0 0 0 0 1
-2x2 Small Ramp" -110 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-1x1x5" 72.75 -11.75 8.1 1 0 58  0 0 1 1 1
-2x2 Small Ramp" -111 -97.5 1.8 3 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -111 -97.5 1.8 3 0 36  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 +-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
+1x1x5" 72.75 -11.75 8.1 1 0 58  0 0 1 1 1
+2x2 Small Ramp" -110 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x1x5" 270.75 -11.75 8.1 1 0 58  0 0 1 1 1
 1x1x5" 320.25 -11.75 8.1 1 0 58  0 0 1 1 1
 1x2x5" -103.25 -89.5 2.1 0 0 48  0 0 1 1 1
@@ -6367,9 +6389,9 @@ Plain Door" 33.5 -101.75 2.4 0 0 57  0 0 1 1 1
 0.5x1" -117.25 -91.25 0.9 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayWest				
 0.5x1" -117.25 -91.75 0.9 0 0 45  0 0 1 1 1
-2x2 Small Ramp" -112 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -112 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x1 Small Ramp" 161.75 -252.75 1.4 3 0 50  0 0 1 1 1
 1x10F" 76.75 -92 2.7 2 0 39  0 0 1 1 1
@@ -6399,9 +6421,9 @@ Plain Door" 33.5 -101.75 2.4 0 0 57  0 0 1 1 1
 1x2F" -112.75 -96.5 1.7 0 0 49  0 0 1 1 1
 1x1F Wedge" -227.25 6.75 1.9 0 0 28  0 0 1 1 1
 1x11x5" -227.25 3.75 3.5 0 0 28  0 0 1 1 1
-2x2 Small Ramp" -105 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -25.5 -97.5 1.8 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x1F Wedge" -250.75 -8.75 1.9 2 0 28  0 0 1 1 1
 1x1" -112.75 -95.75 1.9 0 0 49  0 0 1 1 1
@@ -6421,16 +6443,16 @@ Plain Door" 33.5 -101.75 2.4 0 0 57  0 0 1 1 1
 1x2 Vertical BOTTOM Ramp" -233.75 -8.75 2.5 1 0 28  0 0 1 1 1
 1x1x5" -669.75 -11.75 8.1 1 0 58  0 0 1 1 1
 1x2 Vertical BOTTOM Ramp" -244.25 -8.75 2.5 3 0 28  0 0 1 1 1
-2x2 Small Ramp" -107 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -23.5 -97.5 1.8 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-2x2 Small Ramp" -106 -97.5 1.8 3 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -24.5 -97.5 1.8 1 0 36  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 +-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
 2x6x5" -103.5 -94 3.7 1 0 45  0 0 1 1 1
 2x3x5" -103 -72.75 2.1 0 0 54  0 0 1 1 1
 1x1" -93.75 -71.75 1.1 1 0 50  0 0 1 1 1
@@ -6521,10 +6543,7 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 1F 1x1F Vertical Print" -236.25 -2.25 1.1 3 0 49 Letters/-space 0 0 1 1 1
 1F 1x1F Vertical Print" -239.25 -1.75 1.1 1 0 49 Letters/-space 0 0 1 1 1
 1x1F Round" -117.25 -96.75 0.7 2 0 30  0 0 0 0 1
-2x2 Small Ramp" -115 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x1F Round" -25.75 -98.25 0.9 0 0 37  0 0 0 0 1
 1x1F" -114.25 -92.25 0.7 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
@@ -6534,19 +6553,11 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 1x1F" -235.25 1.75 2.1 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
-2x2 Small Ramp" -116 -97.5 1.8 3 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
+4x4F Tile" 53 -69.5 0.7 2 0 5  0 0 1 1 1
 1x1F" -247.25 -7.25 2.1 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
-2x2 Small Ramp" -117 -97.5 1.8 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+4x4F Tile" 49 -67.5 0.7 2 0 8  0 0 1 1 1
 1x8" -116 -95.25 1.9 1 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 1x6F Tile" -102.5 -86.25 1.1 0 0 25  0 0 1 1 1
@@ -6579,7 +6590,7 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 2x2x5" -100.5 -86 3.7 0 0 45  0 0 1 1 1
 1x2x2" -119.75 -87 1.2 0 0 54  0 0 1 1 1
 1x11x5" -227.25 -5.75 3.5 0 0 28  0 0 1 1 1
-1x2 Small Ramp" -117.75 -97.5 1.8 3 0 49  0 0 1 1 1
+4x4F Tile" 51 -67.5 0.7 2 0 5  0 0 1 1 1
 1x2F" -117.75 -96.5 1.7 0 0 49  0 0 1 1 1
 1x10F" -3 -114.75 2.7 3 0 39  0 0 1 1 1
 1x10F" 76.75 -52 2.7 2 0 39  0 0 1 1 1
@@ -6600,7 +6611,7 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 2x6x5" -115.5 -86 3.7 1 0 45  0 0 1 1 1
 6x8F" -229.5 9.5 0.7 3 0 37  0 0 1 1 1
 6x8F" -234.5 9.5 0.7 3 0 37  0 0 1 1 1
-6x8F" -239.5 9.5 0.7 3 0 37  0 0 1 1 1
+1x10x2" 62.5 -56.25 1.2 1 0 22  0 0 1 1 1
 0.5x2" -105 -60.75 0.9 0 0 45  0 0 1 1 1
 1x2F Print" -105 -60.25 0.7 0 0 45 Letters/F 0 0 1 1 1
 1x10F" -8 -114.75 2.7 3 0 39  0 0 1 1 1
@@ -6691,8 +6702,7 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 1x1 Round" -158.75 16.75 1.7 3 0 43  0 0 1 1 1
 1x1 Round" -158.75 17.75 1.7 3 0 43  0 0 1 1 1
 1x2F Print" 139.25 -239.5 0.7 3 0 51 Letters/-space 0 0 1 1 1
-1x1F" 66.25 -69.25 0.7 2 1 0  0 0 0 0 0
-+-OWNER 29019
+1x1F" 66.25 -69.25 0.7 2 0 0  0 0 0 0 0
 +-ITEM Axe" 0 2 4000
 0.25x0.25 Edge" -223.75 -11.25 2.1 2 0 49  0 0 1 1 1
 0.25x1" -224.25 -11.25 2.1 2 0 49  0 0 1 1 1
@@ -6725,6 +6735,7 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 +-ITEM Hat Disguise" 0 3 4000
 1x1F" -249.75 5.75 1.1 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
++-ITEM Knife"  2 1000
 0.25x0.25F Corner" 50.75 -38.25 0.7 1 0 58  0 0 1 1 1
 1x1F" 60.75 -55.25 0.7 1 0 0  0 0 0 0 0
 +-ITEM Mop" 0 2 4000
@@ -6734,11 +6745,12 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 +-ITEM NONE"  2 1000
 1x1F" 57.25 -37.75 0.7 3 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
-+-ITEM NONE" 0 4 4000
++-ITEM Umbrella" 0 4 4000
 0.25x0.25F Corner" 51.25 -38.25 0.7 0 0 58  0 0 1 1 1
 0.25x0.25F Corner" 50.75 -37.75 0.7 2 0 58  0 0 1 1 1
 1x1F" -249.75 4.75 1.1 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
++-ITEM Knife"  2 1000
 0.25x0.25F Corner" 51.25 -37.75 0.7 3 0 58  0 0 1 1 1
 1x1F" 59.25 -54.75 0.7 2 0 0  0 0 0 0 0
 +-NTOBJECTNAME _item
@@ -6751,20 +6763,47 @@ Plain Door" -119.75 -88.5 2.4 3 0 45  0 0 1 1 1
 0.25x0.25F Corner" 64.75 -54.25 0.7 0 0 58  0 0 1 1 1
 0.25x0.25F Corner" 64.25 -53.75 0.7 2 0 58  0 0 1 1 1
 1x10F" -30.75 -92.5 2.7 0 0 39  0 0 1 1 1
-1F 1x1F Vertical Print" -238.75 -2.25 1.3 3 0 49 Letters/-space 0 0 1 1 1
-1x1x4" 47.75 -81.25 3 0 0 54  0 0 1 1 1
-1x1x2" 45.25 -86.75 1.4 0 0 58  0 0 1 1 1
-1x8F Tile" 5 -49.75 1.9 2 0 31  0 0 1 1 1
-1x12x4" 59.75 -69.5 3 0 0 54  0 0 1 1 1
-1x1x2" 44.25 -114.75 3.4 1 0 39  0 0 1 1 1
-1x1x2" 20.25 -86.75 1.4 0 0 58  0 0 1 1 1
-1x4x2 Fence" 43 -114.75 3.4 0 0 39  0 0 1 1 1
-3x4 Glass Pane" 47.75 -80 2.7 2 0 40  0 0 1 1 1
-1x3F" 40.25 -92.25 0.9 0 0 59  0 0 1 1 1
--45° Ramp 1x" 43.75 -92.5 1.5 0 0 58  0 0 1 1 1
-1x24x4" 54 -56.25 3 1 0 54  0 0 1 1 1
-1x1x2" 41.75 -114.75 3.4 1 0 39  0 0 1 1 1
-0.25x0.25 Edge" 64.25 -53.75 1.1 1 0 58  0 0 1 1 1
+2x2 Small Ramp" -116 -97.5 1.8 3 0 36  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
+1x1F Round" -21.75 -98.25 0.9 0 0 37  0 0 0 0 1
+2x2 Small Ramp" -115 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x2 Small Ramp" -117 -97.5 1.8 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x12x2" 60.25 -59.5 1.2 0 0 22  0 0 1 1 1
+4x4F Tile" 55 -67.5 0.7 2 0 8  0 0 1 1 1
+1x12x2" 59.75 -59.5 1.2 0 0 54  0 0 1 1 1
+0.5x1F" 142.25 -240.75 0.7 0 0 61  0 0 1 1 1
+2x2 Small Ramp" -20.5 -97.5 1.8 1 0 36  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
+2x2 Small Ramp" -19.5 -97.5 1.8 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x2 Small Ramp" -21.5 -97.5 1.8 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x2 Small Ramp" -106 -97.5 1.8 3 0 36  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
+2x4F Tile" 51 -65 0.7 0 0 47  0 0 1 1 1
+2x4F Tile" 49 -65 0.7 0 0 0  0 0 1 1 1
 1x16" 60.25 -60.5 4.5 0 0 45  0 0 1 1 1
 1x6F" 43 -93.25 1.3 1 0 58  0 0 1 1 1
 -45° Ramp 1x" 41.75 -92.5 1.5 0 0 58  0 0 1 1 1
@@ -6980,14 +7019,7 @@ Spawn Point" 38.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x16" 26.5 -101.75 4.5 1 0 45  0 0 1 1 1
 0.75x0.75F" 33.25 -104.75 0.9 1 0 45  0 0 1 1 1
 0.75x0.75F" 33.75 -104.75 0.9 2 0 45  0 0 1 1 1
-1x6x3" -111 -95.25 3.1 1 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+0.25x0.25 Edge" 64.25 -53.75 1.1 1 0 58  0 0 1 1 1
 1x2H" -119.75 -87 2 0 0 54  0 0 1 1 1
 1x2 Small Ramp" -109.25 -96.5 2 3 0 49  0 0 1 1 1
 1x1x2" 76.75 -79.75 3.4 0 0 39  0 0 1 1 1
@@ -7032,14 +7064,7 @@ Spawn Point" 38.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x2F" -118 -91.5 0.9 0 0 45  0 0 1 1 1
 1x2H" -119.75 -91 2 0 0 54  0 0 1 1 1
 1x1x2" 76.75 -74.75 3.4 0 0 39  0 0 1 1 1
-1x6x3" -116 -95.25 3.1 1 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+1x1x2" 41.75 -114.75 3.4 1 0 39  0 0 1 1 1
 0.5x1" -112.75 -92.75 1.3 3 0 28  0 0 1 1 1
 0.5x0.5 Edge" -112.75 -92.25 1.3 3 0 45  0 0 1 1 1
 1x2 Small Ramp" -114.25 -96.5 2 3 0 49  0 0 1 1 1
@@ -7175,7 +7200,7 @@ Spawn Point" 38.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1F 1x1F Vertical Print" -243.75 -2.25 1.3 3 0 49 Letters/-space 0 0 1 1 1
 1F 1x1F Vertical Print" -243.75 -1.75 1.3 2 0 49 Letters/-space 0 0 1 1 1
 1x1x2" 12.75 -47.25 1.4 0 0 58  0 0 1 1 1
-1F 1x1F Vertical Print" -244.25 -2.25 1.3 0 0 49 Letters/-space 0 0 1 1 1
+1x24x4" 54 -56.25 3 1 0 54  0 0 1 1 1
 1x2x2" -117.25 -87.5 1.8 0 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 1F 1x1F Vertical Print" -244.25 -1.75 1.3 1 0 49 Letters/-space 0 0 1 1 1
@@ -7249,16 +7274,16 @@ Spawn Point" 38.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1x5" -108.25 -8.75 3.1 2 0 26  0 0 1 1 1
 1x10F" -110.5 -8.75 4.7 3 0 26  0 0 1 1 1
 1x10F" -115.5 -8.75 4.7 3 0 26  0 0 1 1 1
-4x6F" -239.5 9.5 0.9 3 0 42  0 0 0 0 1
+-45° Ramp 1x" 43.75 -92.5 1.5 0 0 58  0 0 1 1 1
 1x10F" -110.5 -8.75 5.3 3 0 23  0 0 1 1 1
 0.5x1" -113.25 -8.75 1.9 1 0 26  0 0 1 1 1
 0.5x1" -112.75 -8.75 1.9 3 0 26  0 0 1 1 1
 0.5x1" -112.75 -8.75 2.5 3 0 26  0 0 1 1 1
 0.5x1" -112.75 -8.75 3.1 3 0 26  0 0 1 1 1
-1x6x2" -239.5 10.75 1.4 3 0 31  0 0 1 1 1
+1x3F" 40.25 -92.25 0.9 0 0 59  0 0 1 1 1
 1x2" 58 -52.25 1.5 1 0 29  0 0 1 1 1
 0.75x0.75F" 9.25 -65.25 0.9 1 0 45  0 0 1 1 1
-1x1x2" -237.75 8.25 1.4 2 0 32  0 0 1 1 1
+3x4 Glass Pane" 47.75 -80 2.7 2 0 40  0 0 1 1 1
 Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 +-NTOBJECTNAME _r2_spawn
 1x2x4" 60.25 -75 3 0 0 22  0 0 1 1 1
@@ -7267,7 +7292,14 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 0.5x1" -113.25 -8.75 4.3 1 0 26  0 0 1 1 1
 0.5x1" -113.25 -8.75 3.7 1 0 26  0 0 1 1 1
 1x1x5" -174.75 -11.75 11.1 1 0 58  0 0 1 1 1
-1x1x2" -241.25 8.25 1.4 2 0 32  0 0 1 1 1
+1x6x3" -20.5 -99.75 3.1 3 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
 0.5x1" -113.25 -8.75 3.1 1 0 26  0 0 1 1 1
 0.5x1" -113.25 -8.75 2.5 1 0 26  0 0 1 1 1
 1x1x2" -30.75 -114.75 3.4 2 0 39  0 0 1 1 1
@@ -7404,7 +7436,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x10x4" 10.5 -67.25 3 1 0 54  0 0 1 1 1
 1x10x4" 9 -66.75 3 1 0 22  0 0 1 1 1
 1x2" 65.25 -39.5 1.5 0 0 29  0 0 1 1 1
-1x4x2" -241.25 9.5 1.4 2 0 31  0 0 1 1 1
+1x4x2 Fence" 43 -114.75 3.4 0 0 39  0 0 1 1 1
 1x2" 65.25 -37.5 1.5 0 0 29  0 0 1 1 1
 1F 1x1F Vertical Print" -239.25 -2.25 1.3 0 0 49 Letters/-space 0 0 1 1 1
 1x2" 65 -36.75 1.5 1 0 29  0 0 1 1 1
@@ -7468,7 +7500,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 0.5x2F" 144.25 -238.5 0.9 3 0 51  0 0 1 1 1
 0.75x1F" 9.25 -65.75 0.9 1 0 45  0 0 1 1 1
 1x1 Round" -89.75 -82.25 1.5 1 0 49  0 0 1 1 1
-1x1x2" -237.75 10.75 1.4 2 0 32  0 0 1 1 1
+1x1x2" 20.25 -86.75 1.4 0 0 58  0 0 1 1 1
 1x2" 55 -52.25 1.5 1 0 29  0 0 1 1 1
 1x2" 53 -52.25 1.5 1 0 29  0 0 1 1 1
 1x4x2 Fence" -94 -102.25 3.4 0 0 39  0 0 1 1 1
@@ -7492,17 +7524,16 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x2F" 162.75 -241.5 1.7 2 0 43  0 0 1 1 1
 -45° Ramp 1x" 24.75 -52.5 1.5 0 0 58  0 0 1 1 1
 1x4x2 Fence" -91.5 -102.25 3.4 0 0 39  0 0 1 1 1
-1x4x2" -237.75 9.5 1.4 2 0 31  0 0 1 1 1
+1x1x2" -237.75 10.75 1.4 2 0 32  0 0 1 1 1
 1x10" 62.5 -52.25 4.5 1 0 54  0 0 1 1 1
 1x1" -93.75 -82.25 1.5 3 0 50  0 0 1 1 1
-1x6x2" -239.5 8.25 1.4 3 0 31  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
+1x1x2" 44.25 -114.75 3.4 1 0 39  0 0 1 1 1
 1x1x2" -30.75 -47.25 3.4 2 0 39  0 0 1 1 1
 0.5x1" 9.25 -66.25 1.1 1 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
 1x1x2" -30.75 -52.25 3.4 2 0 39  0 0 1 1 1
 2x6F Tile" 50.5 -50.5 1.1 3 0 38  0 0 1 1 1
-1x1x2" -241.25 10.75 1.4 2 0 32  0 0 1 1 1
+1x12x4" 59.75 -69.5 3 0 0 54  0 0 1 1 1
 1x4x2 Fence" -89 -102.25 3.4 0 0 39  0 0 1 1 1
 1x4x2 Fence" -30.75 -51 3.4 1 0 39  0 0 1 1 1
 1x1F Round" -104.75 -96.75 0.9 2 0 37  0 0 0 0 1
@@ -7516,14 +7547,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x1 Round" -89.75 -72.25 1.5 1 0 49  0 0 1 1 1
 1x1" -89.25 -72.25 1.5 3 0 50  0 0 1 1 1
 1x1x2" -82.75 -102.25 3.4 1 0 39  0 0 1 1 1
-1x6x3" -106 -95.25 3.1 1 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+1x8F Tile" 5 -49.75 1.9 2 0 31  0 0 1 1 1
 6x24x1" -113.5 -34 1.5 1 0 49  0 0 1 1 1
 1x4x2 Fence" -86.5 -102.25 3.4 0 0 39  0 0 1 1 1
 1x4x2 Fence" -84 -102.25 3.4 0 0 39  0 0 1 1 1
@@ -7769,22 +7793,14 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x1 Round" 150.25 -268.75 1.9 3 0 43  0 0 1 1 1
 1x8x3" 53.5 -66.75 1.7 1 0 59  0 0 1 1 1
 1x2 Small Ramp" -22.25 -98.5 2 1 0 49  0 0 1 1 1
-1x6x3" -20.5 -99.75 3.1 3 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+1x1x2" 45.25 -86.75 1.4 0 0 58  0 0 1 1 1
 1x1 Cone" 152.25 -265.25 2.3 2 0 43  0 0 1 1 1
 1x1F Round" 152.25 -267.25 1.7 3 0 21  0 0 1 1 1
-4x6" -20.5 -98.5 1.3 3 0 37  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
+1x4x2" -237.75 9.5 1.4 2 0 31  0 0 1 1 1
 1x2" 60 -36.75 1.5 1 0 29  0 0 1 1 1
 1x1 Cone" 152.25 -266.75 1.9 3 0 43  0 0 1 1 1
 3x4 Glass Pane" 16 -49.75 2.7 3 0 40  0 0 1 1 1
-1x1F Round" -21.75 -98.25 0.9 0 0 37  0 0 0 0 1
+1x1x4" 47.75 -81.25 3 0 0 54  0 0 1 1 1
 1x4x2 Fence" 76.75 -53.5 3.4 3 0 39  0 0 1 1 1
 1x1x4" 47.75 -63.75 3 0 0 54  0 0 1 1 1
 1x10x4" -1 -66.75 3 1 0 22  0 0 1 1 1
@@ -7820,12 +7836,12 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 4x4F Tile" -6.5 -63.5 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 3.5 -63.5 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 1x1 Cone" 156.25 -261.25 2.3 2 0 43  0 0 1 1 1
 1x1 Cone" 157.75 -260.25 1.9 2 0 43  0 0 1 1 1
@@ -7834,12 +7850,12 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 4x4F Tile" 39.5 -103 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 29.5 -103 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 0.5x1" -0.25 -66.25 1.1 3 0 45  0 0 1 1 1
 1x1 Round" 167.25 -263.75 1.9 0 0 43  0 0 1 1 1
@@ -7850,7 +7866,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 4x4F Tile" 61.5 -67.5 0.9 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 0.5x1F" 136.75 -238.25 0.9 1 0 62  0 0 1 1 1
 0.5x2F" 136.75 -239 0.9 1 0 23  0 0 1 1 1
@@ -7858,7 +7874,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 4x4F Tile" 61.5 -57.5 0.9 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 0.5x1F" 136.75 -239.75 0.9 1 0 61  0 0 1 1 1
 1x1 Cone" 164.25 -262.25 2.3 2 0 43  0 0 1 1 1
@@ -7899,14 +7915,7 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x8x4" 64.75 -68.5 3 0 0 22  0 0 1 1 1
 0.75x0.75F" 23.25 -104.75 0.9 1 0 45  0 0 1 1 1
 1x4F" 61.25 -40 1.9 0 0 59  0 0 1 1 1
-1x6x3" -24.5 -99.75 3.1 3 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+1F 1x1F Vertical Print" -238.75 -2.25 1.3 3 0 49 Letters/-space 0 0 1 1 1
 1x2" 49 -36.75 1.5 1 0 29  0 0 1 1 1
 4x10F" 164 -244 1.7 3 0 43  0 0 1 1 1
 1x2" 50 -36.75 1.5 1 0 29  0 0 1 1 1
@@ -7919,11 +7928,18 @@ Spawn Point" 4.75 -52.75 2.3 1 0 6  0 0 0 0 0
 1x1x5" 221.25 -11.75 11.1 1 0 58  0 0 1 1 1
 1x1x2" -30.75 -99.75 3.4 2 0 39  0 0 1 1 1
 1x24" 47.75 -43 4.5 0 0 54  0 0 1 1 1
-4x6" -24.5 -98.5 1.3 3 0 37  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
+1x6x2" -239.5 8.25 1.4 3 0 31  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
 1x4x2 Fence" -30.75 -98.5 3.4 1 0 39  0 0 1 1 1
 1x4x2 Fence" -82.75 -86 3.4 3 0 39  0 0 1 1 1
-1x1F Round" -25.75 -98.25 0.9 0 0 37  0 0 0 0 1
+1x6x3" -24.5 -99.75 3.1 3 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
 3x4 Glass Pane" 27 -89.25 2.7 3 0 40  0 0 1 1 1
 1x1x4" 25.75 -89.25 3 0 0 54  0 0 1 1 1
 Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
@@ -8026,16 +8042,37 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1x2" 76.75 -92.25 3.4 0 0 39  0 0 1 1 1
 1x4x2 Fence" 76.75 -91 3.4 3 0 39  0 0 1 1 1
 1x12x4" 60.25 -69.5 3 0 0 22  0 0 1 1 1
-1x3F Tile" 168.25 -271.25 2.3 2 0 43  0 0 1 1 1
-0.5x2" 60.75 -67.5 1.3 3 0 45  0 0 1 1 1
-0.5x2" 30.25 -103 1.3 1 0 45  0 0 1 1 1
-1x10" 47.75 -59.5 5.1 0 0 54  0 0 1 1 1
-1x2F Vertical Print" 47.75 -57.25 3.5 0 0 31 Letters/-space 0 0 1 1 1
-2x3" 40 -92.25 1.3 0 0 59  0 0 1 1 1
-0.5x2" 61.5 -66.75 1.3 0 0 45  0 0 1 1 1
-0.5x0.5 Corner" 60.75 -66.75 1.3 0 0 45  0 0 1 1 1
-0.5x2" 62.5 -66.75 1.3 0 0 45  0 0 1 1 1
-1x4 Glass Pane" 14 -49.75 3.9 3 0 40  0 0 1 1 1
+4x6F" -239.5 9.5 0.9 3 0 42  0 0 0 0 1
+1x6x2" -239.5 10.75 1.4 3 0 31  0 0 1 1 1
+1x6x3" -106 -95.25 3.1 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
+1x6x3" -111 -95.25 3.1 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
+1x1x2" -237.75 8.25 1.4 2 0 32  0 0 1 1 1
+1x1x2" -241.25 8.25 1.4 2 0 32  0 0 1 1 1
+1x4x2" -241.25 9.5 1.4 2 0 31  0 0 1 1 1
+1x1x2" -241.25 10.75 1.4 2 0 32  0 0 1 1 1
+1x6x3" -116 -95.25 3.1 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
+1F 1x1F Vertical Print" -244.25 -2.25 1.3 0 0 49 Letters/-space 0 0 1 1 1
 0.5x0.5 Edge" 25.75 -96.75 1.7 0 0 59  0 0 1 1 1
 0.25x0.25 Edge" 64.75 -54.25 1.7 3 0 58  0 0 1 1 1
 0.25x0.25 Edge" 64.75 -53.75 1.7 2 0 58  0 0 1 1 1
@@ -8070,12 +8107,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x10" 22.5 -89.25 5.1 1 0 54  0 0 1 1 1
 1x6F" 50.25 -88 1.9 0 0 58  0 0 1 1 1
 1x2F Vertical Print" 47.75 -80.75 3.5 2 0 31 Letters/-space 0 0 1 1 1
-2x2 Small Ramp" -234.5 10.5 2.2 1 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
+0.5x2" 62.5 -66.75 1.3 0 0 45  0 0 1 1 1
 1x2F Vertical Print" 47.75 -60.75 2.5 2 0 31 Letters/-space 0 0 1 1 1
 1x16" -3.5 -61.75 4.5 1 0 54  0 0 1 1 1
 0.5x2" 39.5 -105.75 1.3 2 0 45  0 0 1 1 1
@@ -8108,10 +8140,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 0.25x0.25 Edge" 50.75 -37.75 1.7 1 0 58  0 0 1 1 1
 1x2 Small Ramp" -231.25 10.5 2.2 1 0 49  0 0 1 1 1
 1x1 Round" 166.75 -271.25 2.5 0 0 43  0 0 1 1 1
-2x2 Small Ramp" -228.5 10.5 2.2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+0.5x0.5 Corner" 60.75 -66.75 1.3 0 0 45  0 0 1 1 1
 1x1" -232.75 8.75 2.3 2 0 49  0 0 1 1 1
 1x10F" 27 -114.75 4.1 3 0 39  0 0 1 1 1
 0.25x1" -100.75 -90.25 2.7 2 0 25  0 0 1 1 1
@@ -8121,10 +8150,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x4" -116.5 -84.5 1.7 1 0 49  0 0 1 1 1
 1x10F" 76.75 -107 4.1 2 0 39  0 0 1 1 1
 1x1 Round" 165.25 -267.75 2.5 1 0 43  0 0 1 1 1
-2x2 Small Ramp" -230.5 10.5 2.2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x3F" -240.25 10 1.1 3 0 42  0 0 0 0 1
 1x1 Round" 165.25 -268.75 2.5 2 0 43  0 0 1 1 1
 1x2 Small Ramp" -121.75 -7.5 6 3 0 23  0 0 1 1 1
 2x3F" -235.25 10 1.1 3 0 42  0 0 0 0 1
@@ -8151,10 +8177,11 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1x5" 270.75 -11.75 14.1 1 0 58  0 0 1 1 1
 0.5x2" 2.75 -64.5 1.3 3 0 45  0 0 1 1 1
 1x10F" 17 -114.75 4.1 3 0 39  0 0 1 1 1
-2x2 Small Ramp" -235.5 10.5 2.2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -116 -95.75 1.9 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		fireRelayUp				
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.5x2" 2.75 -65.5 1.3 3 0 45  0 0 1 1 1
 1x10" 62.5 -52.25 5.1 1 0 54  0 0 1 1 1
 2x3" 50.75 -57 1.3 1 0 59  0 0 1 1 1
@@ -8250,7 +8277,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x4 Glass Pane" -4 -49.75 3.9 3 0 40  0 0 1 1 1
 1x1F Round" -112.25 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Gasmask"  2 1000
++-ITEM Hat Chef"  2 1000
 1x2F Tile" 169 -268.25 2.3 2 0 43  0 0 1 1 1
 1x8F Tile" 38 -89.25 4.1 2 0 31  0 0 1 1 1
 1x10" 37.5 -89.25 5.1 1 0 54  0 0 1 1 1
@@ -8279,12 +8306,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1 Round" -44.25 -90.75 2.5 2 0 43  0 0 1 1 1
 1x2F Vertical Print" 16.25 -89.25 3.5 3 0 31 Letters/-space 0 0 1 1 1
 1x10F" 62 -114.75 4.1 3 0 39  0 0 1 1 1
-2x2 Small Ramp" -229.5 10.5 2.2 1 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
+1x1F Round" -238.25 9.75 1.1 0 0 30  0 0 0 0 1
 1x10F" 76.75 -92 4.1 2 0 39  0 0 1 1 1
 1x1 Round" 150.25 -259.75 2.5 1 0 43  0 0 1 1 1
 1x4 Glass Pane" 47.75 -58 3.9 2 0 40  0 0 1 1 1
@@ -8588,10 +8610,10 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 0.5x2" -5.75 -65.5 1.3 1 0 45  0 0 1 1 1
 2x2F" 63.5 -63.5 1.1 0 0 45  0 0 1 1 1
 1x10F" -82.75 -59.5 4.1 2 0 39  0 0 1 1 1
-2x6F" -20.5 -98.5 1.7 3 0 49  0 0 1 1 1
+2x6F" -116 -96.5 1.7 1 0 49  0 0 0 0 0
 +-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
++-EVENT	1	0	onRelay	0	Self		disappear	-1			
++-EVENT	2	1	onRelay	0	Self		disappear	0			
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
 1x2F Vertical Print" 39.75 -89.25 2.5 1 0 31 Letters/-space 0 0 1 1 1
 2x3" 40 -97.75 1.3 0 0 59  0 0 1 1 1
@@ -8608,23 +8630,11 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 0.5x2" 61.5 -56.75 1.3 0 0 45  0 0 1 1 1
 1x1x5" -669.75 -11.75 14.1 1 0 58  0 0 1 1 1
 1x1x5" 12.75 -47.25 3.5 0 0 58  0 0 1 1 1
-1x6" -20.5 -99.25 1.9 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
+0.5x2" 61.5 -66.75 1.3 0 0 45  0 0 1 1 1
 0.5x0.5 Corner" 64.25 -68.25 1.3 2 0 45  0 0 1 1 1
 2x2F" 63.5 -73.5 1.1 0 0 45  0 0 1 1 1
-1x6" -24.5 -99.25 1.9 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
-2x6F" -24.5 -98.5 1.7 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+2x3" 40 -92.25 1.3 0 0 59  0 0 1 1 1
+1x2F Vertical Print" 47.75 -57.25 3.5 0 0 31 Letters/-space 0 0 1 1 1
 0.5x2" 64.25 -67.5 1.3 1 0 45  0 0 1 1 1
 0.5x0.5 Corner" 64.25 -66.75 1.3 1 0 45  0 0 1 1 1
 0.5x0.5 Edge" 7.25 -53.75 1.7 2 0 59  0 0 1 1 1
@@ -8697,7 +8707,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1F" 163.25 -253.75 1.5 3 0 29  0 0 1 1 1
 1x1F Round" -110.75 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Fedora"  2 1000
++-ITEM Hat Partyhat"  2 1000
 1x1 Round" 173.25 -264.25 2.5 3 0 43  0 0 1 1 1
 2x1 Vertical TOP Ramp" 164 -253.75 1.3 0 0 49  0 0 1 1 1
 1x1 Vertical TOP Ramp" 165.25 -253.75 1.3 0 0 49  0 0 1 1 1
@@ -8707,14 +8717,14 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x2 Small Ramp" -107.25 -7.5 6 3 0 23  0 0 1 1 1
 1x1F Round" -115.25 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Mummy"  2 1000
++-ITEM Hat Fedora"  2 1000
 2x8 Small Ramp" -119.5 -2 6 2 0 37  0 0 1 1 1
 4x4F Tile" -247 3 5.3 3 0 46  0 0 1 1 1
 1x2 Small Ramp" -121.75 -3.5 6.4 1 0 23  0 0 1 1 1
 0.5x1" -100.75 -92.25 3.9 2 0 25  0 0 1 1 1
 1x1F Round" -113.75 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Fox"  2 1000
++-ITEM Hat Sunglasses"  2 1000
 0.5x1" -103.75 -86.25 3.3 3 0 25  0 0 1 1 1
 4x4F Tile" -239 5 5.3 3 0 46  0 0 1 1 1
 0.5x1" -100.75 -92.25 3.3 2 0 25  0 0 1 1 1
@@ -8785,7 +8795,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1 Cone" 38.75 5.25 2.5 2 0 43  0 0 1 1 1
 1x1F Round" -116.75 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Partyhat"  2 1000
++-ITEM Hat Mounty"  2 1000
 0.25x1" -111.75 -92.75 1.3 3 0 51  0 0 1 1 1
 1x1F Round" -234.75 9.25 1.1 0 0 39  0 0 0 0 1
 1x2 Small Ramp" -107.25 -5.5 6.4 3 0 23  0 0 1 1 1
@@ -8846,29 +8856,17 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x10F" -110.5 -8.75 4.9 3 0 26  0 0 1 1 1
 0.25x1" -100.75 -88.75 2.7 0 0 25  0 0 1 1 1
 2x1 Inverted Ramp" -119.25 -36 2 2 0 29  0 0 1 1 1
-1x6" -111 -95.75 1.9 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
-2x6F" -111 -96.5 1.7 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+1x10" 47.75 -59.5 5.1 0 0 54  0 0 1 1 1
+2x2F Round" -238.5 9 1.1 0 0 40  0 0 0 0 1
 3x14F" -231.5 6.75 5.3 1 0 46  0 0 1 1 1
 2x2F Round" -246.5 -2 1.5 0 0 29  0 0 1 1 1
-1x6" -116 -95.75 1.9 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+1x1F Round" -239.75 9.25 1.1 0 0 39  0 0 0 0 1
+1x2F" -121.75 -2.5 5.9 2 0 23  0 0 1 1 1
+1x6" -111 -95.75 1.9 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		fireRelayUp				
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
-1x2F" -121.75 -2.5 5.9 2 0 23  0 0 1 1 1
-2x6F" -116 -96.5 1.7 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
 0.5x1" -100.75 -86.75 4.5 0 0 25  0 0 1 1 1
 1x1F" -229.25 9.75 1.1 0 0 0  0 0 0 0 0
 +-NTOBJECTNAME _evidence
@@ -8877,25 +8875,19 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x1F" -234.25 9.75 1.1 0 0 0  0 0 0 0 0
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
-2x6F" -106 -96.5 1.7 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+2x2F" -240.5 9 1.1 2 0 42  0 0 0 0 1
 3x14F" -227.25 -4.5 5.3 0 0 46  0 0 1 1 1
-1x6" -106 -95.75 1.9 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x6F" -111 -96.5 1.7 1 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
++-EVENT	1	0	onRelay	0	Self		disappear	-1			
++-EVENT	2	1	onRelay	0	Self		disappear	0			
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
 2x2F Round" -244 -2 1.5 0 0 29  0 0 1 1 1
 1x2F Print" -106 -72.75 1.1 0 0 45 Letters/-space 0 0 1 1 1
 0.5x1F" -108.25 -73.25 2.1 1 0 28  0 0 1 1 1
 2x2F" -230.5 9 1.1 2 0 42  0 0 0 0 1
-2x2 Small Ramp" -233.5 10.5 2.2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x1F" -239.25 9.75 1.1 0 0 0  0 0 0 0 0
++-NTOBJECTNAME _evidence
 1x2F Print" -111 -72.75 1.1 0 0 45 Letters/-space 0 0 1 1 1
 2x8x3" -116.5 -89 6.7 0 0 50  0 0 1 1 1
 3x14F" -227.25 2.5 5.3 0 0 46  0 0 1 1 1
@@ -8944,7 +8936,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x2F Round" -236.5 -2 1.5 0 0 29  0 0 1 1 1
 1x1F Round" -109.25 -7.75 1.9 3 0 39  0 0 1 1 1
 +-NTOBJECTNAME _hatSpawn
-+-ITEM Hat Sunglasses"  2 1000
++-ITEM Hat Wizard"  2 1000
 0.5x1" -101.25 -86.25 3.9 1 0 25  0 0 1 1 1
 1x1F Wedge" -250.75 6.75 5.1 3 0 28  0 0 1 1 1
 1x1F Wedge" -227.25 6.75 5.1 0 0 28  0 0 1 1 1
@@ -8967,19 +8959,33 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x3x5" -103 -72.75 8.1 0 0 45  0 0 1 1 1
 0.25x1" -112.25 -86.25 2.7 1 0 25  0 0 1 1 1
 0.5x1F" 137.25 -240.75 1.1 0 0 61  0 0 1 1 1
-1x1" -237.75 8.75 2.3 2 0 49  0 0 1 1 1
+2x2 Small Ramp" -239.5 10.5 2.2 1 0 36  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
 1x2F" -119.5 -32.75 1.9 1 0 29  0 0 1 1 1
 2x8 Small Ramp" -115.5 -2 6 2 0 37  0 0 1 1 1
-1x2F" -237.75 9.5 2.1 2 0 49  0 0 1 1 1
-1x2 Small Ramp" -237.75 10.5 2.2 1 0 49  0 0 1 1 1
-1x2 Small Ramp" -241.25 10.5 2.2 1 0 49  0 0 1 1 1
-1x1" -241.25 8.75 2.3 2 0 49  0 0 1 1 1
+2x2 Small Ramp" -240.5 10.5 2.2 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x6F" -106 -96.5 1.7 1 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
++-EVENT	1	0	onRelay	0	Self		disappear	-1			
++-EVENT	2	1	onRelay	0	Self		disappear	0			
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+1x6" -106 -95.75 1.9 1 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		fireRelayUp				
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
+0.5x2" 30.25 -103 1.3 1 0 45  0 0 1 1 1
 2x4F Tile" -92 -88.5 3.5 2 0 50  0 0 1 1 1
 0.25x0.25 Edge" 64.25 -53.75 1.7 1 0 58  0 0 1 1 1
 0.5x1" -113.75 -86.25 2.7 3 0 25  0 0 1 1 1
-1x1F" -239.25 9.75 1.1 0 0 0  0 0 0 0 0
-+-NTOBJECTNAME _evidence
-+-ITEM NONE"  2 1000
+0.5x2" 60.75 -67.5 1.3 3 0 45  0 0 1 1 1
 0.25x1" -112.25 -86.25 3.9 1 0 25  0 0 1 1 1
 8x8F" -91.5 -77.5 1.9 0 0 49  0 0 1 1 1
 0.5x1F" 137.25 -237.25 1.1 2 0 58  0 0 1 1 1
@@ -8988,7 +8994,7 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x1 Inverted Ramp" -89.5 -82.75 2 1 0 43  0 0 1 1 1
 0.5x1" -113.75 -86.25 3.9 3 0 25  0 0 1 1 1
 1x2F" -119.5 -35.25 1.9 1 0 29  0 0 1 1 1
-2x2F" -240.5 9 1.1 2 0 42  0 0 0 0 1
+1x3F Tile" 168.25 -271.25 2.3 2 0 43  0 0 1 1 1
 4x10F" -117 -34 1.9 2 0 29  0 0 1 1 1
 0.5x2F" 136.75 -238 1.1 1 0 58  0 0 1 1 1
 3x3F Wedge" -227.25 6.75 5.3 1 0 46  0 0 1 1 1
@@ -8998,32 +9004,24 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x3" -250.25 5.25 3.9 0 0 39  0 0 1 1 1
 1x2F" -90.25 -83 1.9 0 0 43  0 0 1 1 1
 4x10F" -91.5 -80.5 1.9 1 0 43  0 0 1 1 1
-1x2F" -241.25 9.5 2.1 2 0 49  0 0 1 1 1
-1x8" -239.5 8.25 2.3 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayDown				
+1x4 Glass Pane" 14 -49.75 3.9 3 0 40  0 0 1 1 1
 2x2 Small Ramp" -238.5 10.5 2.2 1 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x8" -239.5 8.25 2.3 3 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 1x4 Glass Pane" -102 -86.25 4.5 1 0 17  0 0 1 1 1
 1x3" -249.75 4.25 3.9 1 0 39  0 0 1 1 1
-2x2 Small Ramp" -239.5 10.5 2.2 1 0 36  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	BrickRotateSound			
-2x3F" -240.25 10 1.1 3 0 42  0 0 0 0 1
+1x2F" -241.25 9.5 2.1 2 0 49  0 0 1 1 1
+1x1" -241.25 8.75 2.3 2 0 49  0 0 1 1 1
 1x2F Print" -104 -60.25 1.1 0 0 45 Letters/-space 0 0 1 1 1
 1x3" -249.75 6.25 3.9 1 0 39  0 0 1 1 1
 0.25x2" -111 -93.25 1.3 2 0 51  0 0 1 1 1
-2x2 Small Ramp" -240.5 10.5 2.2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x2 Small Ramp" -241.25 10.5 2.2 1 0 49  0 0 1 1 1
 1x2F" -92.75 -83 1.9 0 0 43  0 0 1 1 1
 0.25x1" -110.25 -92.75 1.3 1 0 51  0 0 1 1 1
-1x1F Round" -238.25 9.75 1.1 0 0 30  0 0 0 0 1
+1x2 Small Ramp" -237.75 10.5 2.2 1 0 49  0 0 1 1 1
 0.25x1" -111.75 -86.25 2.7 3 0 25  0 0 1 1 1
 0.25x1" -112.25 -86.25 3.3 1 0 25  0 0 1 1 1
 2x2F Round" -234.5 -1.5 1.5 0 0 29  0 0 1 1 1
@@ -9033,12 +9031,18 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 1x10F" 76.75 -77 4.1 2 0 39  0 0 1 1 1
 0.5x0.5F" 140.75 -237.25 1.1 2 0 58  0 0 1 1 1
 0.25x1" -100.75 -90.75 2.7 0 0 25  0 0 1 1 1
-1x1F Round" -239.75 9.25 1.1 0 0 39  0 0 0 0 1
+2x2 Small Ramp" -228.5 10.5 2.2 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 2x3x5" -112 -60.25 8.1 0 0 45  0 0 1 1 1
 0.5x1" -110.25 -86.25 2.1 1 0 25  0 0 1 1 1
 1x4 Glass Pane" -111 -92.75 1.3 1 0 17  0 0 1 1 1
 0.5x1" -113.75 -86.25 2.1 3 0 25  0 0 1 1 1
-2x2F Round" -238.5 9 1.1 0 0 40  0 0 0 0 1
+2x2 Small Ramp" -230.5 10.5 2.2 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.25x1" -112.25 -86.25 2.1 1 0 25  0 0 1 1 1
 1x2F Print" -106 -60.25 1.1 0 0 45 Letters/-space 0 0 1 1 1
 1x4x4 Print" -98 -82.25 2.6 2 0 0 Letters/E 0 0 1 1 1
@@ -9051,12 +9055,28 @@ Spawn Point" 28.25 -92.25 2.3 3 0 6  0 0 0 0 0
 2x6x3" -108.5 -86 9.1 1 0 45  0 0 1 1 1
 0.5x1" -100.75 -86.75 3.3 0 0 25  0 0 1 1 1
 1x2 Glass Pane" -103.5 -86.25 4.5 1 0 17  0 0 1 1 1
-0.5x0.5F" 138.25 -237.25 0.9 2 0 61  0 0 1 1 1
-1x1x5" 23.25 -11.75 17.1 2 0 58  0 0 1 1 1
-1x4x2 Fence" 76.75 -43.5 4.8 3 0 39  0 0 1 1 1
-1x16x5" 161.75 -249.5 3.5 2 0 47  0 0 1 1 1
-1x2" 22 -101.25 5.1 1 0 54  0 0 1 1 1
-1x4x2 Fence" 76.75 -48.5 4.8 3 0 39  0 0 1 1 1
+1x1" -237.75 8.75 2.3 2 0 49  0 0 1 1 1
+1x2F" -237.75 9.5 2.1 2 0 49  0 0 1 1 1
+2x2 Small Ramp" -234.5 10.5 2.2 1 0 36  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
+2x2 Small Ramp" -235.5 10.5 2.2 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x2 Small Ramp" -233.5 10.5 2.2 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+2x2 Small Ramp" -229.5 10.5 2.2 1 0 36  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashOpenSound			
 1x12" 62.5 -36.75 4.5 1 0 54  0 0 1 1 1
 0.5x2F" 61.25 -40 2.3 3 0 48  0 0 1 1 1
 1x4x2 Fence" 76.75 -58.5 4.8 3 0 39  0 0 1 1 1
@@ -9441,10 +9461,7 @@ Plain Door" -0.5 -62.25 7.2 2 0 57  0 0 1 1 1
 1x10" 65.25 -54.5 4.5 0 0 54  0 0 1 1 1
 1x10" 65.25 -74.5 5.1 0 0 54  0 0 1 1 1
 1x1x2" 47.75 -41.25 6 0 0 54  0 0 1 1 1
-2x4 Small Ramp" -20 -98.5 2 2 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x4x2 Fence" 76.75 -48.5 4.8 3 0 39  0 0 1 1 1
 1x16" 59.75 -70.5 5.1 0 0 54  0 0 1 1 1
 1x1x2" 76.75 -84.75 4.8 0 0 39  0 0 1 1 1
 -45° Ramp 1x" -8.75 -52 2.7 0 0 58  0 0 1 1 1
@@ -9499,10 +9516,8 @@ House Door" 18.5 -49.75 2.4 2 0 58  0 0 1 1 1
 +-EVENT	3	1	onActivate	0	Self		fireRelayDown				
 1x4x2 Fence" 76.75 -51 4.8 3 0 39  0 0 1 1 1
 1x3x5" -4.25 -60.25 2.7 0 0 57  0 0 0 0 1
-2x2 Small Ramp" -21.5 -98.5 2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -111 -95.75 2.5 1 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
 1x1x2" 76.75 -52.25 4.8 0 0 39  0 0 1 1 1
 1x1x2" 76.75 -49.75 4.8 0 0 39  0 0 1 1 1
 1x4x2 Fence" 76.75 -53.5 4.8 3 0 39  0 0 1 1 1
@@ -9555,8 +9570,10 @@ House Door" 18.5 -49.75 2.4 2 0 58  0 0 1 1 1
 +-EVENT	5	1	onMiniGameReset	0	Self		setEventEnabled	2	1		
 +-EVENT	6	1	onMiniGameReset	0	Self		setEventEnabled	3	0		
 1x1x2" -30.75 -87.25 4.8 2 0 39  0 0 1 1 1
-1x6" -20.5 -99.25 2.5 3 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+2x4 Small Ramp" -111.5 -96.5 2 0 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.25x0.25F" 22.75 -90.25 1.7 2 0 58  0 0 0 0 1
 1x16" 36.5 -101.25 5.1 1 0 54  0 0 1 1 1
 0.25x0.25F" 22.25 -90.25 1.7 1 0 58  0 0 0 0 1
@@ -9580,8 +9597,7 @@ House Door" 18.5 -49.75 2.4 2 0 58  0 0 1 1 1
 1x1x2" -30.75 -72.25 4.8 2 0 39  0 0 1 1 1
 1x4x2 Fence" -30.75 -76 4.8 1 0 39  0 0 1 1 1
 1x1F Round" 165.75 -261.75 2.9 2 0 21  0 0 1 1 1
-1x6" -24.5 -99.25 2.5 3 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+1x2" -117.75 -33 2.3 2 0 28  0 0 0 0 0
 0.25x0.25F" 32.75 -90.25 1.7 2 0 58  0 0 0 0 1
 0.25x0.25F" 48.75 -64.75 1.7 0 0 58  0 0 0 0 1
 0.25x0.25F" 32.25 -90.25 1.7 1 0 58  0 0 0 0 1
@@ -9630,9 +9646,9 @@ House Door" 47.75 -82.5 2.4 3 0 58  0 0 1 1 1
 1x4x5" -2.75 -60.5 2.7 0 0 58  0 0 1 1 1
 2x3F Tile" -116.25 -92.5 6.1 2 0 50  0 0 1 1 1
 1x4x2 Fence" -82.75 -91 4.8 3 0 39  0 0 1 1 1
-2x4 Small Ramp" -24 -98.5 2 2 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x4 Small Ramp" -106.5 -96.5 2 0 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x4x2 Fence" -30.75 -51 4.8 1 0 39  0 0 1 1 1
 2x1 Vertical TOP Ramp" -89.5 -79.75 1.5 2 0 43  0 0 1 1 1
@@ -9667,9 +9683,9 @@ House Door" 47.75 -82.5 2.4 3 0 58  0 0 1 1 1
 0.5x2F" 55.75 -41.5 1.3 1 0 50  0 0 1 1 1
 1x12" 50.5 -36.75 4.5 1 0 54  0 0 1 1 1
 1x4x2 Fence" -125.25 -93.5 4.8 1 0 39  0 0 1 1 1
-2x2 Small Ramp" -25.5 -98.5 2 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -105 -96.5 2 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.5x2F" 55.75 -42.5 1.3 1 0 50  0 0 1 1 1
 6x10F" 30 -87.5 5.1 1 0 58  0 0 1 1 1
@@ -9884,7 +9900,14 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
 1x1x2" -112.75 -102.25 4.8 1 0 39  0 0 1 1 1
-1x2 Small Ramp" -241.25 9.5 2.4 1 0 49  0 0 1 1 1
+1x6x3" -234.5 8.25 3.5 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
 2x6F" -107.5 -34 2.1 2 0 49  0 0 1 1 1
 1x1x2" -120.25 -102.25 4.8 1 0 39  0 0 1 1 1
 1x1 Round" 168.75 -268.25 2.7 2 0 43  0 0 1 1 1
@@ -9916,8 +9939,7 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4F Tile" -100.75 -89.5 4.9 1 0 25  0 0 1 1 1
 2x10F" -89.5 -73 2.1 0 0 49  0 0 1 1 1
 1x2 Inverted Ramp" 166 -241.25 0.8 2 0 47  0 0 1 1 1
-1x6" -106 -95.75 2.5 1 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
+1x2" 22 -101.25 5.1 1 0 54  0 0 1 1 1
 1x1F" -110.75 -7.75 2.1 3 0 39  0 0 1 1 1
 1x2 Inverted Ramp" 162 -241.25 0.8 0 0 47  0 0 1 1 1
 1x10x2" 62.5 -52.25 6 1 0 54  0 0 1 1 1
@@ -9933,7 +9955,7 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x1 Print" -117.75 -83.75 2.9 2 0 47 Letters/-equals 0 0 1 1 1
 2x4H" -107.5 -60.5 3.8 1 0 24  0 0 1 1 1
 1x1 Vertical TOP Ramp" -92.75 -70.75 1.5 2 0 49  0 0 1 1 1
-1x3" -89.25 -80.75 2.3 2 0 43  0 0 1 1 1
+1x3" -89.25 -80.75 2.3 2 0 43  0 0 1 0 1
 1x3" -249.75 4.25 4.5 1 0 39  0 0 1 1 1
 1x1 Wedge" -250.75 6.75 5.7 3 0 28  0 0 1 1 1
 1x2F Print" 161.75 -242 2.3 1 0 43 Letters/-space 0 0 1 1 1
@@ -9959,13 +9981,10 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4x2 Fence" 40.5 -114.75 4.8 0 0 39  0 0 1 1 1
 1x4x2" -91.5 -79.75 2.6 3 0 43  0 0 1 1 1
 0.25x1" -110.25 -92.75 1.9 1 0 51  0 0 1 1 1
-2x4 Small Ramp" -116.5 -96.5 2 0 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x16x5" 161.75 -249.5 3.5 2 0 47  0 0 1 1 1
 1x1F" -92.75 -79.25 2.1 1 0 47  0 0 1 1 1
 0.25x1" -111.75 -92.75 1.9 3 0 51  0 0 1 1 1
-1x2" -117.75 -33 2.3 2 0 28  0 0 0 0 0
+1x4x2 Fence" 76.75 -43.5 4.8 3 0 39  0 0 1 1 1
 1x4x2 Fence" -82.75 -83.5 4.8 3 0 39  0 0 1 1 1
 2x1 Vertical TOP Ramp" -93.5 -79.75 1.5 2 0 43  0 0 1 1 1
 1x4x2 Fence" 65.5 -114.75 4.8 0 0 39  0 0 1 1 1
@@ -9978,15 +9997,10 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4F" -98 -82.25 3.9 1 0 45  0 0 1 1 1
 1x4x2 Fence" -82.75 -58.5 4.8 3 0 39  0 0 1 1 1
 1x4x2 Fence" -82.75 -63.5 4.8 3 0 39  0 0 1 1 1
-2x4 Small Ramp" -111.5 -96.5 2 0 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x2" -92.5 -81.25 2.3 1 0 28  0 0 0 0 0
 0.25x0.25 Corner" -110.25 -93.25 1.9 2 0 51  0 0 1 1 1
-2x2 Small Ramp" -105 -96.5 2 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -106 -95.75 2.5 1 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
 0.25x1" 28.75 -102.75 1.9 3 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 +-EVENT	1	1	onRelay	0	Self		toggleEventEnabled	2 3			
@@ -10009,8 +10023,10 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4x2 Fence" -82.75 -38.5 4.8 3 0 39  0 0 1 1 1
 0.5x0.5F" -108.25 -73.25 2.3 1 0 28  0 0 1 1 1
 1x1 Round" 173.25 -262.25 2.7 1 0 43  0 0 1 1 1
-1x6" -116 -95.75 2.5 1 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
+2x4 Small Ramp" -116.5 -96.5 2 0 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.25x0.25 Corner" -111.75 -93.25 1.9 3 0 51  0 0 1 1 1
 1x4x2 Fence" -82.75 -43.5 4.8 3 0 39  0 0 1 1 1
 1x1 Round" -110.75 -72.75 1.5 1 0 30  0 0 1 1 1
@@ -10019,7 +10035,7 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4x2 Fence" 76.75 -36 4.8 3 0 39  0 0 1 1 1
 1x3F Tile" -44.25 -89.75 2.9 2 0 43  0 0 1 1 1
 1x1x2" 76.75 -37.25 4.8 0 0 39  0 0 1 1 1
-1x3" -117.25 -31.75 2.3 1 0 29  0 0 1 1 1
+1x3" -117.25 -31.75 2.3 1 0 29  0 0 1 0 1
 1x4x2 Fence" 76.75 -41 4.8 3 0 39  0 0 1 1 1
 1x1 Round" -104.25 -60.25 1.5 0 0 30  0 0 1 1 1
 1x1 Round" 173.25 -263.25 2.7 2 0 43  0 0 1 1 1
@@ -10036,10 +10052,8 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x1x5" 145.25 -245.25 8.9 2 0 59  0 0 1 1 1
 1x1 Round" 168.25 -263.75 2.7 3 0 43  0 0 1 1 1
 1x1F" -113.75 -7.75 2.1 3 0 39  0 0 1 1 1
-2x2 Small Ramp" -110 -96.5 2 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -116 -95.75 2.5 1 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
 0.25x0.25F" -242.25 2.75 2.1 2 0 47  0 0 1 1 1
 1x1x2" 76.75 -54.75 4.8 0 0 39  0 0 1 1 1
 1x1 Round" -158.75 17.75 3.1 2 0 43  0 0 1 1 1
@@ -10125,9 +10139,9 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x3" -249.75 6.25 4.5 1 0 39  0 0 1 1 1
 1x3F Tile" -68.75 -57.25 3.3 3 0 43  0 0 1 1 1
 0.5x1F" -241.75 2.75 2.1 2 0 47  0 0 1 1 1
-2x2 Small Ramp" -115 -96.5 2 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+2x2 Small Ramp" -115 -96.5 2 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 0.5x1F" -243.25 2.75 2.1 2 0 47  0 0 1 1 1
 1x4x2 Fence" 76.75 -86 4.8 3 0 39  0 0 1 1 1
@@ -10135,12 +10149,12 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x1 Wedge" -250.75 -8.75 5.7 2 0 28  0 0 1 1 1
 1x2F" -121.75 -4.5 6.5 2 0 23  0 0 1 1 1
 1x1F Round" -68.75 -55.75 3.3 1 0 21  0 0 1 1 1
-1x2" -92.5 -81.25 2.3 1 0 28  0 0 0 0 0
+1x2 Small Ramp" -237.75 9.5 2.4 1 0 49  0 0 1 1 1
 1x4F" 159.25 -321.5 1.3 2 0 50  0 0 1 1 1
 1x1F" -109.25 -7.75 2.1 3 0 39  0 0 1 1 1
 0.25x2" -111 -93.25 1.9 2 0 51  0 0 1 1 1
 1x1 Vertical TOP Ramp" -90.25 -70.75 1.5 2 0 49  0 0 1 1 1
-1x2 Small Ramp" -237.75 9.5 2.4 1 0 49  0 0 1 1 1
+1x2 Small Ramp" -241.25 9.5 2.4 1 0 49  0 0 1 1 1
 2x4 Small Ramp" -120.5 -3 6.2 2 0 37  0 0 1 1 1
 0.25x1" -110.75 -92.75 1.9 3 0 51  0 0 1 1 1
 0.5x0.5F" -106.75 -59.75 2.3 3 0 29  0 0 1 1 1
@@ -10185,7 +10199,7 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x10F" -91.5 -81.75 2.3 3 0 43  0 0 1 1 1
 1x4x2 Fence" 28 -114.75 4.8 0 0 39  0 0 1 1 1
 1x1x2" 39.25 -114.75 4.8 1 0 39  0 0 1 1 1
-1x3" -117.25 -36.25 2.3 3 0 29  0 0 1 1 1
+1x3" -117.25 -36.25 2.3 3 0 29  0 0 1 0 1
 1x1x5" -224.25 -11.75 17.1 2 0 58  0 0 1 1 1
 1x1x2" 69.25 -114.75 4.8 1 0 39  0 0 1 1 1
 1x1x2" -125.25 -102.25 4.8 2 0 39  0 0 1 1 1
@@ -10204,17 +10218,17 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x1x2" 66.75 -114.75 4.8 1 0 39  0 0 1 1 1
 1x4x2 Fence" -124 -102.25 4.8 0 0 39  0 0 1 1 1
 1x16" -231.5 -8.75 5.7 1 0 28  0 0 1 1 1
-1x6" -111 -95.75 2.5 1 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayNorth				
-1x1x2" -122.75 -102.25 4.8 1 0 39  0 0 1 1 1
-1x6x3" -229.5 8.25 3.5 3 0 49  0 0 0 0 0
+1x6x3" -239.5 8.25 3.5 3 0 49  0 0 0 0 0
 +-EVENT	0	0	onRelay	0	Self		disappear	-1			
 +-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 +-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
+1x1x2" -122.75 -102.25 4.8 1 0 39  0 0 1 1 1
+4x6" -239.5 9.5 1.7 3 0 37  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
 1x1 Round" 167.75 -271.25 2.7 3 0 43  0 0 1 1 1
 1x4x2 Fence" 63 -114.75 4.8 0 0 39  0 0 1 1 1
 1x3" -119.75 -32.25 1.5 0 0 29  0 0 1 1 1
@@ -10225,14 +10239,13 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 +-NTOBJECTNAME _evidence
 +-ITEM NONE"  2 1000
 1x1 Round" 165.25 -267.75 3.1 1 0 43  0 0 1 1 1
-4x6" -239.5 9.5 1.7 3 0 37  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
+1x1F Round" -240.75 9.75 1.3 0 0 37  0 0 0 0 1
 0.25x1" -111.25 -92.75 1.9 1 0 51  0 0 1 1 1
 1x3" -119.75 -35.75 1.5 0 0 29  0 0 1 1 1
 1x1 Round" 168.75 -271.25 2.7 2 0 43  0 0 1 1 1
 1x1x2" -30.75 -114.75 4.8 2 0 39  0 0 1 1 1
 1x1x2" 21.75 -114.75 4.8 1 0 39  0 0 1 1 1
-1x3" -93.75 -80.75 2.3 0 0 43  0 0 1 1 1
+1x3" -93.75 -80.75 2.3 0 0 43  0 0 1 0 1
 1x1 Round" 150.25 -260.75 3.1 2 0 43  0 0 1 1 1
 1x10F" -118.75 -34 2.1 0 0 29  0 0 1 1 1
 0.25x0.25 Edge" 50.75 -37.75 2.3 1 0 58  0 0 1 1 1
@@ -10245,16 +10258,9 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x1F" 163.25 -253.75 1.3 3 0 29  0 0 1 1 1
 2x8" -116.5 -89 7.9 0 0 45  0 0 1 1 1
 1x1F" -92.25 -70.75 1.7 1 0 29  0 0 1 1 1
-1x6x3" -234.5 8.25 3.5 3 0 49  0 0 0 0 0
-+-EVENT	0	0	onRelay	0	Self		disappear	-1			
-+-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1 6			
-+-EVENT	3	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	4	1	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	5	1	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	6	0	onMiniGameReset	0	Self		fireRelayDown				
+1x1x5" 23.25 -11.75 17.1 2 0 58  0 0 1 1 1
 1x1x2" 76.75 -104.75 4.8 0 0 39  0 0 1 1 1
-1x1F Round" -240.75 9.75 1.3 0 0 37  0 0 0 0 1
+0.5x0.5F" 138.25 -237.25 0.9 2 0 61  0 0 1 1 1
 1x1x2" -82.75 -99.75 4.8 0 0 39  0 0 1 1 1
 0.25x0.25 Edge" 51.25 -37.75 2.3 2 0 58  0 0 1 1 1
 1x1F" 164.75 -253.75 1.3 3 0 29  0 0 1 1 1
@@ -10288,23 +10294,23 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x4x2 Fence" 33 -114.75 4.8 0 0 39  0 0 1 1 1
 1x4x2 Fence" 43 -114.75 4.8 0 0 39  0 0 1 1 1
 0.25x0.25 Edge" 64.25 -53.75 2.3 1 0 58  0 0 1 1 1
-2x4 Small Ramp" -106.5 -96.5 2 0 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
+1x6x3" -229.5 8.25 3.5 3 0 49  0 0 0 0 0
++-EVENT	0	0	onRelay	0	Self		disappear	-1			
++-EVENT	1	1	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
++-EVENT	3	1	onActivate	0	Self		fireRelayDown				
++-EVENT	4	1	onActivate	0	Self		playSound	TrashCloseSound			
++-EVENT	5	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
 1x2 Small Ramp" -227.75 9.5 2.4 1 0 49  0 0 1 1 1
 1x6F Tile" -102.5 -86.25 4.9 0 0 25  0 0 1 1 1
 1x2" -116.5 -86.75 7.9 1 0 45  0 0 1 1 1
 1x1F" -116.75 -7.75 2.1 3 0 39  0 0 1 1 1
 1x1F Wedge" -238.25 2.25 5.1 1 0 28  0 0 1 1 1
-1x6x3" -239.5 8.25 3.5 3 0 49  0 0 1 1 1
+2x2 Small Ramp" -110 -96.5 2 3 0 49  0 0 0 0 0
 +-EVENT	0	0	onRelay	0	Self		disappear	-1			
 +-EVENT	1	1	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onActivate	0	Self		fireRelayDown				
-+-EVENT	3	0	onActivate	0	Self		playSound	deathExplosionSound			
-+-EVENT	4	0	onActivate	0	Self		playSound	arrowHitSound			
-+-EVENT	5	0	onRelay	500	Self		toggleEventEnabled	0 1 3 4 5			
-+-EVENT	6	1	onMiniGameReset	0	Self		fireRelayDown				
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x10F" -82.75 -74.5 5.5 2 0 39  0 0 1 1 1
 1x6F" -30.75 -33.5 5.5 0 0 39  0 0 1 1 1
 1x6F" -124 -102.25 5.5 1 0 39  0 0 1 1 1
@@ -10359,25 +10365,21 @@ House Door" 24.5 -89.25 7.2 0 0 58  0 0 1 1 1
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
 1x10F" -30.75 -102.5 5.5 0 0 39  0 0 1 1 1
 1x10F" -30.75 -67.5 5.5 0 0 39  0 0 1 1 1
-1x6" -234.5 8.75 2.3 3 0 49  0 0 1 1 1
+1x6" -239.5 8.75 2.3 3 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		fireRelayUp				
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
-1x6" -229.5 8.75 2.3 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
-1x6F" 164 -241.25 0.7 1 0 47  0 0 1 1 1
-1x10F" 76.75 -72 5.5 2 0 39  0 0 1 1 1
-1x10F" -30.75 -92.5 5.5 0 0 39  0 0 1 1 1
-1x1F Round" -118.25 -1.75 2.7 2 0 39  0 0 1 1 1
-2x6F" -234.5 9.5 2.1 3 0 49  0 0 1 1 1
+2x6F" -239.5 9.5 2.1 3 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayUp				
 +-EVENT	1	1	onRelay	0	Self		disappear	-1			
 +-EVENT	2	0	onRelay	0	Self		disappear	0			
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+1x6F" 164 -241.25 0.7 1 0 47  0 0 1 1 1
+1x10F" 76.75 -72 5.5 2 0 39  0 0 1 1 1
+1x10F" -30.75 -92.5 5.5 0 0 39  0 0 1 1 1
+1x1F Round" -118.25 -1.75 2.7 2 0 39  0 0 1 1 1
+0.5x0.5F" -92.75 -81.25 2.7 1 0 49  0 0 1 0 1
 1x10F" -30.75 -97.5 5.5 0 0 39  0 0 1 1 1
 0.25x0.25 Edge" 64.25 -54.25 2.9 0 0 58  0 0 1 1 1
 +-ITEM Hat Fancy"  3 1000
@@ -10434,11 +10436,7 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 +-EVENT	1	1	onRelay	0	Self		setEmitter	chromePaintExplosionEmitter			
 +-EVENT	2	1	onRelay	1000	Self		setEmitter	-1			
 +-EMITTER NONE" 1
-2x6F" -239.5 9.5 2.1 3 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		fireRelayUp				
-+-EVENT	1	1	onRelay	0	Self		disappear	-1			
-+-EVENT	2	0	onRelay	0	Self		disappear	0			
-+-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
+0.5x0.5F" -92.25 -81.25 2.7 2 0 49  0 0 1 0 1
 1x8F Tile" 47.75 -59 6.7 1 0 31  0 0 1 1 1
 1x12x4" 27.5 -101.75 7.8 1 0 22  0 0 1 1 1
 1x10" 47.75 -64.5 9.3 0 0 54  0 0 1 1 1
@@ -10499,7 +10497,7 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 1x1F Round" -44.25 -90.75 3.5 2 0 42  0 0 1 1 1
 4x8F" 27.5 -100 4.3 1 0 58  0 0 1 1 1
 1x10F" -30.75 -42.5 5.5 0 0 39  0 0 1 1 1
-1x2F" -93.75 -81 2.7 0 0 43  0 0 1 1 1
+1x2F" -93.75 -81 2.7 0 0 43  0 0 1 0 1
 3x4 Glass Pane" 47.75 -58 7.5 2 0 40  0 0 1 1 1
 1x16" 36.5 -101.75 9.3 1 0 45  0 0 1 1 1
 1x6x4" 11.5 -49.75 7.8 1 0 54  0 0 1 1 1
@@ -10537,7 +10535,11 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 +-EVENT	2	1	onRelay	1000	Self		setEmitter	-1			
 1x2x4" -7.5 -49.75 7.8 1 0 54  0 0 1 1 1
 6x10F" 3 -48 5.3 1 0 58  0 0 1 1 1
-0.5x0.5F" -92.25 -81.25 2.7 2 0 49  0 0 1 0 1
+1x6" -234.5 8.75 2.3 3 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		fireRelayUp				
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x3F Tile" 165.25 -269.25 3.5 3 0 43  0 0 1 1 1
 6x10F" 30 -87.5 5.3 1 0 58  0 0 1 1 1
 1x12x4" -4.5 -62.25 7.8 1 0 22  0 0 1 1 1
@@ -10564,7 +10566,7 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 1x1 Round" 168.25 -263.75 3.3 3 0 43  0 0 1 1 1
 1x3F Tile" 169.25 -263.75 3.1 3 0 43  0 0 1 1 1
 0.25x1F" -242.75 2.75 2.3 1 0 47  0 0 1 1 1
-1x2F" -89.25 -81 2.7 2 0 43  0 0 1 1 1
+1x2F" -89.25 -81 2.7 2 0 43  0 0 1 0 1
 1x1 Round" 165.75 -260.75 3.3 2 0 43  0 0 1 1 1
 1x3F Tile" 165.75 -259.75 3.1 2 0 43  0 0 1 1 1
 1x1 Round" -43.75 -89.75 3.3 2 0 43  0 0 1 1 1
@@ -10583,13 +10585,17 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 1x10F" 76.75 -47 5.5 2 0 39  0 0 1 1 1
 1x10x2" 5.5 -67.25 6 1 0 54  0 0 1 1 1
 4x4F Tile" -247 -3 5.3 3 0 46  0 0 1 1 1
-0.75x1F" -116.75 -31.75 2.7 2 0 29  0 0 1 1 1
+0.75x1F" -116.75 -31.75 2.7 2 0 29  0 0 1 0 1
 1x1 Print" -114.75 -8.75 6.5 0 0 46 Letters/-apostrophe 0 0 1 1 1
 1x10F" 47 -114.75 5.5 3 0 39  0 0 1 1 1
 1x10x2" 0.5 -67.25 6 1 0 54  0 0 1 1 1
 1x8F Tile" 15 -49.75 6.7 2 0 31  0 0 1 1 1
 1x10F" 76.75 -62 5.5 2 0 39  0 0 1 1 1
-0.5x0.5F" -117.75 -32.75 2.7 2 0 49  0 0 1 0 1
+2x6F" -234.5 9.5 2.1 3 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		fireRelayUp				
++-EVENT	1	1	onRelay	0	Self		disappear	-1			
++-EVENT	2	0	onRelay	0	Self		disappear	0			
++-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	1 2			
 1x12" 51 -52.25 5.1 1 0 54  0 0 1 1 1
 1x1F Round" 158.75 -268.25 3.5 1 0 21  0 0 1 1 1
 1x1F" 163.25 -253.75 1.1 3 0 49  0 0 1 1 1
@@ -10676,7 +10682,7 @@ House Door" 18.5 -49.75 7.2 2 0 58  0 0 1 1 1
 1x2 Inverted Ramp" -119.75 -32 1 1 0 47  0 0 1 1 1
 1x2F Print" -93.75 -82.5 2.5 3 0 43 Letters/-space 0 0 1 1 1
 1x2x4" 47.75 -48.5 7.8 0 0 54  0 0 1 1 1
-0.75x1F" -89.25 -80.25 2.7 3 0 43  0 0 1 1 1
+0.75x1F" -89.25 -80.25 2.7 3 0 43  0 0 1 0 1
 4x4F Tile" -243 -1 5.3 3 0 46  0 0 1 1 1
 1x2F Print" -89.25 -82.5 2.5 3 0 43 Letters/-space 0 0 1 1 1
 1x10x2" 47.75 -54.5 6 0 0 54  0 0 1 1 1
@@ -10744,7 +10750,7 @@ House Door" 14.5 -89.25 7.2 0 0 58  0 0 1 1 1
 12x24" -244 -1 6.3 0 0 46  0 0 1 1 1
 1x10F" 76.75 -82 5.5 2 0 39  0 0 1 1 1
 4x4F Tile" -237 -1 5.3 3 0 46  0 0 1 1 1
-0.5x0.5F" -92.75 -81.25 2.7 1 0 49  0 0 1 0 1
+0.5x0.5F" -117.75 -32.75 2.7 2 0 49  0 0 1 0 1
 2x2F Print" -119 -32.5 2.5 3 0 29 Letters/-space 0 0 1 1 1
 0.25x1" 38.75 -103.75 2.5 3 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
@@ -10829,7 +10835,7 @@ House Door" 14.5 -89.25 7.2 0 0 58  0 0 1 1 1
 1x8x2" 64.75 -68.5 6 0 0 22  0 0 1 1 1
 1x2x2" 32 -101.75 6 1 0 22  0 0 1 1 1
 1x12F" -115.75 -90 5.9 0 0 45  0 0 1 1 1
-0.75x1F" -116.75 -36.25 2.7 0 0 29  0 0 1 1 1
+0.75x1F" -116.75 -36.25 2.7 0 0 29  0 0 1 0 1
 0.25x1" -5.75 -64.25 2.5 1 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 +-EVENT	1	1	onRelay	0	Self		toggleEventEnabled	2 3			
@@ -10984,15 +10990,15 @@ House Door" 14.5 -89.25 7.2 0 0 58  0 0 1 1 1
 2x2F Vertical Double Print" 37.5 -100.75 2.7 2 0 58 Letters/-space 0 0 1 1 1
 3x4 Glass Pane" 47.75 -40 7.5 0 0 17  0 0 1 1 1
 1x1x4" 47.75 -41.25 7.8 0 0 54  0 0 1 1 1
-1x2F" -117.5 -36.25 2.7 3 0 29  0 0 1 1 1
+1x2F" -117.5 -36.25 2.7 3 0 29  0 0 1 0 1
 1x1F Round" -133.25 -59.25 3.5 3 0 42  0 0 1 1 1
-1x6" -239.5 8.75 2.3 3 0 49  0 0 1 1 1
+1x6" -229.5 8.75 2.3 3 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		fireRelayUp				
 +-EVENT	3	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x1 Print" -113.75 -8.75 6.5 0 0 46 Letters/-space 0 0 1 1 1
-0.75x1F" -93.75 -80.25 2.7 1 0 43  0 0 1 1 1
+0.75x1F" -93.75 -80.25 2.7 1 0 43  0 0 1 0 1
 1x1 Round" -138.75 -49.75 3.3 2 0 43  0 0 1 1 1
 2x2F Tile" -113 -89.5 2.1 3 0 48  0 0 1 1 1
 1x1 Print" -116.75 -8.75 6.5 0 0 46 Letters/A 0 0 1 1 1
@@ -11114,7 +11120,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 4x4F Tile" -237 1 5.3 3 0 46  0 0 1 1 1
 4x4F Tile" -243 5 5.3 3 0 46  0 0 1 1 1
 1x1F" -107.25 -33.75 2.3 2 0 48  0 0 1 1 1
-1x2F" -117.5 -31.75 2.7 1 0 29  0 0 1 1 1
+1x2F" -117.5 -31.75 2.7 1 0 29  0 0 1 0 1
 1x2F Print" -119 -36.25 2.5 0 0 29 Letters/-space 0 0 1 1 1
 2x2F Vertical Print" 29.5 -102.75 3.5 0 0 18 Letters/-space 0 0 0 0 0
 +-EVENT	0	1	onRelay	0	Self		fireRelayUp				
@@ -11184,7 +11190,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x1 Round" -40.25 -49.25 3.9 3 0 43  0 0 1 1 1
 1x1 Round" -39.25 -48.75 3.9 3 0 43  0 0 1 1 1
 1x1 Round" -39.25 -49.75 3.9 3 0 43  0 0 1 1 1
-2x2 Small Ramp" -240.5 9.5 2.4 1 0 49  0 0 1 1 1
+2x4 Small Ramp" -229 9.5 2.4 2 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
@@ -11254,8 +11260,10 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x4 Glass Pane" 47.75 -80 8.7 2 0 40  0 0 1 1 1
 1x1F" -92.25 -70.75 1.3 1 0 49  0 0 1 1 1
 1x4 Glass Pane" 47.75 -58 8.7 2 0 40  0 0 1 1 1
-1x6" -239.5 8.75 2.9 3 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+2x2 Small Ramp" -230.5 9.5 2.4 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 6x32F" -241 -2.5 6.7 1 0 46  0 0 1 1 1
 1x4 Glass Pane" 47.75 -45 8.7 2 0 17  0 0 1 1 1
 1x8F Tile" 47.75 -46 8.9 1 0 31  0 0 1 1 1
@@ -11281,10 +11289,10 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x1 Round" 172.75 -262.25 3.5 2 0 43  0 0 1 1 1
 2x2F Round" 30 -98 2.5 0 0 48  4 0 1 1 1
 +-EVENT	0	1	onActivate	0	Self		fireRelayUp				
-2x4 Small Ramp" -239 9.5 2.4 2 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+0.5x2F" -92.5 -81.25 2.9 2 0 49  0 0 1 0 1
++-EVENT	0	1	onActivate	0	Self		playSound	TruckHonkSound3			
++-EVENT	1	1	onActivate	0	Self		setRayCasting	0			
++-EVENT	2	1	onActivate	10000	Self		setRayCasting	1			
 2x8 Small Ramp" -109.5 -36 5.4 0 0 47  0 0 1 1 1
 2x2F Vertical Double Print" 38.5 -100.75 3.7 2 0 58 Letters/-space 0 0 1 1 1
 1x2x4" 59.75 -75 7.8 0 0 54  0 0 1 1 1
@@ -11355,7 +11363,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 +-EVENT	6	1	onMiniGameReset	0	Self		setEventEnabled	3	0		
 1x8" 47.75 -84 9.3 0 0 54  0 0 1 1 1
 0.5x2F" -117.75 -33 2.9 3 0 49  0 0 1 0 1
-+-EVENT	0	1	onActivate	0	Self		playSound	fastImpactSound			
++-EVENT	0	1	onActivate	0	Self		playSound	TruckHonkSound1			
 +-EVENT	1	1	onActivate	0	Self		setRayCasting	0			
 +-EVENT	2	1	onActivate	10000	Self		setRayCasting	1			
 1x1 Round" 158.75 -270.25 3.9 3 0 43  0 0 1 1 1
@@ -11581,10 +11589,10 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x10x2" 65.25 -44.5 6 0 0 54  0 0 1 1 1
 1x4F" -119.75 -34 1.3 0 0 29  0 0 1 1 1
 4x4F Tile" 8 -60 5.3 0 0 45  0 0 1 1 1
-0.5x2F" -92.5 -81.25 2.9 2 0 49  0 0 1 0 1
-+-EVENT	0	1	onActivate	0	Self		playSound	fastImpactSound			
-+-EVENT	1	1	onActivate	0	Self		setRayCasting	0			
-+-EVENT	2	1	onActivate	10000	Self		setRayCasting	1			
+2x4 Small Ramp" -234 9.5 2.4 2 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x12x2" 56.5 -36.75 6 1 0 54  0 0 1 1 1
 25° Ramp 4x" -248 -7.75 6.5 2 0 46  0 0 1 1 1
 1x1 Round" 168.75 -268.25 3.5 2 0 43  0 0 1 1 1
@@ -11773,17 +11781,13 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 4x4F Tile" 10.5 -60 5.3 0 0 45  0 0 1 1 1
 0.25x0.25F Corner" 51.25 -38.25 3.3 1 0 58  0 0 1 1 1
 +-ITEM NONE" 0 4 4000
-2x2 Small Ramp" -235.5 9.5 2.4 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
+1x6" -229.5 8.75 2.9 3 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
 0.25x0.25F" 32.75 -90.25 2.1 2 0 58  0 0 0 0 1
 0.25x0.25F" 32.25 -90.75 2.1 0 0 58  0 0 0 0 1
-2x2 Small Ramp" -230.5 9.5 2.4 1 0 49  0 0 1 1 1
-+-EVENT	0	1	onRelay	0	Self		disappear	-1			
-+-EVENT	1	0	onRelay	0	Self		disappear	0			
-+-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
-2x4 Small Ramp" -229 9.5 2.4 2 0 49  0 0 1 1 1
+1x6" -239.5 8.75 2.9 3 0 49  0 0 0 0 0
++-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+2x2 Small Ramp" -240.5 9.5 2.4 1 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
@@ -11793,7 +11797,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 0.25x0.25F Corner" 50.75 -37.75 3.3 2 0 58  0 0 1 1 1
 2x8 Small Ramp" -89.5 -73 5.4 3 0 47  0 0 1 1 1
 1F 2x2F Vertical Print" -119.75 -36 2.5 1 0 29 Letters/-space 0 0 1 1 1
-2x4 Small Ramp" -234 9.5 2.4 2 0 49  0 0 1 1 1
+2x4 Small Ramp" -239 9.5 2.4 2 0 49  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		disappear	-1			
 +-EVENT	1	0	onRelay	0	Self		disappear	0			
 +-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
@@ -11909,8 +11913,10 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x2F Vertical Print" 13.25 -49.75 7.3 3 0 31 Letters/-space 0 0 1 1 1
 0.5x0.5F" 140.75 -237.25 1.7 2 0 61  0 0 1 1 1
 25° Ramp 4x" -249.75 2 6.5 3 0 46  0 0 1 1 1
-1x6" -229.5 8.75 2.9 3 0 49  0 0 0 0 0
-+-EVENT	0	1	onRelay	0	Self		fireRelaySouth				
+2x2 Small Ramp" -235.5 9.5 2.4 1 0 49  0 0 1 1 1
++-EVENT	0	1	onRelay	0	Self		disappear	-1			
++-EVENT	1	0	onRelay	0	Self		disappear	0			
++-EVENT	2	1	onRelay	0	Self		toggleEventEnabled	0 1			
 1x1 Round" 150.25 -271.75 3.5 2 0 43  0 0 1 1 1
 0.25x1" 4.25 -65.25 3.1 1 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
@@ -12476,7 +12482,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 1x1F Round" 168.75 -270.75 4.5 3 0 21  0 0 1 1 1
 1x1 Cone" 168.75 -271.75 4.7 3 0 43  0 0 1 1 1
 1x1 Round" 165.25 -268.75 5.1 3 0 43  0 0 1 1 1
-0.5x0.5F" -117.75 -33.25 3.3 3 0 49  0 0 0 0 1
+0.5x0.5F" -92.25 -81.25 3.3 2 0 49  0 0 0 0 1
 1x1 Cone" 168.25 -263.75 4.7 3 0 43  0 0 1 1 1
 1x1F Round" 169.25 -263.25 4.5 3 0 21  0 0 1 1 1
 1x1 Cone" 169.25 -264.25 4.7 3 0 43  0 0 1 1 1
@@ -12515,8 +12521,8 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 +-EVENT	4	1	onMiniGameReset	0	Self		setRendering	1			
 +-EVENT	5	1	onMiniGameReset	0	Self		setEventEnabled	2	1		
 +-EVENT	6	1	onMiniGameReset	0	Self		setEventEnabled	3	0		
-0.5x0.5F" -92.25 -81.25 3.3 2 0 49  0 0 0 0 1
-0.5x0.5F" -92.75 -81.25 3.3 1 0 49  0 0 0 0 1
+0.5x0.5F" -117.75 -33.25 3.3 3 0 49  0 0 0 0 1
+0.5x0.5F" -117.75 -32.75 3.3 2 0 49  0 0 0 0 1
 25° Ramp 4x" 47.25 -81 10.5 3 0 32  0 0 1 1 1
 4x4F Tile" 56 -60 5.3 3 0 45  0 0 1 1 1
 4x4F Tile" 56 -62 5.3 3 0 45  0 0 1 1 1
@@ -12555,7 +12561,7 @@ House Door" 47.75 -82.5 7.2 3 0 58  0 0 1 1 1
 +-EVENT	6	1	onMiniGameReset	0	Self		setEventEnabled	3	0		
 1x3" 40.75 -106.75 5.1 1 0 54  0 0 1 1 1
 1x4F" -116.25 -34 4.5 2 0 59  0 0 1 1 1
-0.5x0.5F" -117.75 -32.75 3.3 2 0 49  0 0 0 0 1
+0.5x0.5F" -92.75 -81.25 3.3 1 0 49  0 0 0 0 1
 0.25x1F" 62.25 -58.25 4.1 2 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 +-EVENT	1	1	onRelay	0	Self		toggleEventEnabled	2 3			
@@ -15144,7 +15150,7 @@ House Door" -5.5 -89.25 2.4 0 0 58  0 0 1 1 1
 1x12F" 153 -11.25 11.9 1 0 50  0 0 1 1 1
 1x4F" 216.5 -11.25 12.7 1 0 50  0 0 1 1 1
 1x6F" -168 -10.25 15.1 3 0 50  0 0 1 1 1
-1x4F" 219.5 -11.25 13.1 1 0 50  0 0 1 1 1
+1x4F" 218 -11.25 12.9 1 0 50  0 0 1 1 1
 1x11F" 220.75 -11.75 15.5 2 0 58  0 0 1 1 1
 1x4F" -28 -10.25 15.7 1 0 50  0 0 1 1 1
 1x4F" -665 -13.25 15.3 3 0 50  0 0 1 1 1
@@ -32804,88 +32810,88 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 4x4F Tile" 61.5 -57.5 5.7 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 2x2F Tile" -8 -102.5 0.7 0 0 45  0 0 1 1 1
 1x2F Tile" -8.25 -103 3.3 1 0 45  0 0 1 1 1
 4x4F Tile" 61.5 -77.5 0.9 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 61.5 -67.5 5.7 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 61.5 -77.5 5.7 2 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 39.5 -103 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 29.5 -103 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 19.5 -103 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 9.5 -103 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" -0.5 -103 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" -0.5 -103 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 9.5 -103 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 19.5 -103 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 0.25x0.25F Corner" -8.25 -102.75 3.9 0 0 48  0 0 1 1 1
 1x8x2" -1.5 -106.25 6 1 0 22  0 0 1 1 1
 4x4F Tile" 13.5 -63.5 0.9 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 1x10x2" -6 -106.25 6 1 0 22  0 0 1 1 1
 1x8x4" -1.5 -106.25 7.8 1 0 22  0 0 1 1 1
 4x4F Tile" -6.5 -63.5 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 3.5 -63.5 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 4x4F Tile" 13.5 -63.5 5.7 3 0 45  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		setEventEnabled	1 2 3	1		
 +-EVENT	1	0	onPlayerTouch	0	Player		setBloody	0	0	0	
-+-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	0	fresh		
++-EVENT	2	0	onPlayerTouch	0	Player		_setStatusEffect	1	fresh		
 +-EVENT	3	0	onPlayerTouch	0	Self		setEventEnabled	1 2 3	0		
 1x10x4" -6 -106.25 7.8 1 0 22  0 0 1 1 1
 4x4F Tile" -0.5 -105 5.7 3 0 45  0 0 1 1 1
@@ -35114,7 +35120,7 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 0.25x2" 48.25 -84.5 6.3 1 0 58  0 0 1 1 1
 1x1 Print" 11.75 -29.75 13.7 2 0 45 Letters/-space 3 0 1 1 1
 0.25x2" 33.25 -90.5 6.3 3 0 58  0 0 1 1 1
-1x1 Print" 14.25 -29.75 12.5 2 0 45 Letters/J 3 0 1 1 1
+1x1 Print" 14.25 -29.75 12.5 2 0 45 Letters/j 3 0 1 1 1
 1x1F" -243.25 1.75 4.3 0 0 5  0 0 1 1 1
 1x1 Print" 13.75 -29.75 12.5 2 0 45 Letters/A 3 0 1 1 1
 2x4F Tile" 21 -57 5.5 1 0 8  0 0 1 1 1
@@ -35915,7 +35921,7 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 0.25x2" 49 -83.75 6.3 2 0 58  0 0 1 1 1
 1x1F" -250.25 -2.75 4.1 0 0 52  0 0 1 1 1
 1x1F" -250.25 -3.25 3.7 0 0 52  0 0 1 1 1
-1x1 Print" 11.75 -30.25 12.5 0 0 45 Letters/J 3 0 1 1 1
+1x1 Print" 11.75 -30.25 12.5 0 0 45 Letters/j 3 0 1 1 1
 1x1F" -227.75 -7.75 4.5 0 0 2  0 0 1 1 1
 1x1F" -227.75 -7.25 4.5 0 0 3  0 0 1 1 1
 25° Crest End" 13.5 -55.25 6.9 1 0 45  0 0 0 0 1
@@ -37674,112 +37680,89 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 0.5x2F" 140 -240.75 2.1 0 0 61  0 0 1 1 1
 1x1F Round" -175.25 -13.25 15.7 2 0 49  0 0 1 1 1
 0.5x2F" 139.75 -238 0.7 3 0 51  0 0 1 1 1
-0.5x2F" 139.75 -239 0.7 3 0 51  0 0 1 1 1
-1x1F Round" -322.75 -13.25 15.7 2 0 49  0 0 1 1 1
-1x1F" -372.75 -11.25 13.1 0 0 58  0 0 1 1 1
-0.5x0.5F" 138.75 -237.25 2.1 1 0 58  0 0 1 1 1
-1x2F" -322.5 -11.25 13.3 1 0 50  0 0 1 1 1
-1x4F" 218 -11.25 12.9 1 0 50  0 0 1 1 1
 1x11F" 220.75 -11.75 15.3 2 0 58  0 0 1 1 1
+0.5x2F" 139.75 -239 0.7 3 0 51  0 0 1 1 1
 0.5x2F" 141.25 -240 0.7 3 0 51  0 0 1 1 1
-1x11F" -669.25 -11.75 15.3 2 0 58  0 0 1 1 1
-1x4F" -170 -10.25 15.3 3 0 50  0 0 1 1 1
-1x2F" -373.5 -11.25 13.3 1 0 50  0 0 1 1 1
-1x1F Round" -373.25 -10.25 15.7 2 0 49  0 0 1 1 1
-1x1F" 23.25 -11.25 13.1 0 0 58  0 0 1 1 1
-0.5x2F" 138.75 -240 2.3 1 0 58  0 0 1 1 1
-1x4F" -170 -13.25 15.3 3 0 50  0 0 1 1 1
-1x12F" -94.5 -11.25 11.9 1 0 50  0 0 1 1 1
-1x12F" -651 -11.25 11.9 1 0 50  0 0 1 1 1
-1x4F" -666.5 -10.25 15.5 3 0 50  0 0 1 1 1
-1x1F Round" 23.75 -10.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" 22.75 -10.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" -373.25 -13.25 15.7 2 0 49  0 0 1 1 1
-1x8F" 13.5 -13.25 14.9 1 0 50  0 0 1 1 1
-1x11F" -76.25 -11.75 15.3 2 0 58  0 0 1 1 1
-1x8F" 13.5 -11.25 12.3 1 0 50  0 0 1 1 1
-1x4F" -80.5 -13.25 15.3 1 0 50  0 0 1 1 1
-1x4x2 Fence" -125.25 -101 4.8 1 0 39  0 0 1 1 1
-1x8F" 13.5 -10.25 14.9 1 0 50  0 0 1 1 1
-1x4x2 Fence" -125.25 -101 2 1 0 39  0 0 1 1 1
-1x6F" -19.5 -13.25 15.1 3 0 50  0 0 1 1 1
-1x6F" -19.5 -10.25 15.1 3 0 50  0 0 1 1 1
-1x6F" -379.5 -11.25 12.5 1 0 50  0 0 1 1 1
-1x4x2 Fence" -125.25 -101 3.4 1 0 39  0 0 1 1 1
-1x6F" -415.5 -11.25 12.5 3 0 50  0 0 1 1 1
-1x8F" -313.5 -11.25 12.3 3 0 50  0 0 1 1 1
-1x11F" -75.25 -11.75 15.3 2 0 58  0 0 1 1 1
-1x6F" -316.5 -13.25 15.1 3 0 50  0 0 1 1 1
-1x12F" -292.5 -11.25 11.9 1 0 50  0 0 1 1 1
-1x6F" -316.5 -10.25 15.1 3 0 50  0 0 1 1 1
-1x1F Round" -421.75 -13.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" -76.25 -10.25 15.7 2 0 49  0 0 1 1 1
-1x6F" -415.5 -10.25 15.1 3 0 50  0 0 1 1 1
-1x6F" -415.5 -13.25 15.1 3 0 50  0 0 1 1 1
-1x1F" 64.75 -42.75 6.7 2 0 0  0 0 0 0 0
-+-NTOBJECTNAME _item
-+-ITEM Knife"  2 1000
-1x2F" -421.5 -11.25 13.3 1 0 50  0 0 1 1 1
-1x12F" -391.5 -11.25 11.9 1 0 50  0 0 1 1 1
-1x4F" -80.5 -10.25 15.3 1 0 50  0 0 1 1 1
-1x1F" -75.75 -11.25 13.1 0 0 58  0 0 1 1 1
-1x1F Round" -75.25 -10.25 15.7 2 0 49  0 0 1 1 1
-1x4F" -80.5 -11.25 12.7 1 0 50  0 0 1 1 1
-1x8F" -115.5 -13.25 14.9 3 0 50  0 0 1 1 1
-1x8F" -115.5 -10.25 14.9 3 0 50  0 0 1 1 1
-1x12F" 54 -11.25 11.9 1 0 50  0 0 1 1 1
-1x1F Round" -670.25 -10.25 15.7 2 0 49  0 0 1 1 1
-1x2F" 24 -11.25 13.3 1 0 50  0 0 1 1 1
-1x6F" 30 -13.25 15.1 3 0 50  0 0 1 1 1
-1x12F" -342 -11.25 11.9 1 0 50  0 0 1 1 1
-1x4F" -123.5 -13.25 15.7 3 0 50  0 0 1 1 1
-1x4F" -123.5 -10.25 15.7 3 0 50  0 0 1 1 1
-1x6F" 30 -10.25 15.1 3 0 50  0 0 1 1 1
-1x6F" 30 -11.25 12.5 3 0 50  0 0 1 1 1
-1x8F" -412.5 -11.25 12.3 3 0 50  0 0 1 1 1
-1x8F" 33 -11.25 12.3 3 0 50  0 0 1 1 1
-1x11F" -125.75 -11.75 15.3 2 0 58  0 0 1 1 1
-1x11F" -124.75 -11.75 15.3 2 0 58  0 0 1 1 1
-1x1F" 221.25 -13.25 15.7 3 0 51  0 0 1 1 1
 1x1F" 122.25 -11.25 13.1 0 0 58  0 0 1 1 1
-1x6F" 66 -11.25 12.5 1 0 50  0 0 1 1 1
-1x1F Round" -421.75 -10.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" 72.25 -13.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" 221.25 -11.25 13.5 0 0 49  0 0 1 1 1
-2x2 Round" 72.5 -12.5 13.3 0 0 45  0 0 1 1 1
-1x1F Round" -125.75 -10.25 15.7 2 0 49  0 0 1 1 1
-1x2F" 72 -11.25 13.3 1 0 50  0 0 1 1 1
-1x1F Round" 72.25 -10.25 15.7 2 0 49  0 0 1 1 1
 1x1F" 72.75 -11.25 13.1 0 0 58  0 0 1 1 1
-1x1F" -323.25 -11.25 13.1 0 0 58  0 0 1 1 1
+1x1F Round" 72.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F" 221.25 -13.25 15.7 3 0 51  0 0 1 1 1
+1x8F" 33 -11.25 12.3 3 0 50  0 0 1 1 1
+2x2 Round" 72.5 -12.5 13.3 0 0 45  0 0 1 1 1
+1x1F Round" -322.75 -13.25 15.7 2 0 49  0 0 1 1 1
+1x11F" -669.25 -11.75 15.3 2 0 58  0 0 1 1 1
 1x1F Round" -124.75 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F" -323.25 -11.25 13.1 0 0 58  0 0 1 1 1
 1x1F" -125.25 -11.25 13.1 0 0 58  0 0 1 1 1
 1x12F" 103.5 -11.25 11.9 1 0 50  0 0 1 1 1
+1x4F" -170 -10.25 15.3 3 0 50  0 0 1 1 1
+1x1F" -372.75 -11.25 13.1 0 0 58  0 0 1 1 1
+1x2F" -373.5 -11.25 13.3 1 0 50  0 0 1 1 1
+0.5x0.5F" 138.75 -237.25 2.1 1 0 58  0 0 1 1 1
 1x1F Round" -323.75 -10.25 15.7 2 0 49  0 0 1 1 1
-1x2F" -324 -11.25 13.3 1 0 50  0 0 1 1 1
-2x2 Round" -323.5 -12.5 13.3 0 0 45  0 0 1 1 1
+1x2F" 72 -11.25 13.3 1 0 50  0 0 1 1 1
+1x11F" -125.75 -11.75 15.3 2 0 58  0 0 1 1 1
+1x1F Round" -125.75 -10.25 15.7 2 0 49  0 0 1 1 1
+1x11F" -124.75 -11.75 15.3 2 0 58  0 0 1 1 1
 1x1F Round" -323.75 -13.25 15.7 2 0 49  0 0 1 1 1
-1x6F" -330 -11.25 12.5 1 0 50  0 0 1 1 1
+1x12F" -342 -11.25 11.9 1 0 50  0 0 1 1 1
 0.5x2F" 139.75 -240 0.7 3 0 51  0 0 1 1 1
-1x2F" -372 -11.25 13.3 1 0 50  0 0 1 1 1
-1x1F" 221.25 -10.25 15.7 3 0 51  0 0 1 1 1
-2x2F Tile" 7 -102.5 5.5 0 0 45  0 0 1 1 1
-1x1F Round" 270.25 -12.75 13.7 0 0 47  0 0 1 1 1
-1x1F Round" 270.25 -13.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" 73.25 -13.25 15.7 2 0 49  0 0 1 1 1
-1x1F Round" -372.25 -13.25 15.7 2 0 49  0 0 1 1 1
-1x2F" 73.5 -11.25 13.3 1 0 50  0 0 1 1 1
-1x4F" -127 -11.25 13.1 1 0 50  0 0 1 1 1
-1x1F Round" 73.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" 221.25 -11.25 13.5 0 0 49  0 0 1 1 1
+1x6F" -330 -11.25 12.5 1 0 50  0 0 1 1 1
+1x8F" -412.5 -11.25 12.3 3 0 50  0 0 1 1 1
+1x1F Round" -75.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x2F" -324 -11.25 13.3 1 0 50  0 0 1 1 1
+1x2F" -322.5 -11.25 13.3 1 0 50  0 0 1 1 1
+1x11F" -75.25 -11.75 15.3 2 0 58  0 0 1 1 1
+1x2F" -421.5 -11.25 13.3 1 0 50  0 0 1 1 1
+1x1F Round" -421.75 -13.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" -670.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F" -75.75 -11.25 13.1 0 0 58  0 0 1 1 1
+1x1F Round" -373.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x6F" -316.5 -10.25 15.1 3 0 50  0 0 1 1 1
+1x4F" -123.5 -13.25 15.7 3 0 50  0 0 1 1 1
+2x2 Round" -323.5 -12.5 13.3 0 0 45  0 0 1 1 1
+1x12F" -651 -11.25 11.9 1 0 50  0 0 1 1 1
+1x1F Round" 22.75 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" -373.25 -13.25 15.7 2 0 49  0 0 1 1 1
+1x6F" -19.5 -10.25 15.1 3 0 50  0 0 1 1 1
+1x4x2 Fence" -125.25 -101 4.8 1 0 39  0 0 1 1 1
+1x6F" -19.5 -13.25 15.1 3 0 50  0 0 1 1 1
 1x6F" 79.5 -13.25 15.1 3 0 50  0 0 1 1 1
 1x6F" 79.5 -10.25 15.1 3 0 50  0 0 1 1 1
 1x6F" 79.5 -11.25 12.5 3 0 50  0 0 1 1 1
+1x2F" 73.5 -11.25 13.3 1 0 50  0 0 1 1 1
 1x4F" 267.5 -11.25 12.9 1 0 50  0 0 1 1 1
+1x4F" -127 -11.25 13.1 1 0 50  0 0 1 1 1
+1x1F Round" 73.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" -372.25 -13.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" 270.25 -12.75 13.7 0 0 47  0 0 1 1 1
 1x1F Round" -372.25 -10.25 15.7 2 0 49  0 0 1 1 1
 1x6F" -366 -13.25 15.1 3 0 50  0 0 1 1 1
-1x1F Round" 271.25 -10.25 15.7 2 0 49  0 0 1 1 1
-1x8F" 82.5 -11.25 12.3 3 0 50  0 0 1 1 1
-1x4F" -127 -10.25 15.7 1 0 50  0 0 1 1 1
+1x1F Round" 270.25 -13.25 15.7 2 0 49  0 0 1 1 1
+1x1F Round" 73.25 -13.25 15.7 2 0 49  0 0 1 1 1
+2x2F Tile" 7 -102.5 5.5 0 0 45  0 0 1 1 1
+1x2F" -372 -11.25 13.3 1 0 50  0 0 1 1 1
+1x1F" 221.25 -10.25 15.7 3 0 51  0 0 1 1 1
+1x6F" 66 -11.25 12.5 1 0 50  0 0 1 1 1
+1x2F" 24 -11.25 13.3 1 0 50  0 0 1 1 1
+1x6F" 30 -13.25 15.1 3 0 50  0 0 1 1 1
+1x12F" -292.5 -11.25 11.9 1 0 50  0 0 1 1 1
+1x6F" -316.5 -13.25 15.1 3 0 50  0 0 1 1 1
+1x4F" -80.5 -10.25 15.3 1 0 50  0 0 1 1 1
+1x12F" -391.5 -11.25 11.9 1 0 50  0 0 1 1 1
+1x1F Round" 23.75 -10.25 15.7 2 0 49  0 0 1 1 1
+1x4F" -666.5 -10.25 15.5 3 0 50  0 0 1 1 1
+1x8F" 13.5 -10.25 14.9 1 0 50  0 0 1 1 1
+1x4x2 Fence" -125.25 -101 2 1 0 39  0 0 1 1 1
+1x6F" 30 -11.25 12.5 3 0 50  0 0 1 1 1
+1x1F Round" -421.75 -10.25 15.7 2 0 49  0 0 1 1 1
+1x4F" -123.5 -10.25 15.7 3 0 50  0 0 1 1 1
+1x6F" 30 -10.25 15.1 3 0 50  0 0 1 1 1
+1x1F Round" 72.25 -13.25 15.7 2 0 49  0 0 1 1 1
+1x12F" -94.5 -11.25 11.9 1 0 50  0 0 1 1 1
+1x4F" -80.5 -13.25 15.3 1 0 50  0 0 1 1 1
+1x12F" 54 -11.25 11.9 1 0 50  0 0 1 1 1
 1x6F" 115.5 -11.25 12.5 1 0 50  0 0 1 1 1
 1x1F Round" 121.75 -13.25 15.7 2 0 49  0 0 1 1 1
 1x6F" -316.5 -11.25 12.5 3 0 50  0 0 1 1 1
@@ -37789,6 +37772,10 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 0.5x0.5 Corner" -115.75 -90.75 6.5 2 0 50  0 0 1 1 1
 1x1F Round" 121.75 -10.25 15.7 2 0 49  0 0 1 1 1
 1x6F" -366 -10.25 15.1 3 0 50  0 0 1 1 1
+1x8F" -313.5 -11.25 12.3 3 0 50  0 0 1 1 1
+1x1F" 64.75 -42.75 6.7 2 0 0  0 0 0 0 0
++-NTOBJECTNAME _item
++-ITEM Knife"  2 1000
 0.25x1" 61.25 -78.25 1.9 2 0 18  0 0 0 0 1
 +-EVENT	0	1	onRelay	0	Self		fireRelayDown				
 +-EVENT	1	1	onRelay	0	Self		toggleEventEnabled	2 3			
@@ -37797,4 +37784,31 @@ Spawn Point" -1.75 -92.25 2.3 3 0 6  0 0 0 0 0
 +-EVENT	4	1	onMiniGameReset	0	Self		setRendering	1			
 +-EVENT	5	1	onMiniGameReset	0	Self		setEventEnabled	2	1		
 +-EVENT	6	1	onMiniGameReset	0	Self		setEventEnabled	3	0		
+1x6F" -379.5 -11.25 12.5 1 0 50  0 0 1 1 1
+1x6F" -415.5 -11.25 12.5 3 0 50  0 0 1 1 1
+1x4x2 Fence" -125.25 -101 3.4 1 0 39  0 0 1 1 1
+1x8F" -115.5 -10.25 14.9 3 0 50  0 0 1 1 1
+1x8F" -115.5 -13.25 14.9 3 0 50  0 0 1 1 1
+1x4F" -80.5 -11.25 12.7 1 0 50  0 0 1 1 1
+1x6F" -415.5 -10.25 15.1 3 0 50  0 0 1 1 1
+1x6F" -415.5 -13.25 15.1 3 0 50  0 0 1 1 1
+1x1F Round" -76.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x1F" 23.25 -11.25 13.1 0 0 58  0 0 1 1 1
+1x4F" -170 -13.25 15.3 3 0 50  0 0 1 1 1
+0.5x2F" 138.75 -240 2.3 1 0 58  0 0 1 1 1
+1x11F" -76.25 -11.75 15.3 2 0 58  0 0 1 1 1
+1x8F" 13.5 -11.25 12.3 1 0 50  0 0 1 1 1
+1x8F" 13.5 -13.25 14.9 1 0 50  0 0 1 1 1
+1x1F Round" 271.25 -10.25 15.7 2 0 49  0 0 1 1 1
+1x8F" 82.5 -11.25 12.3 3 0 50  0 0 1 1 1
 1x6F" -366 -11.25 12.5 3 0 50  0 0 1 1 1
+1x4F" -127 -10.25 15.7 1 0 50  0 0 1 1 1
+1x4F" 219.5 -11.25 13.1 1 0 50  0 0 1 1 1
+1x4F" -23 -11.25 12.9 3 0 50  0 0 1 1 1
+1x4F" -21.5 -11.25 12.7 3 0 50  0 0 1 1 1
+1x6F" -19.5 -11.25 12.5 3 0 50  0 0 1 1 1
+1x8F" -16.5 -11.25 12.3 3 0 50  0 0 1 1 1
+1x10F" -12.5 -11.25 12.1 3 0 50  0 0 1 1 1
+1x12F" -7.5 -11.25 11.9 1 0 50  0 0 1 1 1
+1x14F" -1.5 -11.25 11.7 1 0 50  0 0 1 1 1
+1x12F" 4.5 -11.25 11.9 1 0 50  0 0 1 1 1

@@ -142,6 +142,7 @@ function KnifeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.6) //Another random chance to get bloody hand
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))
@@ -150,6 +151,7 @@ function KnifeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 
 		if(%props.bloody && getRandom() < 0.3) //And random chance to get some blood on chest
 		{
+			%player.bloodyWriting = 2;
 			%player.bloody["chest_front"] = true;
 			%player.bloody = true;
 			if (isObject(%player.client))
@@ -157,10 +159,5 @@ function KnifeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		}
 		ServerPlay3D("KnifeHitSound" @ getRandom(1, 3), %position);
 		return %object.damage(%player, %position, %damage, %image.type);
-	}
-	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
-	{
-		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(1);
 	}
 }
