@@ -1,10 +1,4 @@
-//This is a sound system designed to allow us to have "soundproof" objects! Woo.
-//Variables:
-//profile - audio profile
-//position - source of sound
-//IgnoreSrcSZ - Source's soundZone won't be taken into account. Means the sound will be heard outside the soundzone containing sound.
-//IgnorePlayerSZ - Player's soundzone won't be taken into account. Means the sound will be heard by players in different soundzones (?)
-function GameConnection::playGameSound(%this, %profile, %position, %ignoreSrcSZ, %ignorePlayerSZ)
+function GameConnection::playGameSound(%this, %profile, %position)
 {
 	if (%position $= "") //No position provided? Skip the pleasantries and play it as 2d no matter what.
 	{
@@ -15,22 +9,14 @@ function GameConnection::playGameSound(%this, %profile, %position, %ignoreSrcSZ,
 	if (isObject(%this.player)) //Check for soundproof zones and other things
 	{
 		%foundZone = getZoneFromPos(%position);
-		%playerZone = getZoneFromPos(%this.player.getEyePoint());
-		if (!%ignoreSrcSZ && isObject(%foundZone) && %foundZone.isSoundProof && (!isObject(%playerZone) || %playerZone != %foundZone))
-		{
-			// talk("The sound was made in soundproof zone. Player" SPC %this.getPlayerName() SPC "didn't hear it!");
+		%playerZone = %this.player.currentSoundZone;
+		if(isObject(%playerZone) && %playerZone.active && %playerZone != %foundZone)
 			return;
-		}
-		if (!%ignorePlayerSZ && isObject(%playerZone) && %playerZone.isSoundProof && (!isObject(%foundZone) || %foundZone != %playerZone))
-		{
-			// talk("The player is in a soundproof zone. Player" SPC %this.getPlayerName() SPC "didn't hear it!");
-			return;
-		}
 		if (%this.player.unconscious && !%description.is2d)
 		{
 			%dist = vectorDist(%this.player.getEyePoint(), %position);
-			if (%dist > 24) //Unconscious players can only hear sounds right next to them
-				return;
+			//if (%dist > 24) //Unconscious players can only hear sounds right next to them
+			//	return;
 			//Below we adjust the position in a proper way so it's heard relative to camera. This is done due to unconsciousness setting player's camera somewhere else.
 			//First, we make sound pos relative to player (vectorsub). Second, we make it relative to camera position (vectoradd).
 			%position = vectorAdd(vectorSub(%position, %this.player.getEyePoint()), getWords(%this.camera.getTransform(), 0, 2));
@@ -49,37 +35,48 @@ function GameConnection::playGameSound(%this, %profile, %position, %ignoreSrcSZ,
 
 function getZoneFromPos(%position)
 {
-	%x = getWord(%position, 0);
-	%y = getWord(%position, 1);
-	%z = getWord(%position, 2);
-	
-	%count = ZoneGroup.getCount();
-	
-	for (%i = 0; %i < %count; %i++)
+	initContainerRadiusSearch(%position, 0.25, $typeMasks::triggerObjectType);
+
+	while(isObject(%trigger = containerSearchNext()))
 	{
-		%zone = ZoneGroup.getObject(%i);
-		%minX = getWord(%zone.center, 0) - getWord(%zone.bounds, 0) / 2;
-		%minY = getWord(%zone.center, 1) - getWord(%zone.bounds, 1) / 2;
-		%minZ = getWord(%zone.center, 2) - getWord(%zone.bounds, 2) / 2;
-		%maxX = getWord(%zone.center, 0) + getWord(%zone.bounds, 0) / 2;
-		%maxY = getWord(%zone.center, 1) + getWord(%zone.bounds, 1) / 2;
-		%maxZ = getWord(%zone.center, 2) + getWord(%zone.bounds, 2) / 2;
-		if (%x >= %minX && %x <= %maxX && %y >= %minY && %y <= %maxY && %z >= %minZ && %z <= %maxZ)
-			return %zone;
+		if(%trigger.getDatablock() == SoundZoneTriggerData.getID())
+		{
+			return %trigger;
+		}
 	}
-	
 	return 0;
 }
 
-
 package DespairSoundSystem
 {
-	function serverPlay3d(%profile, %position, %ignoreSrcSZ, %ignorePlayerSZ) //Replace serverPlay3d
+	function serverPlay3d(%profile, %position) //Replace serverPlay3d
 	{
 		%count = ClientGroup.getCount();
 
 		for (%i = 0; %i < %count; %i++)
-			ClientGroup.getObject(%i).playGameSound(%profile, %position, %ignoreSrcSZ, %ignorePlayerSZ);
+			ClientGroup.getObject(%i).playGameSound(%profile, %position);
 	}
 };
 activatePackage("DespairSoundSystem");
+
+//Thanks to Wrapperup for this one, though iirc it only works around z rotation
+function RotatePointAroundPivot(%point, %pivot, %zrot)
+{
+	%dist = vectorDist(%point, %pivot);
+	
+	%norm = vectorNormalize(vectorSub(%point, %pivot));
+	
+	%xB = getWord(%norm, 0);
+	%yB = getWord(%norm, 1);
+	
+	%angle = mRadToDeg(mATan(%xB,%yB));
+	
+	%newAngle = %angle + %zrot;
+	
+	%pos = mSin(mDegToRad(%newAngle)) SPC mCos(mDegToRad(%newAngle)) SPC 0;
+	
+	%pos = vectorScale(%pos, %dist);
+	%pos = vectorAdd(%pos, %pivot);
+	
+	return %pos;
+}
