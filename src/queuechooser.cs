@@ -1,36 +1,37 @@
 function chooseNextClient(%queueName)
 {
 	%queue = $Despair::Queue[%queueName];
-	%count = ClientGroup.getCount();
-	%words = getWordCount(%queue);
-	for (%i = 0; %i < %words; %i++)
-		%word[%i] = getWord(%queue, %i);
-	for (%i = 0; %i < %count; %i++)
+	while(!isObject(%pick) && !%refreshed)
 	{
-		%cl = ClientGroup.getObject(%i);
-		if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons) //RDMed
-			continue;
-		%bl_id = %cl.bl_id;
-		%chance = 1;
-		for (%j = 0; %j < %words; %j++)
-			if (%word[%j] == %bl_id)
-				%chance -= mPow(2, -1 - %j);
-		%chance = mPow(%chance, 8);
-		%chance[%i] = %chance;
-		%sumChance += %chance;
-	}
-	%value = getRandom() * %sumChance;
-	for (%i = 0; %i < %count; %i++)
-	{
-		%value -= %chance[%i];
-		if (%value < 0)
+		%index = getRandom(0, getWordCount(%queue)-1);
+		%pick = getWord(%queue, %index);
+		%queue = removeWord(%queue, %index);
+		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons)
+			%pick = "";
+		if(getWordCount(%queue) <= 0)
 		{
-			%chose = ClientGroup.getObject(%i);
-			break;
+			%j = -1;
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
+			{
+				%cl = ClientGroup.getObject(%i);
+				if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons)
+					continue;
+				
+				%queue = setWord(%queue, %j++, %cl);
+			}
+			%refreshed = true;
 		}
+		%index = getRandom(0, getWordCount(%queue)-1);
+		%pick = getWord(%queue, %index);
+		%queue = removeWord(%queue, %index);
+		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons)
+			%pick = "";
 	}
-	if (!isObject(%chose))
+	if(!isObject(%pick) && %refreshed)
+	{
+		talk(announce("\c0ERROR\c6: No suitable clients found to be killer. The fuck!?"));
 		return -1;
-	$Despair::Queue[%queueName] = getWords(%chose.bl_id SPC %queue, 0, 19);
-	return %chose;
+	}
+	$Despair::Queue[%queueName] = %queue;
+	return %pick;
 }

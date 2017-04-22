@@ -146,7 +146,7 @@ package DespairCorpses
 {
 	function Armor::onTrigger(%this, %obj, %slot, %state)
 	{
-		if(%slot == 0 && %obj.currTool == -1)
+		if(%slot == 0 && !isObject(%obj.tool[%obj.currTool]))
 		{
 			%item = %obj.carryObject;
 			if (isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj)
@@ -162,7 +162,7 @@ package DespairCorpses
 			}
 			if(%state && isObject(%col = %obj.findCorpseRayCast()))
 			{
-				if ($Sim::Time - %obj.lastBodyClick < 0.3 && (%col.unconscious || ($investigationStart $= "" || %obj.client.killer)))
+				if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || !%col.isDead))
 				{
 					if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
 						%col.carryPlayer.playThread(2, "root");

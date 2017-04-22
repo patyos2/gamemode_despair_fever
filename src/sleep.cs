@@ -137,6 +137,8 @@ function serverCmdSleep(%this, %bypass)
 
 	if(%this.killer)
 	{
+		%this.setControlObject(%cam = %this.camera);
+		%cam.setMode("CORPSE", %pl);
 		%pl.changeDatablock(PlayerCorpseArmor);
 		%pl.setArmThread(land);
 		%pl.setImageTrigger(0, 0);

@@ -110,14 +110,26 @@ package DespairChat
 			%member = ClientGroup.getObject(%i);
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
-				messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
+				if(%member.miniGame != $DefaultMiniGame)
+					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
+				else
+					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
 				continue;
+			}
+			%_name = %name;
+			%_text = %text;
+			%_range = %range;
+			if(%member.player.unconscious)
+			{
+				%_name = "Someone";
+				%_text = muffleText(%text, 0.5);
+				%_range *= 0.5;
 			}
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
-			if (vectorDist(%a, %b) > %range)
+			if (vectorDist(%a, %b) > %_range)
 				continue;
-			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
+			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %_name, %type, %_text);
 		}
 	}
 	function serverCmdTeamMessageSent(%client, %text) //Adminchat

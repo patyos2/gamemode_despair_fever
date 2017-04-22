@@ -298,15 +298,35 @@ function despairOnNight()
 		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
 				%client.player.removeStatusEffect($SE_sleepSlot);
 	}
+	if($days <= 0)
+		return;
+	// prepare
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		%a[%i] = %i;
+	// shuffle
+	while (%i--)
+	{
+		%j = getRandom(%i);
+		%x = %a[%i - 1];
+		%a[%i - 1] = %a[%j];
+		%a[%j] = %x;
+	}
 
+	%detectiveCount = getRandom(0, 2);
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
-		%client = $DefaultMiniGame.member[%i];
+		%client = $DefaultMiniGame.member[%a[%i]];
 		%player = %client.player;
 		if(isObject(%player))
 		{
 			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
+		}
+		if(%detectiveCount > 0)
+		{
+			%player.character.detective = true;
+			messageClient(%client, '', "\c5You have a \c3Detective\c5 trait! You will get more information from bodies.");
+			%detectiveCount--;
 		}
 	}
 }
@@ -424,11 +444,10 @@ function DespairStartOpeningStatements()
 
 function DespairCycleOpeningStatements(%j)
 {
-	talk(%j);
 	if(%j > $DefaultMiniGame.numMembers)
 	{
 		$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairStartDiscussion);
-		talk("All statements have been heard...");
+		$DefaultMiniGame.chatMessageAll('', "\c5All statements have been heard.");
 		return;
 	}
 	%player = $stand[%j].player;
@@ -465,7 +484,6 @@ function DespairCycleOpeningStatements(%j)
 	}
 	else
 	{
-		talk("Skipping: no player object");
 		DespairCycleOpeningStatements(%j+1);
 	}
 }

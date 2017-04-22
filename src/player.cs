@@ -198,7 +198,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 						return;
 					}
 				}
-				else if(%ray.getType() & $TypeMasks::PlayerObjectType)
+				else if(%ray.getType() & $TypeMasks::PlayerObjectType && !%ray.unconscious) //corpse.cs handles both carrying and examination of sleeping folks
 				{
 					if(isObject(%obj.client))
 						%obj.client.examineObject(%ray);
@@ -213,7 +213,6 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 			{
 				if(isObject(%obj.client))
 					%obj.client.examineObject(%col);
-				return;
 			}
 		}
 	}

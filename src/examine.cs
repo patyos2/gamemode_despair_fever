@@ -19,6 +19,41 @@ function GameConnection::examineObject(%client, %col)
 				DespairCheckInvestigation(%player, %col);
 
 			%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " dead.";
+			if(%player.character.detective)
+			{
+				%tod = %player.attackDayTime[%player.attackCount];
+				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+				%tod = %tod - mFloor(%tod); //get rid of excess stuff
+
+				%tod1 = getDayCycleTimeString(%tod - 0.05, 1);
+				%mod12 = getWord(%tod1, 1);
+				%tod1 = getWord(%tod1, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
+
+				%tod2 = getDayCycleTimeString(%tod + 0.05, 1);
+				%mod12 = getWord(%tod2, 1);
+				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
+
+				%text = %text @ "\n\c6" @ "It appears they died between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
+				for(%i=0;%i<%col.attackCount;%i++)
+				{
+					%wounds[%col.attackType[%i]]++;
+				}
+				if(%wounds["blunt"] > 0)
+				{
+					%field = %wounds["blunt"] SPC "bruises";
+					%haswounds = true;
+				}
+				if(%wounds["sharp"] > 0)
+				{
+					%field = %wounds["sharp"] SPC "cuts";
+					%haswounds = true;
+				}
+
+				if(%haswounds)
+					%text = %text @ "\n\c6" @ "They have \c3" @ naturalGrammarList(%field) @ "\c6.";
+				else
+					%text = %text @ "\n\c6" @ "They have \c3no visible wounds\c6.";
+			}
 		}
 		else
 		{

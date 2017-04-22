@@ -141,10 +141,10 @@ function getPaperEvidence(%character)
 			%msg = "Initials of criminal revealed to be";
 			%a = getSubStr(getWord(%character.name, 0), 0, 1);
 			%b = getSubStr(getWord(%character.name, 1), 0, 1);
-			%rng = getRandom(1, 2);
-			if(%rng == 1)
+			%rng = getRandom(0, 1);
+			if(%rng == 0)
 				%a = "#";
-			if(%rng == 2)
+			if(%rng == 1)
 				%b = "#";
 			%msg = %msg SPC %a @ "." @ %b @ ".";
 	}

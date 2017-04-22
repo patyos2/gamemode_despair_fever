@@ -41,6 +41,7 @@ package DespairHealth
 		%player.attackClient[%player.attackCount] = %attacker;
 		%player.attackCharacter[%player.attackCount] = %attacker.character;
 		%player.attackTime[%player.attackCount] = $Sim::Time;
+		%player.attackDayTime[%player.attackCount] = getDayCycleTime();
 		if (%pos !$= "")
 		{
 			%region = %player.getRegion(%pos, true);
