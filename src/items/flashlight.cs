@@ -32,9 +32,10 @@ datablock ItemData(FlashlightItem)
 	image = FlashLightImage;
 
 	mass = 1;
+	drag = 0.3;
 	density = 0.2;
-	elasticity = 0.2;
-	friction = 0.6;
+	elasticity = 0;
+	friction = 1;
 	emap = true;
 };
 

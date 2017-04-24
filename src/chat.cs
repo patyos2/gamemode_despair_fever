@@ -69,6 +69,17 @@ package DespairChat
 		if(%player.unconscious)
 			return;
 
+		%player.playThread(0, "talk");
+		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
+
+		%name = %client.character.name;
+		if(!$despairTrial)
+		{
+			if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%img = %player.getMountedImage(2)) && %img == nameToID(%hat.image))
+				%name = "Unknown";
+		}
+
+		%sound = DespairChatSound;
 		%type = "says";
 		%range = 32;
 		if(getSubStr(%text, 0, 1) $= "@") //Whispering
@@ -77,19 +88,17 @@ package DespairChat
 			%type = "whispers";
 			%range = 4;
 		}
-
-		%player.playThread(0, "talk");
-		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
-
-		%name = %client.character.name;
-		if(!$despairTrial)
+		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %member.player.findTool("RadioItem")) != -1)
 		{
-			if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
-				%name = "Unknown";
+			%sound = radioTalkSound;
+			%type = "radios";
+			%range = 16;
+			%props = %member.player.getItemProps(%slot);
+			radioTransmitMessage(%player, %props.channel, %text);
 		}
 		if(%type !$= "whispers")
 		{
-			serverPlay3D(DespairChatSound, %player.getHackPosition());
+			serverPlay3D(%sound, %player.getHackPosition());
 
 			%shape = new Item()
 			{
@@ -99,7 +108,7 @@ package DespairChat
 
 			%shape.setCollisionTimeout(%player);
 			%shape.setShapeName(%text);
-			%shape.setShapeNameDistance(30);
+			%shape.setShapeNameDistance(%range);
 			%shape.setVelocity("0 0 0.5");
 			%shape.deleteSchedule = %shape.schedule(3000, delete);
 		}
@@ -111,7 +120,7 @@ package DespairChat
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
 				if(%member.miniGame != $DefaultMiniGame)
-					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
+					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name SPC "(" @ %client.getPlayerName() @ ")", %type, %text);
 				else
 					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
 				continue;
@@ -142,9 +151,9 @@ package DespairChat
 			%killer = true;
 			%name = "Killer";
 		}
-		if(getSubStr(%text, 0, 2) $= "@k") //Killer chat
+		if(getSubStr(%text, 0, 1) $= "@") //Killer chat
 		{
-			%text = getSubStr(%text, 2, strLen(%text));
+			%text = getSubStr(%text, 1, strLen(%text));
 			%killer = true;
 		}
 		if (%text $= "")

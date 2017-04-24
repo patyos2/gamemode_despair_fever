@@ -191,7 +191,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 					}
 					if (%ray.canPickup && (%slot = %obj.addTool(%data, %ray.itemProps, 1, 0)) != -1)
 					{
-						if(%data.getName() $= "MopItem")
+						if(%data.getName() $= "MopItem" || %data.getName() $= "RadioItem")
 							%data.onPickup(%ray, %obj, %slot);
 						%ray.itemProps = "";
 						%ray.delete();
