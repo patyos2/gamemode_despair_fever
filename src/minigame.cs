@@ -48,6 +48,7 @@ function createPlayer(%client)
 	%player.setShapeNameDistance(0);
 	%player.setShapeNameColor("1 1 1");
 	%player.setTransform(%roomSpawn.getSpawnPoint());
+	%player.updateAFKCheck();
 
 	centerPrint(%client, "");
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
@@ -247,8 +248,13 @@ function fxDayCycle::timeSchedule(%this, %lastStage)
 		despairCycleStage(%stage);
 
 	if(isObject($DefaultMiniGame))
+	{
 		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
-			$DefaultMiniGame.member[%i].updateBottomprint();
+		{
+			%member = $DefaultMiniGame.member[%i];
+			%member.updateBottomprint();
+		}
+	}
 
 	%sched = getMax(50, (%this.DayLength * 60) / 86400); //insanely weird and complicated thingy to make schedule happen every time a "second" actually passes
 	%this.timeSchedule = %this.schedule(%sched, timeSchedule, %stage);
@@ -290,6 +296,43 @@ function despairCycleStage(%stage)
 	}
 }
 
+function GameConnection::updateAFKCheck(%this, %previous)
+{
+	cancel(%this.updateAFKCheck);
+
+	if (!isObject(%player = %client.player))
+		return;
+
+	%transform = %player.getTransform();
+
+	if (!%player.unconscious && %transform $= %previous && getSimTime() - %this.lastChatTime >= 60000)
+	{
+		%player.afk = true;
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%member = ClientGroup.getObject(%i);
+			if(%member.isAdmin)
+			{
+				messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
+			}
+		}
+	}
+	else
+	{
+		%player.afk = false;
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%member = ClientGroup.getObject(%i);
+			if(%member.isAdmin)
+			{
+				messageClient(%member, '', '\c2--[\c5%1 is no longer afk.', %this.getPlayerName());
+			}
+		}
+	}
+
+	%this.updateAFKCheck = %this.schedule(60000, "updateAFKCheck", %transform);
+}
+
 package DespairFever
 {
 	function Player::removeBody(%player)
@@ -304,19 +347,13 @@ package DespairFever
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 
-		if(!$pickedKiller)
+		if(!$currentKiller)
 			createPlayer(%client);
 	}
 
 	function MiniGameSO::removeMember($DefaultMiniGame, %client)
 	{
-		Parent::addMember($DefaultMiniGame, %client);
-
-		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
-			despairPrepareGame();
-
-		if(!$pickedKiller)
-			createPlayer(%client);
+		Parent::removeMember($DefaultMiniGame, %client);
 	}
 
 	function MiniGameSO::Reset(%this, %client)

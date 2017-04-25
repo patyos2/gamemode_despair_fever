@@ -30,7 +30,7 @@ function Player::addTool(%this, %data, %props, %ignoreProps, %stealth)
 	if (isObject(%props))
 		%props.onOwnerChange(%this);
 
-	if (isObject(%this.client))
+	if (isObject(%this.client) && %stealth != 2)
 	{
 		messageClient(%this.client, 'MsgItemPickup', '', %i, %data, %stealth);
 
@@ -55,7 +55,7 @@ function Player::setTool(%this, %index, %data, %props, %ignoreProps, %stealth)
 	if (isObject(%props))
 		%props.onOwnerChange(%this);
 
-	if (isObject(%this.client))
+	if (isObject(%this.client) && %stealth != 2)
 	{
 		messageClient(%this.client, 'MsgItemPickup', '', %index, %data, %stealth);
 
@@ -75,7 +75,7 @@ function Player::removeTool(%this, %index, %ignoreProps, %stealth)
 	if (!%ignoreProps && isObject(%this.itemProps[%index]))
 		%this.itemProps[%index].delete();
 
-	if (isObject(%this.client))
+	if (isObject(%this.client) && %stealth != 2)
 		messageClient(%this.client, 'MsgItemPickup', '', %index, 0, %stealth);
 
 	if (%this.currTool == %index)

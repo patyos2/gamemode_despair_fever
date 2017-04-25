@@ -146,7 +146,7 @@ package DespairCorpses
 {
 	function Armor::onTrigger(%this, %obj, %slot, %state)
 	{
-		if(%slot == 0 && !isObject(%obj.tool[%obj.currTool]))
+		if(%slot == 0 && !isObject(%obj.getMountedImage(0)))
 		{
 			%item = %obj.carryObject;
 			if (isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj)

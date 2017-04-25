@@ -6,7 +6,7 @@ function chooseNextClient(%queueName)
 		%index = getRandom(0, getWordCount(%queue)-1);
 		%pick = getWord(%queue, %index);
 		%queue = removeWord(%queue, %index);
-		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons)
+		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons || %pl.afk)
 			%pick = "";
 		if(getWordCount(%queue) <= 0)
 		{
@@ -14,7 +14,7 @@ function chooseNextClient(%queueName)
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%cl = ClientGroup.getObject(%i);
-				if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons)
+				if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons || %pl.afk)
 					continue;
 				
 				%queue = setWord(%queue, %j++, %cl);
@@ -24,7 +24,7 @@ function chooseNextClient(%queueName)
 		%index = getRandom(0, getWordCount(%queue)-1);
 		%pick = getWord(%queue, %index);
 		%queue = removeWord(%queue, %index);
-		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons)
+		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons || %pl.afk)
 			%pick = "";
 	}
 	if(!isObject(%pick) && %refreshed)

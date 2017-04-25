@@ -644,13 +644,13 @@ function DespairTrialDropTool(%cl, %slot)
 		%pl.itemProps[%slot] = "";
 	if (%tool.className $= "Hat")
 	{
-		%cl.applyBodyParts();
 		%pl.unMountImage(2);
+		%cl.applyBodyParts();
 	}
 	if (%tool.getName() $= "CoatItem")
 	{
-		%cl.applyBodyParts();
 		%pl.unMountImage(1);
+		%cl.applyBodyParts();
 	}
 	%item = new Item()
 	{

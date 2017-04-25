@@ -441,5 +441,9 @@ package DespairPlayerPackage
 			return;
 		parent::serverCmdSit(%client);
 	}
+	function serverCmdUseTool(%client, %num)
+	{
+		parent::serverCmdUseTool(%client, %num);		
+	}
 };
 activatePackage(DespairPlayerPackage);
