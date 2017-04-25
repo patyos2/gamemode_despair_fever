@@ -94,7 +94,7 @@ package RepairkitPackage
 
 		%data = %ray.getDataBlock();
 
-		if (%data.isDoor && %data.isOpen || isEventPending(%obj.RepairkitDoAfter))
+		if (!%data.isDoor || %data.isOpen || isEventPending(%obj.RepairkitDoAfter))
 			return;
 
 		if (%slot == 0) //do the thang

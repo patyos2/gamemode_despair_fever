@@ -86,7 +86,7 @@ function KeyImage::onMount(%this, %obj, %slot)
 	%props = %obj.getItemProps();
 
 	if (isObject(%obj.client))
-		%obj.client.centerPrint("\c3" @ %props.name @ "\n", 2.5);
+		%obj.client.centerPrint("\c3" @ %props.name @ "\n");
 }
 
 function KeyImage::onUnMount(%this, %obj, %slot)

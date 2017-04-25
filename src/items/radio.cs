@@ -73,7 +73,7 @@ datablock ShapeBaseImageData(RadioImage)
 	colorShiftColor = "0.3 0.3 0.35 1";
 
 	stateName[0]					= "Activate";
-	stateTimeoutValue[0]			= 0.01;
+	stateTimeoutValue[0]			= 0.5;
 	stateTransitionOnTimeout[0]		= "Ready";
 	stateSound[0]					= "";
 	
@@ -96,8 +96,9 @@ function RadioItem::onPickup(%this, %obj, %player, %slot)
 	radioJoined(%player, %props.channel);
 }
 
-function RadioItem::onDrop(%this, %obj, %player)
+function RadioItem::onDrop(%this, %player, %slot)
 {
+	%props = %player.getItemProps(%slot);
 	serverPlay3d("radioLoseSound", %player.getHackPosition());
 	if(isObject(%player.client))
 		%player.client.centerPrint("\c5Radio disconnected.", 3);
@@ -105,13 +106,25 @@ function RadioItem::onDrop(%this, %obj, %player)
 }
 function RadioImage::onUse(%this, %obj, %slot)
 {
-	%props = %player.getItemProps(%slot);
+	%props = %obj.getItemProps();
 	radioLeft(%obj, %props.channel);
-	%props.channel = %props.channel++ % $Despair::radioNumChannels;
+	%props.channel = (%props.channel + 1) % $Despair::radioNumChannels;
 	if(isObject(%obj.client))
 		%obj.client.centerPrint("\c5Connected to channel\c3 "@ (%props.channel+1), 3);
 	radioJoined(%obj, %props.channel);
 	serverPlay3d("radioGetSound", %obj.getHackPosition());
+}
+
+function RadioImage::onMount(%this, %obj, %slot)
+{
+	%props = %obj.getItemProps();
+	if (isObject(%obj.client))
+		%obj.client.centerPrint("\c5Connected to channel\c3 " @ (%props.channel + 1));
+}
+function RadioImage::onUnMount(%this, %obj, %slot)
+{
+	if (isObject(%obj.client))
+		commandToClient(%obj.client, 'ClearCenterPrint');
 }
 
 function radioJoined(%obj, %channel)
@@ -132,9 +145,11 @@ function radioJoined(%obj, %channel)
 		if((%slot = %member.player.findTool("RadioItem")) != -1)
 		{
 			%props = %member.player.getItemProps(%slot);
-			if(%slot.channel != %channel)
+			if(%props.channel != %channel)
 				continue;
 		}
+		else
+			continue;
 
 		if(%member.player == %obj)
 			continue;
@@ -143,7 +158,7 @@ function radioJoined(%obj, %channel)
 		if(%member.player.unconscious)
 			continue;
 
-		messageClient(%member, '', '\c7[%1]<color:62f069>%2 has joined the channel.', %time, %name);
+		messageClient(%member, '', '\c7[%1]<color:62f069>[Ch.#%2] %3 has joined the channel.', %time, %channel+1, %name);
 	}
 }
 
@@ -165,9 +180,11 @@ function radioLeft(%obj, %channel)
 		if((%slot = %member.player.findTool("RadioItem")) != -1)
 		{
 			%props = %member.player.getItemProps(%slot);
-			if(%slot.channel != %channel)
+			if(%props.channel != %channel)
 				continue;
 		}
+		else
+			continue;
 
 		if(%member.player == %obj)
 			continue;
@@ -176,7 +193,7 @@ function radioLeft(%obj, %channel)
 		if(%member.player.unconscious)
 			continue;
 
-		messageClient(%member, '', '\c7[%1]<color:62f069>%2 has left the channel.', %time, %name);
+		messageClient(%member, '', '\c7[%1]<color:62f069>[Ch.#%2] %3 has left the channel.', %time, %channel+1, %name);
 	}
 }
 
@@ -188,8 +205,8 @@ function radioTransmitMessage(%obj, %channel, %text)
 
 	%time = getDayCycleTimeString(%time, 1);
 
-	%name = "[" @ (%obj % 100) @ "] Someone";
-	%text = muffleText(%text, 0.2);
+	%name = "(" @ (%obj % 100) @ ")Someone";
+	%text = muffleText(%text, 0.1);
 	for (%i = 0; %i < ClientGroup.getCount(); %i++)
 	{
 		%member = ClientGroup.getObject(%i);
@@ -199,17 +216,18 @@ function radioTransmitMessage(%obj, %channel, %text)
 		if((%slot = %member.player.findTool("RadioItem")) != -1)
 		{
 			%props = %member.player.getItemProps(%slot);
-			if(%slot.channel != %channel)
+			if(%props.channel != %channel)
 				continue;
 		}
-
-		if(%member.player == %obj)
+		else
 			continue;
 
-		serverPlay3d("radioTalkSound", %member.player.getHackPosition());
+		if(%member.player != %obj)
+			serverPlay3d("radioTalkSound", %member.player.getHackPosition());
+
 		if(%member.player.unconscious)
 			continue;
 
-		messageClient(%member, '', '\c7[%1]<color:62f069>%2 radios<color:99ffa0>, %3', %time, %name, %text);
+		messageClient(%member, '', '\c7[%1]<color:62f069>[Ch.#%2] %3 radios<color:99ffa0>, %4', %time, %channel+1, %name, %text);
 	}
 }

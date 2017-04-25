@@ -298,7 +298,7 @@ function despairOnNight()
 		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
 				%client.player.removeStatusEffect($SE_sleepSlot);
 	}
-	if($days <= 0)
+	if($days > 0)
 		return;
 	// prepare
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
@@ -642,6 +642,16 @@ function DespairTrialDropTool(%cl, %slot)
 	%value = 3.825 + %pl.itemOffset;
 	if (isObject(%props = %pl.itemProps[%slot]))
 		%pl.itemProps[%slot] = "";
+	if (%tool.className $= "Hat")
+	{
+		%cl.applyBodyParts();
+		%pl.unMountImage(2);
+	}
+	if (%tool.getName() $= "CoatItem")
+	{
+		%cl.applyBodyParts();
+		%pl.unMountImage(1);
+	}
 	%item = new Item()
 	{
 		position = "0 0 0";

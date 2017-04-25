@@ -109,7 +109,7 @@ function despairEndGame()
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
-	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currKiller.getPlayerName(), $currKiller.character.name);
+	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
 
@@ -156,13 +156,14 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RepairkitItem LockpickItem PenItem FlashlightItem";
+	%choices = "RepairkitItem LockpickItem PenItem FlashlightItem RepairkitItem LockpickItem PenItem FlashlightItem RadioItem RadioItem RadioItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
 		%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
 		if(isObject(%pick))
 			%brick.setItem(%pick);
+		%choices = removeWord(%choices, %index); //Only one of a kind
 	}
 
 	//Reset papers
@@ -297,6 +298,17 @@ package DespairFever
 	}
 
 	function MiniGameSO::addMember($DefaultMiniGame, %client)
+	{
+		Parent::addMember($DefaultMiniGame, %client);
+
+		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
+			despairPrepareGame();
+
+		if(!$pickedKiller)
+			createPlayer(%client);
+	}
+
+	function MiniGameSO::removeMember($DefaultMiniGame, %client)
 	{
 		Parent::addMember($DefaultMiniGame, %client);
 

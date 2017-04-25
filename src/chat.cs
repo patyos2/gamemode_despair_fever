@@ -88,12 +88,12 @@ package DespairChat
 			%type = "whispers";
 			%range = 4;
 		}
-		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %member.player.findTool("RadioItem")) != -1)
+		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %player.findTool("RadioItem")) != -1)
 		{
 			%sound = radioTalkSound;
 			%type = "radios";
 			%range = 16;
-			%props = %member.player.getItemProps(%slot);
+			%props = %player.getItemProps(%slot);
 			radioTransmitMessage(%player, %props.channel, %text);
 		}
 		if(%type !$= "whispers")
@@ -164,13 +164,17 @@ package DespairChat
 			if(%member.isAdmin)
 			{
 				if(%killer)
+				{
+					if(isObject(%member.player) && %member.miniGame == $DefaultMiniGame)
+						continue;
 					messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
+				}
 				else
 					messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
 			}
-			if(%killer && %member.killer)
-				messageClient(%member, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
 		}
+		if(%killer && isObject($currentKiller))
+			messageClient($currentKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
 	}
 };
 
