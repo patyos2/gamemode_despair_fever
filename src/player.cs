@@ -233,6 +233,35 @@ function PlayerFrozenArmor::onTrigger(%this, %obj, %slot, %state)
 	PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state);
 }
 
+function Player::onLight(%this)
+{
+	if(!isObject(%client = %this.client))
+		return;
+
+	if(isObject(%col = %this.findCorpseRayCast()))
+	{
+		if(!%this.isViewingInventory)
+			%client.startViewingInventory(%col, %col.getDatablock().maxTools);
+		else
+			%client.updateInventoryView();
+		return;
+	}
+	if(%client.killer)
+	{
+		if ($Sim::Time - %client.lastKillerScan < 3)
+			return;
+		%client.lastKillerScan = $Sim::Time;
+
+		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		{
+			%member = $DefaultMiniGame.member[%i];
+
+			if (%member.player && %member.player != %this)
+				%client.play3d(HeartBeatSound, %member.player.getEyePoint());
+		}
+	}
+}
+
 function player::applyAppearance(%pl,%cl)
 {
 	%pl.hideNode("ALL");

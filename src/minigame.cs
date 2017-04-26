@@ -48,7 +48,7 @@ function createPlayer(%client)
 	%player.setShapeNameDistance(0);
 	%player.setShapeNameColor("1 1 1");
 	%player.setTransform(%roomSpawn.getSpawnPoint());
-	%player.updateAFKCheck();
+	%client.updateAFKCheck();
 
 	centerPrint(%client, "");
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
@@ -300,37 +300,45 @@ function GameConnection::updateAFKCheck(%this, %previous)
 {
 	cancel(%this.updateAFKCheck);
 
-	if (!isObject(%player = %client.player))
+	if (!isObject(%player = %this.player))
 		return;
 
 	%transform = %player.getTransform();
 
 	if (!%player.unconscious && %transform $= %previous && getSimTime() - %this.lastChatTime >= 60000)
 	{
-		%player.afk = true;
-		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		%delay = 2000;
+		if(!%this.afk)
 		{
-			%member = ClientGroup.getObject(%i);
-			if(%member.isAdmin)
+			%this.afk = true;
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
-				messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
+				%member = ClientGroup.getObject(%i);
+				if(%member.isAdmin)
+				{
+					messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
+				}
 			}
 		}
 	}
 	else
 	{
-		%player.afk = false;
-		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		%delay = 60000;
+		if(%this.afk)
 		{
-			%member = ClientGroup.getObject(%i);
-			if(%member.isAdmin)
+			%this.afk = false;
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
-				messageClient(%member, '', '\c2--[\c5%1 is no longer afk.', %this.getPlayerName());
+				%member = ClientGroup.getObject(%i);
+				if(%member.isAdmin)
+				{
+					messageClient(%member, '', '\c2--[\c5%1 is no longer afk.', %this.getPlayerName());
+				}
 			}
 		}
 	}
 
-	%this.updateAFKCheck = %this.schedule(60000, "updateAFKCheck", %transform);
+	%this.updateAFKCheck = %this.schedule(%delay, "updateAFKCheck", %transform);
 }
 
 package DespairFever
@@ -424,20 +432,8 @@ package DespairFever
 		if (%client.miniGame != $DefaultMiniGame)
 			Parent::serverCmdLight(%client);
 
-		if(%client.player && %client.killer)
-		{
-			if ($Sim::Time - %client.lastKillerScan < 3)
-				return;
-			%client.lastKillerScan = $Sim::Time;
-
-			for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
-			{
-				%member = $DefaultMiniGame.member[%i];
-
-				if (%member.player && %member.player != %client.player)
-					%client.play3d(HeartBeatSound, %member.player.getEyePoint());
-			}
-		}
+		if(isObject(%client.player))
+			%client.player.onLight();
 	}
 
 	function serverCmdSuicide(%client)

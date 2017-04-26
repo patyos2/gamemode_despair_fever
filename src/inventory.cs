@@ -56,8 +56,7 @@ function GameConnection::updateInventoryView(%this)
 	{
 		messageClient(%this, 'MsgItemPickup', '', %i, %target.tool[%i], 1);
 	}
-	//if(%player.currTool == -1)
-	//	commandToClient(%this, 'SetActiveTool', %player.currTool);
+	commandToClient(%this, 'SetActiveTool', %player.currTool);
 }
 
 function GameConnection::checkDistanceLoop(%this, %target)
@@ -101,9 +100,39 @@ package DespairInventory
 		{
 			if(%slot == 0 && %state)
 			{
-				%obj.addTool(%obj.inventoryTarget.tool[%obj.currTool], %obj.inventoryTarget.itemProps[%obj.currTool], 0, 2);
-				//Todo: proper itemProps support
-				//remove item from corpse
+				%target = %obj.inventoryTarget;
+				%item = %target.tool[%obj.currTool];
+				if(!isObject(%item))
+					return;
+				%itemName = %item.getName();
+				%props = %target.itemProps[%obj.currTool];
+				%slot = -1;
+				if(%item.className $= "DespairWeapon")
+				{
+					if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
+						%slot = %obj.setTool(%obj.weaponSlot, %item, %props, 1, 2);
+				}
+				else if(%item.className $= "Hat")
+				{
+					if(%item.onPickup("", %obj))
+						%slot = %obj.hatSlot;
+				}
+				else if(%obj.addTool(%item, %props, 1, 2) != -1 && !%item.isIcon)
+				{
+					%target.removeTool(%obj.currTool, 1, 2);
+					%target.itemProps[%obj.currTool] = "";
+					%slot = %obj.currTool;
+				}
+				if(isFunction(%itemName, "onDrop"))
+					%item.onDrop(%target, %slot);
+				if(%slot != -1)
+				{
+					ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %target.getPosition());
+					if(isObject(%target.client))
+						messageClient(%target.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
+					if(isObject(%obj.client))
+						messageClient(%obj.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
+				}
 				return;
 			}
 		}

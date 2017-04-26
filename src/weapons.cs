@@ -86,6 +86,7 @@ datablock ItemData(noWeaponIcon)
 {
 	iconName = $Despair::Path @ "res/shapes/weapons/icon_noWeapon";
 	uiName = "No Weapon";
+	isIcon = true;
 };
 
 function noWeaponIcon::onUse(%this, %obj, %slot)

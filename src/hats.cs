@@ -10,6 +10,7 @@ datablock ItemData(noHatIcon)
 {
 	iconName = $Despair::Path @ "res/shapes/hats/icon_nohat";
 	uiName = "No Hat";
+	isIcon = true;
 };
 
 function noHatIcon::onUse(%this, %obj, %slot)
@@ -27,7 +28,8 @@ function Hat::onPickup(%this, %obj, %player)
 	%player.tool[%player.hatSlot] = %id;
 	if (isObject(%player.client))
 		messageClient(%player.client, 'MsgItemPickup', '', %player.hatSlot, %id, false);
-	%obj.delete();
+	if(isObject(%obj))
+		%obj.delete();
 	return true;
 }
 
