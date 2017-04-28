@@ -77,6 +77,15 @@ function sprayBloodFromHit(%position, %velocity)
 		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)));
 }
 
+function sprayBloodStab(%position, %velocity)
+{
+	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+	%velocity = VectorScale(%velocity, -1);
+	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+}
+
 function sprayBloodWide(%position, %velocity)
 {
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),

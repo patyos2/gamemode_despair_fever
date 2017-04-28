@@ -54,7 +54,7 @@ function GameConnection::updateInventoryView(%this)
 	//commandToClient(%this,'PlayGui_CreateToolHud',%player.invMaxTools);
 	for(%i=0; %i<%player.invMaxTools; %i++)
 	{
-		messageClient(%this, 'MsgItemPickup', '', %i, %target.tool[%i], 1);
+		messageClient(%this, 'MsgItemPickup', '', %i, %target.tool[%i], %i != 0);
 	}
 	commandToClient(%this, 'SetActiveTool', %player.currTool);
 }
@@ -127,6 +127,8 @@ package DespairInventory
 					%item.onDrop(%target, %slot);
 				if(%slot != -1)
 				{
+					%obj.playThread(2, "activate2");
+					%target.playThread(2, "plant");
 					ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %target.getPosition());
 					if(isObject(%target.client))
 						messageClient(%target.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);

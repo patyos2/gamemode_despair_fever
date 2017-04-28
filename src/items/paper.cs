@@ -96,57 +96,100 @@ function PaperImage::onUnMount(%this, %obj, %slot)
 		commandToClient(%obj.client, 'ClearCenterPrint');
 }
 
-function getPaperEvidence(%character)
+function getPaperEvidence()
 {
+	%count = GameCharacters.getCount();
+	%innoCount = -1;
+	for (%i = 0; %i < %count; %i++)
+	{
+		%char = GameCharacters.getObject(%i);
+		if(!%char.killer)
+			%inno[%innoCount++] = %char;
+	}
 	%r = getRandom(1, 3);
 	switch (%r)
 	{
 		case 1:
 			%msg = "Investigation into robbery suspect reveals them to be";
-			%decal = getField(%character.appearance, 2);
-			switch$ (%decal)
+			%pick[1] = %inno[getRandom(0, %innoCount-1)];
+			%pick[2] = %inno[getRandom(0, %innoCount-1)];
+			%pick[getRandom(1, 2)] = $pickedKiller.character;
+
+			%i = 3;
+			while(%i--)
 			{
-				case "Mod-Suit":
-					%msg = %msg SPC "a wealthy progeny";
-				case "Mod-Pilot":
-					%msg = %msg SPC "an aspiring aviator";
-				case "Mod-Army":
-					%msg = %msg SPC "an US Army fanatic";
-				case "Meme-Mongler":
-					%msg = %msg SPC "a dinosaur enthusiast";
-				case "Medieval-YARLY":
-					%msg = %msg SPC "a fan of White Owls";
-				case "Medieval-Rider":
-					%msg = %msg SPC "a Riders fan";
-				case "Medieval-ORLY":
-					%msg = %msg SPC "a fan of Night Owls";
-				case "Medieval-Lion":
-					%msg = %msg SPC "a Lions fan";
-				case "Medieval-Eagle":
-					%msg = %msg SPC "an Eagles fan";
-				case "Hoodie":
-					%msg = %msg SPC "wearing a hoodie";
-				case "Alyx":
-					%msg = %msg SPC "a Black Mesa fan";
+				%decal = getField(%pick[%i].appearance, 2);
+				switch$ (%decal)
+				{
+					case "Mod-Suit":
+						%msg = %msg SPC "a wealthy progeny";
+					case "Mod-Pilot":
+						%msg = %msg SPC "an aspiring aviator";
+					case "Mod-Army":
+						%msg = %msg SPC "an US Army fanatic";
+					case "Meme-Mongler":
+						%msg = %msg SPC "a dinosaur enthusiast";
+					case "Medieval-YARLY":
+						%msg = %msg SPC "a fan of White Owls";
+					case "Medieval-Rider":
+						%msg = %msg SPC "a Riders fan";
+					case "Medieval-ORLY":
+						%msg = %msg SPC "a fan of Night Owls";
+					case "Medieval-Lion":
+						%msg = %msg SPC "a Lions fan";
+					case "Medieval-Eagle":
+						%msg = %msg SPC "an Eagles fan";
+					case "Hoodie":
+						%msg = %msg SPC "wearing a hoodie";
+					case "Alyx":
+						%msg = %msg SPC "a Black Mesa fan";
+					default:
+						%msg = %msg SPC "completely boring";
+				}
+				if(%i == 2)
+					%msg = %msg SPC "or";
 			}
 
 		case 2:
-			%msg = "Suspect of yesterday murder appears to be";
-			if(%character.gender $= "male")
-				%msg = %msg SPC "a male delinquent";
+			if(getRandom() < 0.6) //Only 60% accurate
+				%character = $pickedKiller.character;
 			else
-				%msg = %msg SPC "a female student";
+				%character = %inno[getRandom(0, %innoCount-1)];
+			%msg = "Suspect of yesterday murder is 60% likely to be";
+			%high = -1;
+			if(%character.gender $= "male")
+				%msg = %msg SPC "a male";
+			else
+				%msg = %msg SPC "a female";
+
+			%choice[%high++] = "student";
+			%choice[%high++] = "delinquent";
+			%choice[%high++] = "artist";
+			%msg = %msg SPC %choice[getRandom(%high)];
 
 		case 3:
-			%msg = "Initials of criminal revealed to be";
-			%a = getSubStr(getWord(%character.name, 0), 0, 1);
-			%b = getSubStr(getWord(%character.name, 1), 0, 1);
-			%rng = getRandom(0, 1);
-			if(%rng == 0)
-				%a = "#";
-			if(%rng == 1)
-				%b = "#";
-			%msg = %msg SPC %a @ "." @ %b @ ".";
+			%msg = "A number of people -";
+
+			%pick[1] = %inno[getRandom(0, %innoCount-1)];
+			%pick[2] = %inno[getRandom(0, %innoCount-1)];
+			%pick[3] = %inno[getRandom(0, %innoCount-1)];
+
+			%pick[getRandom(1, 3)] = $pickedKiller.character;
+
+			%i = 4;
+			while(%i--)
+			{
+				%a = getSubStr(getWord(%pick[%i].name, 0), 0, 1);
+				%b = getSubStr(getWord(%pick[%i].name, 1), 0, 1);
+				%rng = getRandom(0, 2);
+				if(%rng == 1)
+					%a = "#";
+				if(%rng == 2)
+					%b = "#";
+				%list = %list @ (%i == 3 ? "" : "	") @ %a @ "." @ %b @ ".";
+			}
+			%list = naturalGrammarList(%list);
+			%msg = %msg @ %list @ "- have been considered as possible murder suspects! Drama on page 5.";
 	}
 	return %msg;
 }
@@ -175,14 +218,40 @@ function getPaperTips()
 {
 	%high = -1;
 
-	%choice[%high++] = "Stuff you see in the news is sometimes inaccurate. Be sure to double-check!";
+	%choice[%high++] = "Stuff you see in the news is accurate, but fairly broad. Be sure to double-check!";
 	%choice[%high++] = "Spilled Coke on your shirt? Just throw a coat on - nobody will see your dirty shirt from under it!";
 	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can't otherwise see.";
 	%choice[%high++] = "A shower will not only completely clean you off, but will leave you feeling fresh and good about yourself!";
 	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won't know it's you!";
 	%choice[%high++] = "If you see something suspicious, scream! If you scream you'll be heard much farther.";
 	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you'll be in a constant state of internal conflict.";
-	%choice[%high++] = "News sources are outdated! They don't report on any new developments.";
+	%choice[%high++] = "Daily News, while accurate, is inflexible. They won't adapt if something happened to the culprit!";
+	//%choice[%high++] = "Someone blocking the doorway? Rapidly and furiously jostling them will usually get them to move!";
 
 	return %choice[getRandom(%high)];
+}
+
+function getGuestList(%i)
+{
+	%charCount = GameCharacters.getCount();
+	%div = 1; //always 0
+	if(%charCount > 5)
+	{
+		%div = 2;
+		%list = "<just:left><tab:160,340>";
+	}
+	if(%charCount > 10)
+	{
+		%div = 3;
+		%list = "<just:left><tab:0,250,500>";
+	}
+	for (%i = 0; %i < %charCount; %i++)
+	{
+		%character = GameCharacters.getObject(%i);
+		%name = %character.name;
+		%room = $roomNum[%character.room];
+		%initials = getSubStr(getWord(%character.name, 0), 0, 1) @ "." @ getSubStr(getWord(%character.name, 1), 0, 1) @ ".";
+		%list = %list @ (%i % %div ? "	" : "") @ "\c6" @ %initials @ "\c3 - \c6#" @ %room @ ((%i % %div) == %div-1 ? "\n" : "	");
+	}
+	return %list;
 }

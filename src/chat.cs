@@ -54,6 +54,7 @@ package DespairChat
 		%name = %client.getPlayerName();
 		if (!isObject(%player))
 		{
+			%client.lastChatTime = $Sim::Time;
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%member = ClientGroup.getObject(%i);
@@ -112,7 +113,7 @@ package DespairChat
 			%shape.setVelocity("0 0 0.5");
 			%shape.deleteSchedule = %shape.schedule(3000, delete);
 		}
-
+		%client.lastChatTime = $Sim::Time;
 		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{

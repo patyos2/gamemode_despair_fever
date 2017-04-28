@@ -218,18 +218,13 @@ function despairOnMorning()
 		if(%evidencePapers >= 0)
 		{
 			%props.name = "Daily News";
-			if(getRandom() < 0.6) //Only 60% accurate
-				%char = $pickedKiller.character;
-			else
-				%char = GameCharacters.getObject(getRandom(0, GameCharacters.getCount()-1)); //Unless it accidentaly picks killer again, oops.
-
-			%props.contents = getPaperEvidence(%char);
+			%props.contents = getPaperEvidence();
 			%evidencePapers--;
 			continue;
 		}
 		else if(%tipsPapers >= 0)
 		{
-			%props.name = "lifeHaxx0r";
+			%props.name = "LifeHack";
 			%props.contents = getPaperTips();
 			%tipsPapers--;
 			continue;
@@ -329,6 +324,12 @@ function despairOnNight()
 			%detectiveCount--;
 		}
 	}
+
+	%brick = BrickGroup_888888.NTObject["_guestlist", 0];
+	%brick.setItem("PaperItem");
+	%props = %brick.item.getItemProps();
+	%props.name = "Guest List";
+	%props.contents = getGuestList(0);
 }
 
 function DespairSpecialChat(%client, %text)
@@ -637,6 +638,8 @@ function DespairTrialDropTool(%cl, %slot)
 	if (!isObject(%pl.tool[%slot]))
 		return;
 	%tool = %pl.tool[%slot];
+	if(%tool.isIcon)
+		return;
 	%pl.tool[%slot] = "";
 	messageClient(%cl, 'MsgItemPickup', '', %slot, -1, 1);
 	%value = 3.825 + %pl.itemOffset;

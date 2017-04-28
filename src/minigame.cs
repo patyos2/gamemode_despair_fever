@@ -174,6 +174,10 @@ function despairPrepareGame()
 		%brick.setItem("");
 	}
 
+	//Reset Guest list
+	%brick = BrickGroup_888888.NTObject["_guestlist", 0];
+	%brick.setItem("");
+
 	for (%i = 0; %i < 16; %i++)
 	{
 		$stand[%i].setTransform("0 0 -300");
@@ -290,7 +294,7 @@ function despairCycleStage(%stage)
 		despairOnMorning();
 	}
 
-	if($days >= 3) //Court 'em on the third day no matter what
+	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		courtPlayers();
 	}
@@ -305,7 +309,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && %transform $= %previous && getSimTime() - %this.lastChatTime >= 60000)
+	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastChatTime >= 60)
 	{
 		%delay = 2000;
 		if(!%this.afk)

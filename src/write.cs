@@ -93,6 +93,8 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
 			if(%blood)
 				%decal.isBlood = true;
+			if(%pen)
+				%props.ink--; //More ink consumed
 		}
 	}
 }

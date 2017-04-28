@@ -134,6 +134,9 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 
 function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 {
+	if(%obj.isViewingInventory)
+		return Parent::onTrigger(%this, %obj, %slot, %state);
+
 	if(%slot == 0 && %state) //pick items up if we don't have any active inventory items selected
 	{
 		%item = %obj.tool[%obj.currTool];
@@ -240,10 +243,26 @@ function Player::onLight(%this)
 
 	if(isObject(%col = %this.findCorpseRayCast()))
 	{
+		%this.playThread(2, "activate2");
 		if(!%this.isViewingInventory)
 			%client.startViewingInventory(%col, %col.getDatablock().maxTools);
 		else
 			%client.updateInventoryView();
+		return;
+	}
+	%a = %this.getEyePoint();
+	%b = vectorAdd(%a, vectorScale(%this.getEyeVector(), 4));
+
+	%mask =
+		$TypeMasks::FxBrickObjectType |
+		$TypeMasks::PlayerObjectType;
+
+	%ray = containerRayCast(%a, %b, %mask, %this);
+
+	if (%ray && %ray.getDataBlock().isDoor)
+	{
+		%this.playThread(2, "activate");
+		serverPlay3d(DoorKnockSound, %ray.getWorldBoxCenter());
 		return;
 	}
 	if(%client.killer)

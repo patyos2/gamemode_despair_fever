@@ -1,3 +1,34 @@
+datablock AudioProfile(DoorJiggleSound) {
+	fileName = $Despair::Path @ "res/sounds/door_jiggle.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(DoorKnockSound) {
+	fileName = $Despair::Path @ "res/sounds/knock.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(DoorLockSound) {
+	fileName = $Despair::Path @ "res/sounds/Lock.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(DoorUnlockSound) {
+	fileName = $Despair::Path @ "res/sounds/Unlock.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
+datablock AudioProfile(WoodHitSound)
+{
+	fileName = $Despair::Path @ "res/sounds/woodhit.wav";
+	description = audioClose3D;
+	preload = true;
+};
+
 function fxDtsBrick::doorDamage(%brick, %damage)
 {
 	if (!%brick.getDatablock().isDoor || %brick.impervious)
