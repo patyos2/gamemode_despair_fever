@@ -70,7 +70,7 @@ function createCourtroom()
 if (!isObject(MissionCleanup))
 	schedule("0", "0", "createCourtroom");
 
-function despairOnKill(%victim, %attacker)
+function despairOnKill(%victim, %attacker, %crit)
 {
 	if(!isObject(%victim) || !isObject(%attacker))
 		return;
@@ -99,7 +99,7 @@ function despairOnKill(%victim, %attacker)
 		return 0;
 	}
 
-	if(%victim.killer || %attacker.killer)
+	if((%victim.killer || %attacker.killer) && !%crit)
 	{
 		$deathCount++;
 		%player = %victim.player;
@@ -417,7 +417,7 @@ function courtPlayers()
 			$stand[%i].player = %player;
 			%player.setTransform(vectorAdd(getWords(%transform, 0, 2), "0 0 0.1") SPC getWords(%transform, 3, 6));
 			%player.changeDataBlock(playerFrozenArmor);
-			%player.playThread(3, "standing");
+			%player.playThread(0, "standing");
 			%player.setVelocity("0 0 0");
 		}
 		%client.playPath(TrialIntroPath);
@@ -638,8 +638,8 @@ function DespairTrialDropTool(%cl, %slot)
 	if (!isObject(%pl.tool[%slot]))
 		return;
 	%tool = %pl.tool[%slot];
-	if(%tool.isIcon)
-		return;
+	//if(%tool.isIcon)
+	//	return;
 	%pl.tool[%slot] = "";
 	messageClient(%cl, 'MsgItemPickup', '', %slot, -1, 1);
 	%value = 3.825 + %pl.itemOffset;
