@@ -16,6 +16,21 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 	if (%text $= "")
 		return;
 
+	if(%player.health <= 0) //Critical state
+	{
+		messageClient(%client, '', "\c5You use the last of your strength to write your final message...");
+		%pos = %player.getPosition();
+		%ray = containerRayCast(%pos, VectorSub(%pos, "0 0 1"), $SprayBloodMask);
+		%decal = spawnDecalFromRayCast(writingDecal, %ray);
+		%decal.color = %color;
+		%decal.spillTime = $Sim::Time;
+		%decal.freshness = 1;
+		%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
+		%decal.isBlood = true;
+		%text = muffleText(%text, 0.2);
+		return;
+	}
+
 	if((%slot = %player.findTool("PenItem")) != -1)
 	{
 		%props = %player.getItemProps(%slot);

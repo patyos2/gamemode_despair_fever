@@ -241,6 +241,13 @@ function serverCmdAlarm(%client)
 		else
 			%player.screamDelay = 3;
 
+		if(%player.health <= 0)
+		{
+			%player.screamDelay = 10;
+			%player.health -= 5;
+			messageClient(%client, '', "\c5You use some of your strength to scream!");
+		}
+
 		%player.screamDelay = getMin(%player.screamDelay, 10);
 
 		%player.lastScream = $Sim::Time;
@@ -258,6 +265,8 @@ package DespairVoice
 {
 	function Player::playPain(%player)
 	{
+		if(%player.health <= 0)
+			return;
 		if(isObject(%player.character))
 			%gender = %player.character.gender;
 		if(%gender $= "")

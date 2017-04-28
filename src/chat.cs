@@ -70,8 +70,8 @@ package DespairChat
 		if(%player.unconscious)
 			return;
 
-		%player.playThread(0, "talk");
-		%player.schedule(strLen(%text) * 35, "playThread", 0, "root");
+		%player.playThread(3, "talk");
+		%player.schedule(strLen(%text) * 35, "playThread", 3, "root");
 
 		%name = %client.character.name;
 		if(!$despairTrial)
@@ -83,6 +83,12 @@ package DespairChat
 		%sound = DespairChatSound;
 		%type = "says";
 		%range = 32;
+
+		if(%player.health <= 0) //critical health
+		{
+			%type = "stammers";
+			%range = 8;
+		}
 		if(getSubStr(%text, 0, 1) $= "@") //Whispering
 		{
 			%text = getSubStr(%text, 1, strLen(%text));
@@ -97,7 +103,7 @@ package DespairChat
 			%props = %player.getItemProps(%slot);
 			radioTransmitMessage(%player, %props.channel, %text);
 		}
-		if(%type !$= "whispers")
+		if(%type $= "says")
 		{
 			serverPlay3D(%sound, %player.getHackPosition());
 

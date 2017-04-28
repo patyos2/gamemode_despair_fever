@@ -21,15 +21,19 @@ function GameConnection::examineObject(%client, %col)
 			%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " dead.";
 			if(%player.character.detective)
 			{
-				%tod = %player.attackDayTime[%player.attackCount];
+				%tod = %col.attackDayTime[%col.attackCount];
 				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
 				%tod = %tod - mFloor(%tod); //get rid of excess stuff
 
-				%tod1 = getDayCycleTimeString(%tod - 0.05, 1);
+				if(!%player.margin[1])
+					%player.margin[1] = getRandom(1, 5) * 0.01;
+				%tod1 = getDayCycleTimeString(%tod - %player.margin[1], 1);
 				%mod12 = getWord(%tod1, 1);
 				%tod1 = getWord(%tod1, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				%tod2 = getDayCycleTimeString(%tod + 0.05, 1);
+				if(!%player.margin[2])
+					%player.margin[2] = getRandom(1, 5) * 0.01;
+				%tod2 = getDayCycleTimeString(%tod + %player.margin[2], 1);
 				%mod12 = getWord(%tod2, 1);
 				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 

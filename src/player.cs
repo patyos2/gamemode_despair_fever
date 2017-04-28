@@ -60,6 +60,10 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	shapeFile = "base/data/shapes/player/m_df.dts";
 	uiName = "Corpse Player";
 
+	cameraMaxDist = 2;
+	cameraVerticalOffset = 1.25;
+	maxFreelookAngle = 2;
+
 	boundingBox = "5 5 4";
 	crouchBoundingBox = "5 5 4";
 
@@ -72,7 +76,7 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxSideSpeed = 0;
 
 	maxForwardCrouchSpeed = 0;
-	maxBackwardCrouchSpeed = 0;
+	maxBackwardCrouchSpeed = 1;
 	maxSideCrouchSpeed = 0;
 
 	jumpForce = 0;

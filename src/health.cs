@@ -4,6 +4,24 @@ datablock AudioProfile(HeartBeatSound) {
 	preload = true;
 };
 
+function Player::critLoop(%this)
+{
+	cancel(%this.critLoop);
+	if(%this.getState() $= "Dead")
+		return;
+	if(isObject(%this.client))
+		%this.client.play2d(HeartBeatSound);
+
+	%this.health -= 5;
+	if(%this.health <= -100)
+	{
+		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
+		return;
+	}
+	%player.setDamageFlash(( - %player.health) / %player.maxhealth * 0.5);
+	%this.critLoop = %this.schedule(1000, "critLoop");
+}
+
 package DespairHealth
 {
 	function Armor::onAdd(%data, %player)
@@ -52,8 +70,7 @@ package DespairHealth
 			{
 			case "head":
 				%player.bloody["head"] = true;
-				if (isObject(%player.client))
-					%player.client.applyBodyParts();
+				%client.applyBodyParts();
 			case "rleg":
 				%player.setNodeColor("RShoe", %color);
 			case "lleg":
@@ -68,21 +85,16 @@ package DespairHealth
 				%player.setNodeColor("pants", %color);
 			case "chest":
 				%player.bloody["chest_front"] = true;
-				if (isObject(%player.client))
-					%player.client.applyBodyParts();
+				%client.applyBodyParts();
 			}
 			%player.bloody = true;
 			%player.bloodyWriting = 2;
 		}
 
 		%player.health -= %damage;
-		//if(%player.health <= 0)
-		//{
-			//critical state
-		//}
-		if(%player.health <= 0) //-100
+		if(%player.health <= -150)
 		{
-			if(despairOnKill(%player.client, %attacker))
+			if(despairOnKill(%client, %attacker))
 			{
 				%p = new Projectile()
 				{
@@ -95,10 +107,32 @@ package DespairHealth
 			}
 			else
 			{
+				cancel(%player.critLoop);
 				%player.health = %player.maxhealth;
 				%player.KnockOut(30);
 			}
 			return 1;
+		}
+		if(%player.health <= 0)
+		{
+			if(despairOnKill(%client, %attacker, true))
+			{
+				if(!isEventPending(%player.critLoop))
+				{
+					%player.changeDataBlock(PlayerCorpseArmor);
+					%player.playThread(0, "sit");
+					%player.noWeapons = true;
+					%player.critLoop();
+					messageClient(%client, '', "\c5You can use the last of your strength to /write your final message!");
+				}
+			}
+			else
+			{
+				cancel(%player.critLoop);
+				%player.health = %player.maxhealth;
+				%player.KnockOut(30);
+				return 1;
+			}
 		}
 		%player.playPain();
 		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);

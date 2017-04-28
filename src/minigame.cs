@@ -146,14 +146,18 @@ function despairPrepareGame()
 	}
 
 	//Hats!
-	%choices = "HatBlindItem HatCatItem HatChefItem HatClownItem HatCowboyItem HatDisguiseItem HatDogeItem HatDuckItem HatFancyItem HatFedoraItem HatFoxItem HatGangsterItem HatGasmaskItem HatMountyItem HatMummyItem HatNinjaItem HatPartyhatItem HatRHoodItem HatRichardItem HatSkimaskItem HatStrawItem HatSunglassesItem HatTophatItem HatWizardItem";
+	%choices[1] = "HatBlindItem HatCatItem HatChefItem HatCowboyItem HatDuckItem HatFancyItem HatFedoraItem HatFoxItem HatGangsterItem HatMountyItem HatPartyhatItem HatRHoodItem HatStrawItem HatSunglassesItem HatTophatItem HatWizardItem";
+	%choices[2] = "HatClownItem HatDisguiseItem HatDogeItem HatRichardItem HatSkimaskItem HatGasmaskItem HatMummyItem HatNinjaItem"; //Items that disguise you
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_hatSpawn"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_hatSpawn", %i];
-		%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
+		%type = 1;
+		if(getWordCount(%choices[2]) && getRandom() < 0.4) //less chance for it to be disguise
+			%type = 2;
+		%pick = getWord(%choices[%type], %index = getRandom(0, getWordCount(%choices[%type])-1));
 		if(isObject(%pick))
 			%brick.setItem(%pick);
-		%choices = removeWord(%choices, %index); //Only one of a kind
+		%choices[%type] = removeWord(%choices[%type], %index); //Only one of a kind
 	}
 
 	//Random items!
@@ -309,7 +313,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastChatTime >= 60)
+	if (!%player.unconscious && ($despairTrial || %transform $= %previous) && $Sim::Time - %this.lastChatTime >= 60)
 	{
 		%delay = 2000;
 		if(!%this.afk)
@@ -444,6 +448,13 @@ package DespairFever
 	{
 		if (%client.miniGame != $DefaultMiniGame)
 			return Parent::serverCmdSuicide(%client);
+
+		if(isObject(%player = %client.player) && %player.health <= 0)
+		{
+			%player.health = -100;
+			%player.critLoop();
+			messageClient(%client, '', "\c5You succumb to your wounds...");
+		}
 	}
 
 	function Item::schedulePop(%this)

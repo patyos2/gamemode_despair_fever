@@ -99,14 +99,16 @@ function despairOnKill(%victim, %attacker, %crit)
 		return 0;
 	}
 
-	if((%victim.killer || %attacker.killer) && !%crit)
+	if(%victim.killer || %attacker.killer)
 	{
-		$deathCount++;
 		%player = %victim.player;
 		if(!isObject(%player))
 			%player = %victim.character.player;
-		%player.isMurdered = true;
-		echo("-+ Killer murdered! Yay!");
+		if(!%crit)
+		{
+			$deathCount++;
+			%player.isMurdered = true;
+		}
 		if(%victim.killer)
 		{
 			%attacker.killer = true;
@@ -420,7 +422,8 @@ function courtPlayers()
 			%player.playThread(0, "standing");
 			%player.setVelocity("0 0 0");
 		}
-		%client.playPath(TrialIntroPath);
+		if(isObject(%client))
+			%client.playPath(TrialIntroPath);
 	}
 
 	ServerPlaySong("MusicOpeningPre");
@@ -445,7 +448,7 @@ function DespairStartOpeningStatements()
 
 function DespairCycleOpeningStatements(%j)
 {
-	if(%j > $DefaultMiniGame.numMembers)
+	if(%j > GameCharacters.getCount())
 	{
 		$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairStartDiscussion);
 		$DefaultMiniGame.chatMessageAll('', "\c5All statements have been heard.");
