@@ -91,7 +91,7 @@ datablock ShapeBaseImageData(mopImage)
 function mopImage::onFire(%this, %obj, %slot)
 {
 	%obj.playThread(2, shiftAway);
-	if(!%obj.client.killer && $investigationStart !$= "")
+	if($investigationStart !$= "")
 		return;
 	%point = %obj.getEyePoint();
 	%vector = %obj.getEyeVector();

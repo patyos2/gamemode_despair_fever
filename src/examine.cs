@@ -25,19 +25,25 @@ function GameConnection::examineObject(%client, %col)
 				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
 				%tod = %tod - mFloor(%tod); //get rid of excess stuff
 
-				if(!%player.margin[1])
+				if(%player.margin[1] $= "")
 					%player.margin[1] = getRandom(1, 5) * 0.01;
-				%tod1 = getDayCycleTimeString(%tod - %player.margin[1], 1);
+				%tod1 = getDayCycleTimeString(getMax(%tod - %player.margin[1], 0), 1);
 				%mod12 = getWord(%tod1, 1);
 				%tod1 = getWord(%tod1, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				if(!%player.margin[2])
+				if(%player.margin[2] $= "")
 					%player.margin[2] = getRandom(1, 5) * 0.01;
 				%tod2 = getDayCycleTimeString(%tod + %player.margin[2], 1);
 				%mod12 = getWord(%tod2, 1);
 				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				%text = %text @ "\n\c6" @ "It appears they died between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
+				%fresh = "very recently";
+				if($Sim::Time - %col.attackTime[%col.attackCount] > 120)
+					%fresh = "not too long ago";
+				if($Sim::Time - %col.attackTime[%col.attackCount] > $Despair::DayLength)
+					%fresh = "very long ago";
+
+				%text = %text @ "\n\c6" @ "It appears they died \c3" @ %fresh @ " between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
 				for(%i=0;%i<%col.attackCount;%i++)
 				{
 					%wounds[%col.attackType[%i]]++;

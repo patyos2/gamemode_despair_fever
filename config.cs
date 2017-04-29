@@ -1,6 +1,7 @@
 //Base
 $Despair::DayLength = 360; //6 minutes for a full cycle
 $Despair::InvestigationLength = 300; //4 mins
+$Despair::CritThreshold = -150; //How much negative health can the player take before dying
 //MOTEL MAP PREFS:
 $mapCenter = "-87.7265 -20.5779 0.20202";
 $boundaries = 170;

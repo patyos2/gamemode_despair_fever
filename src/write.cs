@@ -18,16 +18,34 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 
 	if(%player.health <= 0) //Critical state
 	{
-		messageClient(%client, '', "\c5You use the last of your strength to write your final message...");
-		%pos = %player.getPosition();
-		%ray = containerRayCast(%pos, VectorSub(%pos, "0 0 1"), $SprayBloodMask);
-		%decal = spawnDecalFromRayCast(writingDecal, %ray);
-		%decal.color = %color;
-		%decal.spillTime = $Sim::Time;
-		%decal.freshness = 1;
-		%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
-		%decal.isBlood = true;
-		%text = muffleText(%text, 0.2);
+		%text = muffleText(%text, 0.1);
+
+		%a = %player.getEyePoint();
+		%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
+		%mask =	$TypeMasks::FxBrickObjectType;
+		%ray = containerRayCast(%a, %b, %mask, %player);
+		if(isObject(%ray))
+		{
+			messageClient(%client, '', "\c5You use the last of your strength to write your final message...");
+
+			%rayPosition = getWords(%ray, 1, 3);
+			%rayNormal = getWords(%ray, 4, 6);
+			%rayPosition = VectorAdd(%rayPosition, VectorScale(%rayNormal, 0.01));
+			%forward = vectorScale(%player.getForwardVector(), getWord(%rayNormal, 2));
+			%angle = mATan(getWord(%forward, 0), getWord(%forward, 1));
+			%color = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+			%decal = spawnDecal(writingDecal, %rayPosition, %rayNormal, 1, %color, %angle, "", 1);
+			%decal.spillTime = $Sim::Time;
+			%decal.freshness = 1;
+			%decal.contents = "\c0" @ %text;
+			%decal.isBlood = true;
+			%player.health = -150;
+			%player.critLoop();
+		}
+		else
+		{
+			messageClient(%client, '', "\c5Look at a surface!!");
+		}
 		return;
 	}
 

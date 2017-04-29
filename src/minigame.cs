@@ -9,6 +9,9 @@ function createPlayer(%client)
 	if(!$freeCount)
 		return;
 
+	if(%client.spectating)
+		return;
+
 	$freeCount--;
 	%freeIndex = getRandom($freeCount);
 	%room = $freeRoom[%freeIndex];
@@ -311,9 +314,12 @@ function GameConnection::updateAFKCheck(%this, %previous)
 	if (!isObject(%player = %this.player))
 		return;
 
+	if($despairTrial)
+		return;
+
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && ($despairTrial || %transform $= %previous) && $Sim::Time - %this.lastChatTime >= 60)
+	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastChatTime >= 60)
 	{
 		%delay = 2000;
 		if(!%this.afk)
@@ -331,7 +337,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 	}
 	else
 	{
-		%delay = 60000;
+		%delay = 40000;
 		if(%this.afk)
 		{
 			%this.afk = false;
@@ -369,6 +375,14 @@ package DespairFever
 
 	function MiniGameSO::removeMember($DefaultMiniGame, %client)
 	{
+		if(isObject(%pl = %client.player))
+		{
+			if(%pl.health <= 0)
+			{
+				%pl.health = $Despair::CritThreshold;
+				%pl.critLoop();
+			}
+		}
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
 
@@ -382,7 +396,8 @@ package DespairFever
 			return;
 
 		Parent::reset(%this, %client);
-		despairPrepareGame();
+		if($DefaultMiniGame.numMembers >= 1)
+			despairPrepareGame();
 	}
 
 	function MiniGameSO::checkLastManStanding($DefaultMiniGame)

@@ -9,17 +9,27 @@ function Player::critLoop(%this)
 	cancel(%this.critLoop);
 	if(%this.getState() $= "Dead")
 		return;
+
+	%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
+	if($deathCount >= %maxDeaths)
+	{
+		cancel(%this.critLoop);
+		%this.health = %this.maxhealth;
+		%this.KnockOut(30);
+		return;
+	}
+
 	if(isObject(%this.client))
 		%this.client.play2d(HeartBeatSound);
 
 	%this.health -= 5;
-	if(%this.health <= -100)
+	if(%this.health <= $Despair::CritThreshold)
 	{
 		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
 		return;
 	}
-	%player.setDamageFlash(( - %player.health) / %player.maxhealth * 0.5);
-	%this.critLoop = %this.schedule(1000, "critLoop");
+	%this.setDamageFlash((-%this.health) / $Despair::CritThreshold);
+	%this.critLoop = %this.schedule(1250, "critLoop");
 }
 
 package DespairHealth
@@ -60,6 +70,8 @@ package DespairHealth
 		%player.attackCharacter[%player.attackCount] = %attacker.character;
 		%player.attackTime[%player.attackCount] = $Sim::Time;
 		%player.attackDayTime[%player.attackCount] = getDayCycleTime();
+		%player.attackDay[%player.attackCount] = $days;
+
 		if (%pos !$= "")
 		{
 			%region = %player.getRegion(%pos, true);
@@ -92,7 +104,7 @@ package DespairHealth
 		}
 
 		%player.health -= %damage;
-		if(%player.health <= -150)
+		if(%player.health <= $Despair::CritThreshold)
 		{
 			if(despairOnKill(%client, %attacker))
 			{
@@ -113,17 +125,18 @@ package DespairHealth
 			}
 			return 1;
 		}
-		if(%player.health <= 0)
+		else if(%player.health <= 0)
 		{
 			if(despairOnKill(%client, %attacker, true))
 			{
 				if(!isEventPending(%player.critLoop))
 				{
+					%player.wakeUp();
 					%player.changeDataBlock(PlayerCorpseArmor);
 					%player.playThread(0, "sit");
 					%player.noWeapons = true;
 					%player.critLoop();
-					messageClient(%client, '', "\c5You can use the last of your strength to /write your final message!");
+					messageClient(%client, '', "\c5You can use the last of your strength to /write your final message! Be sure to look at a surface.");
 				}
 			}
 			else

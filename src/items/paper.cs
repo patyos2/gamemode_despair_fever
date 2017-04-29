@@ -243,7 +243,7 @@ function getGuestList(%i)
 	if(%charCount > 10)
 	{
 		%div = 3;
-		%list = "<just:left><tab:0,250,500>";
+		%list = "<just:left><tab:0,250,460>";
 	}
 	for (%i = 0; %i < %charCount; %i++)
 	{

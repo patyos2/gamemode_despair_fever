@@ -1,3 +1,6 @@
+//glass
+ADDON System_BlocklandGlass
+
 //Default Add-Ons
 //ADDON Emote_Alarm //we overwrite the servercmd
 ADDON Emote_Confusion

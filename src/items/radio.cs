@@ -222,8 +222,7 @@ function radioTransmitMessage(%obj, %channel, %text)
 		else
 			continue;
 
-		if(%member.player != %obj)
-			serverPlay3d("radioTalkSound", %member.player.getHackPosition());
+		serverPlay3d("radioTalkSound", %member.player.getHackPosition());
 
 		if(%member.player.unconscious)
 			continue;

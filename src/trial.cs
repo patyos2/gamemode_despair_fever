@@ -109,7 +109,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			$deathCount++;
 			%player.isMurdered = true;
 		}
-		if(%victim.killer)
+		if(%victim.killer && !%attacker.killer)
 		{
 			%attacker.killer = true;
 			$currentKiller = %attacker;
