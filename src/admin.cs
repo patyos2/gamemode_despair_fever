@@ -52,9 +52,10 @@ function serverCmdSpectate(%this, %tog)
 {
 	if(!%this.isAdmin)
 		return;
-	%this.spectating = %tog;
 	if(%tog $= "")
 		%this.spectating = !%this.spectating;
+	else
+		%this.spectating = %tog;
 	messageClient(%this, '', '\c5You are \c6%1 spectating.', %this.spectating ? "now" : "no longer");
 	if(isObject(%this.player) && %this.spectating)
 	{
@@ -62,6 +63,11 @@ function serverCmdSpectate(%this, %tog)
 		%this.setControlObject(%this.camera);
 		%this.camera.setControlObject(%this.camera);
 		%this.player.delete(); //Should be safe to do
+	}
+	else
+	{
+		if(!$currentKiller)
+			createPlayer(%this);
 	}
 }
 
@@ -92,6 +98,21 @@ function updateAdminCount()
 		$Pref::Server::Password = "";
 	}
 	webcom_postServer();
+}
+
+function serverCmdAnnounce(%this, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a10, %a11, %a12, %a13, %a14, %a15, %a16, %a17, %a18, %a19, %a20, %a20, %a22, %a23, %a24)
+{
+	if(!%this.isAdmin)
+		return;
+
+	%text = %a1;
+	for (%i=2; %i<=24; %i++)
+		%text = %text SPC %a[%i];
+	%text = trim(stripMLControlChars(%text));
+	if (%text $= "")
+		return;
+
+	messageAll('MsgAdminForce', '<font:consolas:24><bitmap:base/client/ui/ci/star> \c5%1\c6: %2', %this.getPlayerName(), %text);
 }
 
 function serverCmdLockServer(%this)

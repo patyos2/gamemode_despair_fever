@@ -7,10 +7,16 @@ if (!isObject(GameCharacters))
 function createPlayer(%client)
 {
 	if(!$freeCount)
+	{
+		messageClient(%client, '', '\c5You didn\'t spawn because all rooms are occupied.');
 		return;
+	}
 
 	if(%client.spectating)
+	{
+		messageClient(%client, '', '\c5You didn\'t spawn because you are spectating.');
 		return;
+	}
 
 	$freeCount--;
 	%freeIndex = getRandom($freeCount);
@@ -99,9 +105,12 @@ function roomPlayers()
 
 		%player = createPlayer(%client);
 
-		%client.playPath(IntroPath);
-		%client.schedule(6000, setControlObject, %player);
-		%client.camera.schedule(6000, setControlObject, %client.camera);
+		if(isObject(%player))
+		{
+			%client.playPath(IntroPath);
+			%client.schedule(6000, setControlObject, %player);
+			%client.camera.schedule(6000, setControlObject, %client.camera);
+		}
 	}
 }
 

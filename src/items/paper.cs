@@ -164,7 +164,8 @@ function getPaperEvidence()
 
 			%choice[%high++] = "student";
 			%choice[%high++] = "delinquent";
-			%choice[%high++] = "artist";
+			%choice[%high++] = "sophomore";
+			%choice[%high++] = "graduate";
 			%msg = %msg SPC %choice[getRandom(%high)];
 
 		case 3:

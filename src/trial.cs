@@ -318,12 +318,12 @@ function despairOnNight()
 		{
 			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
-		}
-		if(%detectiveCount > 0)
-		{
-			%player.character.detective = true;
-			messageClient(%client, '', "\c5You have a \c3Detective\c5 trait! You will get more information from bodies.");
-			%detectiveCount--;
+			if(%detectiveCount > 0)
+			{
+				%player.character.detective = true;
+				messageClient(%client, '', "\c5You have a \c3Detective\c5 trait! You will get more information from bodies.");
+				%detectiveCount--;
+			}
 		}
 	}
 

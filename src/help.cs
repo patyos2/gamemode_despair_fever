@@ -79,10 +79,10 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[ADMIN]";
 			%text[%count++] = " \c3Team Chat\c7- \c6Talk through admin-only chat";
 			%text[%count++] = " \c3@ before Team Chat e.g. @message\c7- \c6Talk to the killer directly (cannot see killer chat when alive)";
-			%text[%count++] = " \c6/damageLogs \c3name \c7- \c6See who \c3name \c6has damaged over the course of the round";
+			%text[%count++] = " \c6/damageLogs \c3name \c7- \c6See what damage has been done to \c3name";
 			%text[%count++] = " \c6/whoIs \c3name \c7- \c6Find out who \c3name\c6's in-game alias is";
 			%text[%count++] = " \c6/spectate \c3tog \c7- \c6Become a spectator to be excluded from rounds";
-			//%text[%count++] = " \c6/mute \c3name time \c7- \c6Restrict \c3name \c6from using OOC chat for \c3time";
+			%text[%count++] = " \c6/announce \c3message \c7- \c6Send a server-wide announcement";
 			//%text[%count++] = " \c6/unmute \c3name \c7- \c6Unmute \c3name \c6, allowing them to use OOC chat again";
 			%text[%count++] = " \c5Page Up to read the above.";
 		default:
