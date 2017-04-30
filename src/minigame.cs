@@ -6,7 +6,7 @@ if (!isObject(GameCharacters))
 
 function createPlayer(%client)
 {
-	if(!$freeCount)
+	if($freeCount <= 0)
 	{
 		messageClient(%client, '', '\c5You didn\'t spawn because all rooms are occupied.');
 		return;
@@ -122,6 +122,11 @@ function despairEndGame()
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
+	if($DefaultMiniGame.numMembers <= 1)
+	{
+		cancel(DayCycle.timeSchedule);
+		return;
+	}
 	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
