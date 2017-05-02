@@ -39,7 +39,7 @@ package DespairChat
 		if(DespairSpecialChat(%client, %text))
 			return;
 
-		if($Sim::Time - %client.lastChatTime < $chatDelay)
+		if($Sim::Time - %client.lastSpeakTime < $chatDelay)
 		{
 			messageClient(%client, '', '\c5Slow down\c6!');
 			return;
@@ -55,12 +55,12 @@ package DespairChat
 		}
 		else
 		{
-			%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
+			%time = getTimeString(mFloor($Sim::Time - $DespairTrialStartTime));
 		}
 		%name = %client.getPlayerName();
 		if (!isObject(%player))
 		{
-			%client.lastChatTime = $Sim::Time;
+			%client.lastSpeakTime = $Sim::Time;
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%member = ClientGroup.getObject(%i);
@@ -127,7 +127,7 @@ package DespairChat
 			%shape.setVelocity("0 0 0.5");
 			%shape.deleteSchedule = %shape.schedule(3000, delete);
 		}
-		%client.lastChatTime = $Sim::Time;
+		%client.lastSpeakTime = $Sim::Time;
 		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{

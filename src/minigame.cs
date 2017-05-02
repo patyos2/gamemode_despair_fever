@@ -137,7 +137,7 @@ function roomPlayers()
 
 	for (%i = 0; %i < %count; %i++)
 	{
-		%client = %a[%i];
+        %client = $DefaultMiniGame.member[%a[%i]];
 
 		if (%client.player)
 			%client.player.delete();
@@ -252,9 +252,10 @@ function despairPrepareGame()
 
 	roomPlayers();
 
-	$chatDelay = 0.1;
+	$chatDelay = 0.5;
 
 	$DespairTrial = "";
+	$DespairTrialVote = false;
 	$announcements = 0;
 	$investigationStart = "";
 	$pickedKiller = "";
@@ -380,7 +381,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastChatTime >= 60)
+	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
 	{
 		%delay = 2000;
 		if(!%this.afk)

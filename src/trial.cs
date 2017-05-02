@@ -483,9 +483,13 @@ function courtPlayers()
 	$DefaultMiniGame.chatMessageAll('', "\c5<font:impact:30>Everyone now has 30 seconds to prepare their opening statements! Before that, nobody can talk.");
 	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairStartOpeningStatements);
 
+	$chatDelay = 0.5;
+
 	$DespairTrialCurrSpeaker = "";
 	$DespairTrial = $Sim::Time;
+	$DespairTrialVote = false;
 	$DespairTrialOpening = true;
+	$DespairTrialDiscussion = "";
 	DespairSetWeapons(0);
 
 	despairBottomPrintLoop();
@@ -559,6 +563,8 @@ function DespairStartDiscussion()
 			%client.schedule(5000, setControlObject, %client.camera);
 	}
 	$DespairTrialOpening = false;
+	$DespairTrialDiscussion = $Sim::Time;
+	$chatDelay = 0.75; //less spam, please
 	ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
 	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ $Despair::DiscussPeriod / 60 @ " minutes\c5 to discuss and reveal the killer.");
 	$DefaultMiniGame.chatMessageAll('', "\c5After time has passed you will have to \c0eliminate the killer\c5 by \c3voting.");
@@ -569,7 +575,7 @@ function DespairStartDiscussion()
 function DespairStartVote()
 {
 	cancel($DefaultMiniGame.eventSchedule);
-
+	$DespairTrialVote = true;
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -583,6 +589,8 @@ function DespairStartVote()
 			DespairUpdateCastVote(%player);
 		}
 	}
+
+	$chatDelay = 0.5; //BURNING DISCUSSION
 
 	ServerPlaySong("DespairMusicVoteStart");
 	$DefaultMiniGame.chatMessageAll('', "\c5Look at the person you think is the killer within 30 seconds. The person with the most votes \c0will die.");

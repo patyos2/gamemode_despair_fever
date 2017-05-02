@@ -1,6 +1,6 @@
 //Base
 $Despair::DayLength = 360; //6 minutes for a full cycle
-$Despair::InvestigationLength = 300; //4 mins
+$Despair::InvestigationLength = 300; //5 mins
 $Despair::CritThreshold = -150; //How much negative health can the player take before dying
 //MOTEL MAP PREFS:
 $mapCenter = "-87.7265 -20.5779 0.20202";
@@ -35,5 +35,6 @@ $roomNum[21] = "E";
 $roomNum[22] = "F";
 
 //Trial
-$Despair::DiscussPeriod = 300; //4 mins
+$Despair::DiscussPeriod = 300; //5 mins
+$Despair::CanForceVote = 120; //2 mins have to pass before you can forcevote
 $Despair::MissingLength = 120; //2 mins until body announcement is made automatically

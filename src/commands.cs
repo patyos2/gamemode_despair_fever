@@ -5,6 +5,63 @@ function serverCmdKeepCharacter(%this)
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
 }
 
+function serverCmdForceVote(%client)
+{
+	if ($deathCount <= 0 || $DespairTrial || $DespairTrialOpening || $DespairTrialVote)
+		return;
+
+	if (%client.miniGame == $defaultMiniGame)
+	{
+		if (!isObject(%client.player) || !isObject(%client.character))
+			return;
+
+		%currTime = $Sim::Time - $DespairTrialDiscussion;
+		if (%currTime < $Despair::CanForceVote)
+		{
+			messageClient(%client, '', '\c6You can only vote 2 minutes after trial had started!');
+			return;
+		}
+		for (%i = 0; %i < $defaultMiniGame.numMembers; %i++)
+		{
+			%member = $defaultMiniGame.member[%i];
+			%player = %member.player;
+			if (!isObject(%player))
+				continue;
+			%alivePlayers++;
+		}
+		for (%i = 1; %i <= $forceVoteCount; %i++)
+		{
+			%member = $forceVotes[%i];
+
+			if (!isObject(%member) || !isObject(%member.character))
+				continue;
+			if (%member == %client)
+			{
+				messageClient(%client, '', '\c6You already voted!');
+				return;
+			}
+			%validVotes++;
+		}
+		$forceVotes[$forceVoteCount++] = %client;
+		%validVotes++;
+		if (%validVotes >= (MFloor(%alivePlayers * 0.8))) // if at least 90% of alive players voted
+		{
+			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 There are enough votes to force the voting period.',
+				%client.character.name);
+			%start = true;
+		}
+		else
+		{
+			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 Do /forcevote to concur. %2 votes left.',
+				%client.character.name, MFloor(%alivePlayers * 0.8) - %validVotes);
+		}
+	}
+	else if (%client.isAdmin) //"Admin" forcevote only works outside minigame
+		%start = true;
+	if (%start)
+		DespairStartVote();
+}
+
 //ADMIN ONLY
 function serverCmdWhoIs(%client, %a, %b)
 {
