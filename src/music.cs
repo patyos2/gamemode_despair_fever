@@ -13,65 +13,134 @@ datablock AudioProfile(KillerJingleSound)
 	preload = true;
 };
 
-datablock AudioProfile(BodyDiscoverySound1)
+datablock AudioProfile(DespairBodyDiscoverySound1)
 {
 	fileName = $Despair::Path @ "res/music/BodyDiscoveryNoise1.ogg";
 	description = audio2D;
 	preload = true;
 };
 
-datablock AudioProfile(BodyDiscoverySound2)
+datablock AudioProfile(DespairBodyDiscoverySound2)
 {
 	fileName = $Despair::Path @ "res/music/BodyDiscoveryNoise2.ogg";
 	description = audio2D;
 	preload = true;
 };
-datablock AudioProfile(MusicGameStart)
+
+datablock AudioProfile(DespairBodyDiscoverySound3)
+{
+	fileName = $Despair::Path @ "res/music/BodyDiscoveryNoise3.ogg";
+	description = audio2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairBodyDiscoverySound4)
+{
+	fileName = $Despair::Path @ "res/music/BodyDiscoveryNoise4.ogg";
+	description = audio2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairBodyDiscoverySound5)
+{
+	fileName = $Despair::Path @ "res/music/BodyDiscoveryNoise5.ogg";
+	description = audio2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairMusicGameStart)
 {
 	fileName = $Despair::Path @ "res/music/gameStart.ogg";
-	description = Audio2D;
+	description = audio2D;
 	preload = true;
 };
-datablock AudioProfile(MusicInvestigationStart)
+
+datablock AudioProfile(DespairMusicInvestigationStart)
 {
 	fileName = $Despair::Path @ "res/music/investigationStart.ogg";
-	description = Audio2D;
+	description = audio2D;
 	preload = true;
 };
-datablock AudioProfile(MusicVoteStart)
+
+datablock AudioProfile(DespairMusicVoteStart)
 {
 	fileName = $Despair::Path @ "res/music/VoteStart.ogg";
-	description = Audio2D;
+	description = audio2D;
 	preload = true;
 };
-datablock AudioProfile(MusicOpeningPre)
+
+datablock AudioProfile(DespairMusicOpeningIntro)
 {
-	fileName = $Despair::Path @ "res/music/OpeningPre.ogg";
-	description = Audio2D;
+	fileName = $Despair::Path @ "res/music/OpeningIntro.ogg";
+	description = audio2D;
 	preload = true;
 };
-datablock AudioProfile(MusicOpeningStatements)
+
+datablock AudioProfile(DespairMusicOpeningLoop)
 {
-	fileName = $Despair::Path @ "res/music/OpeningStatements.ogg";
-	description = AudioLooping2D;
-	preload = true;
-};
-datablock AudioProfile(MusicTrialDiscussion)
-{
-	fileName = $Despair::Path @ "res/music/TrialDiscussion.ogg";
+	fileName = $Despair::Path @ "res/music/OpeningLoop.ogg";
 	description = AudioLooping2D;
 	preload = true;
 };
 
-datablock AudioProfile(MusicInvestigationIntro1)
+datablock AudioProfile(DespairMusicTrialDiscussionIntro1)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionintro1.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 24009;
+	loopProfile = DespairMusicTrialDiscussionLoop1;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionLoop1)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionloop1.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionIntro2)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionintro2.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 14333;
+	loopProfile = DespairMusicTrialDiscussionLoop2;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionLoop2)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionloop2.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionIntro3)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionintro3.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 51432;
+	loopProfile = DespairMusicTrialDiscussionLoop3;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionLoop3)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionloop3.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairMusicInvestigationIntro1)
 {
 	fileName = $Despair::Path @ "res/music/investigationintro1.ogg";
-	description = Audio2D;
+	description = audio2D;
 	preload = true;
-	loopStart = 15688;
-	loopProfile = MusicInvestigationLoop1;
+	loopStart = 26932;
+	loopProfile = DespairMusicInvestigationLoop1;
 };
-datablock AudioProfile(MusicInvestigationLoop1)
+
+datablock AudioProfile(DespairMusicInvestigationLoop1)
 {
 	fileName = $Despair::Path @ "res/music/investigationloop1.ogg";
 	description = AudioLooping2D;
@@ -90,18 +159,20 @@ function ServerStopSong()
 function ServerPlaySong(%profile)
 {
 	ServerStopSong();
+	%isLooping = %profile.description == nameToID("AudioLooping2D");
 	new AudioEmitter(ServerMusic)
 	{
 		position = "0 0 0";
 		profile = %profile;
-		useProfileDescription = 1;
-		description = "AudioLooping2D";
+		useProfileDescription = 0;
+		description = %profile.description;
+		is3d = false;
 		type = "0";
 		volume = "1.5";
 		outsideAmbient = "1";
-		ReferenceDistance = "4";
+		ReferenceDistance = "9001";
 		maxDistance = "9001";
-		isLooping = 0;
+		isLooping = %isLooping;
 	};
 	if(isObject(%profile.loopProfile))
 		ServerMusic.loopSchedule = schedule(%profile.loopStart, 0, ServerPlaySong, %profile.loopProfile);

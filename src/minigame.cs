@@ -248,7 +248,7 @@ function despairPrepareGame()
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
 	DespairSetWeapons(1);
-	ServerPlaySong("MusicGameStart");
+	ServerPlaySong("DespairMusicGameStart");
 }
 
 function DespairSetWeapons(%tog)

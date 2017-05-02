@@ -153,7 +153,7 @@ package DespairChat
 		if(!%client.isAdmin && !%client.killer)
 			return;
 		%name = %client.getPlayerName();
-		if(%client.killer && !%client.isAdmin)
+		if(%client.killer == $currentKiller && !%client.isAdmin)
 		{
 			%killer = true;
 			%name = "Killer";

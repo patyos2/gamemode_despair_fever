@@ -144,7 +144,7 @@ function despairCheckInvestigation(%player, %corpse)
 	if(!%corpse.checkedBy[%player])
 	{
 		if(isObject(%player.client))
-			%player.client.play2d(BodyDiscoverySound @ getRandom(1, 2));
+			%player.client.play2d(DespairBodyDiscoverySound @ getRandom(1, 3));
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
 		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
@@ -183,7 +183,7 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
-		ServerPlaySong("MusicInvestigationStart");
+		ServerPlaySong("DespairMusicInvestigationIntro1");
 		$musicSchedule = schedule(15000, 0, ServerPlaySong, "MusicInvestigationIntro1");
 	}
 }
@@ -297,7 +297,7 @@ function despairOnNight()
 		echo(%client.getplayername() SPC "is killa");
 		$pickedKiller = %client;
 		$currentKiller = %client;
-		ServerPlaySong("MusicOpeningPre");
+		ServerPlaySong("DespairMusicOpeningIntro");
 
 		if(%client.player.unconscious)
 			%client.player.WakeUp();
@@ -459,7 +459,7 @@ function courtPlayers()
 			%client.playPath(TrialIntroPath);
 	}
 
-	ServerPlaySong("MusicOpeningPre");
+	ServerPlaySong("DespairMusicOpeningIntro");
 	$DefaultMiniGame.chatMessageAll('', "\c5<font:impact:30>Everyone now has 30 seconds to prepare their opening statements! Before that, nobody can talk.");
 	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairStartOpeningStatements);
 
@@ -474,7 +474,7 @@ function courtPlayers()
 function DespairStartOpeningStatements()
 {
 	cancel($DefaultMiniGame.eventSchedule);
-	ServerPlaySong("MusicOpeningStatements");
+	ServerPlaySong("DespairMusicOpeningLoop");
 	$DefaultMiniGame.chatMessageAll('', "\c5Let's hear everybody out.");
 	$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairCycleOpeningStatements, 0);
 }
@@ -539,7 +539,7 @@ function DespairStartDiscussion()
 			%client.schedule(5000, setControlObject, %client.camera);
 	}
 	$DespairTrialOpening = false;
-	ServerPlaySong("MusicTrialDiscussion");
+	ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
 	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ $Despair::DiscussPeriod / 60 @ " minutes\c5 to discuss and reveal the killer.");
 	$DefaultMiniGame.chatMessageAll('', "\c5After time has passed you will have to \c0eliminate the killer\c5 by \c3voting.");
 	$DefaultMiniGame.chatMessageAll('', "\c0You cannot afford a mistake. \c5Choose wrong, and everyone but the killer will die.");
@@ -564,7 +564,7 @@ function DespairStartVote()
 		}
 	}
 
-	ServerPlaySong("MusicVoteStart");
+	ServerPlaySong("DespairMusicVoteStart");
 	$DefaultMiniGame.chatMessageAll('', "\c5Look at the person you think is the killer within 30 seconds. The person with the most votes \c0will die.");
 	$DefaultMiniGame.eventSchedule = schedule(35000, 0, DespairEndVote);
 }
