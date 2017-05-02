@@ -3,6 +3,9 @@ function GameConnection::examineObject(%client, %col)
 	if(!isObject(%player = %client.player))
 		return;
 
+	if(%col.noExamine)
+		return;
+
 	%text = "<font:cambria:32><color:FFFFFF>";
 
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
@@ -98,9 +101,9 @@ function GameConnection::examineObject(%client, %col)
 		if(%props.class $= "MeleeProps")
 		{
 			if(%props.bloody)
-				%b = "\n\c0It's bloody.";
+				%b = "\c0It's bloody.";
 		}
-		%text = %text @ "This is \c3" @ %name @ "\n\c6" @ %b;
+		%text = %text @ "This is \c3" @ %name @ "\n" @ %b;
 	}
 
 	if(%col.getType() & $TypeMasks::StaticShapeObjectType)

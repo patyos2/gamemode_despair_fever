@@ -28,8 +28,10 @@ function Player::critLoop(%this)
 		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
 		return;
 	}
-	%this.setDamageFlash((-%this.health) / $Despair::CritThreshold);
-	%this.critLoop = %this.schedule(1250, "critLoop");
+	%percent = (-%this.health) / $Despair::CritThreshold;
+	%this.setDamageFlash(%percent);
+	%delay = 1250 * (1 - (%percent * 0.5));
+	%this.critLoop = %this.schedule(getMax(500, %delay), "critLoop");
 }
 
 package DespairHealth
@@ -161,6 +163,7 @@ package DespairHealth
 		if (isObject(%client))
 		{
 			// centerPrint(%client, "");
+			%client.character.deleteMe = true;
 			%client.camera.setMode("Corpse", %player);
 			%client.setControlObject(%client.camera);
 			%client.camera.setControlObject(%client.camera);

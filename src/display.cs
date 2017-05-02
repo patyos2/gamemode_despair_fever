@@ -60,7 +60,7 @@ function GameConnection::updateBottomprint(%this)
 	if(%isSpectate)
 		%a = "\c3 (Spectating)";
 
-	if(!%isSpectate || %this.isAdmin)
+	if(!%isSpectate || %this.showRoles)
 	{
 		if(!$pickedKiller)
 			%role = "\c7Unknown";

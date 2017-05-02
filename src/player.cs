@@ -285,10 +285,9 @@ function Player::onLight(%this)
 	}
 }
 
-function player::applyAppearance(%pl,%cl)
+function player::applyAppearance(%pl,%char)
 {
 	%pl.hideNode("ALL");
-	%char = %cl.character;
 	%app = %char.appearance;
 	%female = %char.gender $= "Female";
 
@@ -301,6 +300,17 @@ function player::applyAppearance(%pl,%cl)
 	%pantsColor = getField(%app, 5);
 	%shoesColor = getField(%app, 6);
 	%hairColor = getField(%app, 7);
+
+	if(%pl.desaturate)
+	{
+		%a = 0.8;
+		%handColor = desaturateRGB(%handColor, %a) SPC 1;
+		%headColor = desaturateRGB(%headColor, %a) SPC 1;
+		%shirtColor = desaturateRGB(%shirtColor, %a) SPC 1;
+		%pantsColor = desaturateRGB(%pantsColor, %a) SPC 1;
+		%shoesColor = desaturateRGB(%shoesColor, %a) SPC 1;
+		%hairColor = desaturateRGB(%hairColor, %a) SPC 1;
+	}
 
 	if(isObject(%pl.getMountedImage(1)) && %pl.getMountedImage(1).item.hideAppearance)
 		%hideApp = true;
@@ -342,22 +352,7 @@ function player::applyAppearance(%pl,%cl)
 		%pl.unHideNode(%hairName);
 
 	%pl.setHeadUp(false);
-	//if($pack[%cl.pack] !$= "none")
-	//{
-	//	%pl.unHideNode($pack[%cl.pack]);
-	//	%pl.setNodeColor($pack[%cl.pack],%cl.packColor);
-	//}
-	//if($secondPack[%cl.secondPack] !$= "none")
-	//{
-	//	%pl.unHideNode($secondPack[%cl.secondPack]);
-	//	%pl.setNodeColor($secondPack[%cl.secondPack],%cl.secondPackColor);
-	//}
-	//if($hat[%cl.hat] !$= "none")
-	//{
-	//	%pl.unHideNode($hat[%cl.hat]);
-	//	%pl.setNodeColor($hat[%cl.hat],%cl.hatColor);
-	//}
-	
+
 	if(%hip && !%hideApp)
 	{
 		%pl.unHideNode("skirthip");
@@ -455,7 +450,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance(%cl);
+				%pl.applyAppearance(%cl.character);
 		}
 	}
 	function gameConnection::applyBodyParts(%cl,%o) 
@@ -464,7 +459,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance(%cl);
+				%pl.applyAppearance(%cl.character);
 		}
 	}
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)

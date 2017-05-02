@@ -8,6 +8,15 @@ datablock StaticShapeData(DespairMemorial)
 	shapeFile = $Despair::Path @ "res/shapes/memorial.dts";
 };
 
+datablock ShapeBaseImageData(MemorialCrossImage)
+{
+	shapeFile = $Despair::Path @ "res/shapes/cross.dts";
+	mountPoint = $headSlot;
+	doColorShift = true;
+	colorShiftColor = "0.65 0 0 1";
+	offset = "0 0.5 0";
+};
+
 function createShape(%data, %position, %rotation, %scale, %color)
 {
 	if (%color $= "") %color = "0.5 0.3 0.1 1";
@@ -402,7 +411,31 @@ function courtPlayers()
 				else
 					%state = "RDM";
 			}
-			$memorial[%i].setShapeName(%character.name SPC "(" @ %state @ ")");
+			%doll = new Player()
+			{
+				datablock = playerFrozenArmor;
+				character = %character;
+			};
+			%doll.setTransform(%transform);
+			%doll.setScale("1 0.05 1");
+			%doll.desaturate = true;
+			%doll.applyAppearance(%character);
+			%doll.hideNode("larm");
+			%doll.hideNode("larmslim");
+			%doll.hideNode("rarm");
+			%doll.hideNode("rarmslim");
+			%doll.hideNode("lhand");
+			%doll.hideNode("rhand");
+			%doll.hideNode("chest");
+			%doll.hideNode("femchest");
+			%doll.hideNode("pants");
+			%doll.hideNode("lshoe");
+			%doll.hideNode("rshoe");
+			%doll.mountImage(MemorialCrossImage, 0);
+			%doll.noExamine = true;
+			%doll.setShapeName(%character.name SPC "(" @ %state @ ")", "8564862");
+
+			GameRoundCleanup.add(%doll);
 		}
 		else
 		{

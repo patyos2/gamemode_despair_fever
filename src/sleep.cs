@@ -167,7 +167,7 @@ function serverCmdSleep(%this, %bypass)
 	if(!%ray || %ray.getName() !$= "_bed")
 	{
 		%sec += 10;
-		%cold = "<color:FF0000>on the cold floor";
+		%cold = "\n<color:FF0000>on the cold floor";
 	}
 	if (%bypass)
 	{
@@ -177,7 +177,7 @@ function serverCmdSleep(%this, %bypass)
 		%this.updateBottomPrint();
 		return;
 	}
-	%message = "Are you sure you want to sleep\n" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!";
+	%message = "Are you sure you want to sleep" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!";
 	commandToClient(%this, 'messageBoxYesNo', "Sleep Prompt", %message, 'SleepAccept');
 }
 

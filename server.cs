@@ -22,10 +22,10 @@ exec("./lib/noObservers.cs");
 exec("./lib/pathCamera.cs");
 exec("./lib/slowdown.cs");
 //src
-exec("./src/admin.cs");
 exec("./src/blood.cs");
 exec("./src/character.cs");
 exec("./src/chat.cs");
+exec("./src/commands.cs");
 exec("./src/corpse.cs");
 exec("./src/display.cs");
 exec("./src/door.cs");

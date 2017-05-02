@@ -111,44 +111,57 @@ function getPaperEvidence()
 	{
 		case 1:
 			%msg = "Investigation into robbery suspect reveals them to be";
-			%pick[1] = %inno[getRandom(0, %innoCount-1)];
-			%pick[2] = %inno[getRandom(0, %innoCount-1)];
-			%pick[getRandom(1, 2)] = $pickedKiller.character;
-
-			%i = 3;
-			while(%i--)
+			for (%i = 0; %i < %innoCount && getWordCount(%decals) < 3; %i++)
 			{
-				%decal = getField(%pick[%i].appearance, 2);
+				%char = %a[%i];
+				%decal = getField(%char.appearance, 2);
+				if(%decal $= "")
+					%decal = "blank";
+				if(strpos(%decals, %decal) == -1)
+				{
+					%decals = %decals @ (getWordCount(%decals) >= 1 ? " " : "") @ %decal;
+				}
+			}
+			%killer = $pickedKiller.character;
+			%decal = getField(%killer.appearance, 2);
+			if(strpos(%decals, %decal) == -1)
+			{
+				%decals = setWord(%decals, getRandom(0, getWordCount(%decals)-1));
+			}
+			for(%i = 0; %i < getWordCount(%decals); %i++)
+			{
+				%decal = getWord(%decals, %i);
 				switch$ (%decal)
 				{
 					case "Mod-Suit":
-						%msg = %msg SPC "a wealthy progeny";
+						%a = "a wealthy progeny";
 					case "Mod-Pilot":
-						%msg = %msg SPC "an aspiring aviator";
+						%a = "an aspiring aviator";
 					case "Mod-Army":
-						%msg = %msg SPC "an US Army fanatic";
+						%a = "an US Army fanatic";
 					case "Meme-Mongler":
-						%msg = %msg SPC "a dinosaur enthusiast";
+						%a = "a dinosaur enthusiast";
 					case "Medieval-YARLY":
-						%msg = %msg SPC "a fan of White Owls";
+						%a = "a fan of White Owls";
 					case "Medieval-Rider":
-						%msg = %msg SPC "a Riders fan";
+						%a = "a Riders fan";
 					case "Medieval-ORLY":
-						%msg = %msg SPC "a fan of Night Owls";
+						%a = "a fan of Night Owls";
 					case "Medieval-Lion":
-						%msg = %msg SPC "a Lions fan";
+						%a = "a Lions fan";
 					case "Medieval-Eagle":
-						%msg = %msg SPC "an Eagles fan";
+						%a = "an Eagles fan";
 					case "Hoodie":
-						%msg = %msg SPC "wearing a hoodie";
+						%a = "wearing a hoodie";
 					case "Alyx":
-						%msg = %msg SPC "a Black Mesa fan";
+						%a = "a Block Mesa fan";
 					default:
-						%msg = %msg SPC "completely boring";
+						%a = "a Plain Shirt";
 				}
-				if(%i == 2)
-					%msg = %msg SPC "or";
+				%list = %list @ (%i == 1 ? "" : "	") @ %a;
 			}
+			%list = naturalGrammarList(%list, "or");
+			%msg = %msg SPC %list;
 
 		case 2:
 			if(getRandom() < 0.6) //Only 60% accurate
@@ -176,9 +189,8 @@ function getPaperEvidence()
 			%pick[3] = %inno[getRandom(0, %innoCount-1)];
 
 			%pick[getRandom(1, 3)] = $pickedKiller.character;
-
-			%i = 4;
-			while(%i--)
+			%i = 0;
+			while(%i++ <= 3)
 			{
 				%a = getSubStr(getWord(%pick[%i].name, 0), 0, 1);
 				%b = getSubStr(getWord(%pick[%i].name, 1), 0, 1);
@@ -187,7 +199,7 @@ function getPaperEvidence()
 					%a = "#";
 				if(%rng == 2)
 					%b = "#";
-				%list = %list @ (%i == 3 ? "" : "	") @ %a @ "." @ %b @ ".";
+				%list = %list @ (%i == 1 ? "" : "	") @ %a @ "." @ %b @ ".";
 			}
 			%list = naturalGrammarList(%list);
 			%msg = %msg @ %list @ "- have been considered as possible murder suspects! Drama on page 5.";
@@ -252,7 +264,7 @@ function getGuestList(%i)
 		%name = %character.name;
 		%room = $roomNum[%character.room];
 		%initials = getSubStr(getWord(%character.name, 0), 0, 1) @ "." @ getSubStr(getWord(%character.name, 1), 0, 1) @ ".";
-		%list = %list @ (%i % %div ? "	" : "") @ "\c6" @ %initials @ "\c3 - \c6#" @ %room @ ((%i % %div) == %div-1 ? "\n" : "	");
+		%list = %list @ (%i % %div ? "	" : "") @ "\c6" @ %initials @ "\c3:\c6" @ %room @ ((%i % %div) == %div-1 ? "\n" : "	");
 	}
 	return %list;
 }

@@ -112,7 +112,7 @@ package DespairChat
 				datablock = DespairEmptyFloatItem;
 				position = VectorAdd(%player.position, "0 0 2");
 			};
-
+			%shape.noExamine = true;
 			%shape.setCollisionTimeout(%player);
 			%shape.setShapeName(%text);
 			%shape.setShapeNameDistance(%range);

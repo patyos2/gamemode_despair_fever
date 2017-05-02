@@ -4,6 +4,16 @@ if (!isObject(GameRoundCleanup))
 if (!isObject(GameCharacters))
 	new SimSet(GameCharacters);
 
+function ClearFlaggedCharacters()
+{
+	for(%i=0; %i < GameCharacters.getCount(); %i++)
+	{
+		%char = GameCharacters.getObject(%i);
+		if(%char.deleteMe || !isObject(%char.client) || %char.client.noPersistance)
+			%char.delete();
+	}
+}
+
 function createPlayer(%client)
 {
 	if($freeCount <= 0)
@@ -28,27 +38,36 @@ function createPlayer(%client)
 
 	%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 	%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
-	//Create character
+	//Create character if none exists
 	%gender = getRandomGender();
-	%character = new ScriptObject()
+	if(!isObject(%character = %client.character) || %character.deleteMe || %character.client.noPersistance)
 	{
-		class = "Character";
+		if(isObject(%character))
+			%character.delete();
+		%character = new ScriptObject()
+		{
+			class = "Character";
 
-		gender = %gender;
-		name = getRandomName(%gender);
-		appearance = getRandomAppearance(%gender);
-		room = %room;
+			gender = %gender;
+			name = getRandomName(%gender);
+			appearance = getRandomAppearance(%gender);
 
-		client = %client;
-		clientName = %client.getPlayerName();
-	};
+			client = %client;
+			clientName = %client.getPlayerName();
+		};
 
-	GameCharacters.add(%character);
-	%client.character = %character;
-
+		GameCharacters.add(%character);
+		%client.character = %character;
+	}
+	else
+	{
+		%character.detective = 0;
+		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
+	}
+	%character.room = %room;
 	//Assign character to client
 	%client.killer = false;
-	%client.spawnPlayer(); //PROTIP: Create players as AIPlayers so you can control them like bots in cutscenes
+	%client.spawnPlayer();
 	%player = %client.player;
 	%player.character = %character; //post-death reference to character
 	%character.player = %player;
@@ -96,6 +115,8 @@ function roomPlayers()
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 	}
 
+	ClearFlaggedCharacters();
+
 	for (%i = 0; %i < $DefaultMiniGame.numMembers && $freeCount; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -128,6 +149,7 @@ function despairEndGame()
 		return;
 	}
 	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
+	$currentKiller.character.deleteMe = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
 
@@ -135,7 +157,6 @@ function despairPrepareGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
 	GameRoundCleanup.deleteAll();
-	GameCharacters.deleteAll();
 	clearDecals();
 
 	// Close *all* doors
@@ -396,6 +417,17 @@ package DespairFever
 				%pl.health = $Despair::CritThreshold;
 				%pl.critLoop();
 			}
+			else
+			{
+				for(%i=0;%i<%pl.getDataBlock().maxTools;%i++)
+				{
+					serverCmdDropTool(%client, %i);
+				}
+			}
+		}
+		if(isObject(%client.character))
+		{
+			%client.character.deleteMe = true;
 		}
 		Parent::removeMember($DefaultMiniGame, %client);
 	}

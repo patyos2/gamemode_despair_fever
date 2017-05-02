@@ -1,3 +1,11 @@
+//GENERAL
+function serverCmdKeepCharacter(%this)
+{
+	%this.noPersistance = !%this.noPersistance;
+	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
+}
+
+//ADMIN ONLY
 function serverCmdWhoIs(%client, %a, %b)
 {
 	if (!%client.isAdmin)
@@ -11,7 +19,7 @@ function serverCmdWhoIs(%client, %a, %b)
 
 		if (%search $= "" || striPos(%character.clientName, %search) != -1 || striPos(%character.name, %search) != -1)
 		{
-			messageClient(%client, '', "\c3" @ %character.clientName SPC "\c6is \c3" @ %character.name);
+			messageClient(%client, '', '\c3%1 \c6is\c3 %2\c6, room \c3%3', %character.clientName, %character.name, $roomNum[%character.room]);
 		}
 	}
 }
@@ -48,15 +56,12 @@ function serverCmdDamageLogs(%client, %a, %b)
 	}
 }
 
-function serverCmdSpectate(%this, %tog)
+function serverCmdSpectate(%this)
 {
 	if(!%this.isAdmin)
 		return;
-	if(%tog $= "")
-		%this.spectating = !%this.spectating;
-	else
-		%this.spectating = %tog;
-	messageClient(%this, '', '\c5You are \c6%1 spectating.', %this.spectating ? "now" : "no longer");
+	%this.spectating = !%this.spectating;
+	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
 	if(isObject(%this.player) && %this.spectating)
 	{
 		%this.camera.setMode("Corpse", %this.player);
@@ -71,9 +76,20 @@ function serverCmdSpectate(%this, %tog)
 	}
 }
 
+function serverCmdShowRoles(%this)
+{
+	if(!%this.isAdmin)
+		return;
+	%this.showRoles = !%this.showRoles;
+	messageClient(%this, '', '\c5You will \c6%1\c5 see the roles when spectating.', %this.showRoles ? "now" : "no longer");
+	%this.updateBottomprint();
+}
+
 function updateAdminCount()
 {
 	cancel($adminCountSchedule);
+	if(!$Server::Dedicated)
+		return;
 	for(%a = 0; %a < ClientGroup.getCount(); %a++)
 	{
 		%client = ClientGroup.getObject(%a);

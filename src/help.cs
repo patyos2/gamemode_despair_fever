@@ -73,17 +73,20 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";
 			//%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
 			%text[%count++] = " \c5Page Up to read the above.";
-		case "7" or "admin":
-			if (!%this.isAdmin)
-				return;
-			%text[%count++] = "\c3[ADMIN]";
-			%text[%count++] = " \c3Team Chat\c7- \c6Talk through admin-only chat";
-			%text[%count++] = " \c3@ before Team Chat e.g. @message\c7- \c6Talk to the killer directly (cannot see killer chat when alive)";
-			%text[%count++] = " \c6/damageLogs \c3name \c7- \c6See what damage has been done to \c3name";
-			%text[%count++] = " \c6/whoIs \c3name \c7- \c6Find out who \c3name\c6's in-game alias is";
-			%text[%count++] = " \c6/spectate \c3tog \c7- \c6Become a spectator to be excluded from rounds";
-			%text[%count++] = " \c6/announce \c3message \c7- \c6Send a server-wide announcement";
-			//%text[%count++] = " \c6/unmute \c3name \c7- \c6Unmute \c3name \c6, allowing them to use OOC chat again";
+		case "7" or "commands":
+			%text[%count++] = "\c3[COMMANDS]";
+			%text[%count++] = " \c6/keepcharacter \c7- \c6Enable or disable character persistance (if you survive a round, you keep your character for the next)";
+			if (%this.isAdmin)
+			{
+				%text[%count++] = "\c3[ADMIN]";
+				%text[%count++] = " \c6Team Chat \c7- \c6Talk through admin-only chat";
+				%text[%count++] = " \c3@\c6 before Team Chat e.g. \c3@message \c7- \c6Talk to the killer directly (cannot see killer chat when alive)";
+				%text[%count++] = " \c6/damageLogs \c3name \c7- \c6See what damage has been done to \c3name";
+				%text[%count++] = " \c6/whoIs \c3name \c7- \c6Find out who \c3name\c6's in-game alias is";
+				%text[%count++] = " \c6/spectate \c7- \c6Become a spectator to be excluded from rounds";
+				%text[%count++] = " \c6/showroles \c7- \c6See who's killer or innocent when spectating";
+				%text[%count++] = " \c6/announce \c3message \c7- \c6Send a server-wide announcement";
+			}
 			%text[%count++] = " \c5Page Up to read the above.";
 		default:
 			%text[%count++] = "<font:impact:30>\c6Welcome to \c5Despair Fever\c6!";
@@ -95,8 +98,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "   \c34\c6 - \c3mechanics\c6: Game mechanics - locking doors, papers, sleeping, etc.";
 			%text[%count++] = "   \c35\c6 - \c3combat\c6: Health and Melee explained";
 			%text[%count++] = "   \c36\c6 - \c3rules\c6: Read this to avoid getting banned";
-			if (%this.isAdmin)
-				%text[%count++] = "   \c37\c6 - \c3admin\c6: Various admin commands";
+			%text[%count++] = "   \c37\c6 - \c3commands\c6: Various slash commands";
 			%text[%count++] = "\c6======";
 			%text[%count++] = "\c5Say \c3/help *category*\c5 for more info on certain topics.";
 	}
