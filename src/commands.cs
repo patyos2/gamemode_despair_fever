@@ -7,8 +7,14 @@ function serverCmdKeepCharacter(%this)
 
 function serverCmdForceVote(%client)
 {
-	if ($deathCount <= 0 || $DespairTrial || $DespairTrialOpening || $DespairTrialVote)
+	if (!$DespairTrial)
 		return;
+
+	if ($DespairTrialOpening || $DespairTrialVote)
+	{
+		messageClient(%client, '', '\c5You can only force vote at discussion phase!');
+		return;
+	}
 
 	if (%client.miniGame == $defaultMiniGame)
 	{
@@ -18,7 +24,7 @@ function serverCmdForceVote(%client)
 		%currTime = $Sim::Time - $DespairTrialDiscussion;
 		if (%currTime < $Despair::CanForceVote)
 		{
-			messageClient(%client, '', '\c6You can only vote 2 minutes after trial had started!');
+			messageClient(%client, '', '\c5You can only vote %1 minutes after trial had started!', mCeil($Despair::CanForceVote / 60));
 			return;
 		}
 		for (%i = 0; %i < $defaultMiniGame.numMembers; %i++)
@@ -37,7 +43,7 @@ function serverCmdForceVote(%client)
 				continue;
 			if (%member == %client)
 			{
-				messageClient(%client, '', '\c6You already voted!');
+				messageClient(%client, '', '\c5You already voted!');
 				return;
 			}
 			%validVotes++;

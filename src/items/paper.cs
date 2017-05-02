@@ -269,6 +269,7 @@ function getGuestList(%i)
 		%div = 3;
 		%list = "<just:left><tab:0,250,460>";
 	}
+	%list = %list @ "<font:cambria:24>";
 	for (%i = 0; %i < %charCount; %i++)
 	{
 		%character = GameCharacters.getObject(%i);

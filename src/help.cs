@@ -76,6 +76,7 @@ function serverCmdHelp(%this, %cat)
 		case "7" or "commands":
 			%text[%count++] = "\c3[COMMANDS]";
 			%text[%count++] = " \c6/keepcharacter \c7- \c6Enable or disable character persistance (if you survive a round, you keep your character for the next)";
+			%text[%count++] = " \c6/forcevote \c7- \c6Skip the discussion phase and get straight to the voting (Trial)";
 			if (%this.isAdmin)
 			{
 				%text[%count++] = "\c3[ADMIN]";
