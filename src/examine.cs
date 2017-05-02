@@ -47,7 +47,7 @@ function GameConnection::examineObject(%client, %col)
 					%fresh = " long ago ";
 
 				%text = %text @ "\n\c6" @ "It appears they died\c3" @ %fresh @ "\c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
-				for(%i=0;%i<%col.attackCount;%i++)
+				for(%i=0;%i<=%col.attackCount;%i++)
 				{
 					%wounds[%col.attackType[%i]]++;
 				}
