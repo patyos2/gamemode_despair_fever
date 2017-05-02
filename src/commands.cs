@@ -64,7 +64,7 @@ function serverCmdSpectate(%this)
 	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
 	if(isObject(%this.player) && %this.spectating)
 	{
-		%this.camera.setMode("Corpse", %this.player);
+		%this.camera.setMode("Observer");
 		%this.setControlObject(%this.camera);
 		%this.camera.setControlObject(%this.camera);
 		%this.player.delete(); //Should be safe to do

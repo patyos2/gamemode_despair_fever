@@ -5,7 +5,7 @@ $Despair::CritThreshold = -150; //How much negative health can the player take b
 //MOTEL MAP PREFS:
 $mapCenter = "-87.7265 -20.5779 0.20202";
 $boundaries = 170;
-$Despair::RoomCount = 16;
+$Despair::RoomCount = 22;
 //male block
 $roomNum[1] = "16";
 $roomNum[2] = "17";
@@ -25,6 +25,14 @@ $roomNum[13] = "22";
 $roomNum[14] = "23";
 $roomNum[15] = "24";
 $roomNum[16] = "25";
+
+//extra rooms
+$roomNum[17] = "A";
+$roomNum[18] = "B";
+$roomNum[19] = "C";
+$roomNum[20] = "D";
+$roomNum[21] = "E";
+$roomNum[22] = "F";
 
 //Trial
 $Despair::DiscussPeriod = 300; //4 mins

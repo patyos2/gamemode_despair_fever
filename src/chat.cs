@@ -39,6 +39,12 @@ package DespairChat
 		if(DespairSpecialChat(%client, %text))
 			return;
 
+		if($Sim::Time - %client.lastChatTime < $chatDelay)
+		{
+			messageClient(%client, '', '\c5Slow down\c6!');
+			return;
+		}
+
 		if(!$despairTrial)
 		{
 			%time = getDayCycleTime();
@@ -94,6 +100,8 @@ package DespairChat
 			%text = getSubStr(%text, 1, strLen(%text));
 			%type = "whispers";
 			%range = 4;
+			if (%text $= "")
+				return;
 		}
 		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %player.findTool("RadioItem")) != -1)
 		{
@@ -153,7 +161,7 @@ package DespairChat
 		if(!%client.isAdmin && !%client.killer)
 			return;
 		%name = %client.getPlayerName();
-		if(%client.killer == $currentKiller && !%client.isAdmin)
+		if(%client.killer && !%client.isAdmin)
 		{
 			%killer = true;
 			%name = "Killer";

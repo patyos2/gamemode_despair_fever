@@ -106,6 +106,17 @@ function getPaperEvidence()
 		if(!%char.killer)
 			%inno[%innoCount++] = %char;
 	}
+	// prepare
+	for (%i = 0; %i < %count; %i++)
+		%a[%i] = %i;
+	// shuffle
+	while (%i--)
+	{
+		%j = getRandom(%i);
+		%x = %a[%i - 1];
+		%a[%i - 1] = %a[%j];
+		%a[%j] = %x;
+	}
 	%r = getRandom(1, 3);
 	switch (%r)
 	{

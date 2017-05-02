@@ -56,7 +56,15 @@ function createCourtroom()
 	$stand13 = createShape(DespairStand, "0 0 -300");
 	$stand14 = createShape(DespairStand, "0 0 -300");
 	$stand15 = createShape(DespairStand, "0 0 -300");
-
+	$stand16 = createShape(DespairStand, "0 0 -300");
+	$stand17 = createShape(DespairStand, "0 0 -300");
+	$stand18 = createShape(DespairStand, "0 0 -300");
+	$stand19 = createShape(DespairStand, "0 0 -300");
+	$stand20 = createShape(DespairStand, "0 0 -300");
+	$stand21 = createShape(DespairStand, "0 0 -300");
+	$stand22 = createShape(DespairStand, "0 0 -300");
+	$stand23 = createShape(DespairStand, "0 0 -300");
+	
 	$memorial0 = createShape(DespairMemorial,  "0 0 -300");
 	$memorial1 = createShape(DespairMemorial,  "0 0 -300");
 	$memorial2 = createShape(DespairMemorial,  "0 0 -300");
@@ -73,6 +81,14 @@ function createCourtroom()
 	$memorial13 = createShape(DespairMemorial, "0 0 -300");
 	$memorial14 = createShape(DespairMemorial, "0 0 -300");
 	$memorial15 = createShape(DespairMemorial, "0 0 -300");
+	$memorial16 = createShape(DespairMemorial, "0 0 -300");
+	$memorial17 = createShape(DespairMemorial, "0 0 -300");
+	$memorial18 = createShape(DespairMemorial, "0 0 -300");
+	$memorial19 = createShape(DespairMemorial, "0 0 -300");
+	$memorial20 = createShape(DespairMemorial, "0 0 -300");
+	$memorial21 = createShape(DespairMemorial, "0 0 -300");
+	$memorial22 = createShape(DespairMemorial, "0 0 -300");
+	$memorial23 = createShape(DespairMemorial, "0 0 -300");
 
 	$instantGroup = %oldInstantGroup;
 }
@@ -183,8 +199,8 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
-		ServerPlaySong("DespairMusicInvestigationIntro1");
-		$musicSchedule = schedule(15000, 0, ServerPlaySong, "MusicInvestigationIntro1");
+		ServerPlaySong("DespairMusicInvestigationStart");
+		$musicSchedule = schedule(15000, 0, ServerPlaySong, "DespairMusicInvestigationIntro1");
 	}
 }
 
@@ -306,6 +322,10 @@ function despairOnNight()
 	}
 	if($days > 0)
 		return;
+
+	ClearFlaggedCharacters(); //call this so joiners-leavers before night 1 are not counted for anything
+
+
 	// prepare
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		%a[%i] = %i;
@@ -379,7 +399,7 @@ function courtPlayers()
 		%a[%j] = %x;
 	}
 
-	for (%i = 0; %i < 16; %i++)
+	for (%i = 0; %i < 24; %i++)
 	{
 		$stand[%i].setTransform("0 0 -300");
 		$memorial[%i].setTransform("0 0 -300");

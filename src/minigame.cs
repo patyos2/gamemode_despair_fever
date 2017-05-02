@@ -9,35 +9,37 @@ function ClearFlaggedCharacters()
 	for(%i=0; %i < GameCharacters.getCount(); %i++)
 	{
 		%char = GameCharacters.getObject(%i);
-		if(%char.deleteMe || !isObject(%char.client) || %char.client.noPersistance)
+		if(%char.deleteMe || !isObject(%char.client))
 			%char.delete();
 	}
 }
 
 function createPlayer(%client)
 {
-	if($freeCount <= 0)
-	{
-		messageClient(%client, '', '\c5You didn\'t spawn because all rooms are occupied.');
-		return;
-	}
-
 	if(%client.spectating)
 	{
 		messageClient(%client, '', '\c5You didn\'t spawn because you are spectating.');
 		return;
 	}
 
-	$freeCount--;
-	%freeIndex = getRandom($freeCount);
-	%room = $freeRoom[%freeIndex];
-	for (%j = %freeIndex; %j < $freeCount; %j++)
-		$freeRoom[%j] = $freeRoom[%j + 1];
+	if(!$freeCount)
+	{
+		messageClient(%client, '', '\c5All rooms are occupied - you will have to live with someone else (or be a bum)');
+		%roomSpawn = BrickGroup_888888.NTObject["_bumSpawn", getRandom(0, BrickGroup_888888.NTObjectCount["_bumSpawn"] - 1)];
+	}
+	else
+	{
+		$freeCount--;
+		%freeIndex = getRandom($freeCount);
+		%room = $freeRoom[%freeIndex];
+		for (%j = %freeIndex; %j < $freeCount; %j++)
+			$freeRoom[%j] = $freeRoom[%j + 1];
 
-	$freeRoom[$freeCount] = "";
+		$freeRoom[$freeCount] = "";
 
-	%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
-	%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
+		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+	}
 	//Create character if none exists
 	%gender = getRandomGender();
 	if(!isObject(%character = %client.character) || %character.deleteMe || %character.client.noPersistance)
@@ -93,11 +95,14 @@ function createPlayer(%client)
 	%player.tool[%player.weaponSlot] = %data;
 	messageClient(%client, 'MsgItemPickup', '', %player.weaponSlot, %data, true);
 
-	%props = KeyItem.newItemProps(%player, 0);
-	%props.name = "Room #" @ $roomNum[%room] @ " Key";
-	%props.id = %roomDoor.lockId;
+	if(%room !$= "")
+	{
+		%props = KeyItem.newItemProps(%player, 0);
+		%props.name = "Room #" @ $roomNum[%room] @ " Key";
+		%props.id = %roomDoor.lockId;
 
-	%player.addTool(KeyItem, %props);
+		%player.addTool(KeyItem, %props);
+	}
 	return %player;
 }
 
@@ -117,9 +122,22 @@ function roomPlayers()
 
 	ClearFlaggedCharacters();
 
-	for (%i = 0; %i < $DefaultMiniGame.numMembers && $freeCount; %i++)
+	%count = $DefaultMiniGame.numMembers;
+	// prepare
+	for (%i = 0; %i < %count; %i++)
+		%a[%i] = %i;
+	// shuffle
+	while (%i--)
 	{
-		%client = $DefaultMiniGame.member[%i];
+		%j = getRandom(%i);
+		%x = %a[%i - 1];
+		%a[%i - 1] = %a[%j];
+		%a[%j] = %x;
+	}
+
+	for (%i = 0; %i < %count; %i++)
+	{
+		%client = %a[%i];
 
 		if (%client.player)
 			%client.player.delete();
@@ -131,6 +149,12 @@ function roomPlayers()
 			%client.playPath(IntroPath);
 			%client.schedule(6000, setControlObject, %player);
 			%client.camera.schedule(6000, setControlObject, %client.camera);
+		}
+		else
+		{
+			%client.camera.setMode("Observer");
+			%client.setControlObject(%client.camera);
+			%client.camera.setControlObject(%client.camera);
 		}
 	}
 }
@@ -227,6 +251,8 @@ function despairPrepareGame()
 	}
 
 	roomPlayers();
+
+	$chatDelay = 0.1;
 
 	$DespairTrial = "";
 	$announcements = 0;
