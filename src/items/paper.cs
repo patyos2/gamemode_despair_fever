@@ -122,22 +122,23 @@ function getPaperEvidence()
 	{
 		case 1:
 			%msg = "Investigation into robbery suspect reveals them to be";
+			%decals = "";
 			for (%i = 0; %i < %innoCount && getWordCount(%decals) < 3; %i++)
 			{
-				%char = %a[%i];
+				%char = GameCharacters.getObject(%a[%i]);
 				%decal = getField(%char.appearance, 2);
 				if(%decal $= "")
 					%decal = "blank";
 				if(strpos(%decals, %decal) == -1)
 				{
-					%decals = %decals @ (getWordCount(%decals) >= 1 ? " " : "") @ %decal;
+					%decals = setWord(%decals, getWordCount(%decals), %decal);
 				}
 			}
 			%killer = $pickedKiller.character;
 			%decal = getField(%killer.appearance, 2);
 			if(strpos(%decals, %decal) == -1)
 			{
-				%decals = setWord(%decals, getRandom(0, getWordCount(%decals)-1));
+				%decals = setWord(%decals, getRandom(1, getWordCount(%decals)) - 1, %decal);
 			}
 			for(%i = 0; %i < getWordCount(%decals); %i++)
 			{
@@ -169,7 +170,7 @@ function getPaperEvidence()
 					default:
 						%a = "a Plain Shirt";
 				}
-				%list = %list @ (%i == 1 ? "" : "	") @ %a;
+				%list = setField(%list, getFieldCount(%list), %a);
 			}
 			%list = naturalGrammarList(%list, "or");
 			%msg = %msg SPC %list;

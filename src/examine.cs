@@ -11,7 +11,7 @@ function GameConnection::examineObject(%client, %col)
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
 	{
 		%name = %col.character.name;
-		if(isObject(%hat = %col.tool[%col.hatSlot]) && %hat.disguise && isObject(%col.getMountedImage(2)) && %col.getMountedImage(2) == nameToID(%hat.image))
+		if(!$DespairTrial && isObject(%hat = %col.tool[%col.hatSlot]) && %hat.disguise && isObject(%col.getMountedImage(2)) && %col.getMountedImage(2) == nameToID(%hat.image))
 			%name = "Unknown";
 
 		%text = %text @ "This is \c3" @ %name;

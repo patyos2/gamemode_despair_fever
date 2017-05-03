@@ -36,5 +36,5 @@ $roomNum[22] = "F";
 
 //Trial
 $Despair::DiscussPeriod = 300; //5 mins
-$Despair::CanForceVote = 120; //2 mins have to pass before you can forcevote
+$Despair::CanForceVote = 60; //1 min has to pass before you can forcevote
 $Despair::MissingLength = 120; //2 mins until body announcement is made automatically

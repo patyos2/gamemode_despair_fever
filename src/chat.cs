@@ -55,7 +55,7 @@ package DespairChat
 		}
 		else
 		{
-			%time = getTimeString(mFloor($Sim::Time - $DespairTrialStartTime));
+			%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
 		}
 		%name = %client.getPlayerName();
 		if (!isObject(%player))

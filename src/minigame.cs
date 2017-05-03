@@ -143,6 +143,13 @@ function roomPlayers()
 			%client.player.delete();
 
 		%player = createPlayer(%client);
+		%ln = getWord(%player.character.name, 1);
+		if(%sibling[%ln] !$= "")
+		{
+			messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, %sibling[%ln].character.room);
+			messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, %player.character.room);
+		}
+		%sibling[%ln] = %player;
 
 		if(isObject(%player))
 		{

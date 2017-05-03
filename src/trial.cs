@@ -189,7 +189,7 @@ function despairMakeBodyAnnouncement(%unfound)
 		%profile = DespairMusicInvestigationIntro2;
 	if(!isObject(ServerMusic) || (ServerMusic.profile !$= %profile && ServerMusic.profile !$= %profile.loopProfile))
 	{
-		if(isObject(ServerMusic))
+		if(ServerMusic.profile $= DespairMusicInvestigationLoop1)
 		{
 			ServerPlaySong(%profile);
 		}
@@ -499,6 +499,7 @@ function courtPlayers()
 
 	$chatDelay = 0.5;
 
+	$forceVoteCount = 0;
 	$DespairTrialCurrSpeaker = "";
 	$DespairTrial = $Sim::Time;
 	$DespairTrialVote = false;
@@ -608,7 +609,7 @@ function DespairStartVote()
 
 	ServerPlaySong("DespairMusicVoteStart");
 	$DefaultMiniGame.chatMessageAll('', "\c5Look at the person you think is the killer within 30 seconds. The person with the most votes \c0will die.");
-	$DefaultMiniGame.eventSchedule = schedule(35000, 0, DespairEndVote);
+	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairEndVote);
 }
 
 function DespairEndVote()
@@ -621,14 +622,19 @@ function DespairEndVote()
 
 		if (%player.canCastVote)
 		{
-			%votes[%player.voteTarget]++;
+			%player.voteTarget.votes++;
 			%player.playThread(2, root);
 			cancel(%player.DespairUpdateCastVote);
 			%player.canCastVote = "";
 			%player.voteTarget = "";
 		}
 	}
+	$DefaultMiniGame.chatMessageAll('', "\c5Your votes have been cast.");
+	$DefaultMiniGame.eventSchedule = schedule(5000, 0, DespairEndTrial);
+}
 
+function DespairEndTrial()
+{
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -636,12 +642,12 @@ function DespairEndVote()
 		
 		if (%player.canReceiveVote)
 		{
-			if (%highestVotes !$= "" && %votes[%player] $= %highestVotes)
+			if (%highestVotes !$= "" && %player.votes $= %highestVotes)
 				%tie = 1;
-			else if (%highestVotes $= "" || %votes[%player] > %highestVotes)
+			else if (%highestVotes $= "" || %player.votes > %highestVotes)
 			{
 				%tie = 0;
-				%highestVotes = %votes[%player];
+				%highestVotes = %player.votes;
 				%unfortunate = %player;
 			}
 
@@ -663,7 +669,7 @@ function DespairEndVote()
 		}
 		else
 		{
-			$DefaultMiniGame.chatMessageAll('', "\c5Majority vote is not the killer. Killer wins.");
+			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
 		}
 	}
 	else

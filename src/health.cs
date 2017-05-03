@@ -21,15 +21,19 @@ function Player::critLoop(%this)
 	if(isObject(%this.client))
 		%this.client.play2d(HeartBeatSound);
 
-	%this.health -= 5;
-	if(%this.health <= $Despair::CritThreshold)
-	{
-		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
-		return;
-	}
 	%percent = (-%this.health) / $Despair::CritThreshold;
+	%delay = 1250 * (1 - (%percent * 0.7));
+
+	if($Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
+	{
+		%this.health -= 5;
+		if(%this.health <= $Despair::CritThreshold)
+		{
+			%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
+			return;
+		}
+	}
 	%this.setDamageFlash(%percent);
-	%delay = 1250 * (1 - (%percent * 0.5));
 	%this.critLoop = %this.schedule(getMax(500, %delay), "critLoop");
 }
 
