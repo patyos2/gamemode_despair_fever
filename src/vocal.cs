@@ -233,6 +233,9 @@ function serverCmdAlarm(%client)
 			}
 		}
 
+		if(%client.killer)
+			%scream = true; //killers can scream whenever the fuck they want
+
 		if (!%scream || $Sim::Time - %player.lastScream < %player.screamDelay)
 			return;
 

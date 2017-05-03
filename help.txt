@@ -1,0 +1,60 @@
+
+[GAMEMODE]
+ The first day is the day without the killer. However, as soon as night strikes, the culprit is picked.
+ Killer's objective is to murder someone and get away with it. They can only kill up to three people (two if investigation period has started).
+ Once the killer does their job, they have to blend in and try to seem least suspicious.
+ A body discovery announcement is initated when at least two people examine/scream at the body.
+ After a body has been discovered, investigation period starts.
+ During investigation, the crime scene is "frozen" - Nobody can modify the state of the scene and nobody will be able to use weapons.
+ After investigation period ends, the trial period starts.
+ In trial, everyone is teleported to the courtroom where you are given time to discuss everyone's alibis and possible suspects.
+ After trial period is over, it's time to vote the most suspicious person.
+ If majority vote is correct and everyone votes the killer, the killer dies and everyone else lives.
+ However, if the vote is a tie, people didn't vote or majority vote is wrong, the killer wins and everyone else is executed.
+ Trial period is the climax of the round - make sure to pay close attention and figure out the culprit!
+
+[CHAT]
+ Normal chat is local/IC (In-Character) chat. Put @ before your message to whisper (like so: "@whisper")
+ To use Killer-to-Admin chat as the killer, use TEAM CHAT (Default key: "Y")
+ Please follow the chat etiquette defined in the /rules.
+
+[KILLER]
+ You can become the killer at first night or by killing the killer.
+ Once you become the killer, you have to kill someone and get away with it. Killing people in public or having a killing spree is completely discouraged.
+ You can only kill so much. When you hit an arbitrary kill limit, your weapon will be disabled and you will be unable to kill.
+ You can clean up the blood with a mop. To wash blood off yourself, you can use sinks, showers, water pumps, buckets or anything of the like.
+ Sinks only clean your hands and head. Showers, buckets, water pumps clean you head to toe.
+ To clean your weapon, take it out when washing and use "Paint Key" to activate events.
+ You also have a number of cool abilities!
+ You can sprint with "JET" key (default: "RightClick")
+ You can hear nearby heartbeats with "LIGHT" key (default: "R")
+ And, since you will never get tired, you can fake /sleep and get up any time!
+ Being a killer is very hard. Make sure to plan, but don't take your time!
+
+[MECHANICS]
+ To unlock/lock the door with the key, press "FIRE" and "JET" keys (default: "LeftClick", "RightClick") respectively.
+ You can sleep with /sleep if you're sleepy, tired or exhausted. It's highly reccomeneded to go to sleep early, otherwise you will have to sleep way more often!
+ Dormitory rooms are the best place to sleep. They are your little safe havens. Make sure to lock the door!
+ Press "LIGHT" key (default: "R") when aiming at a door to knock, and when aiming at the corpse to loot it.
+ To navigate the inventory menu, scroll w/ mouse and click to take something out. To plant something on the corpse, drop an item when looking at it.
+ "Double-click" and hold to carry around a corpse.
+ You can Scream with "ALARM" key (default: "H"). However, you must be looking at something screwed up, like blood or a body.
+ Every morning, papers will spawn. These papers will range from trash, gameplay tips and news articles.
+ Daily News papers will contain IMPORTANT INFORMATION giving you a tip on the killer's identity! Be sure to seek them out!
+ There are NO NON-LETHAL WEAPONS in this gamemode. Everything will kill.
+
+[COMBAT]
+ You can find melee weapons all over the map.
+ EVERYTHING can BREAK DOWN DOORS, however, it takes a while to do so and it's incredibly loud, and effectiveness varies on the weapon.
+ If you fall in combat, you will enter Critical Health. In that state, your speaking range will be reduced and you will not able to scream as much.
+ You cannot be saved from that state. However, you can leave your last message with /write [msg]! Be sure to be aiming at a surface.
+ There are plans to expand the combat system, so stay tuned for updates!
+
+[RULES]
+ 1. Don't be a dick! We're all here to have fun. If you block doorways, lock people in your rooms or break room doors as a non-killer w/o a reason you will be banned.
+ 2. Do not gamethrow! This means don't play at expense of others, deliberately act extra suspicious or pretend to be the culprit.
+ 3. Follow chat etiquette! Don't reference people by their in-game names, don't spam chat and please don't abuse emoticons.
+ 4. Don't freekill! It's really obvious to admins when you freekill. We will figure if it's self-defence or not, but expect to be banned if you kill someone without a reason.
+ 5. Don't metagame! Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.
+ 6. Don't ERP (Erotic RolePlay)! It is obnoxious as fuck and serves no purpose other than to get some preteens' dick wet and annoy everyone else.
+     EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.

@@ -76,6 +76,16 @@ function Player::KnockOutTick(%this, %ticks, %done)
 	cancel(%this.wakeUpSchedule);
 	if (%this.getState() $= "Dead" || !%this.unconscious)
 		return;
+
+	if (isObject(%killer = %this.carryPlayer) && %killer.choking)
+	{
+		%choking = true;
+	}
+	else
+	{
+		%done += 1;
+	}
+
 	if (%done >= %ticks)
 	{
 		%this.WakeUp();
@@ -84,7 +94,25 @@ function Player::KnockOutTick(%this, %ticks, %done)
 	if (isObject(%this.client))
 	{
 		%this.client.centerPrint("\c6" @ %ticks - %done SPC "seconds left until you wake up.", 2);
-		if (getRandom() < 0.1)
+		if(%choking)
+		{
+			%high = -1;
+			%choice[%high++] = "can't breathe";
+			%choice[%high++] = "no air";
+			%choice[%high++] = "choking";
+			%choice[%high++] = "can't move";
+			%choice[%high++] = "help";
+			%choice[%high++] = "please";
+			%choice[%high++] = "gasp";
+			%choice[%high++] = "it hurts";
+			%choice[%high++] = "my neck";
+			%choice[%high++] = "no";
+			%choice[%high++] = "dying";
+
+			%dream = %choice[getRandom(%high)];
+			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
+		}
+		else if (getRandom() < 0.1)
 		{
 			%dream = getDreamText();
 			if (getRandom() < 0.15) //less chance for a random character name to appear
@@ -96,7 +124,7 @@ function Player::KnockOutTick(%this, %ticks, %done)
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
 		}
 	}
-	%this.wakeUpSchedule = %this.schedule(1000, KnockOutTick, %ticks, %done++);
+	%this.wakeUpSchedule = %this.schedule(1000, KnockOutTick, %ticks, %done);
 }
 
 function Player::WakeUp(%this)

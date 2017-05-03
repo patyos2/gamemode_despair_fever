@@ -36,6 +36,12 @@ datablock AudioProfile(BodyDropSound3)
 	preload = true;
 };
 
+datablock AudioProfile(BodyChokeSound)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/choking.wav";
+	description = AudioClosestLooping3d;
+	preload = true;
+};
 
 function Player::findCorpseRayCast(%obj)
 {
@@ -90,6 +96,11 @@ function Player::carryTick(%this)
 		%player.carryObject = 0;
 		%player.playThread(2, "root");
 		ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %this.getPosition());
+		if(%player.choking)
+		{
+			%this.stopAudio(0);
+			%player.choking = "";
+		}
 		return;
 	}
 
@@ -106,6 +117,11 @@ function Player::carryTick(%this)
 		%this.carryPlayer = 0;
 		%player.carryObject = 0;
 		ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %this.getPosition());
+		if(%player.choking)
+		{
+			%this.stopAudio(0);
+			%player.choking = "";
+		}
 		return;
 	}
 	if (%player.getMountedImage(0))
@@ -115,6 +131,11 @@ function Player::carryTick(%this)
 		%this.carryPlayer = 0;
 		%player.carryObject = 0;
 		ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %this.getPosition());
+		if(%player.choking)
+		{
+			%this.stopAudio(0);
+			%player.choking = "";
+		}
 		return;
 	}
 	%eyePoint = %player.getEyePoint();
@@ -124,12 +145,36 @@ function Player::carryTick(%this)
 	%center = %this.getPosition();
 	%target = vectorAdd(%eyePoint, vectorScale(%eyeVector, 3));
 
-	if (vectorDist(%center, %target) > 4)
+	%maxdist = 4;
+	if (vectorDist(%center, %target) > 4 || (%player.choking && vectorLen(%player.getVelocity()) > 4))
 	{
+		%this.lastTosser = %player;
+		%this.carryEnd = $Sim::Time;
 		%this.carryPlayer = 0;
 		%player.carryObject = 0;
 		%player.playThread(2, "root");
+		ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %this.getPosition());
+		if(%player.choking)
+		{
+			%this.stopAudio(0);
+			%player.choking = "";
+		}
 		return;
+	}
+
+	if(%player.choking && $Sim::Time - %player.choking > 6)
+	{
+		if(%this.isDead || $deathCount >= $maxDeaths)
+		{
+			%this.stopAudio(0);
+			%player.choking = "";
+		}
+		else
+		{
+			%this.health = $Despair::CritThreshold;
+			%this.damage(%player, %this.getPosition(), 5, "choking");
+			%this.pools = 1000;
+		}
 	}
 
 	%vel = vectorScale(vectorSub(%target, %center), 4);
@@ -146,54 +191,128 @@ package DespairCorpses
 {
 	function Armor::onTrigger(%this, %obj, %slot, %state)
 	{
-		if(%slot == 0 && !isObject(%obj.getMountedImage(0)))
+		if(!isObject(%obj.getMountedImage(0)))
 		{
 			%item = %obj.carryObject;
-			if (isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj)
+			if(%slot == 0)
 			{
-				%time = $Sim::Time - %item.carryStart;
-				cancel(%item.carrySchedule);
-				%item.lastTosser = %obj;
-				%item.carryEnd = $Sim::Time;
-				%item.carryPlayer = 0;
-				ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %item.getPosition());
-				%obj.carryObject = 0;
-				%obj.playThread(2, "root");
-			}
-			if(%state && isObject(%col = %obj.findCorpseRayCast()))
-			{
-				if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || !%col.isDead))
+				if (isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj)
 				{
-					if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
-						%col.carryPlayer.playThread(2, "root");
-					%obj.carryObject = %col;
-					%col.carryPlayer.carryObject = 0;
-					%col.carryPlayer = %obj;
-					%col.carryStart = $Sim::Time;
-					%col.carryTick();
-					ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %col.getPosition());
-					if (%col.bloody["chest_front"] || %col.bloody["chest_back"])
+					%time = $Sim::Time - %item.carryStart;
+					cancel(%item.carrySchedule);
+					%item.lastTosser = %obj;
+					%item.carryEnd = $Sim::Time;
+					%item.carryPlayer = 0;
+					ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %item.getPosition());
+					if(%obj.choking)
 					{
-						%obj.bloody["rhand"] = true;
-						%obj.bloody["lhand"] = true;
-						%player.bloodyWriting = 2;
+						%item.stopAudio(0);
+						%obj.choking = "";
 					}
-					if (isObject(%obj.character))
+					%obj.carryObject = 0;
+					%obj.playThread(2, "root");
+				}
+				if(%state && isObject(%col = %obj.findCorpseRayCast()))
+				{
+					if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || !%col.isDead))
 					{
-						%obj.applyAppearance(%obj.character);
+						if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
+						{
+							%col.carryPlayer.playThread(2, "root");
+							if(%col.caryPlayer.choking)
+							{
+								%col.stopAudio(0);
+								%col.caryPlayer.choking = "";
+							}
+						}
+						%obj.carryObject = %col;
+						%col.carryPlayer.carryObject = 0;
+						%col.carryPlayer = %obj;
+						%col.carryStart = $Sim::Time;
+						%col.carryTick();
+						ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %col.getPosition());
+						if (%col.bloody["chest_front"] || %col.bloody["chest_back"])
+						{
+							%obj.bloody["rhand"] = true;
+							%obj.bloody["lhand"] = true;
+							%player.bloodyWriting = 2;
+						}
+						if (isObject(%obj.character))
+						{
+							%obj.applyAppearance(%obj.character);
+						}
+						%obj.playThread(2, "armReadyBoth");
 					}
-					%obj.playThread(2, "armReadyBoth");
+					else
+					{
+						if(isObject(%obj.client))
+							%obj.client.examineObject(%col);
+						%obj.lastBodyClick = $sim::time;
+					}
+					return; //so we don't call anything else
+				}
+			}
+			else if (%slot == 4 && %obj.client.killer && isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj && %item.unconscious)
+			{
+				if(%state && !%item.isDead && $deathCount < $maxDeaths)
+				{
+					%item.playAudio(0, BodyChokeSound);
+					%obj.choking = $Sim::Time;
 				}
 				else
 				{
-					if(isObject(%obj.client))
-						%obj.client.examineObject(%col);
-					%obj.lastBodyClick = $sim::time;
+					%item.stopAudio(0);
+					%obj.choking = "";
 				}
-				return; //so we don't call anything else
 			}
 		}
 		Parent::onTrigger(%this, %obj, %slot, %state);
+	}
+
+	function serverCmdDropTool(%client, %index)
+	{
+		if(!isObject(%obj = %client.player))
+			return;
+		%item = %obj.tool[%index];
+		if(isObject(%target = %obj.findCorpseRayCast()))
+		{
+			%item = %obj.tool[%obj.currTool];
+			if(!isObject(%item))
+				return;
+			%itemName = %item.getName();
+			%props = %obj.itemProps[%obj.currTool];
+			%slot = -1;
+			if(%item.className $= "DespairWeapon")
+			{
+				if(%target.tool[%target.weaponSlot] == nameToID(noWeaponIcon))
+					%slot = %target.setTool(%target.weaponSlot, %item, %props, 1, 2);
+			}
+			else if(%item.className $= "Hat")
+			{
+				if(%item.onPickup("", %target))
+					%slot = %target.hatSlot;
+			}
+			else if(%target.addTool(%item, %props, 1, 2) != -1 && !%item.isIcon)
+			{
+				%obj.removeTool(%obj.currTool, 1, 2);
+				%obj.itemProps[%obj.currTool] = "";
+				%slot = %obj.currTool;
+			}
+			if(isFunction(%itemName, "onDrop"))
+				%item.onDrop(%obj, %slot);
+			if(%slot != -1)
+			{
+				%obj.playThread(2, "activate2");
+				%target.playThread(2, "plant");
+				ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %target.getPosition());
+				if(isObject(%target.client))
+					messageClient(%target.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
+				if(isObject(%obj.client))
+					messageClient(%obj.client, 'MsgItemPickup', '', %slot, %obj.tool[%slot], 0);
+			}
+			return;
+		}
+		parent::serverCmdDropTool(%client, %index);
 	}
 };
 activatePackage(DespairCorpses);

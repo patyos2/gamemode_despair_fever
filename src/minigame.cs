@@ -262,6 +262,7 @@ function despairPrepareGame()
 	$currentKiller = "";
 	$days = 0;
 	$deathCount = 0;
+	$maxDeaths = mCeil(GameCharacters.getCount() / 4); //24 chars = 6 deaths, 16 chars = 4 deaths, 8 chars = 2 deaths
 	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
 		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
@@ -275,7 +276,8 @@ function despairPrepareGame()
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
 	DespairSetWeapons(1);
-	ServerPlaySong("DespairMusicGameStart");
+	serverStopSong();
+	serverPlay2d("DespairMusicGameStart");
 }
 
 function DespairSetWeapons(%tog)
@@ -479,6 +481,8 @@ package DespairFever
 			return Parent::checkLastManStanding($DefaultMiniGame);
 		if (isEventPending($DefaultMiniGame.restartSchedule))
 			return;
+		$maxDeaths = mCeil(GameCharacters.getCount() / 4); //24 chars = 6 deaths, 16 chars = 4 deaths, 8 chars = 2 deaths
+
 		%alive = 0;
 		%killerAlive = 0;
 		%otherAlive = 0;

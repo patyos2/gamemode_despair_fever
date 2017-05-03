@@ -147,6 +147,22 @@ datablock AudioProfile(DespairMusicInvestigationLoop1)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicInvestigationIntro2)
+{
+	fileName = $Despair::Path @ "res/music/investigationintro2.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 31025;
+	loopProfile = DespairMusicInvestigationLoop2;
+};
+
+datablock AudioProfile(DespairMusicInvestigationLoop2)
+{
+	fileName = $Despair::Path @ "res/music/investigationloop2.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
 function ServerStopSong()
 {
 	if(isObject(ServerMusic))

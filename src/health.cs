@@ -10,8 +10,7 @@ function Player::critLoop(%this)
 	if(%this.getState() $= "Dead")
 		return;
 
-	%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
-	if($deathCount >= %maxDeaths)
+	if($deathCount >= $maxDeaths)
 	{
 		cancel(%this.critLoop);
 		%this.health = %this.maxhealth;

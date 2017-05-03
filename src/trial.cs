@@ -146,8 +146,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
 					%attacker.player.removeStatusEffect($SE_sleepSlot);
 		}
-		%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
-		if ($deathCount >= %maxDeaths)
+		if ($deathCount >= $maxDeaths)
 			DespairSetWeapons(0);
 		//if(!isEventPending($DefaultMiniGame.missingSchedule))
 		//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
@@ -184,6 +183,22 @@ function despairMakeBodyAnnouncement(%unfound)
 	%time = getDayCycleTimeString(%time, 1);
 	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
+
+	%profile = DespairMusicInvestigationIntro1;
+	if($deathCount > 2)
+		%profile = DespairMusicInvestigationIntro2;
+	if(!isObject(ServerMusic) || (ServerMusic.profile !$= %profile && ServerMusic.profile !$= %profile.loopProfile))
+	{
+		if(isObject(ServerMusic))
+		{
+			ServerPlaySong(%profile);
+		}
+		else
+		{
+			cancel($musicSchedule);
+			$musicSchedule = schedule(15000, 0, ServerPlaySong, %profile);
+		}
+	}
 }
 
 function despairStartInvestigation(%no_announce)
@@ -199,8 +214,7 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
-		ServerPlaySong("DespairMusicInvestigationStart");
-		$musicSchedule = schedule(15000, 0, ServerPlaySong, "DespairMusicInvestigationIntro1");
+		serverPlay2d("DespairMusicInvestigationStart");
 	}
 }
 
