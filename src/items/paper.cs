@@ -154,11 +154,11 @@ function getPaperEvidence()
 					case "Meme-Mongler":
 						%a = "a dinosaur enthusiast";
 					case "Medieval-YARLY":
-						%a = "a fan of White Owls";
+						%a = "a fan of Night Owls";
 					case "Medieval-Rider":
 						%a = "a Riders fan";
 					case "Medieval-ORLY":
-						%a = "a fan of Night Owls";
+						%a = "a fan of White Owls";
 					case "Medieval-Lion":
 						%a = "a Lions fan";
 					case "Medieval-Eagle":

@@ -163,6 +163,19 @@ datablock AudioProfile(DespairMusicInvestigationLoop2)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicKillerWin)
+{
+	fileName = $Despair::Path @ "res/music/killerWinsShort.ogg";
+	description = audio2D;
+	preload = true;
+};
+datablock AudioProfile(DespairMusicInnocentsWin)
+{
+	fileName = $Despair::Path @ "res/music/innocentsWin.ogg";
+	description = audio2D;
+	preload = true;
+};
+
 function ServerStopSong()
 {
 	if(isObject(ServerMusic))

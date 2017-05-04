@@ -67,11 +67,11 @@ function Player::setStatusEffect(%player, %slot, %effect)
 		case "bleeding":
 			//start bleeding schedule
 		case "shock":
-			//slowdown
+			//slowdown and inability to speak
 
 		//damage modelling
 		case "wounded arm":
-			//
+			//random chance to drop shit
 		case "wounded leg":
 			//
 		case "concussion":

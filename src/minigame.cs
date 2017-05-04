@@ -230,7 +230,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RepairkitItem LockpickItem PenItem FlashlightItem RepairkitItem LockpickItem PenItem FlashlightItem RadioItem RadioItem RadioItem";
+	%choices = "RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];

@@ -8,6 +8,8 @@ function chooseNextClient(%queueName)
 		%queue = removeWord(%queue, %index);
 		if(!isObject(%pick) || !isObject(%pl = %pick.player) || %pick.miniGame != $defaultMiniGame || %pl.noWeapons || %cl.afk)
 			%pick = "";
+		else
+			break;
 		if(getWordCount(%queue) <= 0)
 		{
 			%j = -1;

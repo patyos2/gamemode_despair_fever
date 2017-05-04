@@ -66,6 +66,8 @@ ADDON Weapon_Gun
 ADDON Event_doPlayerTeleport
 ADDON Event_Camera_Control
 
+ADDON Event_Zones
+
 ADDON Brick_DemiansBP_1x
 ADDON Brick_DemiansBP_1x_half
 ADDON Brick_DemiansBP_2x_half
@@ -96,6 +98,11 @@ ADDON Brick_SmallBricks
 
 ADDON Brick_Wedge
 ADDON Brick_WedgePlus
+
+ADDON Brick_Zones
+
+ADDON Particle_FoggyBuild
+ADDON Particle_WeatherBuild
 
 ADDON Print_2x2f_RestroomSigns
 

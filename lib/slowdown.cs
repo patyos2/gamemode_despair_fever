@@ -10,3 +10,10 @@ function Player::setSpeedScale(%obj, %scale)
 	%obj.setMaxCrouchBackwardSpeed(%db.maxBackwardCrouchSpeed * %scale);
 	%obj.setMaxCrouchSideSpeed(%db.maxSideCrouchSpeed * %scale);
 }
+
+function Player::updateSpeedScale(%obj)
+{
+	if(%obj.speedScale $= "")
+		%obj.speedScale = 1;
+	%obj.setSpeedScale(%obj.speedScale);
+}

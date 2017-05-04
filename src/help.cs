@@ -36,6 +36,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c6To clean your weapon, take it out when washing and use \c3\"Paint Key\"\c6 to activate events.";
 			%text[%count++] = " \c6You also have a number of cool abilities!";
 			%text[%count++] = " \c6You can sprint with \c3\"JET\" \c6key (default\c3: \"RightClick\"\c6)";
+			%text[%count++] = " \c6When holding a sleeping person, you can hold \c3\"JET\" \c6key to choke them out! This is a bloodless and silent way to kill someone.";
 			%text[%count++] = " \c6You can hear nearby heartbeats with \c3\"LIGHT\" \c6key (default\c3: \"R\"\c6)";
 			%text[%count++] = " \c6And, since you will \c3never get tired\c6, you can fake \c3/sleep\c6 and get up any time!";
 			%text[%count++] = " \c6Being a killer is very hard. Make sure to plan, but don't take your time!";

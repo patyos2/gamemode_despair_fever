@@ -28,8 +28,6 @@ package DespairChat
 
 		if (%client.miniGame != $DefaultMiniGame && %client.hasSpawnedOnce)
 			return Parent::serverCmdMessageSent(%client, %text);
-		if (isEventPending($DefaultMiniGame.restartSchedule))
-			return Parent::serverCmdMessageSent(%client, %text);
 
 		%text = getSubStr(trim(stripMLControlChars(%text)), 0, $Pref::Server::MaxChatLen);
 
@@ -65,7 +63,7 @@ package DespairChat
 			{
 				%member = ClientGroup.getObject(%i);
 
-				if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
+				if (!isObject(%member.player) || isEventPending($DefaultMiniGame.restartSchedule) || %member.miniGame != $DefaultMiniGame)
 				{
 					messageClient(%member, '', '\c7[%1]<color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
 				}

@@ -44,21 +44,18 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 function PlayerDespairArmor::onAdd(%data, %player)
 {
 	parent::onAdd(%data, %player);
-	if(%player.health $= "")
-	{
-		%player.maxhealth = 100;
-		%player.health = 100;
-	}
-	if(%player.swingSpeedMod $= "")
-	{
-		%player.swingSpeedMod = 1;
-	}
+	%player.maxhealth = 100;
+	%player.health = 100;
+	%player.swingSpeedMod = 1;
+	%player.speedScale = 1;
 }
 
 datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 {
 	shapeFile = "base/data/shapes/player/m_df.dts";
 	uiName = "Corpse Player";
+
+	firstPersonOnly = true;
 
 	cameraMaxDist = 2;
 	cameraVerticalOffset = 1.25;
@@ -72,11 +69,11 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxTools = 5;
 
 	maxForwardSpeed = 0;
-	maxBackwardSpeed = 0;
+	maxBackwardSpeed = 1;
 	maxSideSpeed = 0;
 
 	maxForwardCrouchSpeed = 0;
-	maxBackwardCrouchSpeed = 1;
+	maxBackwardCrouchSpeed = 2;
 	maxSideCrouchSpeed = 0;
 
 	jumpForce = 0;
@@ -153,7 +150,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 		{
 			%range = 6;
 			if($DespairTrial)
-				%range = 16;
+				%range = 48;
 
 			%a = %obj.getEyePoint();
 			%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), %range));
@@ -488,9 +485,17 @@ package DespairPlayerPackage
 			return;
 		parent::serverCmdSit(%client);
 	}
-	function serverCmdUseTool(%client, %num)
+	function serverCmdUseTool(%client, %slot)
 	{
-		parent::serverCmdUseTool(%client, %num);		
+		if(isObject(%pl = %client.player) && %pl.unconscious)
+			return;
+		parent::serverCmdUseTool(%client, %slot);
+	}
+	function serverCmdUnUseTool(%client, %slot)
+	{
+		if(isObject(%pl = %client.player) && %pl.unconscious)
+			return;
+		parent::serverCmdUnUseTool(%client, %slot);
 	}
 };
 activatePackage(DespairPlayerPackage);

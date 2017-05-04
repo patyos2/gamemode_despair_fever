@@ -157,9 +157,9 @@ function updateAdminCount()
 	{
 		%client = ClientGroup.getObject(%a);
 		if(%client.isAdmin)
-			%admins++;			
+			%admins++;
 	}
-	if(%admins == 0)
+	if(!%admins)
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "") SPC "[No Admins]";
 		$Pref::Server::Password = "a";	
@@ -214,8 +214,9 @@ package DespairAdmins
 {
 	function GameConnection::onClientLeaveGame(%this)
 	{
+		if(%this.isAdmin)
+			$adminCountSchedule = schedule(2000, 0, "updateAdminCount");
 		Parent::onClientLeaveGame(%this);
-		$adminCountSchedule = schedule(2000, 0, "updateAdminCount");
 	}
 
 	function GameConnection::autoAdminCheck(%this)

@@ -685,8 +685,11 @@ function DespairEndTrial()
 			%player = %client.player;
 			if(!%client.killer)
 				%player.kill();
-		}		
+		}
+		serverPlay2d("DespairMusicKillerWin");
 	}
+	else
+		serverPlay2d("DespairMusicInnocentsWin");
 
 	despairEndGame();
 }

@@ -1,3 +1,10 @@
+datablock audioProfile(WriteSound)
+{
+	fileName =  $Despair::Path @ "res/sounds/write.wav";
+	description = AudioClosest3d;
+	preload = true;
+};
+
 datablock StaticShapeData(writingDecal)
 {
 	shapeFile = $Despair::Path @ "res/shapes/writing.dts";
@@ -60,7 +67,6 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		%pen = true;
 		%prob = getMax(0, 1 - ((%props.ink*2)/%props.maxink));
 		%text = muffleText(%text, %prob);
-		%props.ink--;
 	}
 	else if(%player.bloodyWriting > 0)
 	{
@@ -82,7 +88,11 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		if(%props.name $= "Daily News")
 			messageClient(%client, '', "\c5You are unable to write on this paper!");
 		else
+		{
 			%props.contents = %props.contents @ %color @ %text;
+			if(%pen)
+				serverPlay3d("WriteSound", %player.getHackPosition());
+		}
 		PaperImage.onMount(%player, 0);
 		return;
 	}
@@ -127,7 +137,10 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			if(%blood)
 				%decal.isBlood = true;
 			if(%pen)
+			{
 				%props.ink--; //More ink consumed
+				serverPlay3d("WriteSound", %player.getHackPosition());
+			}
 		}
 	}
 }

@@ -49,6 +49,7 @@ exec("./src/write.cs");
 exec("./src/inventory.cs"); //Package activation order matters!
 exec("./src/events.cs"); //exec events last 'cuz it takes some variables from statuseffects.cs
 //items
+exec("./src/items/cleanspray.cs");
 exec("./src/items/coat.cs");
 exec("./src/items/flashlight.cs");
 exec("./src/items/key.cs");
