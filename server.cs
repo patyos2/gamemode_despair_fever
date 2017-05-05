@@ -22,6 +22,7 @@ exec("./lib/noObservers.cs");
 exec("./lib/pathCamera.cs");
 exec("./lib/slowdown.cs");
 //src
+exec("./src/sounds.cs"); //Important to be first - contains audio descriptions
 exec("./src/blood.cs");
 exec("./src/character.cs");
 exec("./src/chat.cs");
@@ -41,7 +42,6 @@ exec("./src/player.cs");
 exec("./src/queuechooser.cs");
 exec("./src/sleep.cs");
 exec("./src/statuseffects.cs");
-exec("./src/sounds.cs");
 exec("./src/trial.cs");
 exec("./src/vocal.cs");
 exec("./src/weapons.cs");

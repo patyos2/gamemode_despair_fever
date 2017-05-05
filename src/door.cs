@@ -1,6 +1,6 @@
 datablock AudioProfile(DoorJiggleSound) {
 	fileName = $Despair::Path @ "res/sounds/door_jiggle.wav";
-	description = audioClose3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 
@@ -12,13 +12,13 @@ datablock AudioProfile(DoorKnockSound) {
 
 datablock AudioProfile(DoorLockSound) {
 	fileName = $Despair::Path @ "res/sounds/Lock.wav";
-	description = audioClose3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 
 datablock AudioProfile(DoorUnlockSound) {
 	fileName = $Despair::Path @ "res/sounds/Unlock.wav";
-	description = audioClose3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 

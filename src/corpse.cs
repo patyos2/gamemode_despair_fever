@@ -1,45 +1,45 @@
 datablock AudioProfile(BodyPickUpSound1)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodypickup1.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(BodyPickUpSound2)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodypickup2.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(BodyPickUpSound3)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodypickup3.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 
 datablock AudioProfile(BodyDropSound1)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodyDrop1.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(BodyDropSound2)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodyDrop2.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(BodyDropSound3)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/bodyDrop3.wav";
-	description = audioClosest3D;
+	description = AudioQuiet3d;
 	preload = true;
 };
 
 datablock AudioProfile(BodyChokeSound)
 {
 	fileName = $Despair::Path @ "res/sounds/gore/choking.wav";
-	description = AudioClosestLooping3d;
+	description = AudioQuietLooping3d;
 	preload = true;
 };
 

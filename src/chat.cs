@@ -1,10 +1,23 @@
 datablock AudioProfile(DespairChatSound)
 {
-    fileName = $Despair::Path @ "res/sounds/chat.wav";
-    description = AudioClosest3d;
-    preload = true;
+	fileName = $Despair::Path @ "res/sounds/chat.wav";
+	description = AudioClosest3d;
+	preload = true;
 };
 
+datablock AudioProfile(DespairAdminChatSound)
+{
+	fileName = $Despair::Path @ "res/sounds/adminchat.wav";
+	description = Audio2d;
+	preload = true;
+};
+
+datablock AudioProfile(DespairAdminBwoinkSound)
+{
+	fileName = $Despair::Path @ "res/sounds/bwoink.wav";
+	description = Audio2d;
+	preload = true;
+};
 
 datablock ItemData(DespairEmptyFloatItem)
 {
@@ -184,10 +197,14 @@ package DespairChat
 				}
 				else
 					messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
+				%member.play2d(DespairAdminChatSound);
 			}
 		}
 		if(%killer && isObject($currentKiller))
+		{
 			messageClient($currentKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
+			$currentKiller.play2d(DespairAdminChatSound);
+		}
 	}
 };
 

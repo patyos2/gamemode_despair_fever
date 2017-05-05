@@ -3,13 +3,13 @@
 datablock audioProfile(SpraySound)
 {
 	fileName =  $Despair::Path @ "res/sounds/spray.wav";
-	description = AudioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock audioProfile(SprayEmptySound)
 {
 	fileName =  $Despair::Path @ "res/sounds/sprayEmpty.wav";
-	description = AudioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 

@@ -1,7 +1,7 @@
 datablock audioProfile(WriteSound)
 {
 	fileName =  $Despair::Path @ "res/sounds/write.wav";
-	description = AudioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 

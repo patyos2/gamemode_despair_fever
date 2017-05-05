@@ -1,4 +1,17 @@
 //Contains some 3d sound effects, rest of the sounds can be found in their respective script files
+//Some descriptions
+datablock AudioDescription(AudioQuiet3d : AudioClose3d)
+{
+	maxDistance = 15;
+	referenceDistance = 3;
+};
+
+datablock AudioDescription(AudioQuietLooping3d : AudioClose3d)
+{
+	maxDistance = 15;
+	referenceDistance = 3;
+	isLooping = 1;
+};
 
 //Motel sounds
 datablock AudioProfile(TrashOpenSound)
@@ -18,43 +31,43 @@ datablock AudioProfile(TrashCloseSound)
 datablock AudioProfile(CarHonkSound1)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/CarHonk1.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 datablock AudioProfile(CarHonkSound2)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/CarHonk2.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 datablock AudioProfile(CarHonkSound3)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/CarHonk3.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 
 datablock AudioProfile(TruckHonkSound1)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/TruckHonk1.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 datablock AudioProfile(TruckHonkSound2)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/TruckHonk2.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 datablock AudioProfile(TruckHonkSound3)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/TruckHonk3.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };
 datablock AudioProfile(BigTruckHonkSound)
 {
 	fileName = $Despair::Path @ "res/sounds/environment/rllybigtruckhonk.wav";
-	description = audioClose3D;
+	description = AudioDefault3d;
 	preload = true;
 };

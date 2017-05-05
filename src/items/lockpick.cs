@@ -1,19 +1,19 @@
 datablock AudioProfile(DoorPickSound1)
 {
 	fileName = $Despair::Path @ "res/sounds/picklock-01.wav";
-	description = audioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(DoorPickSound2)
 {
 	fileName = $Despair::Path @ "res/sounds/picklock-02.wav";
-	description = audioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 datablock AudioProfile(DoorPickSound3)
 {
 	fileName = $Despair::Path @ "res/sounds/picklock-03.wav";
-	description = audioClosest3d;
+	description = AudioQuiet3d;
 	preload = true;
 };
 

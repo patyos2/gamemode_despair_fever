@@ -119,6 +119,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			if (%other.isAdmin)
 			{
 				messageClient(%other, '', %msg);
+				%other.play2d(DespairAdminBwoinkSound);
 			}
 		}
 		return 0;
@@ -277,8 +278,11 @@ function despairOnMorning()
 			%trashPapers--;
 			continue;
 		}
-		return;
+		break;
 	}
+
+	if($days >= 2)
+		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! More evidence has spawned all over the map. Get searching!");
 }
 
 function despairOnNoon()
@@ -312,6 +316,9 @@ function despairOnLateEvening()
 				%player.setStatusEffect($SE_sleepSlot, "sleepy");
 		}
 	}
+
+	if($days >= 2)
+		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is going to be your last night! After this, trial period starts. Have you gathered enough evidence?");	
 }
 
 function despairOnNight()
