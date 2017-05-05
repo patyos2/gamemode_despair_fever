@@ -141,7 +141,8 @@ package DespairHealth
 					%player.playThread(0, "sit");
 					%player.noWeapons = true;
 					%player.critLoop();
-					messageClient(%client, '', "\c5You can use the last of your strength to /write your final message! Be sure to look at a surface.");
+					messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
+					commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);
 				}
 			}
 			else

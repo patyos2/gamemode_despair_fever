@@ -131,10 +131,8 @@ function despairOnKill(%victim, %attacker, %crit)
 		if(!isObject(%player))
 			%player = %victim.character.player;
 		if(!%crit)
-		{
 			$deathCount++;
-			%player.isMurdered = true;
-		}
+		%player.isMurdered = true;
 		if(%victim.killer && !%attacker.killer)
 		{
 			%attacker.killer = true;
@@ -281,8 +279,8 @@ function despairOnMorning()
 		break;
 	}
 
-	if($days >= 2)
-		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! More evidence has spawned all over the map. Get searching!");
+	if($days == 2)
+		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! Have you found any evidence?");
 }
 
 function despairOnNoon()
@@ -317,7 +315,7 @@ function despairOnLateEvening()
 		}
 	}
 
-	if($days >= 2)
+	if($days == 2)
 		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is going to be your last night! After this, trial period starts. Have you gathered enough evidence?");	
 }
 

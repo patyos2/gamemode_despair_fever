@@ -46,7 +46,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.freshness = 1;
 			%decal.contents = "\c0" @ %text;
 			%decal.isBlood = true;
-			%player.health = -150;
+			%player.health = $Despair::CritThreshold;
 			%player.critLoop();
 		}
 		else
