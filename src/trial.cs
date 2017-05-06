@@ -279,8 +279,32 @@ function despairOnMorning()
 		break;
 	}
 
+	if($days == 1 && $deathCount <= 0)
+	{
+		%brick = BrickGroup_888888.NTObject["_r" @ $currentKiller.character.room @ "_closet", 0];
+		if(isObject(%brick))
+		{
+			%brick.setItem("KillerBoxItem");
+			messageClient($currentKiller, '', '<font:Impact:24>\c5Your closet now contains a box of useful items.');
+		}
+		//else if($currentKiller.player.addTool("KillerBoxItem") == -1)
+		//	messageClient($currentKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
+	}
+
 	if($days == 2)
+	{
 		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! Have you found any evidence?");
+		if($deathCount <= 0)
+			messageClient($currentKiller, '', "<font:impact:30>WARNING\c6: This is your last chance to kill. If you don't commit murder you will be \c0AUTOBANNED\c6.");
+	}
+
+	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
+	{
+		if($deathCount <= 0)
+			banBLID($pickedKiller.bl_id, 300, "Stalling for 3 days straight as the killer.");
+		else
+			courtPlayers();
+	}
 }
 
 function despairOnNoon()
@@ -310,6 +334,7 @@ function despairOnLateEvening()
 		%player = %client.player;
 		if(isObject(%player))
 		{
+			%player.updateStatusEffect($SE_sleepSlot);
 			if(!%client.killer && %player.statusEffect[$SE_sleepSlot] $= "")
 				%player.setStatusEffect($SE_sleepSlot, "sleepy");
 		}
@@ -337,7 +362,7 @@ function despairOnNight()
 		if(%client.player.unconscious)
 			%client.player.WakeUp();
 		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
-				%client.player.removeStatusEffect($SE_sleepSlot);
+			%client.player.removeStatusEffect($SE_sleepSlot);
 	}
 	if($days > 0)
 		return;

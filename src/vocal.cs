@@ -13,7 +13,7 @@ datablock AudioProfile(VoicePain3Male) {
 	description = audioClose3D;
 	preload = true;
 };
-$painCount["male"] = 3;
+$painSoundCount["male"] = 3;
 
 datablock AudioProfile(VoiceDeath1Male) {
 	fileName = $Despair::Path @ "res/sounds/voice/male_Die-01.wav";
@@ -35,7 +35,7 @@ datablock AudioProfile(VoiceDeath4Male) {
 	description = audioClose3D;
 	preload = true;
 };
-$deathCount["male"] = 4;
+$deathSoundCount["male"] = 4;
 
 datablock AudioProfile(VoiceShock1Male) {
 	fileName = $Despair::Path @ "res/sounds/voice/male_shock-01.wav";
@@ -62,7 +62,7 @@ datablock AudioProfile(VoiceShock5Male) {
 	description = AudioDefault3d;
 	preload = true;
 };
-$shockCount["male"] = 5;
+$shockSoundCount["male"] = 5;
 
 
 datablock AudioProfile(VoicePain1Female) {
@@ -80,7 +80,7 @@ datablock AudioProfile(VoicePain3Female) {
 	description = audioClose3D;
 	preload = true;
 };
-$painCount["female"] = 3;
+$painSoundCount["female"] = 3;
 
 datablock AudioProfile(VoiceDeath1Female) {
 	fileName = $Despair::Path @ "res/sounds/voice/Female_Pain-04.wav";
@@ -97,7 +97,7 @@ datablock AudioProfile(VoiceDeath3Female) {
 	description = audioClose3D;
 	preload = true;
 };
-$deathCount["female"] = 3;
+$deathSoundCount["female"] = 3;
 
 datablock AudioProfile(VoiceShock1Female) {
 	fileName = $Despair::Path @ "res/sounds/voice/Female_shock-01.wav";
@@ -114,7 +114,7 @@ datablock AudioProfile(VoiceShock3Female) {
 	description = AudioDefault3d;
 	preload = true;
 };
-$shockCount["female"] = 3;
+$shockSoundCount["female"] = 3;
 
 datablock AudioProfile(VoiceCheese1Female) {
 	fileName = $Despair::Path @ "res/sounds/voice/Female_Death-01.wav";
@@ -197,7 +197,7 @@ function Player::playShock(%player)
 		%gender = %player.character.gender;
 	if(%gender $= "")
 		%gender = "male";
-	%player.playAudio(0, VoiceShock @ getRandom(1,$shockCount[%gender]) @ %gender);
+	%player.playAudio(0, VoiceShock @ getRandom(1,$shockSoundCount[%gender]) @ %gender);
 }
 
 function serverCmdAlarm(%client)
@@ -275,7 +275,7 @@ package DespairVoice
 		if(%gender $= "")
 			%gender = "male";
 		%player.stopAudio(0);
-		%player.playAudio(0, VoicePain @ getRandom(1,$painCount[%gender]) @ %gender);
+		%player.playAudio(0, VoicePain @ getRandom(1,$painSoundCount[%gender]) @ %gender);
 	}
 	function Player::playDeathCry(%player)
 	{
@@ -284,7 +284,7 @@ package DespairVoice
 		if(%gender $= "")
 			%gender = "male";
 		%player.stopAudio(0);
-		%player.playAudio(0, VoiceDeath @ getRandom(1,$deathCount[%gender]) @ %gender);
+		%player.playAudio(0, VoiceDeath @ getRandom(1,$deathSoundCount[%gender]) @ %gender);
 	}
 };
 activatePackage("DespairVoice");

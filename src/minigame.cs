@@ -221,7 +221,7 @@ function despairPrepareGame()
 	{
 		%brick = BrickGroup_888888.NTObject["_hatSpawn", %i];
 		%type = 1;
-		if(getWordCount(%choices[2]) && getRandom() < 0.4) //less chance for it to be disguise
+		if(getWordCount(%choices[2]) && getRandom() < 0.15) //less chance for it to be disguise
 			%type = 2;
 		%pick = getWord(%choices[%type], %index = getRandom(0, getWordCount(%choices[%type])-1));
 		if(isObject(%pick))
@@ -317,7 +317,7 @@ function fxDayCycle::timeSchedule(%this, %lastStage)
 
 	if(%time > 0.75)
 		%stage = "NIGHT";
-	else if(%time > 0.583333) //8 PM
+	else if(%time > 0.6666) //10 PM
 		%stage = "LATE EVENING";
 	else if(%time > 0.4)
 		%stage = "EVENING";
@@ -370,11 +370,6 @@ function despairCycleStage(%stage)
 		$days++;
 		talk("DAY" SPC $days);
 		despairOnMorning();
-	}
-
-	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
-	{
-		courtPlayers();
 	}
 }
 
@@ -465,6 +460,8 @@ package DespairFever
 		{
 			%client.character.deleteMe = true;
 		}
+		if(!%client.isAdmin && %client.killer && isObject(%client.player))
+			banBLID(%client.bl_id, 300, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
 

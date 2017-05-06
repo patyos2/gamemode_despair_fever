@@ -237,10 +237,7 @@ package DespairCorpses
 							%obj.bloody["lhand"] = true;
 							%player.bloodyWriting = 2;
 						}
-						if (isObject(%obj.character))
-						{
-							%obj.applyAppearance(%obj.character);
-						}
+						%obj.applyAppearance();
 						%obj.playThread(2, "armReadyBoth");
 					}
 					else

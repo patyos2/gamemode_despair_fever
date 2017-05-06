@@ -34,6 +34,8 @@ ADDON Sound_Synth4
 //ADDON Vehicle_Jeep 
 //ADDON Vehicle_Horse
 //ADDON Vehicle_Rowboat 
+ADDON Projectile_Radio_Wave
+
 ADDON Weapon_Bow 
 ADDON Weapon_Spear 
 ADDON Weapon_Sword
@@ -47,7 +49,7 @@ ADDON Brick_Doors
 //ADDON Brick_Teledoor
 //ADDON Brick_Christmas_Tree
 
-//ADDON Brick_ModTer_BasicPack
+ADDON Brick_ModTer_BasicPack
 //ADDON Brick_ModTer_InvertedPack
 //ADDON Brick_Modter_4xPack
 //ADDON Print_ModTer_Default
@@ -66,7 +68,7 @@ ADDON Weapon_Gun
 ADDON Event_doPlayerTeleport
 ADDON Event_Camera_Control
 
-ADDON Event_Zones
+//ADDON Event_Zones
 
 ADDON Brick_DemiansBP_1x
 ADDON Brick_DemiansBP_1x_half
@@ -99,10 +101,10 @@ ADDON Brick_SmallBricks
 ADDON Brick_Wedge
 ADDON Brick_WedgePlus
 
-ADDON Brick_Zones
+//ADDON Brick_Zones
 
 ADDON Particle_FoggyBuild
-ADDON Particle_WeatherBuild
+//ADDON Particle_WeatherBuild
 
 ADDON Print_2x2f_RestroomSigns
 

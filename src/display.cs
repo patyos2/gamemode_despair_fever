@@ -12,7 +12,7 @@ function despairBottomPrintLoop()
 function GameConnection::updateBottomprint(%this)
 {
 	%client = %this;
-	if (isObject(%cam = %this.getControlObject()) && %cam.getClassName() $= "Camera" && isObject(%targ = %cam.getOrbitObject().client))
+	if (!isObject(%client.player) && isObject(%cam = %this.getControlObject()) && %cam.getClassName() $= "Camera" && isObject(%targ = %cam.getOrbitObject().client))
 	{
 		%client = %targ;
 		%isSpectate = 1;

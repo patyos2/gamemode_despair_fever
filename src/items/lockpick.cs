@@ -127,7 +127,7 @@ package LockpickPackage
 			{
 				serverPlay3d(DoorJiggleSound, %ray.getWorldBoxCenter(), 1);
 				%obj.playThread(2, "activate");
-				%obj.lockpickDoAfter(8000, %ray, 5);
+				%obj.lockpickDoAfter(6000, %ray, 5);
 			}
 			else
 			{

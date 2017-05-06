@@ -90,12 +90,7 @@ package DespairChat
 		%player.playThread(3, "talk");
 		%player.schedule(strLen(%text) * 35, "playThread", 3, "root");
 
-		%name = %client.character.name;
-		if(!$despairTrial)
-		{
-			if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%img = %player.getMountedImage(2)) && %img == nameToID(%hat.image))
-				%name = "Unknown";
-		}
+		%name = getCharacterName(%client.character, !$despairTrial);
 
 		%sound = DespairChatSound;
 		%type = "says";
@@ -154,11 +149,14 @@ package DespairChat
 			%_name = %name;
 			%_text = %text;
 			%_range = %range;
-			if(%member.player.unconscious)
+			if(%member.player.unconscious && !%member.player.currResting)
 			{
 				%_name = "Someone";
-				%_text = muffleText(%text, 0.5);
-				%_range *= 0.5;
+				if(%type !$= "whispers") //whispering to someone sleeping is LOUD AND CLEAR
+				{
+					%_text = muffleText(%text, 0.5);
+					%_range *= 0.5;
+				}
 			}
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();

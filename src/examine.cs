@@ -10,9 +10,7 @@ function GameConnection::examineObject(%client, %col)
 
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
 	{
-		%name = %col.character.name;
-		if(!$DespairTrial && isObject(%hat = %col.tool[%col.hatSlot]) && %hat.disguise && isObject(%col.getMountedImage(2)) && %col.getMountedImage(2) == nameToID(%hat.image))
-			%name = "Unknown";
+		%name = getCharacterName(%col.character, !$despairTrial);
 
 		%text = %text @ "This is \c3" @ %name;
 		%gender = %col.character.gender;
@@ -21,7 +19,13 @@ function GameConnection::examineObject(%client, %col)
 			if(!%client.killer)
 				DespairCheckInvestigation(%player, %col);
 
-			%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " dead.";
+			%ref = %gender $= "female" ? "She's" : "He's";
+			if(%col.mangled)
+				%ref = "They are";
+
+			%text = %text @ "\n\c0" @ %ref @ " dead.";
+			if (%col.suicide)
+				%text = %text @ "\n\c5It was suicide...";
 			if(%player.character.detective)
 			{
 				%tod = %col.attackDayTime[%col.attackCount];

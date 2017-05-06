@@ -262,3 +262,22 @@ function getRandomSpecialChar(%char)
 
 	%char.appearance = getFields(%choose, 3, 10);
 }
+
+function getCharacterName(%char, %checkDisguised)
+{
+	if(%char.getClassName() $= "GameConnection")
+		%char = %char.character;
+
+	%name = %char.name;
+	%player = %character.player;
+	if(isObject(%player))
+	{
+		if(%checkDisguised && isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%img = %player.getMountedImage(2)) && %img == nameToID(%hat.image))
+			%name = "Unknown";
+		if(%player.mangled)
+			%name = "Unknown";
+		if(%player.fakeName)
+			%name = %player.fakeName;
+	}
+	return %name;
+}

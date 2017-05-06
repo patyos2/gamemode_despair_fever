@@ -64,6 +64,11 @@ package DespairHealth
 			%attacker = %sourceObject.sourceClient;
 		}
 
+		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
+			%type = "fall";
+		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
+			%type = "self";
+
 		%normal = %sourceObject.getEyeVector();
 		%dot = vectorDot(%player.getForwardVector(), %normal);
 
@@ -101,7 +106,7 @@ package DespairHealth
 			case "hip":
 				%player.setNodeColor("pants", %color);
 			case "chest":
-				%player.bloody["chest_front"] = true;
+				%player.bloody[%dot > 0 ? "chest_back" : "chest_front"] = true;
 				%client.applyBodyParts();
 			}
 			%player.bloody = true;
@@ -178,13 +183,25 @@ package DespairHealth
 
 		%player.isDead = 1;
 		%player.isBody = 1;
+		if(%player.attackSource[%player.attackCount] == %player)
+			%player.suicide = true;
 		%player.playDeathCry();
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
-		%player.playThread(0, "death1");
+
+		if (%obj.attackDot[%obj.attackCount] > 0)
+		{
+			%obj.playThread(0, "crouch");
+			%obj.playThread(2, "jump");
+			%obj.schedule(100, playThread, 2, "plant");
+		}
+		else
+			%player.playThread(0, "death1");
+
 		%player.playThread(1, "root");
 		%player.playThread(2, "root");
 		%player.playThread(3, "root");
+
 		GameRoundCleanup.add(%player);
 
 		$DefaultMiniGame.checkLastManStanding();

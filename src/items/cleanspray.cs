@@ -193,6 +193,7 @@ function CleanSprayImage::onFire(%this, %obj, %slot)
 		$TypeMasks::FxBrickObjectType |
 		$TypeMasks::StaticShapeObjectType |
 		$TypeMasks::TerrainObjectType |
+		$TypeMasks::playerObjectType |
 		$TypeMasks::ItemObjectType,
 		%obj
 	);
@@ -203,6 +204,9 @@ function CleanSprayImage::onFire(%this, %obj, %slot)
 	else {
 		%pos = %stop;
 	}
+
+	if (%ray.getType() & $TypeMasks::playerObjectType)
+		%ray.setWhiteOut(0.1);
 
 	initContainerRadiusSearch(%pos, 0.75,
 		$TypeMasks::StaticShapeObjectType);

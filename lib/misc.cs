@@ -18,6 +18,14 @@ function getRandomScalar(%magnitude)
 	return (getRandom() * 2 - 1) * %magnitude;
 }
 
+function vectorSpread(%vector, %spread)
+{
+  %scalars = getRandomScalar() SPC getRandomScalar() SPC getRandomScalar();
+  %scalars = vectorScale(%scalars, %spread);
+
+  return matrixMulVector(matrixCreateFromEuler(%scalars), %vector);
+}
+
 function Player::getAimVector(%player)
 {
 	%fwd = %player.getForwardVector();

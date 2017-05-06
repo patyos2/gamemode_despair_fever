@@ -103,7 +103,7 @@ package RepairkitPackage
 			{
 				serverPlay3d(DoorJiggleSound, %ray.getWorldBoxCenter(), 1);
 				%obj.playThread(2, "activate");
-				%obj.RepairkitDoAfter(10000, %ray, 7);
+				%obj.RepairkitDoAfter(7000, %ray, 7);
 			}
 			else
 			{

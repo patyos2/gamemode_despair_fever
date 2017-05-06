@@ -143,18 +143,23 @@ function Player::WakeUp(%this)
 	%this.setArmThread(look);
 	%this.unconscious = false;
 	%this.isBody = false;
+
 	//%this.setShapeNameDistance($defaultMinigame.shapeNameDistance);
 	%this.changeDataBlock(PlayerDespairArmor);
 	%this.playThread(0, "root");
 
 	%this.removeStatusEffect($SE_sleepSlot);
-	%pos = %this.getPosition();
-	%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
-	if(!%ray || %ray.getName() !$= "_bed")
-		%this.setStatusEffect($SE_passiveSlot, "sore back");
-	else if(%this.freshSleep)
-		%this.setStatusEffect($SE_passiveSlot, "shining");
-	%this.freshSleep = "";
+	if(!%this.currResting)
+	{
+		%pos = %this.getPosition();
+		%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
+		if(!%ray || %ray.getName() !$= "_bed")
+			%this.setStatusEffect($SE_passiveSlot, "sore back");
+		else if(%this.freshSleep)
+			%this.setStatusEffect($SE_passiveSlot, "shining");
+		%this.freshSleep = "";
+	}
+	%this.currResting = false;
 	%client.updateBottomPrint();
 }
 

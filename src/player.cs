@@ -285,6 +285,8 @@ function Player::onLight(%this)
 function player::applyAppearance(%pl,%char)
 {
 	%pl.hideNode("ALL");
+	if(%char $= "")
+		%char = %pl.char;
 	%app = %char.appearance;
 	%female = %char.gender $= "Female";
 
@@ -308,6 +310,22 @@ function player::applyAppearance(%pl,%char)
 		%shoesColor = desaturateRGB(%shoesColor, %a) SPC 1;
 		%hairColor = desaturateRGB(%hairColor, %a) SPC 1;
 	}
+
+	if(%pl.mangled)
+	{
+		%handColor = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+		%headColor = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+		%shirtColor = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+		%pantsColor = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+		%shoesColor = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+
+		%faceName = "asciiTerror";
+		%decalName = "";
+		%hairName = "";
+
+		%female = true;
+	}
+
 
 	if(isObject(%pl.getMountedImage(1)) && %pl.getMountedImage(1).item.hideAppearance)
 		%hideApp = true;
@@ -432,10 +450,8 @@ package DespairPlayerPackage
 		if (isObject(%pl = %client.player))
 		{
 			if (%pl.currResting && %state)
-			{
-				%pl.currResting = 0;
 				%pl.WakeUp();
-			}
+
 			if (%pl.unconscious)
 				return;
 		}
@@ -447,7 +463,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance(%cl.character);
+				%pl.applyAppearance();
 		}
 	}
 	function gameConnection::applyBodyParts(%cl,%o) 
@@ -456,7 +472,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance(%cl.character);
+				%pl.applyAppearance();
 		}
 	}
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)

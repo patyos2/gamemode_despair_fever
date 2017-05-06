@@ -49,8 +49,10 @@ exec("./src/write.cs");
 exec("./src/inventory.cs"); //Package activation order matters!
 exec("./src/events.cs"); //exec events last 'cuz it takes some variables from statuseffects.cs
 //items
+exec("./src/items/box.cs");
 exec("./src/items/cleanspray.cs");
 exec("./src/items/coat.cs");
+exec("./src/items/disguise.cs");
 exec("./src/items/flashlight.cs");
 exec("./src/items/key.cs");
 exec("./src/items/lockpick.cs");
@@ -68,6 +70,7 @@ exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
 exec("./src/weapons/wrench.cs");
 exec("./src/weapons/sledgehammer.cs");
+exec("./src/weapons/taser.cs");
 exec("./src/weapons/shovel.cs");
 exec("./src/weapons/umbrella.cs");
 
