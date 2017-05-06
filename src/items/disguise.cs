@@ -43,7 +43,6 @@ function DisguiseImage::onMount(%this, %obj, %slot)
 
 function DisguiseImage::onUnMount(%this, %obj, %slot)
 {
-	%props = %obj.getItemProps();
 	if (isObject(%obj.client))
 		commandToClient(%obj.client, 'ClearCenterPrint');
 }

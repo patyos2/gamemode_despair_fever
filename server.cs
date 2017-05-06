@@ -53,6 +53,7 @@ exec("./src/items/box.cs");
 exec("./src/items/cleanspray.cs");
 exec("./src/items/coat.cs");
 exec("./src/items/disguise.cs");
+exec("./src/items/flashbang.cs");
 exec("./src/items/flashlight.cs");
 exec("./src/items/key.cs");
 exec("./src/items/lockpick.cs");

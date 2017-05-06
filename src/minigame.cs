@@ -117,7 +117,10 @@ function roomPlayers()
 		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 		%roomDoor.lockId = "R"@%room;
 		%roomDoor.lockState = true;
+		%roomBathDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_bathdoor", 0];
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
+		%roomCloset.setItem("");
 	}
 
 	ClearFlaggedCharacters();
@@ -211,7 +214,7 @@ function despairPrepareGame()
 		if(isObject(%brick.itemData))
 			%brick.setItem(%brick.itemData);
 		if(isObject(%brick.item))
-			%brick.itemData = %brick.item.getDataBlock().getName();
+			%brick.itemData = %brick.item.getDataBlock();
 	}
 
 	//Hats!

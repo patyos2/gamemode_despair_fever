@@ -155,7 +155,7 @@ function despairOnKill(%victim, %attacker, %crit)
 
 function despairCheckInvestigation(%player, %corpse)
 {
-	if(!%corpse.checkedBy[%player])
+	if(!%corpse.suicide && !%corpse.checkedBy[%player])
 	{
 		if(isObject(%player.client))
 			%player.client.play2d(DespairBodyDiscoverySound @ getRandom(1, 3));
@@ -184,7 +184,7 @@ function despairMakeBodyAnnouncement(%unfound)
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 
 	%profile = DespairMusicInvestigationIntro1;
-	if($deathCount > 2)
+	if($announcements > 2)
 		%profile = DespairMusicInvestigationIntro2;
 	if(!isObject(ServerMusic) || (ServerMusic.profile !$= %profile && ServerMusic.profile !$= %profile.loopProfile))
 	{

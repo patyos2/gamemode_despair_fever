@@ -183,8 +183,11 @@ package DespairHealth
 
 		%player.isDead = 1;
 		%player.isBody = 1;
-		if(%player.attackSource[%player.attackCount] == %player)
+		if(%player.attackSource[%player.attackCount] == %player || %player.attackSource[%player.attackCount] $= "")
+		{
 			%player.suicide = true;
+			%player.pools = 1000;
+		}
 		%player.playDeathCry();
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
