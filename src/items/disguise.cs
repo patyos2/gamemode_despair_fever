@@ -65,16 +65,14 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 			%obj.fakeName = %ray.character.name;
 			%obj.applyAppearance();
 			%ray.applyAppearance();
+			%obj.removeTool(%obj.currTool);
+
+			if (isObject(%obj.client))
+				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %name, 2);
 		}
 		else
 		{
 			commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Target must be dead for this to work!", 2);
-			return;
 		}
 	}
-
-	%obj.removeTool(%obj.currTool);
-
-	if (isObject(%obj.client))
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %name, 2);
 }

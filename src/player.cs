@@ -286,7 +286,7 @@ function player::applyAppearance(%pl,%char)
 {
 	%pl.hideNode("ALL");
 	if(%char $= "")
-		%char = %pl.char;
+		%char = %pl.character;
 	%app = %char.appearance;
 	%female = %char.gender $= "Female";
 

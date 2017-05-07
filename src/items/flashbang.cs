@@ -29,11 +29,11 @@ datablock ExplosionData(FlashbangExplosion)
 
 	//impulse
 	impulseRadius = 17;
-	impulseForce = 4000;
+	impulseForce = 2000;
 
 	//radius damage
-	damageRadius = 0;
-	radiusDamage = 0;
+	damageRadius = 17;
+	radiusDamage = 1;
 };
 
 datablock ProjectileData(FlashbangExplosionProjectile)
@@ -52,11 +52,10 @@ datablock ProjectileData(FlashbangExplosionProjectile)
 	fadeDelay           = 0;
 };
 
-function FlashbangExplosionProjectile::radiusImpulse(%this, %obj, %col, %factor, %pos, %force)
+function FlashbangExplosionProjectile::radiusDamage(%this, %obj, %col, %factor, %pos, %force)
 {
 	if(isObject(%col.client) && !%col.client.killer)
 		%col.knockOut(20);
-	Parent::radiusImpulse(%this, %obj, %col, %factor, %pos, %force);
 }
 
 datablock ItemData(FlashbangItem)
@@ -107,11 +106,22 @@ function ExplosiveProps::timerSchedule(%this)
 			sourceObject = %this.sourcePlayer;
 			client = %obj.sourceClient;
 		};
+		MissionCleanup.add(%projectile);
 		%projectile.explode();
+		if(%this.owner.getType() & $TypeMasks::itemObjectType)
+			%this.owner.delete();
+		else if(%this.owner.getType() & $TypeMasks::playerObjectType)
+		{
+			%this.owner.removeTool(%this.itemSlot, 1, 1);
+			if(%this.owner.client.killer)
+				%this.owner.knockOut(20);
+		}
+		if(isObject(%this))
+			%this.delete();
 		return;
 	}
 	%this.timer--;
-	%this.timerSchedule = %this.schedule(1000, timerSchedule)
+	%this.timerSchedule = %this.schedule(1000, timerSchedule);
 }
 
 datablock ShapeBaseImageData(FlashbangImage)
@@ -170,7 +180,7 @@ function FlashbangImage::onUse(%this, %obj, %slot)
 	}
 	if(!%props.primed)
 	{
-		commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ "seconds! \c5Throw it away!");
+		commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ " seconds\c3!\n\c5Throw it away!");
 		%props.primed = true;
 		%props.timerSchedule();
 	}
