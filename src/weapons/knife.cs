@@ -65,11 +65,11 @@ datablock ShapeBaseImageData(KnifeImage)
 	fireManual = true;
 
 	windUp = 0.35;
-	fireDelay = 0.35;
+	fireDelay = 0.4;
 	fireScript = "onFire";
 	meleeRange = 3;
 
-	damage = 25;
+	damage = 20;
 
 	stateName[0]					= "Activate";
 	stateAllowImageChange[0]		= 1;

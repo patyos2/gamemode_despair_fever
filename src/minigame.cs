@@ -287,9 +287,9 @@ function despairPrepareGame()
 		DayCycle.timeSchedule();
 
 	//update fog
-	$EnvGuiServer::VisibleDistance = 120;
+	$EnvGuiServer::VisibleDistance = 140;
 	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
-	$EnvGuiServer::FogDistance = 90;
+	$EnvGuiServer::FogDistance = 110;
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
 
@@ -396,12 +396,13 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
+	if (%transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
 	{
 		%delay = 2000;
-		if(!%this.afk)
+		if(!%player.unconscious && !%this.afk)
 		{
 			%this.afk = true;
+			messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%member = ClientGroup.getObject(%i);
@@ -418,6 +419,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 		if(%this.afk)
 		{
 			%this.afk = false;
+			messageClient(%this.client, '', '\c2<font:Impact:20>Notice\c6: You are no longer considered AFK.');
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%member = ClientGroup.getObject(%i);

@@ -21,6 +21,7 @@ function serverCmdFakeSpeed(%this, %thing)
 			messageClient(%this, '', '\c5You will now have the same walkspeed as \c6Exhausted\c5. \c3Dash\c5 to cancel.');
 		case "default":
 			%player.setSpeedScale(1);
+			messageClient(%this, '', '\c5Your walkspeed is now normal.');
 		default:
 			messageClient(%this, '', '\c5Usage: \c3/fakeSpeed tired, exhausted \c5OR\c3 default\c5 for normal speed.');
 	}

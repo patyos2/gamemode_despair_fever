@@ -214,7 +214,7 @@ package DespairCorpses
 				}
 				if(%state && isObject(%col = %obj.findCorpseRayCast()))
 				{
-					if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || (%col.isDead && %obj.client.killer)))
+					if ($Sim::Time - %obj.lastBodyClick < 0.3 && (!%col.isDead || %obj.client.killer))
 					{
 						if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
 						{

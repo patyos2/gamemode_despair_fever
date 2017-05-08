@@ -158,7 +158,7 @@ function despairCheckInvestigation(%player, %corpse)
 	if(!%corpse.suicide && !%corpse.checkedBy[%player])
 	{
 		if(isObject(%player.client))
-			%player.client.play2d(DespairBodyDiscoverySound @ getRandom(1, 3));
+			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
 		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
@@ -461,6 +461,10 @@ function courtPlayers()
 		%character = GameCharacters.getObject(%a[%i]);
 		%player = %character.player;
 		%client = %character.client;
+		if(%player.afk && !%client.killer)
+		{
+			%player.delete();
+		}
 
 		%transform = $stand[%i].getSlotTransform(1);
 		if(!isObject(%client) || !isObject(%player) || %player.isDead)
@@ -505,7 +509,7 @@ function courtPlayers()
 
 			if(%doll.mangled)
 			{
-				%mangled = %doll;
+				$mangled = %doll;
 				%secs = 40;
 			}
 		}
@@ -529,11 +533,11 @@ function courtPlayers()
 		}
 		if(isObject(%client))
 		{
-			if(isObject(%mangled))
+			if(isObject($mangled))
 			{
 				//aim the camera at the target
-				%pos = vectorAdd(%mangled.getHackPosition(), vectorScale(%mangled.getForwardVector(), 3));
-				%delta = vectorSub(%mangled.getHackPosition(), %pos);
+				%pos = vectorAdd($mangled.getHackPosition(), vectorScale($mangled.getForwardVector(), 3));
+				%delta = vectorSub($mangled.getHackPosition(), %pos);
 				%deltaX = getWord(%delta, 0);
 				%deltaY = getWord(%delta, 1);
 				%deltaZ = getWord(%delta, 2);
@@ -558,10 +562,13 @@ function courtPlayers()
 		}
 	}
 
-	ServerPlaySong("DespairMusicOpeningIntro");
+	if(isObject($mangled))
+		ServerPlaySong("DespairMusicIntense");
+	else
+		ServerPlaySong("DespairMusicOpeningIntro");
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
-	if(isObject(%mangled))
-		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>The victim had their identity stolen. One of you shouldn't be alive...");
+	if(isObject($mangled))
+		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c2The victim had their \c6identity stolen\c2. \c0One of you shouldn't be alive . . .");
 	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
 
 	$chatDelay = 0.5;
@@ -580,7 +587,8 @@ function courtPlayers()
 function DespairStartOpeningStatements()
 {
 	cancel($DefaultMiniGame.eventSchedule);
-	ServerPlaySong("DespairMusicOpeningLoop");
+	if(!isObject($mangled))
+		ServerPlaySong("DespairMusicOpeningLoop");
 	$DefaultMiniGame.chatMessageAll('', "\c5Let's hear everybody out.");
 	$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairCycleOpeningStatements, 0);
 }

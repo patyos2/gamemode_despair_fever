@@ -46,7 +46,7 @@ datablock ShapeBaseImageData(SledgehammerImage)
 	fireManual = true;
 
 	windUp = 0.3;
-	fireDelay = 1.5;
+	fireDelay = 2;
 	fireScript = "onFire";
 	meleeRange = 4;
 
@@ -147,6 +147,6 @@ function SledgehammerImage::onMeleeHit(%image, %player, %object, %position, %nor
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
 	{
 		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(2);
+		return %object.doorDamage(10);
 	}
 }
