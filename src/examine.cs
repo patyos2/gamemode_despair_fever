@@ -10,7 +10,7 @@ function GameConnection::examineObject(%client, %col)
 
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
 	{
-		%name = getCharacterName(%col.character, !$despairTrial);
+		%name = getCharacterName(%col.character, $despairTrial);
 
 		%text = %text @ "This is \c3" @ %name;
 		%gender = %col.character.gender;

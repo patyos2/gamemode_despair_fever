@@ -5,6 +5,27 @@ function serverCmdKeepCharacter(%this)
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
 }
 
+function serverCmdFakeSpeed(%this, %thing)
+{
+	if(!isObject(%player = %this.player))
+		return;
+	if(!%this.killer)
+		return;
+	switch$(%thing)
+	{
+		case "tired":
+			%player.setSpeedScale(0.9);
+			messageClient(%this, '', '\c5You will now have the same walkspeed as \c6Tired\c5. \c3Dash\c5 to cancel.');
+		case "exhausted":
+			%player.setSpeedScale(0.6);
+			messageClient(%this, '', '\c5You will now have the same walkspeed as \c6Exhausted\c5. \c3Dash\c5 to cancel.');
+		case "default":
+			%player.setSpeedScale(1);
+		default:
+			messageClient(%this, '', '\c5Usage: \c3/fakeSpeed tired, exhausted \c5OR\c3 default\c5 for normal speed.');
+	}
+}
+
 function serverCmdForceVote(%client)
 {
 	if (!$DespairTrial)
@@ -53,13 +74,13 @@ function serverCmdForceVote(%client)
 		if (%validVotes >= (MFloor(%alivePlayers * 0.8))) // if at least 90% of alive players voted
 		{
 			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 There are enough votes to force the voting period.',
-				%client.character.name);
+				getCharacterName(%client.character, 1));
 			%start = true;
 		}
 		else
 		{
 			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 Do /forcevote to concur. %2 votes left.',
-				%client.character.name, MFloor(%alivePlayers * 0.8) - %validVotes);
+				getCharacterName(%client.character, 1), MFloor(%alivePlayers * 0.8) - %validVotes);
 		}
 	}
 	else if (%client.isAdmin) //"Admin" forcevote only works outside minigame

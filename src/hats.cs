@@ -8,13 +8,16 @@ echo("\c4Done!");
 
 datablock ItemData(noHatIcon)
 {
+	shapeFile = "base/data/shapes/empty.dts";
 	iconName = $Despair::Path @ "res/shapes/hats/icon_nohat";
 	uiName = "No Hat";
 	isIcon = true;
+	image = printGunImage;
 };
 
 function noHatIcon::onUse(%this, %obj, %slot)
 {
+	%obj.unMountImage(0);
 	%obj.currtool = -1;
 	fixArmReady(%obj);
 }
@@ -50,8 +53,7 @@ function Hat::onWear(%this, %player)
 	{
 		%player.mountImage(%this.image, 2);
 	}
-	if(isObject(%player.client))
-		%player.client.applyBodyParts();
+	%player.applyAppearance();
 }
 
 function Hat::onDrop(%this, %player, %index)
@@ -59,9 +61,9 @@ function Hat::onDrop(%this, %player, %index)
 	%player.tool[%player.hatSlot] = NoHatIcon.getID();
 	%player.unMountImage(2);
 	%player.currtool = -1;
+	%player.applyAppearance();
 	if(isObject(%client = %player.client))
 	{
 		messageClient(%client, 'MsgItemPickup', '', %player.hatSlot, NoHatIcon.getID(), true);
-		%client.applyBodyParts();
 	}
 }

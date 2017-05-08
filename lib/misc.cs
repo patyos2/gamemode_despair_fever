@@ -15,6 +15,7 @@ function rotateVector(%vector, %yawDelta, %pitchDelta)
 
 function getRandomScalar(%magnitude)
 {
+	if(%magnitude $= "") %magnitude = 1;
 	return (getRandom() * 2 - 1) * %magnitude;
 }
 

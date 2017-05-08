@@ -61,6 +61,7 @@ exec("./src/items/mop.cs");
 exec("./src/items/paper.cs");
 exec("./src/items/pen.cs");
 exec("./src/items/radio.cs");
+exec("./src/items/razor.cs");
 exec("./src/items/repairkit.cs");
 //weapons
 exec("./src/weapons/axe.cs");

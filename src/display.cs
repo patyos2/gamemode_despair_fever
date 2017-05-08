@@ -39,7 +39,7 @@ function GameConnection::updateBottomprint(%this)
 	}
 
 	//NAME AND STUFF
-	%name = %name @ "\c6" @ %client.character.name;
+	%name = %name @ "\c6" @ getCharacterName(%client.character, 1);
 
 	//STATUS
 	if(isObject(%player = %client.player))

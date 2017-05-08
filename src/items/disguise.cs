@@ -9,7 +9,7 @@ datablock itemData(DisguiseItem)
 	friction = 1;
 	doColorShift = true;
 	colorShiftColor = "0.6 0.6 0.6 1";
-	uiName = "Box";
+	uiName = "Disguise";
 	canDrop = true;
 };
 
@@ -37,7 +37,7 @@ datablock ShapeBaseImageData(DisguiseImage)
 function DisguiseImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
-	if (isObject(%obj.client))
+	if (isObject(%obj.client) && %obj.client.killer)
 		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Click on a corpse to completely steal their identity.\nThis is one use and will mangle the corpse beyond recognition.");
 }
 
@@ -49,26 +49,22 @@ function DisguiseImage::onUnMount(%this, %obj, %slot)
 
 function DisguiseImage::onUse(%this, %obj, %slot)
 {
-	%a = %obj.getEyePoint();
-	%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), 5));
-
-	%mask =
-		$TypeMasks::FxBrickObjectType |
-		$TypeMasks::PlayerObjectType;
-
-	%ray = containerRayCast(%a, %b, %mask, %obj);
-	if(%ray && %ray.getType() & $TypeMasks::PlayerObjectType)
+	if(!isObject(%obj.client) || !%obj.client.killer)
+		return;
+	if(isObject(%col = %obj.findCorpseRayCast()))
 	{
-		if(%ray.isDead)
+		if(%col.isDead)
 		{
-			%obj.character.appearance = %ray.character.appearance;
-			%obj.fakeName = %ray.character.name;
+			%obj.character.appearance = %col.character.appearance;
+			%obj.fakeName = %col.character.name;
+			%obj.character.gender = %col.character.gender;
+			%col.mangled = true;
 			%obj.applyAppearance();
-			%ray.applyAppearance();
+			%col.applyAppearance();
 			%obj.removeTool(%obj.currTool);
 
 			if (isObject(%obj.client))
-				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %name, 2);
+				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %col.character.name, 2);
 		}
 		else
 		{

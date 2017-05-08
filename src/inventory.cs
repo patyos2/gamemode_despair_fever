@@ -109,6 +109,19 @@ package DespairInventory
 				%slot = -1;
 				if(%item.className $= "DespairWeapon")
 				{
+					if(%target.getMountedImage(0) == %item.image.getID())
+					{
+						if(%target.isDead)
+						{
+							if(isObject(%obj.client))
+								messageClient(%obj.client, '', "\c3Rigor Mortis prevents you from pulling the weapon from the corpse's hands...");
+							return;
+						}
+						else
+						{
+							%target.unMountImage(0);
+						}
+					}
 					if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
 						%slot = %obj.setTool(%obj.weaponSlot, %item, %props, 1, 2);
 				}

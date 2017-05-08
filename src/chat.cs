@@ -90,7 +90,7 @@ package DespairChat
 		%player.playThread(3, "talk");
 		%player.schedule(strLen(%text) * 35, "playThread", 3, "root");
 
-		%name = getCharacterName(%client.character, !$despairTrial);
+		%name = getCharacterName(%client.character, $despairTrial);
 
 		%sound = DespairChatSound;
 		%type = "says";

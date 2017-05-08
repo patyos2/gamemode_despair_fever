@@ -55,20 +55,31 @@ function KillerBoxImage::onUnMount(%this, %obj, %slot)
 
 function KillerBoxImage::onUse(%this, %obj, %slot)
 {
-	%count = getRandom(2, 4);
-	%loot = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem TaserItem DisguiseItem";
+	%count = 3;
+	%loot[0] = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem";
+	%loot[1] = "TaserItem DisguiseItem FlashbangItem";
+	%gotRare = false;
 	while(%count-- >= 0)
 	{
-		%data = getWord(%loot, %i = getRandom(0, getWordCount(%loot)-1));
-		%loot = removeWord(%loot, %i);
+		if(getRandom() <= 0.10 && !%gotRare)
+		{
+			%index = 1;
+			%gotRare = true;
+		}
+		else
+			%index = 0;
+
+		%data = getWord(%loot[%index], %i = getRandom(0, getWordCount(%loot[%index])-1));
+		%loot[%index] = removeWord(%loot[%index], %i);
 		%item = new Item() {
 			dataBlock = %data;
 			position = %obj.getPosition();
 		};
+		%item.setCollisionTimeout(%obj);
 		%item.setTransform(%obj.getEyePoint());
 		%targVel = vectorSpread(VectorScale(%obj.getEyeVector(), 5), 0.25);
 		%item.setVelocity(VectorAdd(%obj.getVelocity(), %targVel));
-		%item.setCollisionTimeout(%obj);
+		%item.schedulePop();
 	}
 
 	%obj.removeTool(%obj.currTool);

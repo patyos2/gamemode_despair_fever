@@ -39,17 +39,13 @@ function CoatItem::onWear(%this, %player)
 	{
 		%player.mountImage(%this.image, 1);
 	}
-	if(isObject(%player.client))
-		%player.client.applyBodyParts();
+	%player.applyAppearance();
 }
 
 function CoatItem::onDrop(%this, %player, %index)
 {
 	%player.unMountImage(1);
-
+	%player.applyAppearance();
 	if(isObject(%client = %player.client))
-	{
 		messageClient(%client, 'MsgItemPickup', '', %index, "", true);
-		%client.applyBodyParts();
-	}
 }

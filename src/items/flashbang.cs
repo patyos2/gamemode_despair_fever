@@ -28,11 +28,11 @@ datablock ExplosionData(FlashbangExplosion)
 	lightEndColor = "0 0 0";
 
 	//impulse
-	impulseRadius = 17;
+	impulseRadius = 12;
 	impulseForce = 2000;
 
 	//radius damage
-	damageRadius = 17;
+	damageRadius = 10;
 	radiusDamage = 1;
 };
 
@@ -140,7 +140,7 @@ datablock ShapeBaseImageData(FlashbangImage)
 	colorShiftColor = "0.3 0.3 0.35 1";
 
 	stateName[0]					= "Activate";
-	stateTimeoutValue[0]			= 0.01;
+	stateTimeoutValue[0]			= 0.5;
 	stateTransitionOnTimeout[0]		= "Ready";
 	stateSound[0]					= "";
 	
@@ -164,7 +164,7 @@ function FlashbangImage::onMount(%this, %obj, %slot)
 
 function FlashbangImage::onUnMount(%this, %obj, %slot)
 {
-	if (isObject(%obj.client) && %obj.client.killer)
+	if (isObject(%obj.client))
 		commandToClient(%obj.client, 'ClearCenterPrint');
 }
 
@@ -173,14 +173,13 @@ function FlashbangImage::onUse(%this, %obj, %slot)
 	%props = %obj.getItemProps();
 	if(!isObject(%client = %obj.client))
 		return;
-	if(!%client.killer)
-	{
-		commandToClient(%client, 'CenterPrint', "\c3It seems broken...");
-		return;
-	}
+
 	if(!%props.primed)
 	{
-		commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ " seconds\c3!\n\c5Throw it away!");
+		if(!%client.killer)
+			commandToClient(%client, 'CenterPrint', "\c3It seems broken...");
+		else
+			commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ " seconds\c3!\n\c5Throw it away!");
 		%props.primed = true;
 		%props.timerSchedule();
 	}

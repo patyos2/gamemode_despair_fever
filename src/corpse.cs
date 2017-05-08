@@ -43,7 +43,7 @@ datablock AudioProfile(BodyChokeSound)
 	preload = true;
 };
 
-function Player::findCorpseRayCast(%obj)
+function Player::findCorpseRayCast(%obj, %doPlayer)
 {
 	%a = %obj.getEyePoint();
 	%b = vectorAdd(vectorScale(%obj.getEyeVector(), 5), %a);
@@ -55,7 +55,7 @@ function Player::findCorpseRayCast(%obj)
 
 	if(%ray && %ray.getType() & $TypeMasks::playerObjectType)
 	{
-		if(%ray.isBody)
+		if(%ray.isBody || %doPlayer)
 			return %ray;
 	}
 
@@ -214,7 +214,7 @@ package DespairCorpses
 				}
 				if(%state && isObject(%col = %obj.findCorpseRayCast()))
 				{
-					if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || !%col.isDead))
+					if ($Sim::Time - %obj.lastBodyClick < 0.3 && ($investigationStart $= "" || (%col.isDead && %obj.client.killer)))
 					{
 						if (isEventPending(%col.carrySchedule) && isObject(%col.carryPlayer))
 						{
@@ -237,7 +237,7 @@ package DespairCorpses
 							%obj.bloody["lhand"] = true;
 							%player.bloodyWriting = 2;
 						}
-						%obj.applyAppearance();
+						%obj.applyAppearance(%obj.character);
 						%obj.playThread(2, "armReadyBoth");
 					}
 					else

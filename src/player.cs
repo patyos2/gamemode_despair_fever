@@ -331,9 +331,9 @@ function player::applyAppearance(%pl,%char)
 		%hideApp = true;
 	if(isObject(%hat = %pl.tool[%pl.hatSlot]) && isObject(%pl.getMountedImage(2)) && %pl.getMountedImage(2) == nameToID(%hat.image))
 	{
-		if(%hat.replaceHair !$= "")
+		if(%hairName !$= "" && %hat.replaceHair !$= "")
 			%hairName = %hat.replaceHair;
-		if(%hat.replaceHair[%char.gender] !$= "")
+		if(%hairName !$= "" && %hat.replaceHair[%char.gender] !$= "")
 			%hairName = %hat.replaceHair[%char.gender];
 		if(%hat.hideHair)
 			%hairName = "";
@@ -463,7 +463,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance();
+				%pl.applyAppearance(%cl.character);
 		}
 	}
 	function gameConnection::applyBodyParts(%cl,%o) 
@@ -472,7 +472,7 @@ package DespairPlayerPackage
 		if(isObject(%pl = %cl.player))
 		{
 			if((%pl.getDatablock()).shapeFile $= "base/data/shapes/player/m_df.dts")
-				%pl.applyAppearance();
+				%pl.applyAppearance(%cl.character);
 		}
 	}
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)

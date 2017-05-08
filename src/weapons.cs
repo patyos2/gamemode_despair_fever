@@ -84,13 +84,16 @@ datablock AudioProfile(BluntEquipSound)
 
 datablock ItemData(noWeaponIcon)
 {
+	shapeFile = "base/data/shapes/empty.dts";
 	iconName = $Despair::Path @ "res/shapes/weapons/icon_noWeapon";
 	uiName = "No Weapon";
 	isIcon = true;
+	image = printGunImage;
 };
 
 function noWeaponIcon::onUse(%this, %obj, %slot)
 {
+	%obj.unMountImage(0);
 	%obj.currtool = -1;
 	fixArmReady(%obj);
 }
@@ -221,14 +224,18 @@ package DespairWeapons
 	function Armor::onTrigger(%data, %player, %slot, %state)
 	{
 		Parent::onTrigger(%data, %player, %slot, %state);
-		if (%slot != 0)
-			return;
-		
+
 		%image = %player.getMountedImage(0);
 
-		if (!isObject(%image) || !%image.useCustomStates)
+		if (!isObject(%image))
 			return;
+		if(isFunction(%image.getName(), "onRightClick") && %slot == 4 && %state)
+			%image.onRightClick(%player, 0);
 
+		if (!%image.useCustomStates)
+			return;
+		if (%slot != 0)
+			return;
 		if (%state)
 			%player.tryStartFireWeapon(true);
 		else

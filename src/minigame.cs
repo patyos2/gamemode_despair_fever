@@ -140,7 +140,7 @@ function roomPlayers()
 
 	for (%i = 0; %i < %count; %i++)
 	{
-        %client = $DefaultMiniGame.member[%a[%i]];
+		%client = $DefaultMiniGame.member[%a[%i]];
 
 		if (%client.player)
 			%client.player.delete();
@@ -233,7 +233,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
@@ -285,6 +285,14 @@ function despairPrepareGame()
 	setDayCycleTime(0.4); //Starts at evening
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
+
+	//update fog
+	$EnvGuiServer::VisibleDistance = 120;
+	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
+	$EnvGuiServer::FogDistance = 90;
+	Sky.fogDistance = $EnvGuiServer::FogDistance;
+	Sky.sendUpdate();
+
 	DespairSetWeapons(1);
 	serverStopSong();
 	serverPlay2d("DespairMusicGameStart");
@@ -464,7 +472,7 @@ package DespairFever
 			%client.character.deleteMe = true;
 		}
 		if(!%client.isAdmin && %client.killer && isObject(%client.player))
-			banBLID(%client.bl_id, 300, "Leaving the game as the killer.");
+			banBLID(%client.bl_id, 5, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
 

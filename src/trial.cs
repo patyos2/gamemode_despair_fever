@@ -164,13 +164,13 @@ function despairCheckInvestigation(%player, %corpse)
 		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
 		{
 			despairStartInvestigation(1);
-			despairMakeBodyAnnouncement();
+			despairMakeBodyAnnouncement("", %corpse.mangled);
 			%corpse.discovered = true;
 		}
 	}
 }
 
-function despairMakeBodyAnnouncement(%unfound)
+function despairMakeBodyAnnouncement(%unfound, %kira)
 {
 	serverPlay2d(AnnouncementSound);
 	if (!%unfound)
@@ -184,7 +184,7 @@ function despairMakeBodyAnnouncement(%unfound)
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 
 	%profile = DespairMusicInvestigationIntro1;
-	if($announcements > 2)
+	if($announcements > 2 || %kira) //if there's been two corpses or it's a disguise kit round
 		%profile = DespairMusicInvestigationIntro2;
 	if(!isObject(ServerMusic) || (ServerMusic.profile !$= %profile && ServerMusic.profile !$= %profile.loopProfile))
 	{
@@ -301,7 +301,7 @@ function despairOnMorning()
 	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			banBLID($pickedKiller.bl_id, 300, "Stalling for 3 days straight as the killer.");
+			banBLID($pickedKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
 		else
 			courtPlayers();
 	}
@@ -448,7 +448,8 @@ function courtPlayers()
 		$stand[%i].setTransform("0 0 -300");
 		$memorial[%i].setTransform("0 0 -300");
 	}
-	
+
+	%secs = 30;
 	%radius = getMax(2, %charCount * 0.5);
 	for (%i = 0; %i < %charCount; %i++)
 	{
@@ -482,6 +483,7 @@ function courtPlayers()
 			};
 			%doll.setTransform(%transform);
 			%doll.setScale("1 0.05 1");
+			%doll.mangled = %player.mangled;
 			%doll.desaturate = true;
 			%doll.applyAppearance(%character);
 			%doll.hideNode("larm");
@@ -497,9 +499,15 @@ function courtPlayers()
 			%doll.hideNode("rshoe");
 			%doll.mountImage(MemorialCrossImage, 0);
 			%doll.noExamine = true;
-			%doll.setShapeName(%character.name SPC "(" @ %state @ ")", "8564862");
+			%doll.setShapeName(getCharacterName(%character, 1) SPC "(" @ %state @ ")", "8564862");
 
 			GameRoundCleanup.add(%doll);
+
+			if(%doll.mangled)
+			{
+				%mangled = %doll;
+				%secs = 40;
+			}
 		}
 		else
 		{
@@ -520,12 +528,41 @@ function courtPlayers()
 			%player.setVelocity("0 0 0");
 		}
 		if(isObject(%client))
-			%client.playPath(TrialIntroPath);
+		{
+			if(isObject(%mangled))
+			{
+				//aim the camera at the target
+				%pos = vectorAdd(%mangled.getHackPosition(), vectorScale(%mangled.getForwardVector(), 3));
+				%delta = vectorSub(%mangled.getHackPosition(), %pos);
+				%deltaX = getWord(%delta, 0);
+				%deltaY = getWord(%delta, 1);
+				%deltaZ = getWord(%delta, 2);
+				%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
+
+				%rotZ = mAtan(%deltaX, %deltaY) * -1; 
+				%rotX = mAtan(%deltaZ, %deltaXYHyp);
+
+				%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
+
+				%camera = %client.camera;
+
+				%camera.setTransform(%pos SPC %aa);
+				%camera.setFlyMode();
+				%camera.mode = "Observer";
+				%client.setControlObject(%camera);
+				%camera.setControlObject(%client.dummyCamera);
+				%client.schedule(10000, playPath, TrialIntroPath);
+			}
+			else
+				%client.playPath(TrialIntroPath);
+		}
 	}
 
 	ServerPlaySong("DespairMusicOpeningIntro");
-	$DefaultMiniGame.chatMessageAll('', "\c5<font:impact:30>Everyone now has 30 seconds to prepare their opening statements! Before that, nobody can talk.");
-	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairStartOpeningStatements);
+	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
+	if(isObject(%mangled))
+		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>The victim had their identity stolen. One of you shouldn't be alive...");
+	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
 
 	$chatDelay = 0.5;
 
@@ -584,7 +621,7 @@ function DespairCycleOpeningStatements(%j)
 			%targ.setControlObject(%camera);
 			%camera.setControlObject(%targ.dummyCamera);
 		}
-		$DefaultMiniGame.chatMessageAll('', "\c5What will" SPC %player.character.name SPC "say?");
+		$DefaultMiniGame.chatMessageAll('', "\c5What will" SPC getCharacterName(%player.character, 1) SPC "say?");
 		%client.chatMessage("\c5(It's your turn!)");
 		$DefaultMiniGame.eventSchedule = schedule(10000, 0, DespairCycleOpeningStatements, %j+1);
 	}
@@ -743,7 +780,7 @@ function DespairUpdateCastVote(%player)
 	
 	%player.voteTarget = %col;
 	if(isObject(%col) && isObject(%col.client) && isObject(%col.character))
-		commandToClient(%player.client, 'CenterPrint', "\c3You are voting against\c6" SPC %col.character.name, 1);
+		commandToClient(%player.client, 'CenterPrint', "\c3You are voting against\c6" SPC getCharacterName(%col.character, 1), 1);
 	else
 		commandToClient(%player.client, 'ClearCenterPrint');
 	%player.DespairUpdateCastVote = schedule(32, %player, "DespairUpdateCastVote", %player);
