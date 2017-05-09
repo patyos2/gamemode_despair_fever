@@ -61,6 +61,7 @@ function createPlayer(%client)
 		{
 			%freeIndex = getRandom($freeCount);
 			%room = $freeRoom[%freeIndex];
+			$roomOwner[%room] = %character;
 			$freeRoom[%freeIndex] = $freeRoom[$freeCount];
 			$freeCount--;
 
