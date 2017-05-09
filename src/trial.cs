@@ -584,6 +584,12 @@ function courtPlayers()
 	$DespairTrialDiscussion = "";
 	DespairSetWeapons(0);
 
+	$EnvGuiServer::VisibleDistance = 500;
+	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
+	$EnvGuiServer::FogDistance = 400;
+	Sky.fogDistance = $EnvGuiServer::FogDistance;
+	Sky.sendUpdate();
+
 	despairBottomPrintLoop();
 }
 

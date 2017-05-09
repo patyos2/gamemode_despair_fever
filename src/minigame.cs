@@ -49,6 +49,9 @@ function createPlayer(%client)
 		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
 	}
 
+	if(getField(%character.appearance, 3) $= "")
+		%character.appearance = setField(%character.appearance, 3, getRandomHairName(%character.gender));
+
 	%room = %character.room;
 	if(%room $= "")
 	{
@@ -285,9 +288,9 @@ function despairPrepareGame()
 		DayCycle.timeSchedule();
 
 	//update fog
-	$EnvGuiServer::VisibleDistance = 140;
+	$EnvGuiServer::VisibleDistance = 200;
 	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
-	$EnvGuiServer::FogDistance = 110;
+	$EnvGuiServer::FogDistance = 120;
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
 

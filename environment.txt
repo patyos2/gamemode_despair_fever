@@ -7,7 +7,7 @@ $EnvGuiServer::SunFlareBottomTexture base/lighting/corona.png
 $EnvGuiServer::DayOffset 0.356667
 $EnvGuiServer::DayLength 300
 $EnvGuiServer::DayCycleEnabled 0
-$EnvGuiServer::DayCycle Add-Ons/DayCycle_Default/default.daycycle
+$EnvGuiServer::DayCycle Add-Ons/DayCycle_DespairFever/fever.daycycle
 $EnvGuiServer::SunAzimuth 127.837
 $EnvGuiServer::SunElevation 6.32653
 $EnvGuiServer::DirectLightColor 0.285047 0.182243 0.172897 1.000000
