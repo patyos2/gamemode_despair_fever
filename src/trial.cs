@@ -130,25 +130,28 @@ function despairOnKill(%victim, %attacker, %crit)
 		%player = %victim.player;
 		if(!isObject(%player))
 			%player = %victim.character.player;
-		if(!%crit)
-			$deathCount++;
-		%player.isMurdered = true;
-		if(%victim.killer && !%attacker.killer)
+
+		%player.isMurdered = true; //rip they're legit
+		if(!%crit) //only give pass to final blow/bleed out
 		{
-			%attacker.killer = true;
-			$currentKiller = %attacker;
-			%attacker.play2d(KillerJingleSound);
-			%msg = "<color:FF0000>You murdered the killer in cold blood! Now it's your turn to get away with it...";
-			messageClient(%attacker, '', "<font:impact:30>" @ %msg);
-			if(%attacker.player.unconscious)
-				%attacker.player.WakeUp();
-			if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
-					%attacker.player.removeStatusEffect($SE_sleepSlot);
+			$deathCount++;
+			if(%victim.killer && !%attacker.killer)
+			{
+				%attacker.killer = true;
+				$currentKiller = %attacker;
+				%attacker.play2d(KillerJingleSound);
+				%msg = "<color:FF0000>You murdered the killer in cold blood! Now it's your turn to get away with it...";
+				messageClient(%attacker, '', "<font:impact:30>" @ %msg);
+				if(%attacker.player.unconscious)
+					%attacker.player.WakeUp();
+				if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
+						%attacker.player.removeStatusEffect($SE_sleepSlot);
+			}
+			if ($deathCount >= $maxDeaths)
+				DespairSetWeapons(0);
+			//if(!isEventPending($DefaultMiniGame.missingSchedule))
+			//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 		}
-		if ($deathCount >= $maxDeaths)
-			DespairSetWeapons(0);
-		//if(!isEventPending($DefaultMiniGame.missingSchedule))
-		//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 		return 1;
 	}
 }

@@ -22,24 +22,6 @@ function createPlayer(%client)
 		return;
 	}
 
-	if(!$freeCount)
-	{
-		messageClient(%client, '', '\c5All rooms are occupied - you will have to live with someone else (or be a bum)');
-		%roomSpawn = BrickGroup_888888.NTObject["_bumSpawn", getRandom(0, BrickGroup_888888.NTObjectCount["_bumSpawn"] - 1)];
-	}
-	else
-	{
-		$freeCount--;
-		%freeIndex = getRandom($freeCount);
-		%room = $freeRoom[%freeIndex];
-		for (%j = %freeIndex; %j < $freeCount; %j++)
-			$freeRoom[%j] = $freeRoom[%j + 1];
-
-		$freeRoom[$freeCount] = "";
-
-		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
-		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
-	}
 	//Create character if none exists
 	%gender = getRandomGender();
 	if(!isObject(%character = %client.character) || %character.deleteMe || %character.client.noPersistance)
@@ -66,6 +48,32 @@ function createPlayer(%client)
 		%character.detective = 0;
 		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
 	}
+
+	%room = %character.room;
+	if(%room $= "")
+	{
+		if(!$freeCount)
+		{
+			messageClient(%client, '', '\c5All rooms are occupied - you will have to live with someone else (or be a bum)');
+			%roomSpawn = BrickGroup_888888.NTObject["_bumSpawn", getRandom(0, BrickGroup_888888.NTObjectCount["_bumSpawn"] - 1)];
+		}
+		else
+		{
+			%freeIndex = getRandom($freeCount);
+			%room = $freeRoom[%freeIndex];
+			$freeRoom[%freeIndex] = $freeRoom[$freeCount];
+			$freeCount--;
+
+			%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
+			%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+		}
+	}
+	else
+	{
+		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
+		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+	}
+
 	%character.room = %room;
 	//Assign character to client
 	%client.killer = false;
@@ -108,12 +116,15 @@ function createPlayer(%client)
 
 function roomPlayers()
 {
-	$freeCount = $Despair::RoomCount;
-
-	for (%i = 0; %i < $freeCount; %i++)
+	ClearFlaggedCharacters();
+	$freeCount = 0;
+	for (%i = 0; %i < $Despair::RoomCount; %i++)
 	{
 		%room = %i + 1;
-		$freeRoom[%i] = %room;
+		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
+			continue;
+
+		$freeRoom[$freeCount++] = %room;
 		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 		%roomDoor.lockId = "R"@%room;
 		%roomDoor.lockState = true;
@@ -123,24 +134,10 @@ function roomPlayers()
 		%roomCloset.setItem("");
 	}
 
-	ClearFlaggedCharacters();
-
 	%count = $DefaultMiniGame.numMembers;
-	// prepare
-	for (%i = 0; %i < %count; %i++)
-		%a[%i] = %i;
-	// shuffle
-	while (%i--)
-	{
-		%j = getRandom(%i);
-		%x = %a[%i - 1];
-		%a[%i - 1] = %a[%j];
-		%a[%j] = %x;
-	}
-
 	for (%i = 0; %i < %count; %i++)
 	{
-		%client = $DefaultMiniGame.member[%a[%i]];
+		%client = $DefaultMiniGame.member[%i];
 
 		if (%client.player)
 			%client.player.delete();
@@ -254,7 +251,7 @@ function despairPrepareGame()
 	%brick = BrickGroup_888888.NTObject["_guestlist", 0];
 	%brick.setItem("");
 
-	for (%i = 0; %i < 16; %i++)
+	for (%i = 0; %i < 24; %i++)
 	{
 		$stand[%i].setTransform("0 0 -300");
 		$memorial[%i].setTransform("0 0 -300");

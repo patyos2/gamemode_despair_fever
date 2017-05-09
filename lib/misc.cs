@@ -21,10 +21,10 @@ function getRandomScalar(%magnitude)
 
 function vectorSpread(%vector, %spread)
 {
-  %scalars = getRandomScalar() SPC getRandomScalar() SPC getRandomScalar();
-  %scalars = vectorScale(%scalars, %spread);
+	%scalars = getRandomScalar() SPC getRandomScalar() SPC getRandomScalar();
+	%scalars = vectorScale(%scalars, %spread);
 
-  return matrixMulVector(matrixCreateFromEuler(%scalars), %vector);
+	return matrixMulVector(matrixCreateFromEuler(%scalars), %vector);
 }
 
 function Player::getAimVector(%player)
@@ -42,10 +42,10 @@ function Player::getAimVector(%player)
 
 function commafy(%s)
 {
-    %i = %L = strlen(%s);
-    while (%i-- >= 0)
-        %o = (%i == 0 ? "" : ((%L - %i) % 3 ? "" : ",")) @ getSubStr(%s, %i, 1) @ %o;
-    return %o;
+	%i = %L = strlen(%s);
+	while (%i-- >= 0)
+		%o = (%i == 0 ? "" : ((%L - %i) % 3 ? "" : ",")) @ getSubStr(%s, %i, 1) @ %o;
+	return %o;
 }
 
 datablock StaticShapeData(PrimitiveLineC)

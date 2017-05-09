@@ -225,10 +225,10 @@ function serverCmdAlarm(%client)
 
 			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
 			%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
-			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isDead || %obj.bloody || %hasweapon || %disguised))
+			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isMurdered || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;
-				if(%obj.isDead && %obj.isMurdered)
+				if(%obj.isMurdered)
 					%foundCorpse = %obj;
 			}
 		}

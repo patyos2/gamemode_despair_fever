@@ -20,6 +20,7 @@ exec("./lib/los.cs");
 exec("./lib/misc.cs");
 exec("./lib/noObservers.cs");
 exec("./lib/pathCamera.cs");
+exec("./lib/scope.cs");
 exec("./lib/slowdown.cs");
 //src
 exec("./src/sounds.cs"); //Important to be first - contains audio descriptions
