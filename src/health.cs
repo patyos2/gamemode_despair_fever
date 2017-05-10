@@ -18,11 +18,13 @@ function Player::critLoop(%this)
 		return;
 	}
 
+	%percent = mAbs(%this.health / $Despair::CritThreshold);
+	%delay = 1250 * (1 - %percent);
 	if(isObject(%this.client))
+	{
 		%this.client.play2d(HeartBeatSound);
-
-	%percent = (-%this.health) / $Despair::CritThreshold;
-	%delay = 1250 * (1 - (%percent * 0.7));
+		commandToClient(%this.client, 'SetVignette', true, %percent SPC "0 0" SPC %percent);
+	}
 
 	if($Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
 	{
@@ -33,8 +35,7 @@ function Player::critLoop(%this)
 			return;
 		}
 	}
-	%this.setDamageFlash(%percent);
-	%this.critLoop = %this.schedule(getMax(500, %delay), "critLoop");
+	%this.critLoop = %this.schedule(getMax(400, %delay), "critLoop");
 }
 
 package DespairHealth
@@ -179,6 +180,7 @@ package DespairHealth
 			%client.player = "";
 			%player.client = "";
 			commandToClient(%client, 'ClearCenterPrint');
+			commandToClient(%client, 'SetVignette', true, "0 0 0 1");
 		}
 
 		%player.isDead = 1;

@@ -490,7 +490,11 @@ package DespairPlayerPackage
 		}
 
 		if(isObject(%client.player))
+		{
+			if(%client.player.unconscious)
+				return;
 			%item = %client.player.tool[%index];
+		}
 		Parent::serverCmdDropTool(%client, %index);
 		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
 			%item.onDrop(%client.player, %index);

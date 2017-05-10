@@ -161,7 +161,10 @@ function despairCheckInvestigation(%player, %corpse)
 	if(!%corpse.suicide && !%corpse.checkedBy[%player])
 	{
 		if(isObject(%player.client))
+		{
 			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
+			%player.client.despairCorpseVignette(%corpse.mangled ? 300 : 200);
+		}
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
 		if(%corpse.checked >= 2 && !%corpse.discovered) //2 people screamed at this corpse!
@@ -208,14 +211,17 @@ function despairStartInvestigation(%no_announce)
 	//%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 	//if ($deathCount >= %maxDeaths)
 		DespairSetWeapons(0);
-	if ($deathCount > 0 && $investigationStart $= "")
+	if ($deathCount > 0)
 	{
-		$investigationStart = $Sim::Time + $Despair::InvestigationLength;
+		%length = $investigationStart $= "" ? $Despair::InvestigationLength : $Despair::InvestigationExtraLength;
+		if($investigationStart > $Sim::Time + %length) //investigation longer than extralength
+			return;
+		$investigationStart = $Sim::Time + %length;
 		if (!%no_announce)
 			despairMakeBodyAnnouncement(1);
 		cancel($DefaultMiniGame.missingSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
-		$DefaultMiniGame.eventSchedule = schedule($Despair::InvestigationLength*1000, 0, "courtPlayers");
+		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
 		serverPlay2d("DespairMusicInvestigationStart");
 	}
 }
@@ -248,7 +254,7 @@ function despairOnMorning()
 		%a[%j] = %x;
 	}
 
-	%evidencePapers = $deathCount > 0 ? 0 : ($days + (getRandom(0, 2) - 1));
+	%evidencePapers = $deathCount > 0 ? 0 : $days;
 	%tipsPapers = getRandom(3, 6);
 	%trashPapers = getRandom(3, 6);
 	//Spawn evidence
@@ -258,21 +264,21 @@ function despairOnMorning()
 		%brick.setItem(PaperItem);
 		%props = %brick.item.getItemProps();
 
-		if(%evidencePapers >= 0)
+		if(%evidencePapers > 0)
 		{
 			%props.name = "Daily News";
 			%props.contents = getPaperEvidence();
 			%evidencePapers--;
 			continue;
 		}
-		else if(%tipsPapers >= 0)
+		else if(%tipsPapers > 0)
 		{
 			%props.name = "LifeHack";
 			%props.contents = getPaperTips();
 			%tipsPapers--;
 			continue;
 		}
-		else if(%trashPapers >= 0)
+		else if(%trashPapers > 0)
 		{
 			%props.name = "Paper";
 			%props.contents = getPaperTrash();

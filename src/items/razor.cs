@@ -153,6 +153,8 @@ function RazorImage::onReady(%this, %obj, %slot)
 
 function RazorImage::onUse(%this, %obj, %slot)
 {
+	if($DespairTrial)
+		return;
 	%props = %obj.getItemProps();
 	if (%props.uses <= 0)
 	{

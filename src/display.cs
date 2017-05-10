@@ -9,6 +9,32 @@ function despairBottomPrintLoop()
 	$bottomPrintSchedule = schedule(1000, 0, despairBottomPrintLoop);
 }
 
+function GameConnection::despairCorpseVignette(%this, %ticks, %intensity)
+{
+	cancel(%this.despairCorpseVignette);
+	if(!isObject(%this.player) || %this.player.health <= 0) //doesn't exist or is in crit (or dead)
+		return;
+
+	if(%ticks $= "")
+		%ticks = 100;
+
+	if(%ticks <= 0)
+	{
+		commandToClient(%this, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
+		return;
+	}
+
+	if(%ticks <= 10)
+		%intensity = getMax(0, %intensity - 0.1);
+	else if(%intensity < 0.9)
+		%intensity += 0.05;
+	else
+		%intensity = 0.9 + getRandom() * 0.2;
+
+	commandToClient(%this, 'SetVignette', true, mSin($Sim::Time) * 0.2 SPC "0 0" SPC getMin(1, %intensity));
+	%this.despairCorpseVignette = %this.schedule(50, despairCorpseVignette, %ticks--, %intensity);
+}
+
 function GameConnection::updateBottomprint(%this)
 {
 	%client = %this;

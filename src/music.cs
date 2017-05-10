@@ -210,6 +210,7 @@ function ServerPlaySong(%profile)
 		maxDistance = "9001";
 		isLooping = %isLooping;
 	};
+	scopeToAll(ServerMusic);
 	if(isObject(%profile.loopProfile))
 		ServerMusic.loopSchedule = schedule(%profile.loopStart, 0, ServerPlaySong, %profile.loopProfile);
 }

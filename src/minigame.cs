@@ -62,7 +62,7 @@ function createPlayer(%client)
 		}
 		else
 		{
-			%freeIndex = getRandom($freeCount);
+			%freeIndex = getRandom(1, $freeCount);
 			%room = $freeRoom[%freeIndex];
 			$roomOwner[%room] = %character;
 			$freeRoom[%freeIndex] = $freeRoom[$freeCount];
@@ -94,6 +94,7 @@ function createPlayer(%client)
 
 	centerPrint(%client, "");
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
+	commandToClient(%client, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
 
 	//Hat icon for hats
 	%data = noHatIcon.getID();
@@ -125,10 +126,6 @@ function roomPlayers()
 	for (%i = 0; %i < $Despair::RoomCount; %i++)
 	{
 		%room = %i + 1;
-		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
-			continue;
-
-		$freeRoom[$freeCount++] = %room;
 		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 		%roomDoor.lockId = "R"@%room;
 		%roomDoor.lockState = true;
@@ -136,6 +133,10 @@ function roomPlayers()
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
 		%roomCloset.setItem("");
+		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
+			continue;
+
+		$freeRoom[$freeCount++] = %room;
 	}
 
 	%count = $DefaultMiniGame.numMembers;
@@ -261,8 +262,6 @@ function despairPrepareGame()
 		$memorial[%i].setTransform("0 0 -300");
 	}
 
-	roomPlayers();
-
 	$chatDelay = 0.5;
 
 	$DespairTrial = "";
@@ -293,6 +292,8 @@ function despairPrepareGame()
 	$EnvGuiServer::FogDistance = 120;
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
+
+	roomPlayers();
 
 	DespairSetWeapons(1);
 	serverStopSong();

@@ -176,22 +176,16 @@ function getPaperEvidence()
 			%msg = %msg SPC %list;
 
 		case 2:
-			if(getRandom() < 0.6) //Only 60% accurate
-				%character = $pickedKiller.character;
-			else
-				%character = %inno[getRandom(0, %innoCount-1)];
-			%msg = "Suspect of yesterday murder is 60% likely to be";
-			%high = -1;
-			if(%character.gender $= "male")
-				%msg = %msg SPC "a male";
-			else
-				%msg = %msg SPC "a female";
+			%character = %inno[getRandom(0, %innoCount-1)];
+			%a = getSubStr(getWord(%character.name, 0), 0, 1);
+			%b = getSubStr(getWord(%character.name, 1), 0, 1);
+			%rng = getRandom(0, 2);
+			if(%rng == 1)
+				%a = "#";
+			if(%rng == 2)
+				%b = "#";
 
-			%choice[%high++] = "student";
-			%choice[%high++] = "delinquent";
-			%choice[%high++] = "sophomore";
-			%choice[%high++] = "graduate";
-			%msg = %msg SPC %choice[getRandom(%high)];
+			%msg = %a @ "." @ %b @ ". was falsely accused of murder!";
 
 		case 3:
 			%msg = "A number of people -";
@@ -206,7 +200,7 @@ function getPaperEvidence()
 			{
 				%a = getSubStr(getWord(%pick[%i].name, 0), 0, 1);
 				%b = getSubStr(getWord(%pick[%i].name, 1), 0, 1);
-				%rng = getRandom(0, 2);
+				%rng = getRandom(1, 2);
 				if(%rng == 1)
 					%a = "#";
 				if(%rng == 2)
