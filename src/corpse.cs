@@ -171,6 +171,9 @@ function Player::carryTick(%this)
 		}
 		else
 		{
+			%player.bloody["rhand"] = true;
+			%player.bloody["lhand"] = true;
+			%player.applyAppearance();
 			%this.health = $Despair::CritThreshold;
 			%this.damage(%player, %this.getPosition(), 5, "choking");
 			%this.pools = 1000;
@@ -237,7 +240,7 @@ package DespairCorpses
 							%obj.bloody["lhand"] = true;
 							%player.bloodyWriting = 2;
 						}
-						%obj.applyAppearance(%obj.character);
+						%obj.applyAppearance();
 						%obj.playThread(2, "armReadyBoth");
 					}
 					else

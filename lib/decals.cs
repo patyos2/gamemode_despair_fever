@@ -1,4 +1,4 @@
-$DecalLimit = 200;
+$DecalLimit = 300;
 $DecalTimeout = ""; // 30000;
 
 if ($DecalTableHead $= "")

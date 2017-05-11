@@ -254,7 +254,7 @@ function despairOnMorning()
 		%a[%j] = %x;
 	}
 
-	%evidencePapers = $deathCount > 0 ? 0 : $days;
+	%evidencePapers = 0; //$deathCount <= 0; //single paper per day //HOW ABOUT NO PAPER A DAY
 	%tipsPapers = getRandom(3, 6);
 	%trashPapers = getRandom(3, 6);
 	//Spawn evidence
