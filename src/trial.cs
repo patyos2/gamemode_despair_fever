@@ -391,7 +391,7 @@ function despairOnNight()
 		%a[%j] = %x;
 	}
 
-	%detectiveCount = getRandom(0, 2);
+	%detectiveCount = getRandom(1, 2);
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%a[%i]];
@@ -487,7 +487,7 @@ function courtPlayers()
 				else if(%player.suicide)
 					%state = "SUICIDE";
 				else
-					%state = "RDM";
+					%state = "AFK";
 			}
 			%doll = new Player()
 			{

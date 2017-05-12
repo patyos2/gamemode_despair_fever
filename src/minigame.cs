@@ -272,7 +272,7 @@ function despairPrepareGame()
 	$currentKiller = "";
 	$days = 0;
 	$deathCount = 0;
-	$maxDeaths = mCeil(GameCharacters.getCount() / 4); //24 chars = 6 deaths, 16 chars = 4 deaths, 8 chars = 2 deaths
+	$maxDeaths = getMax(1, $aliveCount);
 	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
 		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
@@ -452,6 +452,8 @@ package DespairFever
 
 		if(!$currentKiller)
 			createPlayer(%client);
+
+		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
 	}
 
 	function MiniGameSO::removeMember($DefaultMiniGame, %client)
@@ -500,12 +502,11 @@ package DespairFever
 			return Parent::checkLastManStanding($DefaultMiniGame);
 		if (isEventPending($DefaultMiniGame.restartSchedule))
 			return;
-		$maxDeaths = mCeil(GameCharacters.getCount() / 4); //24 chars = 6 deaths, 16 chars = 4 deaths, 8 chars = 2 deaths
 
-		%alive = 0;
+		$aliveCount = 0;
 		%killerAlive = 0;
 		%otherAlive = 0;
-		
+
 		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		{
 			%client = $DefaultMiniGame.member[%i];
@@ -519,9 +520,12 @@ package DespairFever
 			else
 				%otherAlive = 1;
 
-			%alive++;
+			$aliveCount++;
 			%last = %client;
 		}
+
+		$maxDeaths = getMax(1, $aliveCount - 4);
+
 		if(!%otherAlive)
 		{
 			talk("Everybody is dead dave");
@@ -532,7 +536,7 @@ package DespairFever
 			talk("Killer is dead, rip");
 			despairEndGame();
 		}
-		if(%alive == 1)
+		if($aliveCount == 1)
 		{
 			talk("I AM THE ONE AND ONLY");
 			despairEndGame();
