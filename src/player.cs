@@ -125,7 +125,7 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 {
 	if(%end)
 	{
-		%obj.setSpeedScale(1);
+		%obj.updateSpeedScale();
 		return;
 	}
 	%obj.setWhiteOut(0.1);
@@ -235,6 +235,28 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 function PlayerFrozenArmor::onTrigger(%this, %obj, %slot, %state)
 {
 	PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state);
+}
+
+function Player::setSpeedScale(%obj, %scale)
+{
+	%db = %obj.getDataBlock();
+
+	%obj.setMaxForwardSpeed(%db.maxForwardSpeed * %scale);
+	%obj.setMaxBackwardSpeed(%db.maxBackwardSpeed * %scale);
+	%obj.setMaxSideSpeed(%db.maxSideSpeed * %scale);
+	
+	%obj.setMaxCrouchForwardSpeed(%db.maxForwardCrouchSpeed * %scale);
+	%obj.setMaxCrouchBackwardSpeed(%db.maxBackwardCrouchSpeed * %scale);
+	%obj.setMaxCrouchSideSpeed(%db.maxSideCrouchSpeed * %scale);
+}
+
+function Player::updateSpeedScale(%obj)
+{
+	if(%obj.speedScale $= "")
+		%obj.speedScale = 1;
+	if(isObject(%obj.character) && %obj.character.trait["Athletic"])
+		%obj.speedScale += 0.1;
+	%obj.setSpeedScale(%obj.speedScale);
 }
 
 function Player::onLight(%this)

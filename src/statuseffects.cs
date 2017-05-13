@@ -80,7 +80,7 @@ function Player::setStatusEffect(%player, %slot, %effect)
 			//
 
 		default:
-			%player.setSpeedScale(1);
+			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
 	}
 	%player.statusEffect[%slot] = %effect;

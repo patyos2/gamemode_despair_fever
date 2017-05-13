@@ -108,6 +108,13 @@ function createPlayer(%client)
 	%client.spawnPlayer();
 	%player = %client.player;
 	%player.character = %character; //post-death reference to character
+
+	if(%character.trait["Extra Tough"])
+	{
+		%player.maxhealth = 110;
+		%player.health = 110;
+	}
+
 	%character.player = %player;
 	%player.setDatablock(PlayerDespairArmor);
 	%player.room = %room;

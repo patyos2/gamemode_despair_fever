@@ -9,7 +9,13 @@ function serverCmdTraits(%this)
 {
 	if(!isObject(%character = %this.character))
 		return;
-	messageClient(%this, '', '\c5Your traits are\c6: %1\c5!', NaturalGrammarList(%character.traitList));
+	messageClient(%this, '', '\c5Your traits are\c6:');
+	for(%i = 0; %i < getFieldCount(%character.traitList); %i++)
+	{
+		%trait = getField(%character.traitList, %i);
+		%desc = $Despair::Traits::Description[%trait];
+		messageClient(%this, '', ' \c5%1 - \c6%2', %trait, %desc);
+	}
 }
 
 function serverCmdFakeSpeed(%this, %thing)
@@ -27,7 +33,7 @@ function serverCmdFakeSpeed(%this, %thing)
 			%player.setSpeedScale(0.6);
 			messageClient(%this, '', '\c5You will now have the same walkspeed as \c6Exhausted\c5. \c3Dash\c5 to cancel.');
 		case "default":
-			%player.setSpeedScale(1);
+			%player.updateSpeedScale();
 			messageClient(%this, '', '\c5Your walkspeed is now normal.');
 		default:
 			messageClient(%this, '', '\c5Usage: \c3/fakeSpeed tired, exhausted \c5OR\c3 default\c5 for normal speed.');
