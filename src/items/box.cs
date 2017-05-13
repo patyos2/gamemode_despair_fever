@@ -43,7 +43,7 @@ function KillerBoxImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
 	if (isObject(%obj.client))
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This box contains something...\nClick to dump its contents!");
+		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This box contains something...\nClick to dump its contents! Rightclick to dispose of it.");
 }
 
 function KillerBoxImage::onUnMount(%this, %obj, %slot)
@@ -86,4 +86,13 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 
 	if (isObject(%obj.client))
 		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You dump the contents and discard the box.", 2);
+}
+
+function KillerBoxImage::onRightClick(%this, %obj, %slot)
+{
+	if(%obj.getImageState(0) !$= "Ready")
+		return;
+	%obj.removeTool(%obj.currTool);
+	if (isObject(%obj.client))
+		commandToClient(%obj.client, 'CenterPrint', "\c5You dispose of the box.");
 }

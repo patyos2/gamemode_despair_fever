@@ -5,6 +5,13 @@ function serverCmdKeepCharacter(%this)
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
 }
 
+function serverCmdTraits(%this)
+{
+	if(!isObject(%character = %this.character))
+		return;
+	messageClient(%this, '', '\c5Your traits are\c6: %1\c5!', NaturalGrammarList(%character.traitList));
+}
+
 function serverCmdFakeSpeed(%this, %thing)
 {
 	if(!isObject(%player = %this.player))

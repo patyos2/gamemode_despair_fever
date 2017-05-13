@@ -1,6 +1,6 @@
 //Blood event
-registerOutputEvent(Player, setBloody, "list ALL 0 chest 1 hands 2 shoes 3 head 4" TAB "list ALL 0 front 1 back 2" TAB "bool 0", 1);
-function Player::setBloody(%this, %type, %dir, %bool, %client)
+registerOutputEvent(Player, setBloody, "list ALL 0 chest 1 hands 2 shoes 3 head 4" TAB "list ALL 0 front 1 back 2" TAB "bool 0", 0);
+function Player::setBloody(%this, %type, %dir, %bool)
 {
 	switch(%type)
 	{
@@ -48,8 +48,7 @@ function Player::setBloody(%this, %type, %dir, %bool, %client)
 				%this.bloodyFootprints = 0;
 	}
 	%this.bloody = %this.bloody["lhand"] || %this.bloody["rhand"] || %this.bloody["chest_front"] || %this.bloody["chest_back"] || %this.bloody["head"];
-	if (isObject(%client))
-		%client.applyBodyParts();
+	%this.applyAppearance();
 }
 
 //Set camera from brick to direction
@@ -109,6 +108,12 @@ package DespairEvents
 		}
 
 		parent::onTrigger(%this, %obj, %trig, %tog);
+	}
+
+	function Armor::onEnterLiquid(%data, %obj, %coverage, %type)
+	{
+		Parent::onEnterLiquid(%data, %obj, %coverage, %type);
+		%obj.setBloody(0, 0, 0);
 	}
 };
 activatePackage("DespairEvents");

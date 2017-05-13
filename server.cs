@@ -1,3 +1,4 @@
+registerLoadingScreen("https://cdn.discordapp.com/attachments/307876244744306698/313026827901730816/loadingScreen.png", "png");
 $Despair::Path = filePath(expandFileName("./description.txt")) @ "/";
 function r(%p)
 {
@@ -43,6 +44,7 @@ exec("./src/player.cs");
 exec("./src/queuechooser.cs");
 exec("./src/sleep.cs");
 exec("./src/statuseffects.cs");
+exec("./src/traits.cs");
 exec("./src/trial.cs");
 exec("./src/vocal.cs");
 exec("./src/weapons.cs");
@@ -85,3 +87,6 @@ if (!isObject(TrialIntroPath))
 
 if (!isObject(TrialDiscussionPath))
 	exec("./src/campaths/TrialDiscussion.cs");
+
+
+addExtraResource($Despair::Path @ "res/logo.png");

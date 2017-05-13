@@ -26,7 +26,7 @@ function GameConnection::examineObject(%client, %col)
 			%text = %text @ "\n\c0" @ %ref @ " dead.";
 			if (%col.suicide)
 				%text = %text @ "\n\c5It was suicide...";
-			if(%player.character.detective)
+			if(%player.character.trait["investigative"])
 			{
 				%tod = %col.attackDayTime[%col.attackCount];
 				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction

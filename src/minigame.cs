@@ -39,13 +39,37 @@ function createPlayer(%client)
 			client = %client;
 			clientName = %client.getPlayerName();
 		};
+		//pick traits
+		%positive = $Despair::Traits::Positive;
+		%neutral = $Despair::Traits::Neutral;
+		%negative = $Despair::Traits::Negative;
+		%traitCount = getRandom(2, 3);
+		while(%traitCount-- >= 0)
+		{
+			if(%type $= %positive)
+				%type = %negative;
+			else if(getRandom(0, 1) == 0)
+			{
+				%type = %positive;
+				if(%traitCount == 0) //guaranteed negative
+					%traitCount++;
+			}
+			else
+				%type = %neutral;
+			%trait = getField(%type, getRandom(0, getFieldCount(%type) - 1));
+			%character.trait[%trait] = true;
+			%character.traitList = setField(%character.traitList, getFieldCount(%character.traitList), %trait);
 
+			%color = %type $= %positive ? "\c2" : (%type $= %negative ? "\c0" : "\c6");
+			%desc = $Despair::Traits::Description[%trait];
+			messageClient(%client, '', '\c5You now have %1%2\c5 trait! %3', %color, %trait, %desc);
+		}
+		messageClient(%client, '', '\c5Say \c3/traits\c5 to bring up your traits again.');
 		GameCharacters.add(%character);
 		%client.character = %character;
 	}
 	else
 	{
-		%character.detective = 0;
 		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
 	}
 
@@ -92,7 +116,7 @@ function createPlayer(%client)
 	%player.setTransform(%roomSpawn.getSpawnPoint());
 	%client.updateAFKCheck();
 
-	centerPrint(%client, "");
+	centerPrint(%client, "<bitmap:" @ $Despair::Path @ "res/logo>", 6);
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
 	commandToClient(%client, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
 

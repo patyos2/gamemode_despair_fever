@@ -391,7 +391,7 @@ function despairOnNight()
 		%a[%j] = %x;
 	}
 
-	%detectiveCount = getRandom(1, 2);
+	//pick traits
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%a[%i]];
@@ -400,12 +400,6 @@ function despairOnNight()
 		{
 			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
-			if(%detectiveCount > 0)
-			{
-				%player.character.detective = true;
-				messageClient(%client, '', "\c5You have a \c3Detective\c5 trait! You will get more information from bodies.");
-				%detectiveCount--;
-			}
 		}
 	}
 
