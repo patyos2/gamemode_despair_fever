@@ -40,27 +40,37 @@ function createPlayer(%client)
 			clientName = %client.getPlayerName();
 		};
 		//pick traits
-		%positive = $Despair::Traits::Positive;
-		%neutral = $Despair::Traits::Neutral;
-		%negative = $Despair::Traits::Negative;
+		%typePositive = $Despair::Traits::Positive;
+		%typeNeutral = $Despair::Traits::Neutral;
+		%typeNegative = $Despair::Traits::Negative;
 		%traitCount = getRandom(2, 3);
 		while(%traitCount-- >= 0)
 		{
-			if(%type $= %positive)
-				%type = %negative;
+			if(%typeStr $= "positive")
+				%typeStr = "negative";
 			else if(getRandom(0, 1) == 0)
 			{
-				%type = %positive;
+				%typeStr = "positive";
 				if(%traitCount == 0) //guaranteed negative
 					%traitCount++;
 			}
 			else
-				%type = %neutral;
-			%trait = getField(%type, getRandom(0, getFieldCount(%type) - 1));
+				%typeStr = "neutral";
+			%lastTrait = %trait;
+			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
+			%type[%typeStr] = removeField(%type[%typeStr], %index);
+
+			//Check if we picked conflicting traits
+			if((%lastTrait $= "Extra Tough" && %trait $= "Frail") || (%lastTrait $= "Athletic" && %trait $= "Sluggish") || (%lastTrait $= "Loudmouth" && %trait $= "Softspoken"))
+			{
+				%trait = %lastTrait; //rollback a bit, we still need a negative
+				%traitCount++;
+				continue;
+			}
 			%character.trait[%trait] = true;
 			%character.traitList = setField(%character.traitList, getFieldCount(%character.traitList), %trait);
 
-			%color = %type $= %positive ? "\c2" : (%type $= %negative ? "\c0" : "\c6");
+			%color = %typeStr $= "positive" ? "\c2" : (%typeStr $= "negative" ? "\c0" : "\c6");
 			%desc = $Despair::Traits::Description[%trait];
 			messageClient(%client, '', '\c5You now have %1%2\c5 trait! %3', %color, %trait, %desc);
 		}
@@ -94,12 +104,14 @@ function createPlayer(%client)
 
 			%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 			%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+			%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
 		}
 	}
 	else
 	{
 		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
+		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
 	}
 
 	%character.room = %room;
@@ -109,10 +121,10 @@ function createPlayer(%client)
 	%player = %client.player;
 	%player.character = %character; //post-death reference to character
 
-	if(%character.trait["Extra Tough"])
+	if(%character.trait["Frail"])
 	{
-		%player.maxhealth = 110;
-		%player.health = 110;
+		%player.maxhealth = 90;
+		%player.health = 90;
 	}
 
 	%character.player = %player;
@@ -147,6 +159,17 @@ function createPlayer(%client)
 
 		%player.addTool(KeyItem, %props);
 	}
+
+	if(%character.trait["Hatter"])
+	{
+		%choices = "HatBlindItem HatCatItem HatChefItem HatCowboyItem HatDuckItem HatFancyItem HatFedoraItem HatFoxItem HatGangsterItem HatMountyItem HatPartyhatItem HatRHoodItem HatStrawItem HatSunglassesItem HatTophatItem HatWizardItem";
+		%pick = getWord(%choices, getRandom(0, getWordCount(%choices)-1));
+		if(isObject(%roomCloset))
+			%roomCloset.setItem(%pick);
+		else
+			%pick.onPickup("", %player);
+	}
+
 	return %player;
 }
 

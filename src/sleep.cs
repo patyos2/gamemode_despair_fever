@@ -3,6 +3,13 @@ datablock StaticShapeData(PlaneShapeGlowData)
 	shapeFile = $Despair::Path @ "res/shapes/plane_glow.dts";
 };
 
+datablock AudioProfile(SnoringLoopSound)
+{
+	fileName = $Despair::Path @ "res/sounds/snoring.ogg";
+	description = audioClosestLooping3D;
+	preload = true;
+};
+
 function Player::KnockOut(%this, %duration)
 {
 	%this.changeDataBlock(PlayerCorpseArmor);
@@ -67,6 +74,12 @@ function Player::KnockOut(%this, %duration)
 	{
 		%this.freshSleep = true;
 		%this.removeStatusEffect($SE_passiveSlot);
+	}
+
+	if(%this.character.trait["Snorer"])
+	{
+		%this.stopAudio(0);
+		%this.playAudio(0, SnoringLoopSound);
 	}
 	%this.KnockOutTick(%duration);
 }
@@ -160,6 +173,10 @@ function Player::WakeUp(%this)
 		%this.freshSleep = "";
 	}
 	%this.currResting = false;
+
+	if(%this.character.trait["Snorer"])
+		%this.stopAudio(0);
+
 	%client.updateBottomPrint();
 }
 
@@ -184,6 +201,11 @@ function serverCmdSleep(%this, %bypass)
 		%pl.currResting = 1;
 		%pl.isBody = true;
 		%this.chatMessage("\c6You are faking sleep. Press any key to get up.");
+		if(%this.character.trait["Snorer"])
+		{
+			%pl.stopAudio(0);
+			%pl.playAudio(0, SnoringLoopSound);
+		}
 		return;
 	}
 

@@ -254,8 +254,13 @@ function Player::updateSpeedScale(%obj)
 {
 	if(%obj.speedScale $= "")
 		%obj.speedScale = 1;
-	if(isObject(%obj.character) && %obj.character.trait["Athletic"])
-		%obj.speedScale += 0.1;
+	if(isObject(%obj.character))
+	{
+		if (%obj.character.trait["Athletic"])
+			%obj.speedScale += 0.1;
+		else if (%obj.character.trait["Sluggish"])
+			%obj.speedScale -= 0.1;
+	}
 	%obj.setSpeedScale(%obj.speedScale);
 }
 

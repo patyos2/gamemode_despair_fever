@@ -103,25 +103,6 @@ function drawLine(%ref, %a, %b, %color)
 	return %ref;
 }
 
-function muffleText(%text, %prob)
-{
-	if (%text $= "")
-		return;
-	if (%prob $= "")
-		%prob = 0.2;
-	if (%prob <= 0)
-		return %text;
-	%result = %text;
-	for (%i=0;%i<strlen(%text);%i++)
-	{
-		if (getSubStr(%text, %i, %i+1) $= " ") //space character
-			continue;
-		if (getRandom() < %prob)
-			%result = getSubStr(%result, 0, %i) @ "#" @ getSubStr(%result, %i+1, strlen(%result));
-	}
-	return %result;
-}
-
 function naturalGrammarList(%list, %b)
 {
 	%fields = getFieldCount(%list);

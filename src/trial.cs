@@ -1,3 +1,9 @@
+datablock AudioProfile(ObjectionSound)
+{
+	fileName = $Despair::Path @ "res/sounds/objection.wav";
+	description = audio2D;
+	preload = true;
+};
 datablock StaticShapeData(DespairStand)
 {
 	shapeFile = $Despair::Path @ "res/shapes/stand.dts";
@@ -145,7 +151,7 @@ function despairOnKill(%victim, %attacker, %crit)
 				if(%attacker.player.unconscious)
 					%attacker.player.WakeUp();
 				if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
-						%attacker.player.removeStatusEffect($SE_sleepSlot);
+					%attacker.player.removeStatusEffect($SE_sleepSlot);
 			}
 			if ($deathCount >= $maxDeaths)
 				DespairSetWeapons(0);
@@ -369,7 +375,12 @@ function despairOnNight()
 		ServerPlaySong("DespairMusicOpeningIntro");
 
 		if(%client.player.unconscious)
-			%client.player.WakeUp();
+		{
+			%client.setControlObject(%cam = %client.camera);
+			%cam.setMode("CORPSE", %client.player);
+			%client.player.currResting = 1;
+			%client.chatMessage("\c6You are faking sleep. Press any key to get up.");
+		}
 		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
 			%client.player.removeStatusEffect($SE_sleepSlot);
 	}
@@ -849,4 +860,39 @@ function DespairTrialDropTool(%cl, %slot)
 	%item.canPickUp = false;
 	MissionCleanup.add(%item);
 	GameRoundCleanup.add(%item);
+}
+
+function DespairTrialOnAlarm(%client)
+{
+	if(!isObject(%pl = %client.player))
+		return;
+	if($DespairTrialDiscussion $= "")
+		return;
+
+	if(%pl.character.trait["Loudmouth"] && !%pl.loudmouthed)
+	{
+		%high = -1;
+		%choice[%high++] = "SHUT IT!!!";
+		%choice[%high++] = "LET ME SPEAK GODDAMNIT!!!";
+		%choice[%high++] = "A MOMENT, PLEASE!!!";
+		%choice[%high++] = "ORDER IN THE COURT!!!";
+		%choice[%high++] = "OBJECTION!!!";
+		%choice[%high++] = "YOU'RE ALL STUPID!!!";
+		%choice[%high++] = "SHUT!! UP!!!";
+		%text = %choice[getRandom(%high)];
+
+		%pl.loudmouthed = true; //One-use
+		%pl.emote(AlarmProjectile);
+		%pl.playThread(3, "talk");
+		%pl.schedule(strLen(%text) * 35, "playThread", 3, "root");
+		serverPlay2d("ObjectionSound");
+
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%member = ClientGroup.getObject(%i);
+			if(%member != %client && isObject(%member.player))
+				%member.timeOut = $Sim::Time + 5;
+			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>,<font:Impact:20> %4', getTimeString(mFloor($Sim::Time - $DespairTrial)), getCharacterName(%client.character, 1), "yells", %text);
+		}
+	}
 }

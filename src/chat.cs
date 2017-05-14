@@ -56,6 +56,12 @@ package DespairChat
 			return;
 		}
 
+		if($Sim::Time < %client.timeOut) //Special trial ability
+		{
+			messageClient(%client, '', '\c5You\'re unable to speak\c6!');
+			return;
+		}
+
 		if(!$despairTrial)
 		{
 			%time = getDayCycleTime();
@@ -100,6 +106,7 @@ package DespairChat
 		{
 			%type = "stammers";
 			%range = 8;
+			%text = stutterText(%text, 0.2);
 		}
 		if(getSubStr(%text, 0, 1) $= "@") //Whispering
 		{
@@ -117,6 +124,22 @@ package DespairChat
 			%props = %player.getItemProps(%slot);
 			radioTransmitMessage(%player, %props.channel, %text);
 		}
+
+		if(%player.character.trait["Nervous"])
+		{
+			%text = stutterText(%text);
+		}
+
+		if(%player.character.trait["Loudmouth"])
+		{
+			%range += 3;
+		}
+		else if(%player.character.trait["Softspoken"])
+		{
+			%range *= 0.8;
+			%text = softSpeakText(%text);
+		}
+
 		if(%type $= "says")
 		{
 			serverPlay3D(%sound, %player.getHackPosition());
@@ -207,3 +230,62 @@ package DespairChat
 };
 
 activatePackage("DespairChat");
+
+//Text parse funcs
+function muffleText(%text, %prob)
+{
+	if (%text $= "")
+		return;
+	if (%prob $= "")
+		%prob = 0.2;
+	if (%prob <= 0)
+		return %text;
+	%result = %text;
+	for (%i=0;%i<strlen(%text);%i++)
+	{
+		if (getSubStr(%text, %i, 1) $= " ") //space character
+			continue;
+		if (getRandom() < %prob)
+			%result = getSubStr(%result, 0, %i) @ "#" @ getSubStr(%result, %i+1, strlen(%result));
+	}
+	return %result;
+}
+
+function softSpeakText(%text)
+{
+	if (%text $= "")
+		return;
+	%result = strlwr(%text);
+	for (%i=0;%i<strlen(%text);%i++)
+	{
+		if ((%char = getSubStr(%result, %i, 1)) $= " ") //space character
+			continue;
+		if (%char $= "." || %char $= "!" || %char $= "?")
+		{
+			%result = getSubStr(%result, 0, %i+1) @ ".." @ getSubStr(%result, getMin(%i+2, strlen(%result)), strlen(%result));
+			%i += 2;
+		}
+	}
+	if(getSubStr(%result, strlen(%result)-1, 1) !$= ".")
+		%result = %result @ "...";
+	return %result;
+}
+
+function stutterText(%text, %prob)
+{
+	if (%text $= "")
+		return;
+	if (%prob $= "")
+		%prob = 0.4;
+	if (%prob <= 0)
+		return %text;
+	%result = %text;
+	for (%i=0;%i<strlen(%result);%i++)
+	{
+		if (strpos("aeiou ", %char = getSubStr(%result, %i, 1)) != -1) //incompatible
+			continue;
+		if (getRandom() < %prob)
+			%result = getSubStr(%result, 0, %i) @ %char @ %char @ getSubStr(%result, %i+1, strlen(%result));
+	}
+	return %result;
+}

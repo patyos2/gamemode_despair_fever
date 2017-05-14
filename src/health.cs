@@ -54,6 +54,9 @@ package DespairHealth
 		if(%player.isCrouched())
 			%damage *= 3;
 
+		if(%player.character.trait["Extra Tough"] && (%type $= "blunt" || %type $= "sharp"))
+			%damage *= 0.9;
+
 		if (%src.getType() & $TypeMasks::PlayerObjectType)
 		{
 			%sourceObject = %src;
@@ -159,8 +162,12 @@ package DespairHealth
 				return 1;
 			}
 		}
-		%player.playPain();
-		%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
+		if(!%player.character.trait["Feel No Pain"])
+		{
+			if(%player.health > 0 && !%player.unconscious)
+				%player.playPain();
+			%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
+		}
 		return 1;
 	}
 

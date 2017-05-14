@@ -202,8 +202,8 @@ function Player::playShock(%player)
 
 function serverCmdAlarm(%client)
 {
-	if($DespairTrial) //fuck that noise
-		return;
+	if($DespairTrial)
+		return DespairTrialOnAlarm(%client);
 
 	if(isObject(%player = %client.player))
 	{
@@ -268,10 +268,10 @@ package DespairVoice
 {
 	function Player::playPain(%player)
 	{
-		if(%player.health <= 0)
-			return;
 		if(isObject(%player.character))
+		{
 			%gender = %player.character.gender;
+		}
 		if(%gender $= "")
 			%gender = "male";
 		%player.stopAudio(0);
