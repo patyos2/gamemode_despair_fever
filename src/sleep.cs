@@ -82,6 +82,7 @@ function Player::KnockOut(%this, %duration)
 		%this.playAudio(0, SnoringLoopSound);
 	}
 	%this.KnockOutTick(%duration);
+	%this.lastKO = $Sim::Time;
 }
 
 function Player::KnockOutTick(%this, %ticks, %done)
@@ -166,7 +167,7 @@ function Player::WakeUp(%this)
 	{
 		%pos = %this.getPosition();
 		%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
-		if(!%ray || %ray.getName() !$= "_bed")
+		if(!%this.character.trait["Heavy Sleeper"] && (!%ray || %ray.getName() !$= "_bed"))
 			%this.setStatusEffect($SE_passiveSlot, "sore back");
 		else if(%this.freshSleep)
 			%this.setStatusEffect($SE_passiveSlot, "shining");
@@ -218,11 +219,14 @@ function serverCmdSleep(%this, %bypass)
 	%sec = %se $= "exhausted" ? 80 : 60;
 	%pos = %pl.getPosition();
 
-	%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
-	if(!%ray || %ray.getName() !$= "_bed")
+	if(!%this.character.trait["Heavy Sleeper"])
 	{
-		%sec += 10;
-		%cold = "\n<color:FF0000>on the cold floor";
+		%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
+		if(!%ray || %ray.getName() !$= "_bed")
+		{
+			%sec += 10;
+			%cold = "\n<color:FF0000>on the cold floor";
+		}
 	}
 	if (%bypass)
 	{

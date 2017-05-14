@@ -28,6 +28,71 @@ datablock ItemData(DespairEmptyFloatItem)
 
 function DespairEmptyFloatItem::onPickup() {}
 
+function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10, %m11, %m12, %m13, %m14, %m15, %m16, %m17, %m18, %m19, %m20, %m20, %m22, %m23, %m24)
+{
+	if (!isObject(%pl = %client.player) || (%pl.unconscious && !%pl.currResting))
+		return;
+
+	if($Sim::Time - %client.lastSpeakTime < $chatDelay)
+	{
+		messageClient(%client, '', '\c5Slow down\c6!');
+		return;
+	}
+
+	if($Sim::Time < %client.timeOut) //Special trial ability
+	{
+		messageClient(%client, '', '\c5You\'re unable to act\c6!');
+		return;
+	}
+
+	if(%pl.unconscious)
+		return;
+
+	%text = %m1;
+	for (%i=2; %i<=24; %i++)
+		%text = %text SPC %m[%i];
+	%text = trim(stripMLControlChars(%text));
+	if (%text $= "")
+		return;
+	
+	%client.lastSpeakTime = $Sim::Time;
+	%name = getCharacterName(%client.character, $despairTrial);
+
+	if(!$despairTrial)
+	{
+		%time = getDayCycleTime();
+		%time += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+		%time = %time - mFloor(%time); //get rid of excess stuff
+
+		%time = getDayCycleTimeString(%time, 1);
+	}
+	else
+	{
+		%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
+	}
+
+	%count = ClientGroup.getCount();
+	for (%i = 0; %i < %count; %i++)
+	{
+		%other = ClientGroup.getObject(%i);
+		if (%other.miniGame == $DefaultMiniGame && isObject(%other.player))
+		{
+			if(%other.player.unconscious)
+				continue;
+			%a = %pl.getEyePoint();
+			%b = %other.player.getEyePoint();
+			%mask = $TypeMasks::All ^ $TypeMasks::FxBrickAlwaysObjectType;
+			%ray = containerRayCast(%a, %b, %mask, %client.player);
+			if (%ray && %ray.getClassName() !$= "Player") //Can't see emote
+				continue;
+			if (vectorDist(%a, %b) > 24) //Out of range
+				continue;
+		}
+
+		messageClient(%other, '', '\c7[%1]<color:ffff80>%2 %3', %time, %name, %text);
+	}
+}
+
 package DespairChat
 {
 	function serverCmdStartTalking(%client)
@@ -106,7 +171,7 @@ package DespairChat
 		{
 			%type = "stammers";
 			%range = 8;
-			%text = stutterText(%text, 0.2);
+			%text = stutterText(%text, 0.1);
 		}
 		if(getSubStr(%text, 0, 1) $= "@") //Whispering
 		{
@@ -276,7 +341,7 @@ function stutterText(%text, %prob)
 	if (%text $= "")
 		return;
 	if (%prob $= "")
-		%prob = 0.4;
+		%prob = 0.2;
 	if (%prob <= 0)
 		return %text;
 	%result = %text;

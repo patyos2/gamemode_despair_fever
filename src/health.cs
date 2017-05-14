@@ -168,6 +168,9 @@ package DespairHealth
 				%player.playPain();
 			%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		}
+		if(%player.character.trait["Hemophiliac"] && (%type $= "blunt" || %type $= "sharp"))
+			%player.setStatusEffect($SE_damageSlot, "bleeding");
+
 		return 1;
 	}
 

@@ -879,6 +879,13 @@ function DespairTrialOnAlarm(%client)
 		%choice[%high++] = "OBJECTION!!!";
 		%choice[%high++] = "YOU'RE ALL STUPID!!!";
 		%choice[%high++] = "SHUT!! UP!!!";
+		//%choice[%high++] = "NO!! THAT'S WRONG!!!";
+		%choice[%high++] = "SHUT YOUR MOUTH ALREADY!!!";
+		%choice[%high++] = "STOP SPOUTING BULLSHIT!!!";
+		%choice[%high++] = "NOW WAIT JUST A SECOND!!!";
+		%choice[%high++] = "KNOW YOUR PLACE!!!";
+		%choice[%high++] = "I'VE HAD ENOUGH!!!";
+
 		%text = %choice[getRandom(%high)];
 
 		%pl.loudmouthed = true; //One-use
@@ -891,7 +898,7 @@ function DespairTrialOnAlarm(%client)
 		{
 			%member = ClientGroup.getObject(%i);
 			if(%member != %client && isObject(%member.player))
-				%member.timeOut = $Sim::Time + 5;
+				%member.timeOut = $Sim::Time + 7;
 			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>,<font:Impact:20> %4', getTimeString(mFloor($Sim::Time - $DespairTrial)), getCharacterName(%client.character, 1), "yells", %text);
 		}
 	}

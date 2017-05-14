@@ -48,6 +48,7 @@ function PlayerDespairArmor::onAdd(%data, %player)
 	%player.health = 100;
 	%player.swingSpeedMod = 1;
 	%player.speedScale = 1;
+	%player.traitSchedule();
 }
 
 datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
@@ -252,8 +253,7 @@ function Player::setSpeedScale(%obj, %scale)
 
 function Player::updateSpeedScale(%obj)
 {
-	if(%obj.speedScale $= "")
-		%obj.speedScale = 1;
+	%obj.speedScale = 1;
 	if(isObject(%obj.character))
 	{
 		if (%obj.character.trait["Athletic"])
