@@ -79,13 +79,7 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 		{
 			if(%other.player.unconscious)
 				continue;
-			%a = %pl.getEyePoint();
-			%b = %other.player.getEyePoint();
-			%mask = $TypeMasks::All ^ $TypeMasks::FxBrickAlwaysObjectType;
-			%ray = containerRayCast(%a, %b, %mask, %client.player);
-			if (%ray && %ray.getClassName() !$= "Player") //Can't see emote
-				continue;
-			if (vectorDist(%a, %b) > 24) //Out of range
+			if (vectorDist(%other.player.getEyePoint(), %pl.getEyePoint()) > 24) //Out of range
 				continue;
 		}
 
@@ -151,6 +145,7 @@ package DespairChat
 				{
 					messageClient(%member, '', '\c7[%1]<color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
 				}
+				$lastDeadText = %text; //for medium
 			}
 			echo("-+ (DEAD) " @ %name @ ": " @ %text);
 			return;
@@ -297,7 +292,7 @@ package DespairChat
 activatePackage("DespairChat");
 
 //Text parse funcs
-function muffleText(%text, %prob)
+function muffleText(%text, %prob, %char)
 {
 	if (%text $= "")
 		return;
@@ -305,13 +300,15 @@ function muffleText(%text, %prob)
 		%prob = 0.2;
 	if (%prob <= 0)
 		return %text;
+	if (%char $= "")
+		%char = "#";
 	%result = %text;
 	for (%i=0;%i<strlen(%text);%i++)
 	{
 		if (getSubStr(%text, %i, 1) $= " ") //space character
 			continue;
 		if (getRandom() < %prob)
-			%result = getSubStr(%result, 0, %i) @ "#" @ getSubStr(%result, %i+1, strlen(%result));
+			%result = getSubStr(%result, 0, %i) @ %char @ getSubStr(%result, %i+1, strlen(%result));
 	}
 	return %result;
 }

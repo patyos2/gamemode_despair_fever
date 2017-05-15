@@ -80,6 +80,8 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	jumpForce = 0;
 
 	maxTools = 6;
+
+	disableFootsteps = true;
 };
 
 datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
@@ -104,6 +106,8 @@ datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
 	jumpForce = 0;
 
 	maxTools = 6;
+
+	disableFootsteps = true;
 };
 
 function PlayerDespairArmor::doDismount(%this, %obj)
@@ -481,6 +485,9 @@ package DespairPlayerPackage
 
 			if (%pl.unconscious)
 				return;
+
+			if (%pl.isSlipping)
+				return;
 		}
 		Parent::onTrigger(%this, %obj, %slot, %state);
 	}
@@ -505,7 +512,14 @@ package DespairPlayerPackage
 	function Armor::onCollision(%this, %obj, %col, %velocity, %speed)
 	{
 		if (isObject(%col) && %col.getClassName() $= "Item" && %obj.client.miniGame == $defaultMiniGame)
+		{
+			if(!%col.static && %obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 0.2 && getRandom() > 0.3)
+			{
+				%obj.slip();
+				%col.setVelocity(%obj.getVelocity());
+			}
 			return;
+		}
 		Parent::onCollision(%this, %obj, %col, %velocity, %speed);
 	}
 	function serverCmdDropTool(%client, %index)

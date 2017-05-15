@@ -300,7 +300,8 @@ function despairOnMorning()
 		if(isObject(%brick))
 		{
 			%brick.setItem("KillerBoxItem");
-			messageClient($currentKiller, '', '<font:Impact:24>\c5Your closet now contains a box of useful items.');
+			messageClient($currentKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
+			commandToClient($currentKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
 		}
 		//else if($currentKiller.player.addTool("KillerBoxItem") == -1)
 		//	messageClient($currentKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
@@ -676,10 +677,13 @@ function DespairStartDiscussion()
 	$DespairTrialDiscussion = $Sim::Time;
 	$chatDelay = 0.75; //less spam, please
 	ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
-	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ $Despair::DiscussPeriod / 60 @ " minutes\c5 to discuss and reveal the killer.");
+
+	%time = $Despair::DiscussPeriod + (60 * ($deathCount - 1)); //extra minute for every extra body
+
+	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ %time / 60 @ " minutes\c5 to discuss and reveal the killer.");
 	$DefaultMiniGame.chatMessageAll('', "\c5After time has passed you will have to \c0eliminate the killer\c5 by \c3voting.");
 	$DefaultMiniGame.chatMessageAll('', "\c0You cannot afford a mistake. \c5Choose wrong, and everyone but the killer will die.");
-	$DefaultMiniGame.eventSchedule = schedule($Despair::DiscussPeriod * 1000, 0, DespairStartVote);
+	$DefaultMiniGame.eventSchedule = schedule(%time * 1000, 0, DespairStartVote);
 }
 
 function DespairStartVote()
@@ -898,7 +902,7 @@ function DespairTrialOnAlarm(%client)
 		{
 			%member = ClientGroup.getObject(%i);
 			if(%member != %client && isObject(%member.player))
-				%member.timeOut = $Sim::Time + 7;
+				%member.timeOut = $Sim::Time + 10;
 			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>,<font:Impact:20> %4', getTimeString(mFloor($Sim::Time - $DespairTrial)), getCharacterName(%client.character, 1), "yells", %text);
 		}
 	}

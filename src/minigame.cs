@@ -165,11 +165,19 @@ function createPlayer(%client)
 		%choices = "HatBlindItem HatCatItem HatChefItem HatCowboyItem HatDuckItem HatFancyItem HatFedoraItem HatFoxItem HatGangsterItem HatMountyItem HatPartyhatItem HatRHoodItem HatStrawItem HatSunglassesItem HatTophatItem HatWizardItem";
 		%pick = getWord(%choices, getRandom(0, getWordCount(%choices)-1));
 		if(isObject(%roomCloset))
-			%roomCloset.setItem(%pick);
+			%roomCloset.spawnItem("0 0 1", %pick);
 		else
 			%pick.onPickup("", %player);
 	}
 
+	if(%character.trait["Gang Member"])
+	{
+		if(isObject(%roomCloset))
+			%roomCloset.spawnItem("0 0 1", "LockpickItem");
+		else
+			%player.addTool(LockpickItem);
+		HatGangsterItem.onPickup("", %player);
+	}
 	return %player;
 }
 
@@ -579,6 +587,9 @@ package DespairFever
 		}
 
 		$maxDeaths = getMax(1, $aliveCount - 4);
+
+		if($deathCount >= $maxDeaths)
+			DespairSetWeapons(0);
 
 		if(!%otherAlive)
 		{

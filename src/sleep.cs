@@ -10,6 +10,13 @@ datablock AudioProfile(SnoringLoopSound)
 	preload = true;
 };
 
+datablock AudioProfile(SlipSound)
+{
+	fileName = $Despair::Path @ "res/sounds/slip.wav";
+	description = audioQuiet3D;
+	preload = true;
+};
+
 function Player::KnockOut(%this, %duration)
 {
 	%this.changeDataBlock(PlayerCorpseArmor);
@@ -131,9 +138,17 @@ function Player::KnockOutTick(%this, %ticks, %done)
 			%dream = getDreamText();
 			if (getRandom() < 0.15) //less chance for a random character name to appear
 			{
-				%character = GameCharacters.getObject(getRandom(0, GameCharacters.getCount()));
+				%character = GameCharacters.getObject(getRandom(0, GameCharacters.getCount()-1));
 				if (isObject(%character))
 					%dream = %character.name;
+			}
+
+			if(%this.character.trait["Medium"])
+			{
+				if($lastDeadText !$= "" && getRandom() < 0.4)
+					%dream = $lastDeadText;
+				%dream = muffleText(softSpeakText(%dream), 0.2 + (getRandom() * 0.3), "...");
+				$lastDeadText = "";
 			}
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
 		}
@@ -169,6 +184,8 @@ function Player::WakeUp(%this)
 		%ray = containerRayCast(%pos, vectorSub(%pos, "0 0 1"), $TypeMasks::FxBrickObjectType, %this);
 		if(!%this.character.trait["Heavy Sleeper"] && (!%ray || %ray.getName() !$= "_bed"))
 			%this.setStatusEffect($SE_passiveSlot, "sore back");
+		else if(%this.character.trait["Paranoid"])
+			%this.setStatusEffect($SE_passiveSlot, "drowsy");
 		else if(%this.freshSleep)
 			%this.setStatusEffect($SE_passiveSlot, "shining");
 		%this.freshSleep = "";
@@ -179,6 +196,53 @@ function Player::WakeUp(%this)
 		%this.stopAudio(0);
 
 	%client.updateBottomPrint();
+}
+
+function Player::Slip(%this, %ticks)
+{
+	cancel(%this.wakeUpSchedule);
+	if(%this.getState() $= "Dead")
+		return;
+	if(%this.unconscious || %this.health <= 0)
+		return;
+
+	if(%ticks <= 0 && %this.isSlipping)
+	{
+		if(vectorLen(%this.getVelocity()) < 1)
+		{
+			%this.isSlipping = false;
+			%this.setArmThread(look);
+			%this.changeDataBlock(PlayerDespairArmor);
+			%this.setActionThread("sit");
+
+			%this.client.camera.schedule(500, setMode, "Player", %this);
+			%this.client.camera.schedule(500, setControlObject, %client);
+			%this.client.schedule(500, setControlObject, %this);
+			return;
+		}
+	}
+	else if(!%this.isSlipping)
+	{
+		%this.isSlipping = true;
+
+		%this.client.setControlObject(%cam = %this.client.camera);
+		%cam.setMode("CORPSE", %this);
+		%this.changeDatablock(PlayerCorpseArmor);
+		%this.setArmThread(land);
+		%this.setImageTrigger(0, 0);
+		%this.playThread(0, "jump");
+		%this.playThread(1, "root");
+		%this.playThread(2, "root");
+		%this.playThread(3, "death1");
+		%this.setActionThread("root");
+
+		%vel = getWords(vectorScale(%this.getForwardVector(), 7), 0, 1) SPC 3;
+		%vel = vectorAdd(%this.getVelocity(), %vel);
+		%this.setVelocity(%vel);
+
+		serverPlay3d(SlipSound, %this.getPosition());
+	}
+	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks);
 }
 
 function serverCmdSleep(%this, %bypass)

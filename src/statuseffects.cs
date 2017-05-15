@@ -42,7 +42,7 @@ function Player::setStatusEffect(%player, %slot, %effect)
 		//passive buffs/debuffs
 		case "drowsy":
 			%player.setSpeedScale(0.8);
-			%player.swingSpeedMod = 1.2;
+			%player.swingSpeedMod = 1.5;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
 		case "sore back":
@@ -65,7 +65,7 @@ function Player::setStatusEffect(%player, %slot, %effect)
 
 		//damage-related
 		case "bleeding":
-			%player.bleedTicks = 5;
+			%player.bleedTicks = 6;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
 		case "shock":
@@ -128,17 +128,18 @@ function Player::updateStatusEffect(%player, %slot)
 			%pos = %player.getPosition();
 			%decal = spawnDecalFromRayCast(NewBloodDecal, containerRayCast(%pos, VectorSub(%pos, "0 0 1"), $SprayBloodMask));
 			%decal.color = 0.75 + 0.1 * getRandom() @ " 0 0 1";
+			%decal.setNodeColor("ALL", %decal.color);
 			%decal.hideNode("ALL");
 			%decal.unHideNode(blood @ getRandom(3, 4));
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 0;
 			%decal.isBlood = true;
-			%size = 0.7 + 0.4 * getRandom();
+			%size = 1 + 0.5 * getRandom();
 			%decal.setScale(%size SPC %size SPC %size);
 			if(getRandom() < 0.45)
 				serverPlay3d(BloodSplat @ getRandom(1,3), getWords(%ray, 1, 3));
 			%player.health = getMax(1, %player.health - 2);
-			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
+			%player.statusSchedule[%slot] = %player.schedule(1000, updateStatusEffect, %slot);
 		case "shock":
 			//beep
 

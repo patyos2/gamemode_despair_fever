@@ -43,7 +43,7 @@ function Player::playFootsteps(%this, %foot)
 {
 	cancel(%this.playFootsteps);
 
-	if (%this.getState() $= "Dead" || %this.isDead || %this.isBody)
+	if (%this.getState() $= "Dead" || %this.isDead)
 	{
 		return;
 	}
@@ -215,6 +215,7 @@ package FootstepsPackage
 	{
 		Parent::onNewDataBlock(%this, %obj);
 		if (%obj.isDead) return;
+		if (%obj.disableFootsteps) return;
 		if (!isEventPending(%obj.updateFootsteps))
 		{
 			%obj.updateFootsteps = %obj.schedule(0, "updateFootsteps");

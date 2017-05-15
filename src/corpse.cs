@@ -113,7 +113,7 @@ function Player::carryTick(%this)
 		%player.lastNormal = %normal;
 	if(!%player.startCarrying)
 	{
-		if(vectorLen(vectorSub(%player.lastNormal, %normal)) > 0.1)
+		if(vectorLen(vectorSub(%player.lastNormal, %normal)) > 0.05)
 		{
 			ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %this.getPosition());
 			if (%this.bloody["chest_front"] || %this.bloody["chest_back"])

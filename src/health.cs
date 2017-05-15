@@ -26,7 +26,7 @@ function Player::critLoop(%this)
 		commandToClient(%this.client, 'SetVignette', true, %percent SPC "0 0" SPC %percent);
 	}
 
-	if($Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
+	if(%this.attackSource[%this.attackCount] == %this || $Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
 	{
 		%this.health -= 5;
 		if(%this.health <= $Despair::CritThreshold)
@@ -168,8 +168,18 @@ package DespairHealth
 				%player.playPain();
 			%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		}
-		if(%player.character.trait["Hemophiliac"] && (%type $= "blunt" || %type $= "sharp"))
+		if((%type $= "blunt" || %type $= "sharp") && (%player.character.trait["Hemophiliac"] || getRandom() > (%type $= "sharp" ? 0.3 : 0.15)))
+		{
 			%player.setStatusEffect($SE_damageSlot, "bleeding");
+			if(%player.character.trait["Hemophiliac"])
+				%player.bleedTicks = 13;
+		}
+
+		if(%player.unconscious)
+		{
+			%player.wakeUp();
+			%player.setStatusEffect($SE_passiveSlot, "drowsy");
+		}
 
 		return 1;
 	}

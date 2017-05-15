@@ -140,7 +140,7 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 	if (!%image)
 		return;
 
-	if(isObject(%player.character) && %player.character.trait["bodybuilder"])
+	if(isObject(%player.character) && %player.character.trait["Bodybuilder"])
 		%extra = -0.05; // a BIT faster
 
 	%time = %image.fireDelay * (%player.swingSpeedMod + %extra);

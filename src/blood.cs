@@ -193,6 +193,9 @@ function Player::setBloodyFootprints(%this, %val, %bloodclient)
 	%this.bloody["rshoe"] = true;
 	if (%this.client)
 		%this.client.applyBodyParts();
+
+	if(%val && %this.character.trait["Clumsy"] && getRandom() > 0.2)
+		%this.slip();
 }
 
 //
