@@ -71,6 +71,8 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 		%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
 	}
 
+	echo("-+ (ACTION) " @ %name SPC %text);
+
 	%count = ClientGroup.getCount();
 	for (%i = 0; %i < %count; %i++)
 	{
@@ -252,7 +254,10 @@ package DespairChat
 	{
 		if(!%client.isAdmin && !%client.killer)
 			return;
+		if (%text $= "")
+			return;
 		%name = %client.getPlayerName();
+
 		if(%client.killer && !%client.isAdmin)
 		{
 			%killer = true;
@@ -263,8 +268,9 @@ package DespairChat
 			%text = getSubStr(%text, 1, strLen(%text));
 			%killer = true;
 		}
-		if (%text $= "")
-			return;
+
+		echo("-+ (" @ (%killer ? "KILLER" : "ADMIN") @ ") " @ %client.getPlayerName() @ ": " @ %text);
+
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
@@ -344,7 +350,7 @@ function stutterText(%text, %prob)
 	%result = %text;
 	for (%i=0;%i<strlen(%result);%i++)
 	{
-		if (strpos("aeiou ", %char = getSubStr(%result, %i, 1)) != -1) //incompatible
+		if (strpos("bcdfghjklmnpqrstvxzwy", %char = getSubStr(%result, %i, 1)) == -1) //incompatible
 			continue;
 		if (getRandom() < %prob)
 			%result = getSubStr(%result, 0, %i) @ %char @ %char @ getSubStr(%result, %i+1, strlen(%result));

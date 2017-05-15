@@ -48,7 +48,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c6Dormitory rooms are the \c3best place to sleep\c6. They are your little safe havens. Make sure to lock the door!";
 			%text[%count++] = " \c6Press \c3\"LIGHT\"\c6 key (default\c3: \"R\"\c6) when aiming at a door to knock, and when aiming at the corpse to loot it.";
 			%text[%count++] = " \c6To navigate the inventory menu, scroll w/ mouse and click to take something out. To plant something on the corpse, drop an item when looking at it.";
-			%text[%count++] = " \c3\"Double-click\" and hold\c6 to carry around a corpse.";
+			%text[%count++] = " \c3\"Hold-click\" and move your mouse\c6 to carry around a corpse.";
 			%text[%count++] = " \c6You can \c3Scream\c6 with \c3\"ALARM\"\c6 key (default\c3: \"H\"\c6). However, you must be looking at something screwed up, like blood or a body.";
 			%text[%count++] = " \c6Every morning, \c3papers\c6 will spawn. These papers will range from \c3trash\c6, \c3gameplay tips\c6 and \c3news articles\c6.";
 			%text[%count++] = " \c6Daily News papers will contain \c3IMPORTANT INFORMATION\c6 giving you a tip on the killer's identity! Be sure to seek them out!";
