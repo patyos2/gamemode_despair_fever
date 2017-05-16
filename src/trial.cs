@@ -108,6 +108,7 @@ function despairOnKill(%victim, %attacker, %crit)
 
 	if(%victim == %attacker)
 	{
+
 		%victim.player.suicide = true;
 		return 1;
 	}
@@ -178,6 +179,12 @@ function despairCheckInvestigation(%player, %corpse)
 			despairStartInvestigation(1);
 			despairMakeBodyAnnouncement("", %corpse.mangled);
 			%corpse.discovered = true;
+		}
+		if(!%player.client.killer && %player.character.trait["Squeamish"] && !isEventPending(%player.passOutSchedule))
+		{
+			messageClient(%player.client, '', "\c5You're about to \c3faint\c5...!");
+			%player.setSpeedScale(0.5);
+			%player.passOutSchedule = %player.schedule(2000, knockOut, 30);
 		}
 	}
 }

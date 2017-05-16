@@ -513,10 +513,11 @@ package DespairPlayerPackage
 	{
 		if (isObject(%col) && %col.getClassName() $= "Item" && %obj.client.miniGame == $defaultMiniGame)
 		{
-			if(!%col.static && %obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 0.2 && getRandom() > 0.3)
+			if(!%col.static && %col.canPickup && %obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 3 && getRandom() > 0.1)
 			{
 				%obj.slip();
-				%col.setVelocity(%obj.getVelocity());
+				%col.setCollisionTimeout(%obj);
+				%col.setVelocity(vectorScale(%obj.getVelocity(), 1.5));
 			}
 			return;
 		}

@@ -236,11 +236,14 @@ function Player::Slip(%this, %ticks)
 		%this.playThread(3, "death1");
 		%this.setActionThread("root");
 
-		%vel = getWords(vectorScale(%this.getForwardVector(), 7), 0, 1) SPC 3;
+		%vel = getWords(vectorScale(%this.getForwardVector(), 4), 0, 1) SPC 3;
 		%vel = vectorAdd(%this.getVelocity(), %vel);
 		%this.setVelocity(%vel);
 
 		serverPlay3d(SlipSound, %this.getPosition());
+
+		if(isObject(%this.getMountedImage(0)) && getRandom() < 0.3)
+			serverCmdDropTool(%this.client, %this.currTool);
 	}
 	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks);
 }

@@ -214,8 +214,10 @@ package FootstepsPackage
 	function Armor::onNewDataBlock(%this, %obj)
 	{
 		Parent::onNewDataBlock(%this, %obj);
+		cancel(%obj.updateFootsteps);
+		cancel(%obj.playFootsteps);
 		if (%obj.isDead) return;
-		if (%obj.disableFootsteps) return;
+		if (%this.disableFootsteps) return;
 		if (!isEventPending(%obj.updateFootsteps))
 		{
 			%obj.updateFootsteps = %obj.schedule(0, "updateFootsteps");

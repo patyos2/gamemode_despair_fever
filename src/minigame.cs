@@ -176,7 +176,7 @@ function createPlayer(%client)
 			%roomCloset.spawnItem("0 0 1", "LockpickItem");
 		else
 			%player.addTool(LockpickItem);
-		HatGangsterItem.onPickup("", %player);
+		HatGangsterRedItem.onPickup("", %player);
 	}
 	return %player;
 }
@@ -631,7 +631,7 @@ package DespairFever
 
 		if(isObject(%player = %client.player) && %player.health <= 0)
 		{
-			%player.health = -100;
+			%player.health = $Despair::CritThreshold;
 			%player.critLoop();
 			messageClient(%client, '', "\c5You succumb to your wounds...");
 		}

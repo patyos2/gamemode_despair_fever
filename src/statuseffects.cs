@@ -139,6 +139,7 @@ function Player::updateStatusEffect(%player, %slot)
 			if(getRandom() < 0.45)
 				serverPlay3d(BloodSplat @ getRandom(1,3), getWords(%ray, 1, 3));
 			%player.health = getMax(1, %player.health - 2);
+			%player.setDamageFlash(0.1);
 			%player.statusSchedule[%slot] = %player.schedule(1000, updateStatusEffect, %slot);
 		case "shock":
 			//beep
