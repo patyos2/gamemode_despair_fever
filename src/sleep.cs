@@ -13,12 +13,34 @@ datablock AudioProfile(SnoringLoopSound)
 datablock AudioProfile(SlipSound)
 {
 	fileName = $Despair::Path @ "res/sounds/slip.wav";
-	description = audioQuiet3D;
+	description = audioClosest3d;
+	preload = true;
+};
+
+datablock AudioProfile(SlipSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/slip1.wav";
+	description = audioClosest3d;
+	preload = true;
+};
+
+datablock AudioProfile(SlipSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/slip2.wav";
+	description = audioClosest3d;
+	preload = true;
+};
+
+datablock AudioProfile(SlipSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/slip3.wav";
+	description = audioClosest3d;
 	preload = true;
 };
 
 function Player::KnockOut(%this, %duration)
 {
+	cancel(%this.wakeUpSchedule);
 	%this.changeDataBlock(PlayerCorpseArmor);
 	%client = %this.client;
 	if (isObject(%client) && isObject(%client.camera))
@@ -214,6 +236,7 @@ function Player::Slip(%this, %ticks)
 			%this.setArmThread(look);
 			%this.changeDataBlock(PlayerDespairArmor);
 			%this.setActionThread("sit");
+			%this.playThread(0, "root");
 
 			%this.client.camera.schedule(500, setMode, "Player", %this);
 			%this.client.camera.schedule(500, setControlObject, %client);
@@ -224,28 +247,28 @@ function Player::Slip(%this, %ticks)
 	else if(!%this.isSlipping)
 	{
 		%this.isSlipping = true;
-
+		%this.lastSlip = $Sim::Time;
 		%this.client.setControlObject(%cam = %this.client.camera);
 		%cam.setMode("CORPSE", %this);
 		%this.changeDatablock(PlayerCorpseArmor);
 		%this.setArmThread(land);
 		%this.setImageTrigger(0, 0);
-		%this.playThread(0, "jump");
+		%this.playThread(0, "death1");
 		%this.playThread(1, "root");
 		%this.playThread(2, "root");
-		%this.playThread(3, "death1");
+		%this.playThread(3, "root");
 		%this.setActionThread("root");
 
 		%vel = getWords(vectorScale(%this.getForwardVector(), 4), 0, 1) SPC 3;
 		%vel = vectorAdd(%this.getVelocity(), %vel);
 		%this.setVelocity(%vel);
 
-		serverPlay3d(SlipSound, %this.getPosition());
+		serverPlay3d(SlipSound @ getRandom(1, 3), %this.getPosition());
 
 		if(isObject(%this.getMountedImage(0)) && getRandom() < 0.3)
 			serverCmdDropTool(%this.client, %this.currTool);
 	}
-	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks);
+	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks--);
 }
 
 function serverCmdSleep(%this, %bypass)

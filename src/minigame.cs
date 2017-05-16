@@ -553,6 +553,13 @@ package DespairFever
 		if (getSimTime() - %this.lastResetTime < 5000)
 			return;
 
+		cancel($musicSchedule);
+		cancel($DefaultMiniGame.missingSchedule);
+		cancel($DefaultMiniGame.restartSchedule);
+		cancel($DefaultMiniGame.eventSchedule);
+		if($DefaultMiniGame.numMembers < 1)
+			cancel(DayCycle.timeSchedule);
+
 		Parent::reset(%this, %client);
 		if($DefaultMiniGame.numMembers >= 1)
 			despairPrepareGame();

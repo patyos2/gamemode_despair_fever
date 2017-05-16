@@ -13,6 +13,13 @@ datablock AudioDescription(AudioQuietLooping3d : AudioClose3d)
 	isLooping = 1;
 };
 
+datablock AudioProfile(EatSound)
+{
+	fileName = $Despair::Path @ "res/sounds/eat.wav";
+	description = AudioQuiet3d;
+	preload = true;
+};
+
 //Motel sounds
 datablock AudioProfile(TrashOpenSound)
 {

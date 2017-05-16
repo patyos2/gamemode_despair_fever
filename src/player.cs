@@ -513,9 +513,12 @@ package DespairPlayerPackage
 	{
 		if (isObject(%col) && %col.getClassName() $= "Item" && %obj.client.miniGame == $defaultMiniGame)
 		{
-			if(!%col.static && %col.canPickup && %obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 3 && getRandom() > 0.1)
+			if(!%col.static && %col.canPickup)
 			{
-				%obj.slip();
+				%slipcheck = (%obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 3 && getRandom() > 0.1) || (vectorLen(%obj.getVelocity()) > 0.1 && %col.getDatablock().slip);
+				if(%slipcheck && !isEventPending(%obj.wakeUpSchedule) && $Sim::Time - %obj.lastSlip > 3)
+					%obj.slip(%col.getDatablock().slip);
+				%col.setTransform(getWords(%col.getTransform(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
 				%col.setCollisionTimeout(%obj);
 				%col.setVelocity(vectorScale(%obj.getVelocity(), 1.5));
 			}

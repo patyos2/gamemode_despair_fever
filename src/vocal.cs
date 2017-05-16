@@ -200,7 +200,7 @@ function Player::playShock(%player)
 	%player.playAudio(0, VoiceShock @ getRandom(1,$shockSoundCount[%gender]) @ %gender);
 }
 
-function serverCmdAlarm(%client)
+function serverCmdAlarm(%client, %susp)
 {
 	if($DespairTrial)
 		return DespairTrialOnAlarm(%client);
@@ -223,8 +223,8 @@ function serverCmdAlarm(%client)
 				%point = %obj.getEyePoint();
 			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
 
-			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
-			%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
+			%hasweapon = !%susp && isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
+			%disguised = !%susp && isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
 			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isMurdered || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;

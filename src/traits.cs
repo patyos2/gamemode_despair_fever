@@ -26,7 +26,7 @@ $Despair::Traits::Description["Frail"] = "Less health.";
 $Despair::Traits::Description["Cold"] = "Constantly ill...";
 $Despair::Traits::Description["Sluggish"] = "Slightly slower run speed.";
 $Despair::Traits::Description["Hemophiliac"] = "Bleed more.";
-$Despair::Traits::Description["Squeamish"] = "Blood and scary people make you scream! Seeing corpses will make you faint.";
+$Despair::Traits::Description["Squeamish"] = "Blood makes you scream! Seeing corpses will make you faint.";
 $Despair::Traits::Description["Narcoleptic"] = "Randomly pass out.";
 $Despair::Traits::Description["Softspoken"] = "quieter speech, unable to use caps...";
 
@@ -58,7 +58,7 @@ function Player::traitSchedule(%obj)
 				serverCmdMe(%obj.client, %text);
 			}
 			else
-				serverCmdAlarm(%obj.client); //very easy (and lazy) way of doing this. despairCheckInvestigation has Squeamish check for fainting, too.
+				serverCmdAlarm(%obj.client, 1); //very easy (and lazy) way of doing this. despairCheckInvestigation has Squeamish check for fainting, too.
 		}
 	}
 	if(%obj.character.trait["Schizo"])
@@ -97,7 +97,7 @@ function Player::traitSchedule(%obj)
 	}
 	if(%obj.character.trait["Chain Smoker"])
 	{
-		if(getRandom() < 0.01)
+		if(getRandom() < 0.03)
 			serverCmdMe(%obj.client, "coughs!");
 	}
 	%obj.traitSchedule = %obj.schedule(getMax(500, $Despair::Traits::Tick), traitSchedule, %obj);
