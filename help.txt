@@ -47,7 +47,7 @@
  You can find melee weapons all over the map.
  EVERYTHING can BREAK DOWN DOORS, however, it takes a while to do so and it's incredibly loud, and effectiveness varies on the weapon.
  If you fall in combat, you will enter Critical Health. In that state, your speaking range will be reduced and you will not able to scream as much.
- You cannot be saved from that state. However, you can leave your last message with /write [msg]! Be sure to be aiming at a surface.
+ You cannot be saved from that state. However, you can leave your last message with /w[rite] [msg]! Be sure to be aiming at a surface.
  There are plans to expand the combat system, so stay tuned for updates!
 
 [RULES]

@@ -1,5 +1,5 @@
 //GENERAL
-function serverCmdKeepCharacter(%this)
+function serverCmdKeepChar(%this)
 {
 	%this.noPersistance = !%this.noPersistance;
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");

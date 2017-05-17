@@ -41,7 +41,7 @@ function PenImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
 	if (isObject(%obj.client))
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This is a passive item.\nYou can /write [msg] on walls and paper with this.");
+		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This is a passive item.\nYou can /w[rite] [msg] on walls and paper with this.");
 }
 
 function PenImage::onUnMount(%this, %obj, %slot)

@@ -60,7 +60,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c6EVERYTHING can \c3BREAK DOWN DOORS\c6, however, it takes a while to do so and it's incredibly loud, and effectiveness varies on the weapon.";
 			//%text[%count++] = " \c6Attacks from behind have multiplied damage. Use this to your advantage!";
 			%text[%count++] = " \c6If you fall in combat, you will enter \c0Critical Health\c6. In that state, your speaking range will be reduced and you will not able to scream as much.";
-			%text[%count++] = " \c0You cannot be saved\c6 from that state. However, you can leave your last message with \c3/write [msg]\c6! Be sure to be aiming at a surface.";
+			%text[%count++] = " \c0You cannot be saved\c6 from that state. However, you can leave your last message with \c3/w[rite] [msg]\c6! Be sure to be aiming at a surface.";
 			%text[%count++] = " \c6There are plans to expand the combat system, so stay tuned for updates!";
 			%text[%count++] = " \c5Page Up to read the above.";
 		case "6" or "rules":
@@ -76,7 +76,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c5Page Up to read the above.";
 		case "7" or "commands":
 			%text[%count++] = "\c3[COMMANDS]";
-			%text[%count++] = " \c6/keepcharacter \c7- \c6Enable or disable character persistance (if you survive a round, you keep your character for the next)";
+			%text[%count++] = " \c6/keepchar \c7- \c6Enable or disable character persistance (if you survive a round, you keep your character for the next)";
 			%text[%count++] = " \c6/forcevote \c7- \c6Skip the discussion phase and get straight to the voting (Trial)";
 			if (%this.isAdmin)
 			{
