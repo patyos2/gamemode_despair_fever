@@ -130,7 +130,7 @@ package DespairInventory
 					if(%item.onPickup("", %obj))
 						%slot = %obj.hatSlot;
 				}
-				else if(%obj.addTool(%item, %props, 1, 2) != -1 && !%item.isIcon)
+				else if(!%item.isIcon && %obj.addTool(%item, %props, 1, 2) != -1)
 				{
 					%target.removeTool(%obj.currTool, 1, 2);
 					%target.itemProps[%obj.currTool] = "";
@@ -152,11 +152,6 @@ package DespairInventory
 			}
 		}
 		Parent::onTrigger(%this, %obj, %slot, %state);
-	}
-	function serverCmdDropTool(%client, %index)
-	{
-		//if looking at corpse, give them the thing
-		Parent::serverCmdDropTool(%client, %index);
 	}
 };
 

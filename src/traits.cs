@@ -64,14 +64,14 @@ function Player::traitSchedule(%obj)
 	if(%obj.character.trait["Schizo"])
 	{
 		%random = GameCharacters.getObject(getRandom(0, GameCharacters.getCount()-1));
-		if(getRandom() < 0.1)
+		if(getRandom() < 0.03)
 		{
 			%dream = getDreamText();
 			if (getRandom() < 0.15 && isObject(%random)) //less chance for a random character name to appear
 				%dream = %random.name;
 			messageClient(%obj.client, '', '   \c1... %1 ...', %dream);
 		}
-		else if(getRandom() < 0.1)
+		else if(getRandom() < 0.05)
 		{
 			%high = -1;
 			%type[%high++] = "whispers";

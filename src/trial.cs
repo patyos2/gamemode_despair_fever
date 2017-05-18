@@ -326,7 +326,7 @@ function despairOnMorning()
 		if($deathCount <= 0)
 			banBLID($pickedKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
 		else
-			courtPlayers();
+			despairStartInvestigation();
 	}
 }
 

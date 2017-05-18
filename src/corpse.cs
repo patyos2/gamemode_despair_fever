@@ -321,16 +321,16 @@ package DespairCorpses
 				if(%item.onPickup("", %target))
 					%slot = %target.hatSlot;
 			}
-			else if(%target.addTool(%item, %props, 1, 2) != -1 && !%item.isIcon)
+			else if(!%item.isIcon && %target.addTool(%item, %props, 1, 2) != -1)
 			{
 				%obj.removeTool(%obj.currTool, 1, 2);
 				%obj.itemProps[%obj.currTool] = "";
 				%slot = %obj.currTool;
 			}
-			if(isFunction(%itemName, "onDrop"))
-				%item.onDrop(%obj, %slot);
 			if(%slot != -1)
 			{
+				if(isFunction(%itemName, "onDrop"))
+					%item.onDrop(%obj, %slot);
 				%obj.playThread(2, "activate2");
 				%target.playThread(2, "plant");
 				ServerPlay3D("BodyPickUpSound" @ getRandom(1, 3), %target.getPosition());

@@ -43,7 +43,7 @@ function createPlayer(%client)
 		%typePositive = $Despair::Traits::Positive;
 		%typeNeutral = $Despair::Traits::Neutral;
 		%typeNegative = $Despair::Traits::Negative;
-		%traitCount = getRandom(2, 3);
+		%traitCount = getRandom(1, 2); //In actuality this decides how many positive-negative trait combos there are
 		while(%traitCount-- >= 0)
 		{
 			if(%typeStr $= "positive")
@@ -55,7 +55,10 @@ function createPlayer(%client)
 					%traitCount++;
 			}
 			else
+			{
 				%typeStr = "neutral";
+				%traitCount++;
+			}
 			%lastTrait = %trait;
 			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
@@ -188,9 +191,12 @@ function roomPlayers()
 	for (%i = 0; %i < $Despair::RoomCount; %i++)
 	{
 		%room = %i + 1;
-		%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", 0];
-		%roomDoor.lockId = "R"@%room;
-		%roomDoor.lockState = true;
+		for(%a = 0; %a < BrickGroup_888888.NTObjectCount["_r" @ %room @ "_door"]; %a++)
+		{
+			%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", %a];
+			%roomDoor.lockId = "R"@%room;
+			%roomDoor.lockState = true;
+		}
 		%roomBathDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_bathdoor", 0];
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
@@ -297,7 +303,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];

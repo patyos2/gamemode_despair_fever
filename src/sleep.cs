@@ -41,6 +41,8 @@ datablock AudioProfile(SlipSound3)
 function Player::KnockOut(%this, %duration)
 {
 	cancel(%this.wakeUpSchedule);
+	if($DespairTrial !$= "")
+		return;
 	%this.changeDataBlock(PlayerCorpseArmor);
 	%client = %this.client;
 	if (isObject(%client) && isObject(%client.camera))
