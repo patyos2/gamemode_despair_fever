@@ -39,6 +39,7 @@ function createPlayer(%client)
 			client = %client;
 			clientName = %client.getPlayerName();
 		};
+		GameCharacters.add(%character);
 		//pick traits
 		%typePositive = $Despair::Traits::Positive;
 		%typeNeutral = $Despair::Traits::Neutral;
@@ -78,7 +79,6 @@ function createPlayer(%client)
 			messageClient(%client, '', '\c5You now have %1%2\c5 trait! %3', %color, %trait, %desc);
 		}
 		messageClient(%client, '', '\c5Say \c3/traits\c5 to bring up your traits again.');
-		GameCharacters.add(%character);
 		%client.character = %character;
 	}
 	else
@@ -329,6 +329,8 @@ function despairPrepareGame()
 		$stand[%i].setTransform("0 0 -300");
 		$memorial[%i].setTransform("0 0 -300");
 	}
+	$courtVoid.setTransform("0 0 -300");
+	$courtvoid.setScale("1 1 1");
 
 	$chatDelay = 0.5;
 

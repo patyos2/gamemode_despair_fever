@@ -13,6 +13,10 @@ datablock StaticShapeData(DespairMemorial)
 {
 	shapeFile = $Despair::Path @ "res/shapes/memorial.dts";
 };
+datablock StaticShapeData(DespairCourtVoid)
+{
+	shapeFile = $Despair::Path @ "res/shapes/courtvoid.dts";
+};
 
 datablock ShapeBaseImageData(MemorialCrossImage)
 {
@@ -45,6 +49,10 @@ function createCourtroom()
 		new SimGroup(CourtroomGroup);
 	%oldInstantGroup = $instantGroup;
 	$instantGroup = CourtroomGroup;
+
+	$courtvoid = createShape(DespairCourtVoid,  "0 0 -300");
+	$courtvoid.setNodeColor("ALL", "0.2 0.1 0.2 1");
+	//$courtvoid.playThread(0, "spin"); //VERY nauseating effect
 
 	$stand0 = createShape(DespairStand,  "0 0 -300");
 	$stand1 = createShape(DespairStand,  "0 0 -300");
@@ -473,6 +481,9 @@ function courtPlayers()
 
 	%secs = 30;
 	%radius = getMax(2, %charCount * 0.5);
+	$courtvoid.setTransform("0 8 100");
+	$courtvoid.setScale("20 20 20");
+
 	for (%i = 0; %i < %charCount; %i++)
 	{
 		%angle = $m2pi * (%i / %charCount);

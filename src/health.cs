@@ -3,6 +3,18 @@ datablock AudioProfile(HeartBeatSound) {
 	description = AudioDefault3d;
 	preload = true;
 };
+datablock AudioProfile(fallFatalSound)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/fallFatal.wav";
+	description = AudioClose3d;
+	preload = true;
+};
+datablock AudioProfile(fallInjurySound)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/fallInjury.wav";
+	description = AudioClose3d;
+	preload = true;
+};
 
 function Player::critLoop(%this)
 {
@@ -57,24 +69,42 @@ package DespairHealth
 		if(%player.character.trait["Extra Tough"] && (%type $= "blunt" || %type $= "sharp"))
 			%damage *= 0.9;
 
-		if (%src.getType() & $TypeMasks::PlayerObjectType)
-		{
-			%sourceObject = %src;
-			%attacker = %sourceObject.client;
-		}
-		else
-		{
-			%sourceObject = %src.sourceObject;
-			%attacker = %sourceObject.sourceClient;
-		}
-
 		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
+		{
+			%fatal = %player.health - %damage <= 0;
+			%sound = %fatal ? fallFatalSound : fallInjurySound;
+			serverPlay3D(%sound, %pos);
 			%type = "fall";
+			if(%fatal)
+				%player.health = $Despair::CritThreshold;
+		}
 		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
 			%type = "self";
 
-		%normal = %sourceObject.getEyeVector();
-		%dot = vectorDot(%player.getForwardVector(), %normal);
+		if(isObject(%src))
+		{
+			if (%src.getType() & $TypeMasks::PlayerObjectType)
+			{
+				%sourceObject = %src;
+				%attacker = %sourceObject.client;
+			}
+			else
+			{
+				%sourceObject = %src.sourceObject;
+				%attacker = %sourceObject.sourceClient;
+			}
+			%normal = %sourceObject.getEyeVector();
+			%dot = vectorDot(%player.getForwardVector(), %normal);
+		}
+		else
+		{
+			if(isObject(%player.lastTosser) && $Sim::Time - %player.carryEnd <= 30) //Assisted suicide
+			{
+				%src = %player.lastTosser;
+				%sourceObject = %src;
+				%attacker = %sourceObject.client;
+			}
+		}
 
 		%player.attackCount++;
 		%player.attackType[%player.attackCount] = %type;
@@ -205,7 +235,7 @@ package DespairHealth
 
 		%player.isDead = 1;
 		%player.isBody = 1;
-		if(%player.attackSource[%player.attackCount] == %player || %player.attackSource[%player.attackCount] $= "")
+		if(%player.attackSource[%player.attackCount] == %player || %player.attackSource[%player.attackCount] <= 0)
 		{
 			%player.suicide = true;
 			%player.pools = 1000;
@@ -214,13 +244,13 @@ package DespairHealth
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
 
-		if (%obj.attackDot[%obj.attackCount] > 0)
-		{
-			%obj.playThread(0, "crouch");
-			%obj.playThread(2, "jump");
-			%obj.schedule(100, playThread, 2, "plant");
-		}
-		else
+		//if (%player.attackDot[%player.attackCount] > 0)
+		//{
+		//	%player.playThread(0, "crouch");
+		//	%player.playThread(2, "jump");
+		//	%player.schedule(100, playThread, 2, "plant");
+		//}
+		//else
 			%player.playThread(0, "death1");
 
 		%player.playThread(1, "root");

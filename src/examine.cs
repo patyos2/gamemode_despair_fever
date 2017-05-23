@@ -11,7 +11,7 @@ function GameConnection::examineObject(%client, %col)
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
 	{
 		%name = getCharacterName(%col.character, $despairTrial);
-
+		%text = "<font:cambria:24><color:FFFFFF>";
 		%text = %text @ "This is \c3" @ %name;
 		%gender = %col.character.gender;
 		if (%col.isDead)
@@ -44,13 +44,13 @@ function GameConnection::examineObject(%client, %col)
 				%mod12 = getWord(%tod2, 1);
 				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				%fresh = " recently ";
+				%fresh = "recently ";
 				if($Sim::Time - %col.attackTime[%col.attackCount] > 120)
 					%fresh = "";
 				if($Sim::Time - %col.attackTime[%col.attackCount] > $Despair::DayLength)
-					%fresh = " long ago ";
+					%fresh = "long ago ";
 
-				%text = %text @ "\n\c6" @ "It appears they died\c3" @ %fresh @ "\c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
+				%text = %text @ "\n\c6" @ "They died \c3" @ %fresh @ "\c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
 				for(%i=0;%i<=%col.attackCount;%i++)
 				{
 					%wounds[%col.attackType[%i]]++;
@@ -71,9 +71,14 @@ function GameConnection::examineObject(%client, %col)
 				else
 					%text = %text @ "\n\c6" @ "They have \c3no visible wounds\c6.";
 
+				if(%wounds["fall"] > 0)
+				{
+					%text = %text @ "\n\c6" @ "There are \c3signs of falling\c6.";
+				}
+
 				if(%wounds["bleed"] > 0)
 				{
-					%text = %text @ "\n\c6" @ "They have bled to death\c6.";
+					%text = %text @ "\n\c6" @ "They have \c3bled to death\c6.";
 				}
 			}
 		}
@@ -128,5 +133,5 @@ function GameConnection::examineObject(%client, %col)
 		}
 	}
 
-	commandToClient(%client, 'CenterPrint', %text, 3);
+	commandToClient(%client, 'CenterPrint', %text, 5);
 }

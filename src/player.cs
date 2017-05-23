@@ -26,6 +26,8 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 
 	maxEnergy = 100;
 
+	minImpactSpeed = 23;
+
 	jumpForce = 1200;
 	jumpDelay = 30;
 
@@ -76,6 +78,8 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxForwardCrouchSpeed = 0;
 	maxBackwardCrouchSpeed = 2;
 	maxSideCrouchSpeed = 0;
+
+	minImpactSpeed = 20;
 
 	jumpForce = 0;
 
