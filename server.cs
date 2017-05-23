@@ -1,3 +1,12 @@
+//TODO: Replace $despairTrial and $investigationStart with $gameState and $gameStateStart instead
+//TODO: /sign for writing
+//TODO: Click to push for those pushdown crimes
+//TODO: Disable non-killer-induced death during investigation
+//TODO: Breaking Doors alert, /report and admin /pm
+//TODO: fix corpses eating your items
+//TODO: fix servercmddroptool not checking for walls
+//TODO: something very important i forgot :(
+
 registerLoadingScreen("https://cdn.discordapp.com/attachments/307876244744306698/313026827901730816/loadingScreen.png", "png");
 $Despair::Path = filePath(expandFileName("./description.txt")) @ "/";
 function r(%p)

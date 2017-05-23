@@ -206,7 +206,7 @@ function radioTransmitMessage(%obj, %channel, %text)
 	%time = getDayCycleTimeString(%time, 1);
 
 	%name = "(" @ (%obj % 100) @ ")Someone";
-	%text = muffleText(%text, 0.1);
+	%text = scrambleText(%text, 0.1);
 	for (%i = 0; %i < ClientGroup.getCount(); %i++)
 	{
 		%member = ClientGroup.getObject(%i);

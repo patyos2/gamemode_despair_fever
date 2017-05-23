@@ -25,7 +25,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 
 	if(%player.health <= 0) //Critical state
 	{
-		%text = muffleText(%text, 0.1);
+		%text = scrambleText(%text, 0.1);
 
 		%a = %player.getEyePoint();
 		%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
@@ -66,12 +66,12 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		}
 		%pen = true;
 		%prob = getMax(0, 1 - ((%props.ink*2)/%props.maxink));
-		%text = muffleText(%text, %prob);
+		%text = scrambleText(%text, %prob);
 	}
 	else if(%player.bloodyWriting > 0)
 	{
 		%blood = true;
-		%text = muffleText(%text, 0.2);
+		%text = scrambleText(%text, 0.2);
 		%player.bloodyWriting--;
 	}
 

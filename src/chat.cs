@@ -163,6 +163,7 @@ package DespairChat
 		%sound = DespairChatSound;
 		%type = "says";
 		%range = 32;
+		%wall_effect = 8;
 
 		if(%player.health <= 0) //critical health
 		{
@@ -239,14 +240,24 @@ package DespairChat
 				%_name = "Someone";
 				if(%type !$= "whispers") //whispering to someone sleeping is LOUD AND CLEAR
 				{
-					%_text = muffleText(%text, 0.5);
+					%_text = scrambleText(%text, 0.5);
 					%_range *= 0.5;
 				}
 			}
+
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
+
+			%distance = vectorDist(%a, %b) + %wall_effect * getWallsBetween(%a, %b);
+
 			if (vectorDist(%a, %b) > %_range)
 				continue;
+
+			if ($despairTrial $= "")
+			{
+				%factor = %distance / (%range*4);
+				%_text = scrambleText(%text, %factor);
+			}
 			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %_name, %type, %_text);
 		}
 	}
@@ -297,25 +308,48 @@ package DespairChat
 
 activatePackage("DespairChat");
 
-//Text parse funcs
-function muffleText(%text, %prob, %char)
+
+function getWallsBetween(%pos, %end)
 {
-	if (%text $= "")
-		return;
-	if (%prob $= "")
-		%prob = 0.2;
-	if (%prob <= 0)
-		return %text;
-	if (%char $= "")
-		%char = "#";
-	%result = %text;
-	for (%i=0;%i<strlen(%text);%i++)
+	%count = 0;
+
+	while (vectorDist(%pos, %end) > 1 && %count < 32)
 	{
-		if (getSubStr(%text, %i, 1) $= " ") //space character
-			continue;
-		if (getRandom() < %prob)
-			%result = getSubStr(%result, 0, %i) @ %char @ getSubStr(%result, %i+1, strlen(%result));
+		%ray = containerRayCast(%pos, %end, $TypeMasks::FxBrickObjectType, %exempt);
+
+		if (!%ray)
+			break;
+
+		%count++;
+
+		%exempt = getWord(%ray, 0);
+		%pos = getWords(%ray, 1, 3);
 	}
+
+	return %count;
+}
+
+function scrambleText(%text, %factor, %replace, %retain)
+{
+	if (%factor $= "")
+		%factor = 0.2;
+	if (%replace $= "")
+		%replace = "#";
+	if (%retain $= "")
+		%retain = " .,!?";
+
+	%length = strlen(%text);
+
+	for (%j = 0; %j < %length; %j++)
+	{
+		%char = getSubStr(%text, %j, 1);
+
+		if ((%retain !$= "" && strpos(%retain, %char) != -1) || getRandom() > %factor)
+			%result = %result @ %char;
+		else
+			%result = %result @ %replace;
+	}
+
 	return %result;
 }
 

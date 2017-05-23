@@ -458,8 +458,8 @@ function courtPlayers()
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
-	DayCycle.setDayLength(1800); //30 mins
-	setDayCycleTime(0.25);
+	$EnvGuiServer::DayCycleEnabled = 0;
+	DayCycle.setEnabled($EnvGuiServer::DayCycleEnabled);
 	%charCount = GameCharacters.getCount();
 	// prepare
 	for (%i = 0; %i < %charCount; %i++)

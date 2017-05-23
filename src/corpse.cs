@@ -315,11 +315,15 @@ package DespairCorpses
 			{
 				if(%target.tool[%target.weaponSlot] == nameToID(noWeaponIcon))
 					%slot = %target.setTool(%target.weaponSlot, %item, %props, 1, 2);
+				else
+					return;
 			}
 			else if(%item.className $= "Hat")
 			{
 				if(%item.onPickup("", %target))
 					%slot = %target.hatSlot;
+				else
+					return;
 			}
 			else if(!%item.isIcon && %target.addTool(%item, %props, 1, 2) != -1)
 			{

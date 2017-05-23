@@ -171,7 +171,7 @@ function Player::KnockOutTick(%this, %ticks, %done)
 			{
 				if($lastDeadText !$= "" && getRandom() < 0.6)
 					%dream = $lastDeadText;
-				%dream = muffleText(softSpeakText(%dream), 0.2 + (getRandom() * 0.3), "...");
+				%dream = scrambleText(softSpeakText(%dream), 0.2 + (getRandom() * 0.3), "...");
 				$lastDeadText = "";
 			}
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);

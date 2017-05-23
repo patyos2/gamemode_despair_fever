@@ -63,6 +63,7 @@ package DespairHealth
 		if (%client.miniGame != $DefaultMiniGame)
 			return;
 
+		%playPain = 1;
 		if(%player.isCrouched())
 			%damage *= 3;
 
@@ -73,6 +74,7 @@ package DespairHealth
 		{
 			%fatal = %player.health - %damage <= 0;
 			%sound = %fatal ? fallFatalSound : fallInjurySound;
+			%playPain = 0;
 			serverPlay3D(%sound, %pos);
 			%type = "fall";
 			if(%fatal)
@@ -159,6 +161,8 @@ package DespairHealth
 					initialVelocity = vectorScale(%normal, 4);
 				};
 				%p.explode();
+				if(%playPain)
+					%player.playDeathCry();
 				%player.setDamageLevel(100);
 			}
 			else
@@ -194,7 +198,7 @@ package DespairHealth
 		}
 		if(!%player.character.trait["Feel No Pain"])
 		{
-			if(%player.health > 0 && !%player.unconscious)
+			if(%playPain && %player.health > 0 && !%player.unconscious)
 				%player.playPain();
 			%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		}
@@ -240,7 +244,6 @@ package DespairHealth
 			%player.suicide = true;
 			%player.pools = 1000;
 		}
-		%player.playDeathCry();
 		%player.setDamageFlash(1);
 		%player.setImageTrigger(0, 0);
 
