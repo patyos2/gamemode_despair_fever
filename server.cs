@@ -1,6 +1,5 @@
 //TODO: Replace $despairTrial and $investigationStart with $gameState and $gameStateStart instead
 //TODO: /sign for writing
-//TODO: Click to push for those pushdown crimes
 //TODO: Disable non-killer-induced death during investigation
 //TODO: Breaking Doors alert, /report and admin /pm
 //TODO: fix corpses eating your items

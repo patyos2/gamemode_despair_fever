@@ -100,7 +100,19 @@ package DespairHealth
 		}
 		else
 		{
-			if(isObject(%player.lastTosser) && $Sim::Time - %player.carryEnd <= 30) //Assisted suicide
+			if(isObject(%player.attackSource[%player.attackCount]) && $Sim::Time - %player.attackTime[%player.attackCount] <= 5)
+			{
+				%src = %player.attackSource[%player.attackCount];
+				%sourceObject = %src;
+				%attacker = %sourceObject.client;
+			}
+			else if(isObject(%player.lastShover) && $Sim::Time - %player.lastShoved <= 5) //Pushed off a building or something
+			{
+				%src = %player.lastShover;
+				%sourceObject = %src;
+				%attacker = %sourceObject.client;
+			}
+			else if(isObject(%player.lastTosser) && $Sim::Time - %player.carryEnd <= 5) //Assisted suicide
 			{
 				%src = %player.lastTosser;
 				%sourceObject = %src;
@@ -154,6 +166,7 @@ package DespairHealth
 		{
 			if(despairOnKill(%client, %attacker))
 			{
+				%player.wakeUp();
 				%p = new Projectile()
 				{
 					datablock = cubeHighExplosionProjectile;

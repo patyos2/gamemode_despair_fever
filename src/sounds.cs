@@ -20,6 +20,13 @@ datablock AudioProfile(EatSound)
 	preload = true;
 };
 
+datablock AudioProfile(ShoveSound)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/shove.wav";
+	description = AudioQuiet3d;
+	preload = true;
+};
+
 //Motel sounds
 datablock AudioProfile(TrashOpenSound)
 {

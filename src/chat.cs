@@ -33,6 +33,9 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 	if (!isObject(%pl = %client.player) || (%pl.unconscious && !%pl.currResting))
 		return;
 
+	if($DespairTrialOpening && %client != $DespairTrialCurrSpeaker)
+		return;
+
 	if($Sim::Time - %client.lastSpeakTime < $chatDelay)
 	{
 		messageClient(%client, '', '\c5Slow down\c6!');
@@ -76,16 +79,19 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 	%count = ClientGroup.getCount();
 	for (%i = 0; %i < %count; %i++)
 	{
+		%_name = %name;
 		%other = ClientGroup.getObject(%i);
 		if (%other.miniGame == $DefaultMiniGame && isObject(%other.player))
 		{
 			if(%other.player.unconscious)
 				continue;
-			if (vectorDist(%other.player.getEyePoint(), %pl.getEyePoint()) > 24) //Out of range
+			if (vectorDist(%a = %other.player.getEyePoint(), %b = %pl.getEyePoint()) > 24) //Out of range
 				continue;
+			if(%ray = containerRayCast(%a, %b, $TypeMasks::FxBrickObjectType, %pl))
+				%_name = "Someone";
 		}
 
-		messageClient(%other, '', '\c7[%1]<color:ffff80>%2 %3', %time, %name, %text);
+		messageClient(%other, '', '\c7[%1]<color:ffff80>%2 %3', %time, %_name, %text);
 	}
 }
 
@@ -163,7 +169,7 @@ package DespairChat
 		%sound = DespairChatSound;
 		%type = "says";
 		%range = 32;
-		%wall_effect = 8;
+		%wall_effect = 6;
 
 		if(%player.health <= 0) //critical health
 		{
@@ -179,14 +185,6 @@ package DespairChat
 			if (%text $= "")
 				return;
 		}
-		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %player.findTool("RadioItem")) != -1)
-		{
-			%sound = radioTalkSound;
-			%type = "radios";
-			%range = 16;
-			%props = %player.getItemProps(%slot);
-			radioTransmitMessage(%player, %props.channel, %text);
-		}
 
 		if(%player.character.trait["Nervous"])
 		{
@@ -201,6 +199,15 @@ package DespairChat
 		{
 			%range *= 0.8;
 			%text = softSpeakText(%text);
+		}
+
+		if(isObject(%img = %player.getMountedImage(0)) && %img == nameToID(radioImage) && (%slot = %player.findTool("RadioItem")) != -1)
+		{
+			%sound = radioTalkSound;
+			%type = "radios";
+			%range = 16;
+			%props = %player.getItemProps(%slot);
+			radioTransmitMessage(%player, %props.channel, %text);
 		}
 
 		if(%type $= "says")
@@ -235,15 +242,6 @@ package DespairChat
 			%_name = %name;
 			%_text = %text;
 			%_range = %range;
-			if(%member.player.unconscious && !%member.player.currResting)
-			{
-				%_name = "Someone";
-				if(%type !$= "whispers") //whispering to someone sleeping is LOUD AND CLEAR
-				{
-					%_text = scrambleText(%text, 0.5);
-					%_range *= 0.5;
-				}
-			}
 
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
@@ -255,9 +253,22 @@ package DespairChat
 
 			if ($despairTrial $= "")
 			{
-				%factor = %distance / (%range*4);
+				%factor = getMax(0, %distance / (%range*4) - 0.15);
 				%_text = scrambleText(%text, %factor);
+				if(%factor > 0.4)
+					%_name = "Someone";
 			}
+
+			if(%member.player.unconscious && !%member.player.currResting)
+			{
+				%_name = "Someone";
+				if(%type !$= "whispers") //whispering to someone sleeping is LOUD AND CLEAR
+				{
+					%_text = scrambleText(%text, 0.5);
+					%_range *= 0.5;
+				}
+			}
+	
 			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %_name, %type, %_text);
 		}
 	}

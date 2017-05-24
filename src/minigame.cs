@@ -45,20 +45,21 @@ function createPlayer(%client)
 		%typeNeutral = $Despair::Traits::Neutral;
 		%typeNegative = $Despair::Traits::Negative;
 		%traitCount = getRandom(1, 2); //In actuality this decides how many positive-negative trait combos there are
+		%neutralCount = getRandom(1, 2);
 		while(%traitCount-- >= 0)
 		{
-			if(%typeStr $= "positive")
-				%typeStr = "negative";
-			else if(getRandom(0, 1) == 0)
+			if(%neutralCount > 0)
 			{
-				%typeStr = "positive";
-				if(%traitCount == 0) //guaranteed negative
-					%traitCount++;
+				%neutralCount--;
+				%traitCount++;
+				%typeStr = "neutral";
 			}
+			else if(%typeStr $= "positive")
+				%typeStr = "negative";
 			else
 			{
-				%typeStr = "neutral";
-				%traitCount++;
+				%typeStr = "positive";
+				%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 			}
 			%lastTrait = %trait;
 			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));

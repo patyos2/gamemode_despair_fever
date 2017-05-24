@@ -90,7 +90,11 @@ package ItemPropsPackage
 	function ItemData::onAdd(%this, %obj)
 	{
 		Parent::onAdd(%this, %obj);
-
+		if (isObject($DroppedItemSource))
+		{
+			%obj.sourceObject = $DroppedItemSource;
+			$DroppedItemSource = "";
+		}
 		if (isObject($DroppedItemProps))
 		{
 			%obj.itemProps = $DroppedItemProps;
@@ -220,7 +224,11 @@ package ItemPropsPackage
 		if (isObject(%player.tool[%index]) && isObject(%player.itemProps[%index]))
 			$DroppedItemProps = %player.itemProps[%index];
 
+		$DroppedItemSource = %player;
+
 		Parent::serverCmdDropTool(%client, %index);
+
+		$DroppedItemSource = "";
 
 		if (!isObject(%player.tool[%index]) && isObject(%player.itemProps[%index]))
 		{

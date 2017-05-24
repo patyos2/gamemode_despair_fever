@@ -80,6 +80,7 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxSideCrouchSpeed = 0;
 
 	minImpactSpeed = 20;
+	speedDamageScale = 5;
 
 	jumpForce = 0;
 
@@ -215,7 +216,6 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 				{
 					if(isObject(%obj.client))
 						%obj.client.examineObject(%ray);
-					return;
 				}
 			}
 
@@ -479,6 +479,49 @@ function player::applyAppearance(%pl,%char)
 
 package DespairPlayerPackage
 {
+	function Player::playThread(%this, %slot, %sequenceName)
+	{
+		if (%this.getDataBlock().getID() != nameToID(PlayerDespairArmor) || %slot != 3)
+		{
+			Parent::playThread(%this, %slot, %sequenceName);
+			return;
+		}
+
+		Parent::playThread(%this, %slot, %sequenceName);
+
+		if (%sequenceName !$= "activate2" || $Sim::Time - %this.lastRapidClick < 0.8)
+			return;
+
+		%this.lastRapidClick = $Sim::Time;
+
+		%eyePoint = %this.getEyePoint();
+		%eyeVector = %this.getEyeVector();
+
+		%ray = containerRayCast(%eyePoint,
+			vectorAdd(%eyePoint, vectorScale(%eyeVector, 5)),
+			$TypeMasks::PlayerObjectType |
+			$TypeMasks::FxBrickObjectType,
+			%this
+		);
+
+		if (!%ray)
+			return;
+
+		%col = getWord(%ray, 0);
+
+		if (!(%col.getType() & $TypeMasks::PlayerObjectType) || %ray.getDataBlock().isPushImmune)
+			return;
+
+		%velocity = vectorScale(%this.getForwardVector(), 8);
+		%velocity = vectorAdd(%velocity, vectorScale(%col.getVelocity(), 0.5));
+		%velocity = vectorAdd(%velocity, "0 0 5");
+
+		%col.setVelocity(%velocity);
+		%col.lastShover = %this;
+		%col.lastShoved = $Sim::Time;
+
+		ServerPlay3D("ShoveSound", getWords(%ray, 1, 3));
+	}
 	function Observer::onTrigger(%this, %obj, %slot, %state)
 	{
 		%client = %obj.getControllingClient();
@@ -521,7 +564,11 @@ package DespairPlayerPackage
 			{
 				%slipcheck = (%obj.character.trait["Clumsy"] && vectorLen(%obj.getVelocity()) > 3 && getRandom() > 0.1) || (vectorLen(%obj.getVelocity()) > 0.1 && %col.getDatablock().slip);
 				if(%slipcheck && !isEventPending(%obj.wakeUpSchedule) && $Sim::Time - %obj.lastSlip > 3)
+				{
 					%obj.slip(%col.getDatablock().slip);
+					%obj.lastShover = %col.sourceObject;
+					%obj.lastShoved = $Sim::Time;
+				}
 				%col.setTransform(getWords(%col.getTransform(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
 				%col.setCollisionTimeout(%obj);
 				%col.setVelocity(vectorScale(%obj.getVelocity(), 1.5));
