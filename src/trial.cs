@@ -255,7 +255,7 @@ function despairOnMorning()
 		%player = %client.player;
 		if(isObject(%player))
 		{
-			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			%player.schedule(1000 * (getRandom() + 1)updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
 		}
 	}
@@ -455,6 +455,8 @@ function DespairSpecialChat(%client, %text)
 
 function courtPlayers()
 {
+	SunLight.flareSize = 0;
+	SunLight.sendUpdate();
 	cancel($DefaultMiniGame.missingSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
@@ -510,6 +512,8 @@ function courtPlayers()
 					%state = "MURDER";
 				else if(%player.suicide)
 					%state = "SUICIDE";
+				else if(%player.executed) //ran outta map or something
+					%state = "EXECUTED";
 				else
 					%state = "AFK";
 			}
@@ -781,6 +785,7 @@ function DespairEndTrial()
 		if(%unfortunate.client.killer)
 		{
 			$DefaultMiniGame.chatMessageAll('', "\c5The killer has been eliminated! Innocents won.");
+			%unfortunate.setVelocity(vectorAdd(vectorScale(%unfortunate.getForwardVector(), 3), "0 0 10"));
 			%unfortunate.kill();
 			%win = 1;
 		}
@@ -801,7 +806,10 @@ function DespairEndTrial()
 			%client = $DefaultMiniGame.member[%i];
 			%player = %client.player;
 			if(!%client.killer)
+			{
+				%player.setVelocity(vectorAdd(vectorScale(%player.getForwardVector(), 3), "0 0 10"));//%player.setVelocity(vectorAdd(vectorSub(%player.getPosition(), "0 8 0"), "0 0 10"));
 				%player.kill();
+			}
 		}
 		serverPlay2d("DespairMusicKillerWin");
 	}

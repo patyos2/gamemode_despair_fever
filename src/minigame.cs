@@ -48,6 +48,8 @@ function createPlayer(%client)
 		%neutralCount = getRandom(1, 2);
 		while(%traitCount-- >= 0)
 		{
+			%lastType = %typeStr;
+			%lastTrait = %trait;
 			if(%neutralCount > 0)
 			{
 				%neutralCount--;
@@ -61,7 +63,6 @@ function createPlayer(%client)
 				%typeStr = "positive";
 				%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 			}
-			%lastTrait = %trait;
 			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
 
@@ -69,6 +70,7 @@ function createPlayer(%client)
 			if((%lastTrait $= "Extra Tough" && %trait $= "Frail") || (%lastTrait $= "Athletic" && %trait $= "Sluggish") || (%lastTrait $= "Loudmouth" && %trait $= "Softspoken"))
 			{
 				%trait = %lastTrait; //rollback a bit, we still need a negative
+				%typeStr = %lastType;
 				%traitCount++;
 				continue;
 			}
@@ -357,6 +359,10 @@ function despairPrepareGame()
 	if(!isEventPending(DayCycle.timeSchedule))
 		DayCycle.timeSchedule();
 
+	//update sunflare size
+	SunLight.flareSize = $EnvGuiServer::SunFlareSize;
+	SunLight.sendUpdate();
+
 	//update fog
 	$EnvGuiServer::VisibleDistance = 200;
 	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
@@ -452,7 +458,22 @@ function despairCycleStage(%stage)
 	if(%stage $= "MORNING")
 	{
 		$days++;
-		talk("DAY" SPC $days);
+
+		%high = -1;
+		%choice[%high++] = "Did you know we have a <a:discord.gg/4DPjh9t>Discord</a>\c6 channel? Join the discussion!";
+		%choice[%high++] = "\c3/help\c6 contains a lot of useful gameplay information and tips. Check it out!";
+		%choice[%high++] = "Sometimes, it's better to team up with someone instead of going solo. Be careful of traitors, though!";
+		%choice[%high++] = "Pay close attention to your surroundings. You never know what could be used as evidence!";
+		%choice[%high++] = "Murder weapon and blood contain a lot more information that you may initially think. Don't write them off!";
+		%choice[%high++] = "Once investigation period starts, weapons are disabled, but non-standard murders may still happen!";
+		%choice[%high++] = "You can spamclick people to shove them!";
+		%choice[%high++] = "\c3Mediums\c6 can hear dead people in their dreams! However, you'll have to decipher what they said.";
+		%choice[%high++] = "If you survive and win as an innocent, you will keep your character AND your room number!";
+		%choice[%high++] = "Cleaning up the crime scene is impossible once investigation starts.";
+		%choice[%high++] = "You can loot bodies by pressing \c3Light Key\c6 and clicking an item! Plant stuff using \c3Ctrl+W\c6!";
+		%choice[%high++] = "\c3Hold-click\c6 and \c3move your mouse\c6 to start carrying a body! Only killers can carry corpses, though.";
+
+		$DefaultMiniGame.chatMessageAll('', '\c5~~[Day \c3%1\c5]\c6 Good morning, everyone! %2', $days, %choice[getRandom(%high)]);
 		despairOnMorning();
 	}
 }
@@ -488,7 +509,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 	}
 	else
 	{
-		%delay = 40000;
+		%delay = 60000;
 		if(%this.afk)
 		{
 			%this.afk = false;

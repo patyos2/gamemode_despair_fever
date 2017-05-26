@@ -283,7 +283,7 @@ package DespairCorpses
 			}
 			else if (%slot == 4 && %obj.client.killer && isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj && %item.unconscious)
 			{
-				if($investigationStart !$= "" && %state && !%item.isDead && $deathCount < $maxDeaths)
+				if(%state && !%item.isDead && $deathCount < $maxDeaths)
 				{
 					%item.playAudio(0, BodyChokeSound);
 					%obj.choking = $Sim::Time;
@@ -331,7 +331,7 @@ package DespairCorpses
 				%obj.itemProps[%obj.currTool] = "";
 				%slot = %obj.currTool;
 			}
-			if(%slot != -1)
+			if(%slot >= 0)
 			{
 				if(isFunction(%itemName, "onDrop"))
 					%item.onDrop(%obj, %slot);

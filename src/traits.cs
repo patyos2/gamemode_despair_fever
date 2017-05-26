@@ -47,9 +47,9 @@ function Player::traitSchedule(%obj)
 				%obj.passOutSchedule = %obj.schedule(10000, knockOut, %sec);
 			}
 		}
-		if(!%obj.client.killer && %obj.character.trait["Squeamish"])
+		if(%obj.character.trait["Squeamish"])
 		{
-			if($Sim::Time - %obj.lastScream < 10)
+			if($Sim::Time - %obj.lastScream < 10) //Killer only spams emotes
 			{
 				%text[%high++] = "hyperventilates!";
 				%text[%high++] = "freaks out!";
@@ -57,7 +57,7 @@ function Player::traitSchedule(%obj)
 				%text = %text[getRandom(%high)];
 				serverCmdMe(%obj.client, %text);
 			}
-			else
+			else if(!%obj.client.killer)
 				serverCmdAlarm(%obj.client, 1); //very easy (and lazy) way of doing this. despairCheckInvestigation has Squeamish check for fainting, too.
 		}
 	}

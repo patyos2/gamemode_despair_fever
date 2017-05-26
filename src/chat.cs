@@ -241,14 +241,15 @@ package DespairChat
 			}
 			%_name = %name;
 			%_text = %text;
-			%_range = %range;
+			%c1 = "ffff80";
+			%c2 = "fffff0";
 
 			%a = %player.getEyePoint();
 			%b = %member.player.getEyePoint();
 
 			%distance = vectorDist(%a, %b) + %wall_effect * getWallsBetween(%a, %b);
 
-			if (vectorDist(%a, %b) > %_range)
+			if ((%realdist = vectorDist(%a, %b)) > %range)
 				continue;
 
 			if ($despairTrial $= "")
@@ -257,19 +258,33 @@ package DespairChat
 				%_text = scrambleText(%text, %factor);
 				if(%factor > 0.4)
 					%_name = "Someone";
+
+				%distfactor = %realdist / %range;
+				if(%distfactor > 0.3)
+				{
+					%c1 = "f2f255";
+					%c2 = "f2f2c0";
+				}
+				if(%distfactor > 0.5)
+				{
+					%c1 = "e6e62e";
+					%c2 = "e6e693";
+				}
+				if(%distfactor > 0.7)
+				{
+					%c1 = "d9d90b";
+					%c2 = "d9d96a";
+				}
 			}
 
 			if(%member.player.unconscious && !%member.player.currResting)
 			{
 				%_name = "Someone";
 				if(%type !$= "whispers") //whispering to someone sleeping is LOUD AND CLEAR
-				{
 					%_text = scrambleText(%text, 0.5);
-					%_range *= 0.5;
-				}
 			}
 	
-			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %_name, %type, %_text);
+			messageClient(%member, '', '\c7[%1]<color:%5>%2 %3<color:%6>, %4', %time, %_name, %type, %_text, %c1, %c2);
 		}
 	}
 	function serverCmdTeamMessageSent(%client, %text) //Adminchat

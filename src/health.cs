@@ -72,6 +72,8 @@ package DespairHealth
 
 		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
 		{
+			if(%client.killer)
+				%damage *= 0.2;
 			%fatal = %player.health - %damage <= 0;
 			%sound = %fatal ? fallFatalSound : fallInjurySound;
 			%playPain = 0;
