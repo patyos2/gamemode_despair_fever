@@ -246,6 +246,41 @@ function PlayerFrozenArmor::onTrigger(%this, %obj, %slot, %state)
 	PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state);
 }
 
+function Player::dropTool(%obj, %index)
+{
+	if($DespairTrial)
+	{
+		DespairTrialDropTool(%obj, %index);
+		return;
+	}
+	if(%obj.unconscious)
+		return;
+	%item = %obj.tool[%index];
+	if(!isObject(%item) || %item.isIcon)
+		return;
+
+	%spawn = new Item() {
+		dataBlock = %item;
+		position = %obj.getEyePoint();
+	};
+	%spawn.setCollisionTimeout(%obj);
+	%spawn.setTransform(getWords(%obj.getEyePoint(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
+	%targVel = VectorScale(%obj.getEyeVector(), 15);
+	%spawn.setVelocity(VectorAdd(%obj.getVelocity(), %targVel));
+	%spawn.schedulePop();
+	%spawn.sourceObject = %obj;
+	%spawn.itemProps = %obj.itemProps[%index];
+
+	if(isObject(%obj.itemProps[%index]))
+		%obj.itemProps[%index].onOwnerChange(%spawn);
+	%obj.itemProps[%index] = "";
+
+	if(isFunction(%item.getName(), "onDrop"))
+		%item.onDrop(%obj, %index);
+	else
+		%obj.removeTool(%index, 1, 0, 0);
+}
+
 function Player::setSpeedScale(%obj, %scale)
 {
 	%db = %obj.getDataBlock();
@@ -579,21 +614,9 @@ package DespairPlayerPackage
 	}
 	function serverCmdDropTool(%client, %index)
 	{
-		if($DespairTrial)
-		{
-			DespairTrialDropTool(%client, %index);
-			return;
-		}
-
-		if(isObject(%client.player))
-		{
-			if(%client.player.unconscious)
-				return;
-			%item = %client.player.tool[%index];
-		}
-		Parent::serverCmdDropTool(%client, %index);
-		if(isObject(%item) && isFunction(%item.getName(), "onDrop"))
-			%item.onDrop(%client.player, %index);
+		if(!isObject(%player = %client.player))
+			return parent::serverCmdDropTool(%client, %index);
+		%player.dropTool(%index);
 	}
 	function serverCmdSit(%client)
 	{

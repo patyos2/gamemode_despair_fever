@@ -208,7 +208,7 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 
 	%time = getDayCycleTimeString(%time, 1);
 	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
-		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are corpses to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
+		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 
 	%profile = DespairMusicInvestigationIntro1;
 	if($announcements > 2 || %kira) //if there's been two corpses or it's a disguise kit round
@@ -255,7 +255,7 @@ function despairOnMorning()
 		%player = %client.player;
 		if(isObject(%player))
 		{
-			%player.schedule(1000 * (getRandom() + 1)updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			%player.schedule(1000 * (getRandom() * 3), updateStatusEffect, $SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
 		}
 	}
@@ -844,9 +844,9 @@ function DespairUpdateCastVote(%player)
 	%player.DespairUpdateCastVote = schedule(32, %player, "DespairUpdateCastVote", %player);
 }
 
-function DespairTrialDropTool(%cl, %slot)
+function DespairTrialDropTool(%pl, %slot)
 {
-	%pl = %cl.player;
+	%cl = %pl.client;
 	if (!isObject(%pl.tool[%slot]))
 		return;
 	%tool = %pl.tool[%slot];
@@ -860,12 +860,12 @@ function DespairTrialDropTool(%cl, %slot)
 	if (%tool.className $= "Hat")
 	{
 		%pl.unMountImage(2);
-		%cl.applyBodyParts();
+		%pl.applyAppearance();
 	}
 	if (%tool.getName() $= "CoatItem")
 	{
 		%pl.unMountImage(1);
-		%cl.applyBodyParts();
+		%pl.applyAppearance();
 	}
 	%item = new Item()
 	{

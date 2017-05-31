@@ -1,4 +1,4 @@
-$Despair::radioNumChannels = 10;
+$Despair::radioNumChannels = 3;
 
 datablock AudioProfile(radioGetSound)
 {
@@ -100,8 +100,13 @@ function RadioItem::onDrop(%this, %player, %slot)
 {
 	%props = %player.getItemProps(%slot);
 	serverPlay3d("radioLoseSound", %player.getHackPosition());
+	%player.tool[%player.currTool] = "";
+	%player.unMountImage(0);
 	if(isObject(%player.client))
+	{
+		messageClient(%player.client, 'MsgItemPickup', '', %player.currTool, "");
 		%player.client.centerPrint("\c5Radio disconnected.", 3);
+	}
 	radioLeft(%player, %props.channel);
 }
 function RadioImage::onUse(%this, %obj, %slot)

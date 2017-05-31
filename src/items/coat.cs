@@ -46,6 +46,7 @@ function CoatItem::onDrop(%this, %player, %index)
 {
 	%player.unMountImage(1);
 	%player.applyAppearance();
+	%player.tool[%index] = "";
 	if(isObject(%client = %player.client))
-		messageClient(%client, 'MsgItemPickup', '', %index, "", true);
+		messageClient(%client, 'MsgItemPickup', '', %index, "");
 }

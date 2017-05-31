@@ -6,12 +6,11 @@ function GameConnection::examineObject(%client, %col)
 	if(%col.noExamine)
 		return;
 
-	%text = "<font:cambria:32><color:FFFFFF>";
+	%text = "<font:cambria:24><color:FFFFFF>";
 
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
 	{
 		%name = getCharacterName(%col.character, $despairTrial);
-		%text = "<font:cambria:24><color:FFFFFF>";
 		%text = %text @ "This is \c3" @ %name;
 		%gender = %col.character.gender;
 		if (%col.isDead)

@@ -86,7 +86,7 @@ function PaperImage::onMount(%this, %obj, %slot)
 	if(%props.contents !$= "")
 		%text = %props.contents;
 	if (isObject(%obj.client))
-		commandToClient(%obj.client, 'CenterPrint', "<font:cambria:32>\c3" @ %props.name @ "\n<color:FFFFFF>" @ %text);
+		commandToClient(%obj.client, 'CenterPrint', "<font:cambria:24>\c3" @ %props.name @ "\n<color:FFFFFF>" @ %text);
 }
 
 function PaperImage::onUnMount(%this, %obj, %slot)
@@ -237,15 +237,15 @@ function getPaperTips()
 {
 	%high = -1;
 
-	%choice[%high++] = "Stuff you see in the news is accurate, but fairly broad. Be sure to double-check!";
+	%choice[%high++] = "Choking people leaves your hands bloody! Causing accidents doesn't, however.";
 	%choice[%high++] = "Spilled Coke on your shirt? Just throw a coat on - nobody will see your dirty shirt from under it!";
 	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can't otherwise see.";
 	%choice[%high++] = "A shower will not only completely clean you off, but will leave you feeling fresh and good about yourself!";
 	%choice[%high++] = "Find a spooky mask to pull off a scary prank! With the mask on, they won't know it's you!";
 	%choice[%high++] = "If you see something suspicious, scream! If you scream you'll be heard much farther.";
 	%choice[%high++] = "Stick with someone who reflects your values! Otherwise you'll be in a constant state of internal conflict.";
-	%choice[%high++] = "Daily News, while accurate, is inflexible. They won't adapt if something happened to the culprit!";
-	//%choice[%high++] = "Someone blocking the doorway? Rapidly and furiously jostling them will usually get them to move!";
+	%choice[%high++] = "Getting everyone's alibi in check is very important! However, you should also learn time of death!";
+	%choice[%high++] = "Someone blocking the doorway? Rapidly and furiously jostling them will usually get them to move!";
 
 	return %choice[getRandom(%high)];
 }
@@ -264,7 +264,6 @@ function getGuestList(%i)
 		%div = 3;
 		%list = "<just:left><tab:0,250,460>";
 	}
-	%list = %list @ "<font:cambria:24>";
 	for (%i = 0; %i < %charCount; %i++)
 	{
 		%character = GameCharacters.getObject(%i);

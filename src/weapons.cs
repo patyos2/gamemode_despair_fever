@@ -100,6 +100,7 @@ function noWeaponIcon::onUse(%this, %obj, %slot)
 
 function DespairWeapon::onDrop(%this, %player, %index)
 {
+	%player.unMountImage(0);
 	%player.tool[%player.weaponSlot] = noWeaponIcon.getID();
 	%player.currtool = -1;
 	if(isObject(%client = %player.client))

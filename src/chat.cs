@@ -260,17 +260,17 @@ package DespairChat
 					%_name = "Someone";
 
 				%distfactor = %realdist / %range;
-				if(%distfactor > 0.3)
+				if(%distfactor > 0.5)
 				{
 					%c1 = "f2f255";
 					%c2 = "f2f2c0";
 				}
-				if(%distfactor > 0.5)
+				if(%distfactor > 0.65)
 				{
 					%c1 = "e6e62e";
 					%c2 = "e6e693";
 				}
-				if(%distfactor > 0.7)
+				if(%distfactor > 0.8)
 				{
 					%c1 = "d9d90b";
 					%c2 = "d9d96a";

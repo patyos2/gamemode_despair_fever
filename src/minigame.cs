@@ -49,7 +49,7 @@ function createPlayer(%client)
 		while(%traitCount-- >= 0)
 		{
 			%lastType = %typeStr;
-			%lastTrait = %trait;
+			%lastTrait[%lastType] = %trait;
 			if(%neutralCount > 0)
 			{
 				%neutralCount--;
@@ -67,7 +67,7 @@ function createPlayer(%client)
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
 
 			//Check if we picked conflicting traits
-			if((%lastTrait $= "Extra Tough" && %trait $= "Frail") || (%lastTrait $= "Athletic" && %trait $= "Sluggish") || (%lastTrait $= "Loudmouth" && %trait $= "Softspoken"))
+			if((%lastTrait["Positive"] $= "Extra Tough" && %trait $= "Frail") || (%lastTrait["Positive"] $= "Athletic" && %trait $= "Sluggish") || (%lastTrait["Positive"] $= "Loudmouth" && %trait $= "Softspoken"))
 			{
 				%trait = %lastTrait; //rollback a bit, we still need a negative
 				%typeStr = %lastType;
@@ -306,7 +306,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
@@ -472,6 +472,9 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "Cleaning up the crime scene is impossible once investigation starts.";
 		%choice[%high++] = "You can loot bodies by pressing \c3Light Key\c6 and clicking an item! Plant stuff using \c3Ctrl+W\c6!";
 		%choice[%high++] = "\c3Hold-click\c6 and \c3move your mouse\c6 to start carrying a body! Only killers can carry corpses, though.";
+		%choice[%high++] = "At least two people must scream or examine a body to start the investigation.";
+		%choice[%high++] = "You can choke people by carrying a body and \c3Holding Rightclick\c6! However, both of your hands will get bloody.";
+		%choice[%high++] = "Instead of focusing on a single person the entire time, you should check as many people as possible for being the killer.";
 
 		$DefaultMiniGame.chatMessageAll('', '\c5~~[Day \c3%1\c5]\c6 Good morning, everyone! %2', $days, %choice[getRandom(%high)]);
 		despairOnMorning();

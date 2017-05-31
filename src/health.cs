@@ -64,9 +64,7 @@ package DespairHealth
 			return;
 
 		%playPain = 1;
-		if(%player.isCrouched())
-			%damage *= 3;
-
+		%blood = true;
 		if(%player.character.trait["Extra Tough"] && (%type $= "blunt" || %type $= "sharp"))
 			%damage *= 0.9;
 
@@ -81,9 +79,15 @@ package DespairHealth
 			%type = "fall";
 			if(%fatal)
 				%player.health = $Despair::CritThreshold;
+			%blood = false;
 		}
+		else if(%player.isCrouched())
+			%damage *= 3;
 		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
+		{
 			%type = "self";
+			%blood = false;
+		}
 
 		if(isObject(%src))
 		{
@@ -132,7 +136,7 @@ package DespairHealth
 		%player.attackDayTime[%player.attackCount] = getDayCycleTime();
 		%player.attackDay[%player.attackCount] = $days;
 
-		if (%pos !$= "")
+		if (%pos !$= "" && %blood)
 		{
 			%region = %player.getRegion(%pos, true);
 			%player.attackRegion[%player.attackCount] = %region;

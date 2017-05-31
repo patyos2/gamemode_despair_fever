@@ -19,9 +19,18 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 	%text = %a1;
 	for (%i=2; %i<=24; %i++)
 		%text = %text SPC %a[%i];
+	%text = strreplace(%text, "<br>", "[br]");
+	%text = strreplace(%text, "<jl>", "[jl]");
+	%text = strreplace(%text, "<jc>", "[jc]");
+	%text = strreplace(%text, "<jr>", "[jr]");
 	%text = trim(stripMLControlChars(%text));
 	if (%text $= "")
 		return;
+
+	%text = strreplace(%text, "[br]", "\n");
+	%text = strreplace(%text, "[jl]", "<just:left>");
+	%text = strreplace(%text, "[jc]", "<just:center>");
+	%text = strreplace(%text, "[jr]", "<just:right>");
 
 	if(%player.health <= 0) //Critical state
 	{

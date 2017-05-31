@@ -298,10 +298,8 @@ package DespairCorpses
 		Parent::onTrigger(%this, %obj, %slot, %state);
 	}
 
-	function serverCmdDropTool(%client, %index)
+	function Player::dropTool(%obj, %index)
 	{
-		if(!isObject(%obj = %client.player))
-			return;
 		%item = %obj.tool[%index];
 		if(isObject(%target = %obj.findCorpseRayCast()))
 		{
@@ -345,7 +343,7 @@ package DespairCorpses
 			}
 			return;
 		}
-		parent::serverCmdDropTool(%client, %index);
+		parent::dropTool(%obj, %index);
 	}
 };
 activatePackage(DespairCorpses);

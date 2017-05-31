@@ -74,7 +74,7 @@ datablock itemData(RazorItem)
 
 function RazorProps::onAdd(%this)
 {
-	%this.uses = getRandom(2, 5);
+	%this.uses = getRandom(3, 6);
 }
 
 datablock ShapeBaseImageData(RazorImage)
@@ -127,7 +127,7 @@ function RazorImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
 	%props = %obj.getItemProps();
-	if (%props.uses <= 0)
+	if (%props.uses < 0)
 	{
 		%obj.setImageAmmo(0, 0);
 		if (isObject(%obj.client))
@@ -156,7 +156,7 @@ function RazorImage::onUse(%this, %obj, %slot)
 	if($InvestigationStart !$= "" && !%obj.client.killer)
 		return;
 	%props = %obj.getItemProps();
-	if (%props.uses <= 0)
+	if (%props.uses < 0)
 	{
 		%obj.setImageAmmo(0, 0);
 		if (isObject(%obj.client))
@@ -186,6 +186,8 @@ function RazorImage::onUse(%this, %obj, %slot)
 		%obj.setImageAmmo(0, 0);
 		%obj.prevTargetPos = %col.getPosition();
 		%obj.prevPosition = %obj.getPosition();
+		%props = %obj.getItemProps();
+		%props.uses--;
 		%this.razeSchedule = %this.schedule(2250, onRaze, %obj, %col);
 		if (isObject(%obj.client))
 			commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Shaving...");
@@ -223,7 +225,7 @@ function RazorImage::onRaze(%this, %obj, %col)
 		return;
 	if(%obj.getPosition() !$= %obj.prevPosition || %col.getPosition() !$= %obj.prevTargetPos)
 	{
-		%obj.setImageAmmo(0, %props.uses > 0);
+		%obj.setImageAmmo(0, %props.uses >= 0);
 		if (isObject(%obj.client))
 			commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Action interrupted. Stand still!");
 		%obj.prevPosition = "";
@@ -232,8 +234,6 @@ function RazorImage::onRaze(%this, %obj, %col)
 	}
 	%obj.prevPosition = "";
 	%obj.prevTargetPos = "";
-	%props = %obj.getItemProps();
-	%props.uses--;
 	serverPlay3d(RazorHitSound, %col.getHackPosition());
 	if (isObject(%obj.client))
 		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Done!");
@@ -244,5 +244,5 @@ function RazorImage::onRaze(%this, %obj, %col)
 		%col.applyAppearance();
 	}
 
-	%obj.setImageAmmo(0, %props.uses > 0);
+	%obj.setImageAmmo(0, %props.uses >= 0);
 }

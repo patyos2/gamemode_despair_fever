@@ -142,5 +142,6 @@ function mopImage::onStopFire(%this, %obj, %slot)
 
 function mopImage::onUnMount(%this, %obj, %slot)
 {
-	serverCmdDropTool(%obj.client, %obj.mopSlot);
+	if(%obj.tool[%obj.mopSlot] !$= "")
+		%obj.dropTool(%obj.mopSlot);
 }
