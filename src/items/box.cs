@@ -61,7 +61,7 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 	%gotRare = false;
 	while(%count-- >= 0)
 	{
-		if(getRandom() <= 0.15 && !%gotRare)
+		if(getRandom() <= 0.35 && !%gotRare)
 		{
 			%index = 1;
 			%gotRare = true;

@@ -379,27 +379,19 @@ function despairOnNight()
 {
 	if(!$pickedKiller)
 	{
-		%client = chooseNextClient("Killer");
-		%client.play2d(KillerJingleSound);
-		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
-		messageClient(%client, '', "<font:impact:30>" @ %msg);
-		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
-		%client.killer = true;
-		echo(%client.getplayername() SPC "is killa");
-		$pickedKiller = %client;
-		$currentKiller = %client;
-		ServerPlaySong("DespairMusicOpeningIntro");
-
-		if(%client.player.unconscious)
+		$Despair::Queue["Killer"] = "";
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
-			%client.setControlObject(%cam = %client.camera);
-			%cam.setMode("CORPSE", %client.player);
-			%client.player.currResting = 1;
-			%client.chatMessage("\c6You are faking sleep. Press any key to get up.");
+			%cl = ClientGroup.getObject(%i);
+			if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons || %cl.afk)
+				continue;
+			
+			%cl.prompted = true;
+			commandToClient(%cl, 'messageBoxYesNo', "Killer Queue", "Do you wish to be included in the killer queue for this round?", 'KillerAccept');
 		}
-		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
-			%client.player.removeStatusEffect($SE_sleepSlot);
+		$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
 	}
+
 	if($days > 0)
 		return;
 
@@ -435,6 +427,52 @@ function despairOnNight()
 	%props = %brick.item.getItemProps();
 	%props.name = "Guest List";
 	%props.contents = getGuestList(0);
+}
+
+function serverCmdKillerAccept(%this)
+{
+	if(%this.prompted && !$pickedKiller)
+	{
+		%queue = $Despair::Queue["Killer"];
+		for(%i = 0; %i < getWordCount(%queue); %i++)
+		{
+			if(getWord(%queue, %i) == %this)
+				return;
+		}
+		%queue = setWord(%queue, getWordCount(%queue), %this);
+		$Despair::Queue["Killer"] = %queue;
+		%this.prompted = false;
+		commandToClient(%this, 'messageBoxOK', "Killer Queue", "You will now be included in the killer queue.");
+	}
+}
+
+function DespairPickKiller()
+{
+	cancel($DefaultMiniGame.eventSchedule);
+	if(!$pickedKiller)
+	{
+		%queue = $Despair::Queue["Killer"];
+		%client = getWord(%queue, getRandom(0, getWordCount(%queue)-1));//chooseNextClient("Killer");
+		%client.play2d(KillerJingleSound);
+		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
+		messageClient(%client, '', "<font:impact:30>" @ %msg);
+		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
+		%client.killer = true;
+		echo(%client.getplayername() SPC "is killa");
+		$pickedKiller = %client;
+		$currentKiller = %client;
+		ServerPlaySong("DespairMusicOpeningIntro");
+
+		if(%client.player.unconscious)
+		{
+			%client.setControlObject(%cam = %client.camera);
+			%cam.setMode("CORPSE", %client.player);
+			%client.player.currResting = 1;
+			%client.chatMessage("\c6You are faking sleep. Press any key to get up.");
+		}
+		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
+			%client.player.removeStatusEffect($SE_sleepSlot);
+	}
 }
 
 function DespairSpecialChat(%client, %text)
@@ -605,7 +643,7 @@ function courtPlayers()
 		ServerPlaySong("DespairMusicOpeningIntro");
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
 	if(isObject($mangled))
-		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c2The victim had their \c6identity stolen\c2. \c0One of you shouldn't be alive . . .");
+		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c0The victim had their \c6identity stolen\c0. One of you shouldn't be alive . . .");
 	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
 
 	$chatDelay = 0.5;

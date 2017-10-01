@@ -1,8 +1,8 @@
 $Despair::Traits::Tick = 3000; //miliseconds
 
-$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Medium	Loudmouth";
+$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth"; //Medium
 $Despair::Traits::Neutral = "Snorer	Feel No Pain	Hatter	Chain Smoker";
-$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Schizo	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Narcoleptic	Softspoken";
+$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken"; //Schizo Narcoleptic
 
 $Despair::Traits::Description["Investigative"] = "You will get more information from corpses.";
 $Despair::Traits::Description["Heavy Sleeper"] = "Can sleep on any surface without suffering sore back!";
@@ -10,7 +10,7 @@ $Despair::Traits::Description["Gang Member"] = "Totally gangsta. Has a cool hat 
 $Despair::Traits::Description["Extra Tough"] = "More resistant to weapon damage!";
 $Despair::Traits::Description["Bodybuilder"] = "Faster weapon swings!";
 $Despair::Traits::Description["Athletic"] = "Slightly faster run speed!";
-$Despair::Traits::Description["Medium"] = "Hear the dead when sleeping...";
+$Despair::Traits::Description["Medium"] = "You're not supposed to have this";//"Hear the dead when sleeping...";
 $Despair::Traits::Description["Loudmouth"] = "Louder speech, as well as a Scream ability during trial to shut everyone up.";
 
 $Despair::Traits::Description["Snorer"] = "Snore loudly when sleeping.";
@@ -21,13 +21,13 @@ $Despair::Traits::Description["Chain Smoker"] = "Cough constantly.";
 $Despair::Traits::Description["Clumsy"] = "Trip on blood and dropped items, chance to drop held item when tripping!";
 $Despair::Traits::Description["Paranoid"] = "Constantly alert. Never able to get a good night's rest.";
 $Despair::Traits::Description["Nervous"] = "Stuttered speech, easily stressed out.";
-$Despair::Traits::Description["Schizo"] = "Daydreaming and spooky voices!!";
+$Despair::Traits::Description["Schizo"] = "You're not supposed to have this";//"Daydreaming and spooky voices!!";
 $Despair::Traits::Description["Frail"] = "Less health.";
 $Despair::Traits::Description["Cold"] = "Constantly ill...";
 $Despair::Traits::Description["Sluggish"] = "Slightly slower run speed.";
 $Despair::Traits::Description["Hemophiliac"] = "Bleed more.";
 $Despair::Traits::Description["Squeamish"] = "Blood makes you scream! Seeing corpses will make you faint.";
-$Despair::Traits::Description["Narcoleptic"] = "Randomly pass out.";
+$Despair::Traits::Description["Narcoleptic"] = "You're not supposed to have this";//"Randomly pass out.";
 $Despair::Traits::Description["Softspoken"] = "quieter speech, unable to use caps...";
 
 function Player::traitSchedule(%obj)
@@ -49,7 +49,7 @@ function Player::traitSchedule(%obj)
 		}
 		if(%obj.character.trait["Squeamish"])
 		{
-			if($Sim::Time - %obj.lastScream < 10) //Killer only spams emotes
+			if($Sim::Time - %obj.lastScream < 10 && getRandom() < 0.05) //Killer only spams emotes
 			{
 				%text[%high++] = "hyperventilates!";
 				%text[%high++] = "freaks out!";
@@ -86,7 +86,7 @@ function Player::traitSchedule(%obj)
 	}
 	if(%obj.character.trait["Cold"])
 	{
-		if(getRandom() < 0.03)
+		if(getRandom() < 0.015)
 		{
 			%text[%high++] = "sneezes!";
 			%text[%high++] = "sniffs!";
@@ -97,7 +97,7 @@ function Player::traitSchedule(%obj)
 	}
 	if(%obj.character.trait["Chain Smoker"])
 	{
-		if(getRandom() < 0.03)
+		if(getRandom() < 0.015)
 			serverCmdMe(%obj.client, "coughs!");
 	}
 	%obj.traitSchedule = %obj.schedule(getMax(500, $Despair::Traits::Tick), traitSchedule, %obj);

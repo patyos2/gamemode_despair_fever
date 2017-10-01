@@ -134,6 +134,11 @@ function Player::carryTick(%this)
 		}
 	}
 
+	if(getRandom() < 0.001)
+		%this.spawnFiber();
+	if(getRandom() < 0.001)
+		%player.spawnFiber();
+
 	if (!%this.isBody)
 	{
 		%this.lastTosser = %player;
@@ -340,6 +345,11 @@ package DespairCorpses
 					messageClient(%target.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
 				if(isObject(%obj.client))
 					messageClient(%obj.client, 'MsgItemPickup', '', %slot, %obj.tool[%slot], 0);
+
+				if(getRandom() < 0.2)
+					%obj.spawnFiber();
+				if(getRandom() < 0.2)
+					%target.spawnFiber();
 			}
 			return;
 		}

@@ -156,8 +156,6 @@ function serverCmdDamageLogs(%client, %a, %b)
 
 function serverCmdSpectate(%this)
 {
-	if(!%this.isAdmin)
-		return;
 	%this.spectating = !%this.spectating;
 	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
 	if(isObject(%this.player) && %this.spectating)
@@ -171,6 +169,27 @@ function serverCmdSpectate(%this)
 	{
 		if(!$currentKiller)
 			createPlayer(%this);
+	}
+}
+
+function serverCmdKill(%this, %target)
+{
+	if(!%this.isAdmin)
+		return;
+	%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	messageClient(%this, '', '\c5You have force-killed %1.', %target);
+	messageClient(%target, '', '\c5You have been force-killed.');
+	if(isObject(%target.player))
+	{
+		%target.camera.setMode("Observer");
+		%target.setControlObject(%target.camera);
+		%target.camera.setControlObject(%target.camera);
+		%target.player.delete(); //Should be safe to do
 	}
 }
 

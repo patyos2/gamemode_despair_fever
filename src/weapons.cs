@@ -164,6 +164,9 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 
 	%player.lastFireTime = $Sim::Time;
 
+	if(getRandom() < 0.2)
+		%player.spawnFiber();
+
 	if (!%image.fireManual)
 		%player.fireSchedule = %player.schedule(%time * 1000, fireWeapon, true);
 }

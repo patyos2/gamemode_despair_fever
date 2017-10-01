@@ -87,6 +87,26 @@ function createPlayer(%client)
 	else
 	{
 		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
+		for(%i = 0; %i < getFieldCount(%character.traitList); %i++)
+		{
+			%trait = getField(%character.traitList, %i);
+			%done = false;
+			for(%j = 0; %j < getFieldCount($Despair::Traits::Negative); %j++)
+			{
+				if(%trait $= getField($Despair::Traits::Negative, %j)) //negative trait
+				{
+					%character.traitList = removeField(%character.traitList, %i);
+					%character.trait[%trait] = false;
+					messageClient(%client, '', '\c5Your \c0%1\c5 trait is now gone!', %trait);
+					%done = true;
+					break;
+				}
+				if(%done)
+					break;
+			}
+			if(%done)
+				break;
+		}
 	}
 
 	if(getField(%character.appearance, 3) $= "")
@@ -222,8 +242,8 @@ function roomPlayers()
 		%ln = getWord(%player.character.name, 1);
 		if(%sibling[%ln] !$= "")
 		{
-			messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, %sibling[%ln].character.room);
-			messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, %player.character.room);
+			messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, $roomNum[%sibling[%ln].character.room]);
+			messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, $roomNum[%player.character.room]);
 		}
 		%sibling[%ln] = %player;
 
@@ -628,8 +648,8 @@ package DespairFever
 
 		$maxDeaths = getMax(1, $aliveCount - 4);
 
-		if($deathCount >= $maxDeaths)
-			DespairSetWeapons(0);
+		//if($deathCount >= $maxDeaths)
+		//	DespairSetWeapons(0);
 
 		if(!%otherAlive)
 		{

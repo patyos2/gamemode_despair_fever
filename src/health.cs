@@ -22,13 +22,13 @@ function Player::critLoop(%this)
 	if(%this.getState() $= "Dead")
 		return;
 
-	if($deathCount >= $maxDeaths)
-	{
-		cancel(%this.critLoop);
-		%this.health = %this.maxhealth;
-		%this.KnockOut(30);
-		return;
-	}
+	//if($deathCount >= $maxDeaths)
+	//{
+	//	cancel(%this.critLoop);
+	//	%this.health = %this.maxhealth;
+	//	%this.KnockOut(30);
+	//	return;
+	//}
 
 	%percent = mAbs(%this.health / $Despair::CritThreshold);
 	%delay = 1250 * (1 - %percent);
@@ -38,7 +38,7 @@ function Player::critLoop(%this)
 		commandToClient(%this.client, 'SetVignette', true, %percent SPC "0 0" SPC %percent);
 	}
 
-	if(%this.attackSource[%this.attackCount] == %this || $Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
+	if(%this.die || %this.attackSource[%this.attackCount] == %this || $Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
 	{
 		%this.health -= 5;
 		if(%this.health <= $Despair::CritThreshold)
@@ -71,7 +71,7 @@ package DespairHealth
 		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
 		{
 			if(%client.killer)
-				%damage *= 0.2;
+				%damage = 1;
 			%fatal = %player.health - %damage <= 0;
 			%sound = %fatal ? fallFatalSound : fallInjurySound;
 			%playPain = 0;
@@ -166,6 +166,9 @@ package DespairHealth
 			%player.bloody = true;
 			%player.bloodyWriting = 2;
 		}
+
+		if(getRandom() < 0.2)
+			%player.spawnFiber();
 
 		%player.health -= %damage;
 		if(%player.health <= $Despair::CritThreshold)

@@ -40,6 +40,7 @@ exec("./src/corpse.cs");
 exec("./src/display.cs");
 exec("./src/door.cs");
 exec("./src/examine.cs");
+exec("./src/fibers.cs");
 exec("./src/footsteps.cs");
 exec("./src/hats.cs");
 exec("./src/health.cs");

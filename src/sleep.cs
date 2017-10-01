@@ -94,6 +94,8 @@ function Player::KnockOut(%this, %duration)
 	%this.playThread(3, "root");
 	%this.setActionThread("root");
 
+	%this.spawnFiber();
+
 	%this.unconscious = true;
 	//%this.setShapeNameDistance(0);
 	%this.isBody = true;
@@ -171,10 +173,10 @@ function Player::KnockOutTick(%this, %ticks, %done)
 
 			if(%this.character.trait["Medium"])
 			{
-				if($lastDeadText !$= "" && getRandom() < 0.6)
+				if($lastDeadText !$= "" && getRandom() < 0.7)
 					%dream = $lastDeadText;
 				%dream = scrambleText(softSpeakText(%dream), 0.2 + (getRandom() * 0.3), "...");
-				$lastDeadText = "";
+				//$lastDeadText = "";
 			}
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
 		}
