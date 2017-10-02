@@ -40,7 +40,7 @@
  "Double-click" and hold to carry around a corpse.
  You can Scream with "ALARM" key (default: "H"). However, you must be looking at something screwed up, like blood or a body.
  Every morning, papers will spawn. These papers will range from trash, gameplay tips and news articles.
- Daily News papers will contain IMPORTANT INFORMATION giving you a tip on the killer's identity! Be sure to seek them out!
+ People leave Fibers during fights, sleeping or dragging bodies! The fibers take on the colors of their hair or clothes. Coats and hair-hiding masks obscure fibers!
  There are NO NON-LETHAL WEAPONS in this gamemode. Everything will kill.
 
 [COMBAT]

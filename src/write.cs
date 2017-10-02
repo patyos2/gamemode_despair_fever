@@ -57,6 +57,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.isBlood = true;
 			%player.health = $Despair::CritThreshold;
 			%player.critLoop();
+			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
 		}
 		else
 		{
@@ -126,7 +127,10 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 				if(%props.name $= "Daily News")
 					messageClient(%client, '', "\c5You are unable to write on this paper!");
 				else
+				{
 					%props.contents = %props.contents @ %color @ %text;
+					RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
+				}
 				return;
 			}
 		}
@@ -143,6 +147,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 1;
 			%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
+			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
 			if(%blood)
 				%decal.isBlood = true;
 			if(%pen)

@@ -141,6 +141,9 @@ function radioJoined(%obj, %channel)
 	%time = getDayCycleTimeString(%time, 1);
 
 	%name = "[" @ (%obj % 100) @ "] Someone";
+
+	if(isObject(%obj.client))
+		RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") joined radio channel '" @ %channel @ "'", "\c2");
 	for (%i = 0; %i < ClientGroup.getCount(); %i++)
 	{
 		%member = ClientGroup.getObject(%i);
@@ -176,6 +179,9 @@ function radioLeft(%obj, %channel)
 	%time = getDayCycleTimeString(%time, 1);
 
 	%name = "[" @ (%obj % 100) @ "] Someone";
+
+	if(isObject(%obj.client))
+		RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") left radio channel '" @ %channel @ "'", "\c2");
 	for (%i = 0; %i < ClientGroup.getCount(); %i++)
 	{
 		%member = ClientGroup.getObject(%i);

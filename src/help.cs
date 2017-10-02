@@ -51,7 +51,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c3\"Hold-click\" and move your mouse\c6 to carry around a corpse.";
 			%text[%count++] = " \c6You can \c3Scream\c6 with \c3\"ALARM\"\c6 key (default\c3: \"H\"\c6). However, you must be looking at something screwed up, like blood or a body.";
 			%text[%count++] = " \c6Every morning, \c3papers\c6 will spawn. These papers will range from \c3trash\c6, \c3gameplay tips\c6 and \c3news articles\c6.";
-			%text[%count++] = " \c6Daily News papers will contain \c3IMPORTANT INFORMATION\c6 giving you a tip on the killer's identity! Be sure to seek them out!";
+			%text[%count++] = " \c6People leave \c3Fibers\c6 during fights, sleeping or dragging bodies! The fibers take on the colors of their hair or clothes. Coats and hair-hiding masks obscure fibers!";
 			%text[%count++] = " \c6There are \c0NO NON-LETHAL WEAPONS\c6 in this gamemode. Everything will kill.";
 			%text[%count++] = " \c5Page Up to read the above.";
 		case "5" or "combat":

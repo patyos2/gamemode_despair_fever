@@ -279,6 +279,8 @@ function Player::dropTool(%obj, %index)
 		%item.onDrop(%obj, %index);
 	else
 		%obj.removeTool(%index, 1, 0, 0);
+
+	RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") used /dropTool '" @ %item.uiName @ "'", "\c1");
 }
 
 function Player::setSpeedScale(%obj, %scale)
@@ -556,6 +558,8 @@ package DespairPlayerPackage
 		%col.lastShoved = $Sim::Time;
 
 		ServerPlay3D("ShoveSound", getWords(%ray, 1, 3));
+		if(isObject(%client = %this.client))
+			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") shoved " @ %col.client.getPlayerName() SPC "(" @ %col.client.getBLID() @ ")", "\c1");
 	}
 	function Observer::onTrigger(%this, %obj, %slot, %state)
 	{

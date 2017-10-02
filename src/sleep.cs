@@ -118,6 +118,8 @@ function Player::KnockOut(%this, %duration)
 	}
 	%this.KnockOutTick(%duration);
 	%this.lastKO = $Sim::Time;
+	if(isObject(%client = %this.client))
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") is unconscious!", "\c2");
 }
 
 function Player::KnockOutTick(%this, %ticks, %done)
@@ -160,6 +162,8 @@ function Player::KnockOutTick(%this, %ticks, %done)
 
 			%dream = %choice[getRandom(%high)];
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
+			if(getRandom() < 0.4);
+				serverCmdMe(%this.client, "gasp");
 		}
 		else if (getRandom() < 0.1)
 		{
@@ -224,6 +228,7 @@ function Player::WakeUp(%this)
 		%this.stopAudio(0);
 
 	%client.updateBottomPrint();
+	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") woke up!", "\c2");
 }
 
 function Player::Slip(%this, %ticks)
@@ -275,6 +280,8 @@ function Player::Slip(%this, %ticks)
 			serverCmdDropTool(%this.client, %this.currTool);
 	}
 	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks--);
+	if(isObject(%client = %this.client))
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") slipped!", "\c2");
 }
 
 function serverCmdSleep(%this, %bypass)
@@ -303,6 +310,7 @@ function serverCmdSleep(%this, %bypass)
 			%pl.stopAudio(0);
 			%pl.playAudio(0, SnoringLoopSound);
 		}
+		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is faking sleep!", "\c2");
 		return;
 	}
 
@@ -330,6 +338,7 @@ function serverCmdSleep(%this, %bypass)
 			return;
 		%pl.KnockOut(%sec);
 		%this.updateBottomPrint();
+		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is sleeping!", "\c2");
 		return;
 	}
 	%message = "Are you sure you want to sleep" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!";

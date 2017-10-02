@@ -49,7 +49,7 @@ function Player::traitSchedule(%obj)
 		}
 		if(%obj.character.trait["Squeamish"])
 		{
-			if($Sim::Time - %obj.lastScream < 10 && getRandom() < 0.05) //Killer only spams emotes
+			if($Sim::Time - %obj.lastScream < 60 && getRandom() < 0.05) //Killer only spams emotes
 			{
 				%text[%high++] = "hyperventilates!";
 				%text[%high++] = "freaks out!";

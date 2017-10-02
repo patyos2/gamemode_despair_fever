@@ -225,9 +225,13 @@ function roomPlayers()
 		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
 		%roomCloset.setItem("");
 		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
+		{
+			talk("Room " @ $roomNum[%room] @ " was occupied.");
 			continue;
+		}
 
 		$freeRoom[$freeCount++] = %room;
+		talk("Room " @ $roomNum[%room] @ " was free!");
 	}
 
 	%count = $DefaultMiniGame.numMembers;
@@ -487,7 +491,8 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "Murder weapon and blood contain a lot more information that you may initially think. Don't write them off!";
 		%choice[%high++] = "Once investigation period starts, weapons are disabled, but non-standard murders may still happen!";
 		%choice[%high++] = "You can spamclick people to shove them!";
-		%choice[%high++] = "\c3Mediums\c6 can hear dead people in their dreams! However, you'll have to decipher what they said.";
+		//%choice[%high++] = "\c3Mediums\c6 can hear dead people in their dreams! However, you'll have to decipher what they said.";
+		%choice[%high++] = "\c3Investigatives\c6 are incredibly helpful! They can tell time of death, number and type of cuts, choking victims and all the like!";
 		%choice[%high++] = "If you survive and win as an innocent, you will keep your character AND your room number!";
 		%choice[%high++] = "Cleaning up the crime scene is impossible once investigation starts.";
 		%choice[%high++] = "You can loot bodies by pressing \c3Light Key\c6 and clicking an item! Plant stuff using \c3Ctrl+W\c6!";
@@ -495,6 +500,10 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "At least two people must scream or examine a body to start the investigation.";
 		%choice[%high++] = "You can choke people by carrying a body and \c3Holding Rightclick\c6! However, both of your hands will get bloody.";
 		%choice[%high++] = "Instead of focusing on a single person the entire time, you should check as many people as possible for being the killer.";
+		%choice[%high++] = "You have no idea how important alibis are! If you pay attention and remember who went where, you might figure something out!";
+		%choice[%high++] = "Fibers can be dropped when you swing your weapon, you get hit or you interact with a body! They also drop if you sleep.";
+		%choice[%high++] = "Fibers take on the color of your hair, your clothes and your shoes. Coats and hair-hiding masks obscure fibers.";
+		%choice[%high++] = "You can fake dying messages if you get your hands bloody and /write!";
 
 		$DefaultMiniGame.chatMessageAll('', '\c5~~[Day \c3%1\c5]\c6 Good morning, everyone! %2', $days, %choice[getRandom(%high)]);
 		despairOnMorning();

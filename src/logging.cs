@@ -52,7 +52,7 @@ function serverCmdMenu(%this)
 
 function serverCmdLogs(%this)
 {
-	serverCmdMenu(%this)
+	serverCmdMenu(%this);
 }
 
 

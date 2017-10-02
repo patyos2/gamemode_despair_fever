@@ -163,7 +163,8 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 		return;
 
 	%player.lastFireTime = $Sim::Time;
-
+	if(isObject(%client = %player.client))
+		RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] swung their " @ %image.item.uiName, "\c4");
 	if(getRandom() < 0.2)
 		%player.spawnFiber();
 

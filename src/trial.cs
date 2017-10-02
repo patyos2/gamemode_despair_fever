@@ -127,7 +127,7 @@ function despairOnKill(%victim, %attacker, %crit)
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
 		//echo("-+ " @ %msg);
 		RS_Log("[RDM]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] RDMed " @
-				%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
+				%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c2");
 		%count = ClientGroup.getCount();
 		for (%i = 0; %i < %count; %i++)
 		{
@@ -176,12 +176,12 @@ function despairOnKill(%victim, %attacker, %crit)
 				DespairSetWeapons(0);
 			//if(!isEventPending($DefaultMiniGame.subEventSchedule))
 			//	$DefaultMiniGame.subEventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
-			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] murdered " @ 
-					%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
+			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] murdered " @ 
+					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
 		}
 		else
-			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] critted " @ 
-					%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
+			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] critted " @ 
+					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
 		return 1;
 	}
 }
@@ -225,6 +225,8 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 
+	RS_Log("[GAME] Body Announcement - " @ (%unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered")), "\c5");
+
 	%profile = DespairMusicInvestigationIntro1;
 	if($announcements > 2 || %kira) //if there's been two corpses or it's a disguise kit round
 		%profile = DespairMusicInvestigationIntro2;
@@ -265,11 +267,13 @@ function despairStartInvestigation(%no_announce)
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
 		serverPlay2d("DespairMusicInvestigationStart");
+		RS_Log("[GAME] Investigation has started", "\c5");
 	}
 }
 
 function despairOnMorning()
 {
+	RS_Log("[GAME] Good morning!", "\c5");
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -398,6 +402,7 @@ function despairOnLateEvening()
 
 function despairOnNight()
 {
+	RS_Log("[GAME] Good night...", "\c5");
 	if(!$pickedKiller)
 	{
 		$Despair::Queue["Killer"] = "";
@@ -664,6 +669,7 @@ function courtPlayers()
 	else
 		ServerPlaySong("DespairMusicOpeningIntro");
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
+	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Suggested topics of discussion: \c6Your Alibi, Friend\'s Alibi, Crime Scene, Murder Weapon, Thoughts and Suspicions');
 	if(isObject($mangled))
 		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c0The victim had their \c6identity stolen\c0. One of you shouldn't be alive . . .");
 	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
@@ -685,6 +691,8 @@ function courtPlayers()
 	Sky.sendUpdate();
 
 	despairBottomPrintLoop();
+
+	RS_Log("[GAME] Trial period has begun.", "\c5");
 }
 
 function DespairStartOpeningStatements()
@@ -694,6 +702,7 @@ function DespairStartOpeningStatements()
 		ServerPlaySong("DespairMusicOpeningLoop");
 	$DefaultMiniGame.chatMessageAll('', "\c5Let's hear everybody out.");
 	$DefaultMiniGame.eventSchedule = schedule(1000, 0, DespairCycleOpeningStatements, 0);
+	RS_Log("[GAME] Opening statements!", "\c5");
 }
 
 function DespairCycleOpeningStatements(%j)
@@ -744,6 +753,7 @@ function DespairCycleOpeningStatements(%j)
 
 function DespairStartDiscussion()
 {
+	RS_Log("[GAME] Discussion start!", "\c5");
 	cancel($DefaultMiniGame.eventSchedule);
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
@@ -770,6 +780,7 @@ function DespairStartDiscussion()
 
 function DespairStartVote()
 {
+	RS_Log("[GAME] Vote start!", "\c5");
 	cancel($DefaultMiniGame.eventSchedule);
 	$DespairTrialVote = true;
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
@@ -795,6 +806,7 @@ function DespairStartVote()
 
 function DespairEndVote()
 {
+	RS_Log("[GAME] Vote end!", "\c5");
 	cancel($DefaultMiniGame.eventSchedule);
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
@@ -950,6 +962,7 @@ function DespairTrialDropTool(%pl, %slot)
 	%item.canPickUp = false;
 	MissionCleanup.add(%item);
 	GameRoundCleanup.add(%item);
+	RS_Log(%pl.client.getPlayerName() SPC "(" @ %pl.client.getBLID() @ ") used /dropTool '" @ %tool.uiName @ "'", "\c2");
 }
 
 function DespairTrialOnAlarm(%client)
@@ -983,6 +996,8 @@ function DespairTrialOnAlarm(%client)
 		%pl.playThread(3, "talk");
 		%pl.schedule(strLen(%text) * 35, "playThread", 3, "root");
 		serverPlay2d("ObjectionSound");
+
+		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used his loudmouth ability!", "\c2");
 
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{

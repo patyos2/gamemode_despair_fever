@@ -2,6 +2,7 @@
 function serverCmdKeepChar(%this)
 {
 	%this.noPersistance = !%this.noPersistance;
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
 }
 
@@ -109,8 +110,8 @@ function serverCmdWhoIs(%client, %a, %b)
 	if (!%client.isAdmin)
 		return;
 
-	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /whois", "\c2");
 	%search = trim(%a SPC %b);
+	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /whois '" @ %search @ "'", "\c2");
 	%charCount = GameCharacters.getCount();
 	for (%i = 0; %i < %charCount; %i++)
 	{
@@ -127,7 +128,7 @@ function serverCmdSpectate(%this)
 {
 	%this.spectating = !%this.spectating;
 	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
-	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /spectate", "\c2");
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
 	if(isObject(%this.player) && %this.spectating)
 	{
 		%this.camera.setMode("Observer");
@@ -152,7 +153,7 @@ function serverCmdKill(%this, %target)
 		messageClient(%this, '', '\c5Invalid target!');
 		return;
 	}
-	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target @ "'", "\c2");
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
 	messageClient(%this, '', '\c5You have force-killed %1.', %target);
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
@@ -169,8 +170,72 @@ function serverCmdShowRoles(%this)
 	if(!%this.isAdmin)
 		return;
 	%this.showRoles = !%this.showRoles;
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /showroles '" @ (%this.showRoles ? "yes" : "no") @ "'", "\c2");
 	messageClient(%this, '', '\c5You will \c6%1\c5 see the roles when spectating.', %this.showRoles ? "now" : "no longer");
 	%this.updateBottomprint();
+}
+
+function serverCmdPM(%this, %target, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10, %m11, %m12, %m13, %m14, %m15, %m16, %m17, %m18, %m19, %m20, %m20, %m22, %m23, %m24, %m25, %m26, %m27, %m28, %m29, %m30, %m31, %m32)
+{
+	if (!%this.isAdmin)
+	{
+		serverCmdReport(%this, %target, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10, %m11, %m12, %m13, %m14, %m15, %m16, %m17, %m18, %m19, %m20, %m20, %m22, %m23, %m24, %m25, %m26, %m27, %m28, %m29, %m30, %m31, %m32);
+		return;
+	}
+	%text = %m1;
+	for (%i=2; %i<=32; %i++)
+		%text = %text SPC %m[%i];
+	%text = trim(stripMLControlChars(%text));
+	if (%text $= "")
+		return;
+	if (isObject(%target = findClientByName(%target)))
+	{
+		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /pm '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")" SPC %text @ "'", "\c2");
+		messageClient(%target, '', '\c4Admin PM from \c5%1\c6: %2',%this.getPlayerName(), %text);
+		%target.play2d(AdminBwoinkSound);
+		%msg = "\c4PM from \c5"@ %this.getPlayerName() @"\c6 to \c3"@ %target.getPlayerName() @"\c6: "@%text;
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%other = ClientGroup.getObject(%i);
+			if (%other.isAdmin)
+			{
+				messageClient(%other, '', %msg);
+			}
+		}
+	}
+	else
+	{
+		messageClient(%this, '', '\c5Player not found');
+	}
+}
+function serverCmdReport(%this, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10, %m11, %m12, %m13, %m14, %m15, %m16, %m17, %m18, %m19, %m20, %m20, %m22, %m23, %m24, %m25, %m26, %m27, %m28, %m29, %m30, %m31, %m32)
+{
+	if (getSimTime() - %this.lastReport <= 10000)
+	{
+		messageClient(%this, '', '\c0You have to wait \c3%1\c0 seconds until you can use this again.', mCeil(getSimTime() - %this.lastReport / 10000));
+		return;
+	}
+	%text = %m1;
+	for (%i=2; %i<=32; %i++)
+		%text = %text SPC %m[%i];
+	%text = trim(stripMLControlChars(%text));
+	if (%text $= "")
+		return;
+
+	messageClient(%this, '', '\c0Your report\c6: %1', %text);
+	%this.lastReport = getSimTime();
+
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /report '" @ %text @ "'", "\c2");
+	%msg = "\c0REPORT from \c3"@%this.getPlayerName()@"\c6:" SPC %text;
+	for (%i = 0; %i < ClientGroup.getCount(); %i++)
+	{
+		%other = ClientGroup.getObject(%i);
+		if (%other.isAdmin)
+		{
+			messageClient(%other, '', %msg);
+			%other.play2d(AdminBwoinkSound);
+		}
+	}
 }
 
 function updateAdminCount()
@@ -215,7 +280,7 @@ function serverCmdAnnounce(%this, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %
 	%text = trim(stripMLControlChars(%text));
 	if (%text $= "")
 		return;
-
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /announce '" @ %text @ "'", "\c2");
 	messageAll('MsgAdminForce', '<font:consolas:24><bitmap:base/client/ui/ci/star> \c5%1\c6: %2', %this.getPlayerName(), %text);
 }
 
@@ -225,6 +290,7 @@ function serverCmdLockServer(%this)
 		return;
 	$Pref::Server::Password = "a";
 	messageAll('MsgAdminForce', '<bitmap:base/client/ui/ci/star> \c3%1\c0 has \c3locked \c0the server.', %this.getPlayerName());
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /lockserver", "\c2");
 }
 
 function serverCmdUnLockServer(%this)
@@ -233,6 +299,7 @@ function serverCmdUnLockServer(%this)
 		return;
 	$Pref::Server::Password = "";
 	messageAll('MsgAdminForce', '<bitmap:base/client/ui/ci/star> \c3%1\c0 has \c3unlocked \c0the server.', %this.getPlayerName());
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /unlockserver", "\c2");
 }
 
 package DespairAdmins

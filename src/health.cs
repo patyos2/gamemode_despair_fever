@@ -138,9 +138,9 @@ package DespairHealth
 
 		if(%attacker)
 			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] harmed " @ 
-					%client.getPlayerName() SPC "[" @ %client.getBLID() @ "], type " @ %type @ " for " @ %damage @ " damage.", "\c5");
+					%client.getPlayerName() SPC "[" @ %client.getBLID() @ "], type " @ %type @ " for " @ %damage @ " damage.", "\c4");
 		else
-			RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] harmed himself, type " @ %type @ " for " @ %damage @ " damage.", "\c5");
+			RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] harmed himself, type " @ %type @ " for " @ %damage @ " damage.", "\c4");
 
 		if (%pos !$= "" && %blood)
 		{
@@ -264,7 +264,7 @@ package DespairHealth
 			commandToClient(%client, 'ClearCenterPrint');
 			commandToClient(%client, 'SetVignette', true, "0 0 0 1");
 
-			RS_Log("[DMGLOG]" SPC %client.getPlayerName() @ " [" @ %client.getBLID() @ "] died.", "\c5");
+			RS_Log("[DMGLOG]" SPC %client.getPlayerName() @ " [" @ %client.getBLID() @ "] died.", "\c4");
 		}
 
 		%player.isDead = 1;
