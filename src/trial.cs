@@ -883,6 +883,12 @@ function DespairEndTrial()
 				%player.kill();
 			}
 		}
+		for (%i = 0; %i < $Despair::RoomCount; %i++)
+		{
+			%room = %i + 1;
+			if(isObject($roomOwner[%room])) //All rooms are cleared
+				$roomOwner[%room] = "";
+		}
 		serverPlay2d("DespairMusicKillerWin");
 	}
 	else
