@@ -32,6 +32,7 @@ exec("./lib/pathCamera.cs");
 exec("./lib/scope.cs");
 //src
 exec("./src/sounds.cs"); //Important to be first - contains audio descriptions
+exec("./src/logging.cs"); //Logging
 exec("./src/blood.cs");
 exec("./src/character.cs");
 exec("./src/chat.cs");

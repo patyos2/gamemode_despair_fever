@@ -116,17 +116,18 @@ function despairOnKill(%victim, %attacker, %crit)
 
 	if(%victim == %attacker)
 	{
-
 		%victim.player.suicide = true;
 		return 1;
 	}
 
-	if(!%victim.killer && !%attacker.killer)
+	if(!%victim.aboutToKill && !%victim.killer && !%attacker.killer)
 	{
 		%attacker.player.setSpeedScale(0.1);
 		%attacker.player.noWeapons = true;
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
-		echo("-+ " @ %msg);
+		//echo("-+ " @ %msg);
+		RS_Log("[RDM]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] RDMed " @
+				%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
 		%count = ClientGroup.getCount();
 		for (%i = 0; %i < %count; %i++)
 		{
@@ -140,18 +141,27 @@ function despairOnKill(%victim, %attacker, %crit)
 		return 0;
 	}
 
-	if(%victim.killer || %attacker.killer)
+	if(%victim.aboutToKill || %victim.killer || %attacker.killer)
 	{
 		%player = %victim.player;
 		if(!isObject(%player))
 			%player = %victim.character.player;
 
+		if(%victim.aboutToKill)
+		{
+			%victim.aboutToKill.health = $Despair::CritThreshold;
+			%victim.aboutToKill.critLoop();
+			%victim.aboutToKill = "";
+		}
+
+		%attacker.aboutToKill = %player; //Attacker can be killed
 		%player.isMurdered = true; //rip they're legit
 		if(!%crit) //only give pass to final blow/bleed out
 		{
 			$deathCount++;
 			if(%victim.killer && !%attacker.killer)
 			{
+				%attacker.aboutToKill = "";
 				%attacker.killer = true;
 				$currentKiller = %attacker;
 				%attacker.play2d(KillerJingleSound);
@@ -164,9 +174,14 @@ function despairOnKill(%victim, %attacker, %crit)
 			}
 			if ($deathCount >= $maxDeaths)
 				DespairSetWeapons(0);
-			//if(!isEventPending($DefaultMiniGame.missingSchedule))
-			//	$DefaultMiniGame.missingSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
+			//if(!isEventPending($DefaultMiniGame.subEventSchedule))
+			//	$DefaultMiniGame.subEventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
+			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] murdered " @ 
+					%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
 		}
+		else
+			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] critted " @ 
+					%victim.getPlayerName() SPC "(" @ getCharacterName(%victim.character, 1) @ ") [" @ %victim.getBLID() @ "]", "\c5");
 		return 1;
 	}
 }
@@ -231,7 +246,7 @@ function despairStartInvestigation(%no_announce)
 {
 	//%maxDeaths = mCeil(GameCharacters.getCount() / 4); //16 chars = 4 deaths, 8 chars = 2 deaths
 	//if ($deathCount >= %maxDeaths)
-		DespairSetWeapons(0);
+	//	DespairSetWeapons(0);
 	if ($deathCount > 0)
 	{
 		%length = $investigationStart $= "" ? $Despair::InvestigationLength : $Despair::InvestigationExtraLength;
@@ -240,7 +255,13 @@ function despairStartInvestigation(%no_announce)
 		$investigationStart = $Sim::Time + %length;
 		if (!%no_announce)
 			despairMakeBodyAnnouncement(1);
-		cancel($DefaultMiniGame.missingSchedule);
+		//cancel($DefaultMiniGame.subEventSchedule);
+		if(!$DefaultMiniGame.noWeapons && !isEventPending($DefaultMiniGame.subEventSchedule))
+		{
+			if ($pickedKiller)
+				messageClient($pickedKiller, '', "<font:impact:24>\c5Warning! You will be unable to swing your weapons in \c61 minute\c5!");
+			$DefaultMiniGame.subEventSchedule = schedule(60*1000, 0, "DespairSetWeapons", 0); //Only disable weapons a minute after
+		}
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
 		serverPlay2d("DespairMusicInvestigationStart");
@@ -458,7 +479,8 @@ function DespairPickKiller()
 		messageClient(%client, '', "<font:impact:30>" @ %msg);
 		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
 		%client.killer = true;
-		echo(%client.getplayername() SPC "is killa");
+		//echo(%client.getplayername() SPC "is killa");
+		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
 		$pickedKiller = %client;
 		$currentKiller = %client;
 		ServerPlaySong("DespairMusicOpeningIntro");
@@ -495,7 +517,7 @@ function courtPlayers()
 {
 	SunLight.flareSize = 0;
 	SunLight.sendUpdate();
-	cancel($DefaultMiniGame.missingSchedule);
+	cancel($DefaultMiniGame.subEventSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	cancel(DayCycle.timeSchedule);
 	$EnvGuiServer::DayCycleEnabled = 0;

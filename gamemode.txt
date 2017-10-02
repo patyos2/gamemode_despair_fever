@@ -1,5 +1,5 @@
 //glass
-//ADDON System_BlocklandGlass
+ADDON System_BlocklandGlass
 
 //Default Add-Ons
 //ADDON Emote_Alarm //we overwrite the servercmd

@@ -109,6 +109,7 @@ function serverCmdWhoIs(%client, %a, %b)
 	if (!%client.isAdmin)
 		return;
 
+	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /whois", "\c2");
 	%search = trim(%a SPC %b);
 	%charCount = GameCharacters.getCount();
 	for (%i = 0; %i < %charCount; %i++)
@@ -121,43 +122,12 @@ function serverCmdWhoIs(%client, %a, %b)
 		}
 	}
 }
-function serverCmdDamageLogs(%client, %a, %b)
-{
-	if (!%client.isAdmin)
-		return;
-
-	%search = trim(%a SPC %b);
-	%charCount = GameCharacters.getCount();
-	for (%i = 0; %i < %charCount; %i++)
-	{
-		%character = GameCharacters.getObject(%i);
-
-		if (striPos(%character.clientName, %search) != -1 || striPos(%character.name, %search) != -1)
-		{
-			%target = %character.player;
-			%name = %character.clientName;
-		}
-	}
-	if (isObject(%target))
-	{
-		messageClient(%client, '', '\c5Damage logs for client \c3%1\c5:', %name);
-		for (%i=1;%i<=%target.attackCount;%i++) //Parse attack logs for info
-		{
-			%text[%a++] = "\c3["@ (%target.attackTime[%i] - $defaultMiniGame.lastResetTime / 1000) @ " seconds after roundstart], \c6Type\c3:" SPC %target.attackType[%i] @ ", \c6Attacker\c3:" SPC %target.attackCharacter[%i].clientName;
-		}
-		for (%i=1; %i<=%a; %i++)
-			messageClient(%client, '', %text[%i]);
-	}
-	else
-	{
-		messageClient(%client, '', '\c5Player not found');
-	}
-}
 
 function serverCmdSpectate(%this)
 {
 	%this.spectating = !%this.spectating;
 	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /spectate", "\c2");
 	if(isObject(%this.player) && %this.spectating)
 	{
 		%this.camera.setMode("Observer");
@@ -182,6 +152,7 @@ function serverCmdKill(%this, %target)
 		messageClient(%this, '', '\c5Invalid target!');
 		return;
 	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target @ "'", "\c2");
 	messageClient(%this, '', '\c5You have force-killed %1.', %target);
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
@@ -285,6 +256,10 @@ package DespairAdmins
 		}
 		messageClient(%this, '', '\c4Hey %1, welcome to \c5Despair Fever\c4. Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
 		messageClient(%this, '', '\c4Please download \c6Music and Sounds\c4 for the full experience!');
+
+		// Admin client handshake.
+		commandToClient(%this, 'RPA_Handshake');
+
 		return %parent;
 	}
 };

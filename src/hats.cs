@@ -41,8 +41,8 @@ function Hat::onUse(%this, %obj, %slot)
 	%obj.unMountImage(0);
 	%obj.currtool = %slot;
 	fixArmReady(%obj);
-	//if (isObject(%obj.client))
-	//	%obj.client.centerPrint("\c3" @ %this.uiName @ "\n");
+	if (isObject(%obj.client))
+		%obj.client.centerPrint("\c6Click to equip/unequip \c3" @ %this.uiName, 2);
 }
 
 function Hat::onWear(%this, %player)

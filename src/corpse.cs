@@ -286,7 +286,7 @@ package DespairCorpses
 					return; //so we don't call anything else
 				}
 			}
-			else if (%slot == 4 && %obj.client.killer && isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj && %item.unconscious)
+			else if (%slot == 4 && isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj && %item.unconscious)
 			{
 				if(%state && !%item.isDead && $deathCount < $maxDeaths)
 				{

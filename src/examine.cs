@@ -65,20 +65,30 @@ function GameConnection::examineObject(%client, %col)
 					%haswounds = true;
 				}
 
+				//Tissue damage comes first
 				if(%haswounds)
 					%text = %text @ "\n\c6" @ "They have \c3" @ naturalGrammarList(%field) @ "\c6.";
-				else
-					%text = %text @ "\n\c6" @ "They have \c3no visible wounds\c6.";
+
+				if(%wounds["choking"] > 0)
+				{
+					%text = %text @ "\n\c6" @ "There is \c3bruising on their neck\c6.";
+					%haswounds = true;
+				}
 
 				if(%wounds["fall"] > 0)
 				{
 					%text = %text @ "\n\c6" @ "There are \c3signs of falling\c6.";
+					%haswounds = true;
 				}
 
 				if(%wounds["bleed"] > 0)
 				{
 					%text = %text @ "\n\c6" @ "They have \c3bled to death\c6.";
+					%haswounds = true;
 				}
+
+				if(!%haswounds)
+					%text = %text @ "\n\c6" @ "They have \c3no visible wounds\c6.";
 			}
 		}
 		else

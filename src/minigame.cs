@@ -267,7 +267,7 @@ function despairEndGame()
 	if (isEventPending($DefaultMiniGame.restartSchedule))
 		return;
 	cancel($musicSchedule);
-	cancel($DefaultMiniGame.missingSchedule);
+	cancel($DefaultMiniGame.subEventSchedule);
 	cancel($DefaultMiniGame.restartSchedule);
 	cancel($DefaultMiniGame.eventSchedule);
 	if($DefaultMiniGame.numMembers <= 1)
@@ -607,7 +607,7 @@ package DespairFever
 			return;
 
 		cancel($musicSchedule);
-		cancel($DefaultMiniGame.missingSchedule);
+		cancel($DefaultMiniGame.subEventSchedule);
 		cancel($DefaultMiniGame.restartSchedule);
 		cancel($DefaultMiniGame.eventSchedule);
 		if($DefaultMiniGame.numMembers < 1)
@@ -707,6 +707,22 @@ package DespairFever
 		Parent::onAdd(%this, %item);
 		if (%this.canPickUp !$= "")
 			%item.canPickUp = %this.canPickUp;
+	}
+
+	function GameConnection::onClientEnterGame(%this)
+	{
+		Parent::onClientEnterGame(%this);
+
+		if(%this.isAdmin && !%this.hasRPA)
+		{
+			messageClient(%this, '', '\c4Uh-oh, you\'re missing \c6Client_RoleplayAdmin \c4and will not be able to see logs in your console.');
+			messageClient(%this, '', '<a:www.dropbox.com/s/zplta1zrwrft3ru/Client_RoleplayAdmin.zip?dl=1>DOWNLOAD THE ADMIN CLIENT HERE</a>');
+		}
+		else if(%this.isAdmin && %this.RPAVersion < $RSAdmin::Version)
+		{
+			messageClient(%this, '', '\c4Uh-oh, your \c6Client_RoleplayAdmin \c4is out of date.');
+			messageClient(%this, '', '<a:www.dropbox.com/s/zplta1zrwrft3ru/Client_RoleplayAdmin.zip?dl=1>DOWNLOAD THE ADMIN CLIENT HERE</a>');
+		}
 	}
 };
 activatePackage("DespairFever");

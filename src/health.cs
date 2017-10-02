@@ -38,14 +38,14 @@ function Player::critLoop(%this)
 		commandToClient(%this.client, 'SetVignette', true, %percent SPC "0 0" SPC %percent);
 	}
 
-	if(%this.die || %this.attackSource[%this.attackCount] == %this || $Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
+	if(%this.attackSource[%this.attackCount] == %this || $Sim::Time - %this.attackTime[%this.attackCount] > 1) //So you don't bleed to death while being beaten to death!
 	{
 		%this.health -= 5;
-		if(%this.health <= $Despair::CritThreshold)
-		{
-			%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
-			return;
-		}
+	}
+	if(%this.health <= $Despair::CritThreshold)
+	{
+		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
+		return;
 	}
 	%this.critLoop = %this.schedule(getMax(400, %delay), "critLoop");
 }
@@ -135,6 +135,12 @@ package DespairHealth
 		%player.attackTime[%player.attackCount] = $Sim::Time;
 		%player.attackDayTime[%player.attackCount] = getDayCycleTime();
 		%player.attackDay[%player.attackCount] = $days;
+
+		if(%attacker)
+			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] harmed " @ 
+					%client.getPlayerName() SPC "[" @ %client.getBLID() @ "], type " @ %type @ " for " @ %damage @ " damage.", "\c5");
+		else
+			RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] harmed himself, type " @ %type @ " for " @ %damage @ " damage.", "\c5");
 
 		if (%pos !$= "" && %blood)
 		{
@@ -257,6 +263,8 @@ package DespairHealth
 			%player.client = "";
 			commandToClient(%client, 'ClearCenterPrint');
 			commandToClient(%client, 'SetVignette', true, "0 0 0 1");
+
+			RS_Log("[DMGLOG]" SPC %client.getPlayerName() @ " [" @ %client.getBLID() @ "] died.", "\c5");
 		}
 
 		%player.isDead = 1;

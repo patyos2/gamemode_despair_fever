@@ -26,6 +26,8 @@ function CoatItem::onUse(%this, %obj, %slot)
 {
 	%obj.unMountImage(0);
 	fixArmReady(%obj);
+	if (isObject(%obj.client))
+		%obj.client.centerPrint("\c6Click to equip/unequip \c3" @ %this.uiName, 2);
 }
 
 //Functions defined by hats.cs

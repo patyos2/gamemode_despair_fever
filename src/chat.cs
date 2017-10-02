@@ -74,7 +74,8 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 		%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
 	}
 
-	echo("-+ (ACTION) " @ %name SPC %text);
+	//echo("-+ (ACTION) " @ %name SPC %text);
+	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") emoted '" @ %text @ "'", "\c1");
 
 	%count = ClientGroup.getCount();
 	for (%i = 0; %i < %count; %i++)
@@ -155,7 +156,8 @@ package DespairChat
 				}
 				$lastDeadText = %text; //for medium
 			}
-			echo("-+ (DEAD) " @ %name @ ": " @ %text);
+			//echo("-+ (DEAD) " @ %name @ ": " @ %text);
+			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") deadchat '" @ %text @ "'", "\c1");
 			return;
 		}
 		if(%player.unconscious)
@@ -227,7 +229,8 @@ package DespairChat
 			%shape.deleteSchedule = %shape.schedule(3000, delete);
 		}
 		%client.lastSpeakTime = $Sim::Time;
-		echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
+		//echo("-+ " @ %name @ " (" @ %client.getPlayerName() @ "): " @ %text);
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") " @ %type @ " '" @ %text @ "'", "\c1");
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
@@ -306,7 +309,8 @@ package DespairChat
 			%killer = true;
 		}
 
-		echo("-+ (" @ (%killer ? "KILLER" : "ADMIN") @ ") " @ %client.getPlayerName() @ ": " @ %text);
+		//echo("-+ (" @ (%killer ? "KILLER" : "ADMIN") @ ") " @ %client.getPlayerName() @ ": " @ %text);
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used " @ (%killer ? "killer" : "admin") @"chat '" @ %text @ "'", "\c2");
 
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{

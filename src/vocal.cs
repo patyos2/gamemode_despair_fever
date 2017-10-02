@@ -198,6 +198,8 @@ function Player::playShock(%player)
 	if(%gender $= "")
 		%gender = "male";
 	%player.playAudio(0, VoiceShock @ getRandom(1,$shockSoundCount[%gender]) @ %gender);
+	if(isObject(%client = %player.client))
+	RS_Log(%client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1) @ ") [" @ %client.getBLID() @ "] screamed.", "\c1");
 }
 
 function serverCmdAlarm(%client, %susp)
