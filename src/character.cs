@@ -263,7 +263,7 @@ function getRandomSpecialChar(%char)
 	%char.appearance = getFields(%choose, 3, 10);
 }
 
-function getCharacterName(%char, %ignoreDisguised)
+function getCharacterName(%char, %ignoreDisguised, %revealFakeName)
 {
 	%name = %char.name;
 	%player = %char.player;
@@ -274,7 +274,10 @@ function getCharacterName(%char, %ignoreDisguised)
 		if(%player.mangled)
 			%name = "Unknown";
 		if(%player.fakeName !$= "")
-			%name = %player.fakeName;
+			if(%revealFakeName)
+				%name = %name SPC "(as" SPC %player.fakeName @ ")";
+			else
+				%name = %player.fakeName;
 	}
 	return %name;
 }

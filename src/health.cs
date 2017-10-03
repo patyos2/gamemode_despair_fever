@@ -173,7 +173,7 @@ package DespairHealth
 			%player.bloodyWriting = 2;
 		}
 
-		if(getRandom() < 0.2)
+		if(getRandom() < 0.3)
 			%player.spawnFiber();
 
 		%player.health -= %damage;
@@ -201,20 +201,17 @@ package DespairHealth
 			}
 			return 1;
 		}
-		else if(%player.health <= 0)
+		else if(!isEventPending(%player.critLoop) && %player.health <= 0)
 		{
 			if(despairOnKill(%client, %attacker, true))
 			{
-				if(!isEventPending(%player.critLoop))
-				{
-					%player.wakeUp();
-					%player.changeDataBlock(PlayerCorpseArmor);
-					%player.playThread(0, "sit");
-					%player.noWeapons = true;
-					%player.critLoop();
-					messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
-					commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);
-				}
+				%player.wakeUp();
+				%player.changeDataBlock(PlayerCorpseArmor);
+				%player.playThread(0, "sit");
+				%player.noWeapons = true;
+				%player.critLoop();
+				messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
+				commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);
 			}
 			else
 			{

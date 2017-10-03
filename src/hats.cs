@@ -50,10 +50,14 @@ function Hat::onWear(%this, %player)
 	if(isObject(%img = %player.getMountedImage(2)) && %img != %this.image)
 	{
 		%player.unMountImage(2);
+		if (isObject(%player.client))
+			%player.client.centerPrint("\c6You unequip \c3" @ %this.uiName, 2);
 	}
 	else
 	{
 		%player.mountImage(%this.image, 2);
+		if (isObject(%player.client))
+			%player.client.centerPrint("\c6You equip \c3" @ %this.uiName, 2);
 	}
 	%player.applyAppearance();
 }

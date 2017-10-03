@@ -114,7 +114,7 @@ function ExplosiveProps::timerSchedule(%this)
 		{
 			%this.owner.removeTool(%this.itemSlot, 1, 1);
 			if(%this.owner.client.killer)
-				%this.owner.knockOut(20);
+				%this.owner.knockOut(10);
 		}
 		if(isObject(%this))
 			%this.delete();
@@ -159,7 +159,7 @@ function FlashbangImage::onMount(%this, %obj, %slot)
 	fixArmReady(%obj);
 	%props = %obj.getItemProps();
 	if (isObject(%obj.client) && %obj.client.killer)
-		commandToClient(%client, 'CenterPrint', "<color:FFFF00>This is a \c6flashbang\c3 disguised as a flashlight!\nPrime time is \c6" @ %props.timer @ " seconds\c3. Be sure to drop it, or you'll be knocked out as well!");
+		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This is a \c6flashbang\c3 disguised as a flashlight!\nPrime time is \c6" @ %props.timer @ " seconds\c3. Be sure to drop it, or you'll be knocked out as well!");
 }
 
 function FlashbangImage::onUnMount(%this, %obj, %slot)

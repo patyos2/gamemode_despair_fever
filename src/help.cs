@@ -66,7 +66,7 @@ function serverCmdHelp(%this, %cat)
 		case "6" or "rules":
 			%text[%count++] = "\c3[RULES]";
 			%text[%count++] = " \c31\c6. \c0Don't be a dick!\c6 We're all here to have fun. If you block doorways, lock people in your rooms or break room doors as a non-killer w/o a reason you will be banned.";
-			%text[%count++] = " \c32\c6. \c0Do not gamethrow!\c6 This means don't play at expense of others, deliberately act extra suspicious or pretend to be the culprit.";
+			%text[%count++] = " \c32\c6. \c0Do not gamethrow!\c6 This means don't play at expense of others, deliberately act extra suspicious or pretend to be the culprit. Not taking trials seriously also counts as gamethrowing.";
 			%text[%count++] = " \c33\c6. \c0Follow chat etiquette!\c6 Don't reference people by their in-game names, don't spam chat and please don't abuse emoticons.";
 			%text[%count++] = " \c34\c6. \c0Don't freekill!\c6 It's really obvious to admins when you freekill. We will figure if it's self-defence or not, but expect to be banned if you kill someone without a reason.";
 			%text[%count++] = " \c35\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
@@ -83,11 +83,14 @@ function serverCmdHelp(%this, %cat)
 				%text[%count++] = "\c3[ADMIN]";
 				%text[%count++] = " \c6Team Chat \c7- \c6Talk through admin-only chat";
 				%text[%count++] = " \c3@\c6 before Team Chat e.g. \c3@message \c7- \c6Talk to the killer directly (cannot see killer chat when alive)";
-				%text[%count++] = " \c6/damageLogs \c3name \c7- \c6See what damage has been done to \c3name";
+				%text[%count++] = " \c6/menu \c7- \c6Bring up the logs";
 				%text[%count++] = " \c6/whoIs \c3name \c7- \c6Find out who \c3name\c6's in-game alias is";
 				%text[%count++] = " \c6/spectate \c7- \c6Become a spectator to be excluded from rounds";
 				%text[%count++] = " \c6/showroles \c7- \c6See who's killer or innocent when spectating";
 				%text[%count++] = " \c6/announce \c3message \c7- \c6Send a server-wide announcement";
+				%text[%count++] = " \c6/banlogs \c3bl_id \c7- \c6See someone's punishment history";
+				%text[%count++] = " \c6/warn \c3name warning \c7- \c6Warn someone";
+				%text[%count++] = " \c6/kill \c3name \c7- \c6Forcekill someone";
 			}
 			%text[%count++] = " \c5Page Up to read the above.";
 		default:

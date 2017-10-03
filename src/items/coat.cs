@@ -36,10 +36,14 @@ function CoatItem::onWear(%this, %player)
 	if(isObject(%img = %player.getMountedImage(1)) && %img != %this.image)
 	{
 		%player.unMountImage(1);
+		if (isObject(%player.client))
+			%player.client.centerPrint("\c6You unequip \c3" @ %this.uiName, 2);
 	}
 	else
 	{
 		%player.mountImage(%this.image, 1);
+		if (isObject(%player.client))
+			%player.client.centerPrint("\c6You equip \c3" @ %this.uiName, 2);
 	}
 	%player.applyAppearance();
 }

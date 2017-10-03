@@ -156,6 +156,13 @@ function despairOnKill(%victim, %attacker, %crit)
 
 		%attacker.aboutToKill = %player; //Attacker can be killed
 		%player.isMurdered = true; //rip they're legit
+
+		//log stuff
+		%tod = getDayCycleTime();
+		%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+		%tod = %tod - mFloor(%tod); //get rid of excess stuff
+		%tod = getDayCycleTimeString(%tod, 1);
+
 		if(!%crit) //only give pass to final blow/bleed out
 		{
 			$deathCount++;
@@ -178,10 +185,14 @@ function despairOnKill(%victim, %attacker, %crit)
 			//	$DefaultMiniGame.subEventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] murdered " @ 
 					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
+			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ getCharacterName(%attacker.character, 1, 1) SPC "murdered" SPC getCharacterName(%victim.character, 1, 1) @ "!";
 		}
 		else
+		{
 			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] critted " @ 
 					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
+			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ getCharacterName(%attacker.character, 1, 1) SPC "struck down" SPC getCharacterName(%victim.character, 1, 1) @ "!";
+		}
 		return 1;
 	}
 }
@@ -194,6 +205,15 @@ function despairCheckInvestigation(%player, %corpse)
 		{
 			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
 			%player.client.despairCorpseVignette(%corpse.mangled ? 300 : 200);
+			if(!%corpse.discovered)
+			{
+				RS_Log(%player.client.getPlayerName() SPC "(" @ %player.client.getBLID() @ ") discovered " @ %corpse.character.name @ "'s corpse!", "\c2");
+				%tod = getDayCycleTime();
+				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+				%tod = %tod - mFloor(%tod); //get rid of excess stuff
+				%tod = getDayCycleTimeString(%tod, 1);
+				$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c3" @ getCharacterName(%player.client.character, 1, 1) SPC "discovered" SPC %corpse.character.name @ "'s corpse!";
+			}
 		}
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
@@ -225,9 +245,31 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
 		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
 
-	RS_Log("[GAME] Body Announcement - " @ (%unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered")), "\c5");
+	%tod = getDayCycleTime();
+	%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+	%tod = %tod - mFloor(%tod); //get rid of excess stuff
+	%tod = getDayCycleTimeString(%tod, 1);
 
+	%msg = "Body Announcement - " @ (%unfound ? "Undiscovered corpses" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
+
+	RS_Log("[GAME]" @ %msg, "\c5");
+	$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c2" @ %msg;
 	%profile = DespairMusicInvestigationIntro1;
+
+	if(%unfound)
+	{
+		for (%i = 0; %i < $Despair::RoomCount; %i++)
+		{
+			%room = %i + 1;
+			for(%a = 0; %a < BrickGroup_888888.NTObjectCount["_r" @ %room @ "_door"]; %a++)
+			{
+				%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", %a];
+				%roomDoor.lockState = false;
+			}
+		}
+		$DefaultMiniGame.messageAll('', '\c5All doors have been unlocked!');
+	}
+
 	if($announcements > 2 || %kira) //if there's been two corpses or it's a disguise kit round
 		%profile = DespairMusicInvestigationIntro2;
 	if(!isObject(ServerMusic) || (ServerMusic.profile !$= %profile && ServerMusic.profile !$= %profile.loopProfile))
@@ -268,6 +310,12 @@ function despairStartInvestigation(%no_announce)
 		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
 		serverPlay2d("DespairMusicInvestigationStart");
 		RS_Log("[GAME] Investigation has started", "\c5");
+		%tod = getDayCycleTime();
+		%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
+		%tod = %tod - mFloor(%tod); //get rid of excess stuff
+		%tod = getDayCycleTimeString(%tod, 1);
+
+		$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c2Investigation has started.";
 	}
 }
 
@@ -485,7 +533,7 @@ function DespairPickKiller()
 		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
 		%client.killer = true;
 		//echo(%client.getplayername() SPC "is killa");
-		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
+		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
 		$pickedKiller = %client;
 		$currentKiller = %client;
 		ServerPlaySong("DespairMusicOpeningIntro");
@@ -617,11 +665,7 @@ function courtPlayers()
 		}
 		else
 		{
-			if(%player.unconscious)
-			{
-				%player.WakeUp();
-			}
-
+			%player.WakeUp();
 			if(%player.inCameraEvent)
 			{
 				%player.inCameraEvent = false;
@@ -633,35 +677,36 @@ function courtPlayers()
 			%player.playThread(0, "standing");
 			%player.setVelocity("0 0 0");
 		}
-		if(isObject(%client))
+	}
+
+	for(%i = 0; %i < ClientGroup.getCount(); %i++)
+	{
+		if(isObject($mangled))
 		{
-			if(isObject($mangled))
-			{
-				//aim the camera at the target
-				%pos = vectorAdd($mangled.getHackPosition(), vectorScale($mangled.getForwardVector(), 3));
-				%delta = vectorSub($mangled.getHackPosition(), %pos);
-				%deltaX = getWord(%delta, 0);
-				%deltaY = getWord(%delta, 1);
-				%deltaZ = getWord(%delta, 2);
-				%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
+			//aim the camera at the target
+			%pos = vectorAdd($mangled.getHackPosition(), vectorScale($mangled.getForwardVector(), 3));
+			%delta = vectorSub($mangled.getHackPosition(), %pos);
+			%deltaX = getWord(%delta, 0);
+			%deltaY = getWord(%delta, 1);
+			%deltaZ = getWord(%delta, 2);
+			%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
 
-				%rotZ = mAtan(%deltaX, %deltaY) * -1; 
-				%rotX = mAtan(%deltaZ, %deltaXYHyp);
+			%rotZ = mAtan(%deltaX, %deltaY) * -1; 
+			%rotX = mAtan(%deltaZ, %deltaXYHyp);
 
-				%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
+			%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
 
-				%camera = %client.camera;
+			%camera = %client.camera;
 
-				%camera.setTransform(%pos SPC %aa);
-				%camera.setFlyMode();
-				%camera.mode = "Observer";
-				%client.setControlObject(%camera);
-				%camera.setControlObject(%client.dummyCamera);
-				%client.schedule(10000, playPath, TrialIntroPath);
-			}
-			else
-				%client.playPath(TrialIntroPath);
+			%camera.setTransform(%pos SPC %aa);
+			%camera.setFlyMode();
+			%camera.mode = "Observer";
+			%client.setControlObject(%camera);
+			%camera.setControlObject(%client.dummyCamera);
+			%client.schedule(10000, playPath, TrialIntroPath);
 		}
+		else
+			%client.playPath(TrialIntroPath);
 	}
 
 	if(isObject($mangled))
@@ -693,6 +738,8 @@ function courtPlayers()
 	despairBottomPrintLoop();
 
 	RS_Log("[GAME] Trial period has begun.", "\c5");
+
+	$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "] \c5Trial has begun.";
 }
 
 function DespairStartOpeningStatements()
@@ -802,6 +849,8 @@ function DespairStartVote()
 	ServerPlaySong("DespairMusicVoteStart");
 	$DefaultMiniGame.chatMessageAll('', "\c5Look at the person you think is the killer within 30 seconds. The person with the most votes \c0will die.");
 	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairEndVote);
+
+	$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "] \c5Voting start!";
 }
 
 function DespairEndVote()
@@ -817,6 +866,12 @@ function DespairEndVote()
 		{
 			%player.voteTarget.votes++;
 			%player.playThread(2, root);
+
+			if(isObject(%player.voteTarget))
+				$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "]\c3" SPC getCharacterName(%client.character, 1, 1) SPC "voted for" SPC getCharacterName(%player.voteTarget.character, 1, 1);
+			else
+				$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "]\c3" SPC getCharacterName(%client.character, 1, 1) SPC "didn't vote!";
+
 			cancel(%player.DespairUpdateCastVote);
 			%player.canCastVote = "";
 			%player.voteTarget = "";
@@ -1003,7 +1058,20 @@ function DespairTrialOnAlarm(%client)
 		%pl.schedule(strLen(%text) * 35, "playThread", 3, "root");
 		serverPlay2d("ObjectionSound");
 
-		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used his loudmouth ability!", "\c2");
+		%shape = new Item()
+		{
+			datablock = DespairEmptyFloatItem;
+			position = VectorAdd(%pl.position, "0 0 2");
+		};
+		%shape.noExamine = true;
+		%shape.setCollisionTimeout(%pl);
+		%shape.setShapeName(%text);
+		%shape.setShapeNameDistance(100);
+		%shape.setShapeNameColor("1 0.3 0.3");
+		%shape.setVelocity("0 0 0.5");
+		%shape.deleteSchedule = %shape.schedule(3000, delete);
+
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used his loudmouth ability!", "\c2");
 
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{

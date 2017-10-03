@@ -6,7 +6,7 @@
 //TODO: fix servercmddroptool not checking for walls
 //TODO: something very important i forgot :(
 
-registerLoadingScreen("https://cdn.discordapp.com/attachments/307876244744306698/313026827901730816/loadingScreen.png", "png");
+registerLoadingScreen("https://i.imgur.com/KLJ5q1v.png", "png", "FeverLoadScreen");
 $Despair::Path = filePath(expandFileName("./description.txt")) @ "/";
 function r(%p)
 {

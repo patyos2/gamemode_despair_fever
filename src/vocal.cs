@@ -225,13 +225,19 @@ function serverCmdAlarm(%client, %susp)
 				%point = %obj.getEyePoint();
 			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
 
-			%hasweapon = !%susp && isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
-			%disguised = !%susp && isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
+			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
+			%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
 			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isMurdered || %obj.bloody || %hasweapon || %disguised))
 			{
 				%scream = true;
 				if(%obj.isMurdered && %obj.getState() $= "Dead")
+				{
 					%foundCorpse = %obj;
+					if(%susp && %obj.checkedBy[%player])
+						%scream = false; //squeamish don't spam screams
+				}
+				else if(%susp)
+					%scream = false; //squeamish only screams at bodies
 			}
 		}
 

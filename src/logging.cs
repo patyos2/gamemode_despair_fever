@@ -50,12 +50,6 @@ function serverCmdMenu(%this)
 	commandToClient(%this, 'RSAdmin_showMenu');
 }
 
-function serverCmdLogs(%this)
-{
-	serverCmdMenu(%this);
-}
-
-
 function serverCmdBanLogs(%this, %targetID)
 {
 
@@ -65,10 +59,10 @@ function serverCmdBanLogs(%this, %targetID)
 	messageClient(%this, '', "<font:Palatino Linotype:28>\c4Punishment Logs for \c6 BL_ID " @ %targetID @ "\c4:");
 	%this.play2D(RoleplayChatSound);
 	
-	if(!isFile("config/server/Roleplay/logs/BanLog.txt"))
+	if(!isFile("config/server/despairfever/logs/BanLog.txt"))
 		return;
 	%f = new fileObject();
-	%f.openForRead("config/server/Roleplay/logs/BanLog.txt");
+	%f.openForRead("config/server/despairfever/logs/BanLog.txt");
 	
 	while(!%f.isEOF())
 	{
@@ -93,6 +87,14 @@ function serverCmdBanLogs(%this, %targetID)
 	%f.close();
     %f.delete();
 }
+function serverCmdShowLogs(%this, %targetID)
+{serverCmdBanLogs(%this, %targetID);}
+
+function serverCmdLogs(%this, %targetID)
+{serverCmdBanLogs(%this, %targetID);}
+
+function serverCmdSL(%this, %targetID)
+{serverCmdBanLogs(%this, %targetID);}
 
 function serverCmdWarn(%this, %target, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a10, %a11, %a12, %a13, %a14, %a15, %a16, %a17, %a18, %a19, %a20, %a21, %a22, %a23, %a24, %a25, %a26, %a27, %a28, %a29, %a30, %a31, %a32)
 {
@@ -135,14 +137,14 @@ function serverCmdWarn(%this, %target, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %
 	
 	// File I/O Operations
 	%f=new fileObject();
-	if(!isFile("config/server/Roleplay/logs/BanLog.txt"))
+	if(!isFile("config/server/despairfever/logs/BanLog.txt"))
 	{
-		%f.openForWrite("config/server/Roleplay/logs/BanLog.txt");
+		%f.openForWrite("config/server/despairfever/logs/BanLog.txt");
 		%f.writeLine("victimID" TAB "date" TAB "type" TAB "time" TAB "reason");
 		%f.close();
 	}
 	%date = getDateTime();
-	%f.openForAppend("config/server/Roleplay/logs/BanLog.txt");
+	%f.openForAppend("config/server/despairfever/logs/BanLog.txt");
 	%f.writeLine(%victimID TAB %date TAB "Warning" TAB "0" TAB %msg);
 	%f.close();
 	%f.delete();
@@ -183,21 +185,6 @@ function serverCmdDoBanCalc(%this, %curr, %prev)	// %curr = current offenses, %p
 
 package RS_BanLogs
 {
-	// Intuitive Commands
-	
-	// /banLogs
-	function serverCmdShowLogs(%this, %targetID)
-	{serverCmdBanLogs(%this, %targetID);}
-	
-	function serverCmdLogs(%this, %targetID)
-	{serverCmdBanLogs(%this, %targetID);}
-
-	function serverCmdSL(%this, %targetID)
-	{serverCmdBanLogs(%this, %targetID);}
-	
-	// /HP
-	function serverCmdHealth(%this)
-	{serverCmdHP(%this);}	
 	function serverCmdUnBan(%client, %idx)
 	{
 		parent::serverCmdUnban(%client, %idx);
@@ -213,16 +200,16 @@ package RS_BanLogs
 		if(!%client.isAdmin)
 			return;
 		%f=new fileObject();
-		if(!isFile("config/server/Roleplay/logs/BanLog.txt"))
+		if(!isFile("config/server/despairfever/logs/BanLog.txt"))
 		{
-			%f.openForWrite("config/server/Roleplay/logs/BanLog.txt");
+			%f.openForWrite("config/server/despairfever/logs/BanLog.txt");
 			%f.writeLine("victimID" TAB "date" TAB "type" TAB "time" TAB "reason");
 			%f.close();
 		}
 		if(%victim.inSit)
 			serverCmdKickFromSit(%client, %victim);
 		%date = getDateTime();
-		%f.openForAppend("config/server/Roleplay/logs/BanLog.txt");
+		%f.openForAppend("config/server/despairfever/logs/BanLog.txt");
 		%f.writeLine(%victimID TAB %date TAB "Ban" TAB %time TAB %reason);
 		%f.close();
 		%f.delete();
@@ -253,13 +240,13 @@ package RS_BanLogs
 		
 
 		%f=new fileObject();
-		if(!isFile("config/server/Roleplay/logs/BanLog.txt"))
+		if(!isFile("config/server/despairfever/logs/BanLog.txt"))
 		{
-			%f.openForWrite("config/server/Roleplay/logs/BanLog.txt");
+			%f.openForWrite("config/server/despairfever/logs/BanLog.txt");
 			%f.writeLine("victimID" TAB "date" TAB "type" TAB "time" TAB "reason");
 			%f.close();
 		}
-		%f.openForAppend("config/server/Roleplay/logs/BanLog.txt");
+		%f.openForAppend("config/server/despairfever/logs/BanLog.txt");
 		%victimID = %victim.getBLID();
 		%date = getDateTime();
 		%f.writeLine(%victimID TAB %date TAB "Kick");

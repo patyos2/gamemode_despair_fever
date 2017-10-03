@@ -85,29 +85,7 @@ function createPlayer(%client)
 		%client.character = %character;
 	}
 	else
-	{
-		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more!', %character.name);
-		for(%i = 0; %i < getFieldCount(%character.traitList); %i++)
-		{
-			%trait = getField(%character.traitList, %i);
-			%done = false;
-			for(%j = 0; %j < getFieldCount($Despair::Traits::Negative); %j++)
-			{
-				if(%trait $= getField($Despair::Traits::Negative, %j)) //negative trait
-				{
-					%character.traitList = removeField(%character.traitList, %i);
-					%character.trait[%trait] = false;
-					messageClient(%client, '', '\c5Your \c0%1\c5 trait is now gone!', %trait);
-					%done = true;
-					break;
-				}
-				if(%done)
-					break;
-			}
-			if(%done)
-				break;
-		}
-	}
+		%survivalPerk = true;
 
 	if(getField(%character.appearance, 3) $= "")
 		%character.appearance = setField(%character.appearance, 3, getRandomHairName(%character.gender));
@@ -204,6 +182,52 @@ function createPlayer(%client)
 			%player.addTool(LockpickItem);
 		HatGangsterRedItem.onPickup("", %player);
 	}
+
+	if(%survivalPerk)
+	{
+		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more and receive a survival bonus!', %character.name);
+		%type = getRandom(1,3);
+		switch(%type)
+		{
+			case 1:
+				for(%i = 0; %i < getFieldCount(%character.traitList); %i++)
+				{
+					%trait = getField(%character.traitList, %i);
+					%done = false;
+					for(%j = 0; %j < getFieldCount($Despair::Traits::Negative); %j++)
+					{
+						if(%trait $= getField($Despair::Traits::Negative, %j)) //negative trait
+						{
+							%character.traitList = removeField(%character.traitList, %i);
+							%character.trait[%trait] = false;
+							messageClient(%client, '', '\c5Your \c0%1\c5 trait is now gone!', %trait);
+							%done = true;
+							break;
+						}
+						if(%done)
+							break;
+					}
+					if(%done)
+						break;
+				}
+			case 2:
+				if(isObject(%roomCloset))
+				{
+					messageClient(%client, '', '\c5Your closet now contains a useful item!', %character.name);
+					%choices = "LockpickItem FlashlightItem RadioItem CleanSprayItem BananaItem";
+					%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
+					%roomCloset.spawnItem("0 0 1", %pick);
+				}
+			case 3:
+				if(isObject(%roomCloset))
+				{
+					messageClient(%client, '', '\c5Your closet now contains a weapon!', %character.name);
+					%choices = "KnifeItem BatItem UmbrellaItem";
+					%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
+					%roomCloset.spawnItem("0 0 1", %pick);
+				}
+		}
+	}
 	return %player;
 }
 
@@ -226,12 +250,12 @@ function roomPlayers()
 		%roomCloset.setItem("");
 		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
 		{
-			talk("Room " @ $roomNum[%room] @ " was occupied.");
+			//talk("Room " @ $roomNum[%room] @ " was occupied.");
 			continue;
 		}
 
 		$freeRoom[$freeCount++] = %room;
-		talk("Room " @ $roomNum[%room] @ " was free!");
+		//talk("Room " @ $roomNum[%room] @ " was free!");
 	}
 
 	%count = $DefaultMiniGame.numMembers;
@@ -279,6 +303,13 @@ function despairEndGame()
 		cancel(DayCycle.timeSchedule);
 		return;
 	}
+
+	$DefaultMiniGame.chatMessageAll('', '\c5What actually happened:');
+	for(%i = 0; %i <= $EndLogCount; %i++)
+	{
+		$DefaultMiniGame.chatMessageAll('', $EndLog[%i]);
+	}
+
 	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
 	$currentKiller.character.deleteMe = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
@@ -330,7 +361,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
@@ -369,7 +400,11 @@ function despairPrepareGame()
 	$currentKiller = "";
 	$days = 0;
 	$deathCount = 0;
-	$maxDeaths = getMax(1, $aliveCount);
+	$maxDeaths = 99;//getMax(1, $aliveCount);
+
+	//EoR report reset
+	$EndLogCount = -1;
+
 	if($EnvGuiServer::DayCycleEnabled <= 0)
 	{
 		$EnvGuiServer::DayCycleFile = "Add-Ons/DayCycle_DespairFever/fever.daycycle";
