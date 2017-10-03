@@ -141,12 +141,11 @@ function despairOnKill(%victim, %attacker, %crit)
 		return 0;
 	}
 
+	%player = %victim.player;
+	if(!isObject(%player))
+		%player = %victim.character.player;
 	if(%victim.aboutToKill || %victim.killer || %attacker.killer)
 	{
-		%player = %victim.player;
-		if(!isObject(%player))
-			%player = %victim.character.player;
-
 		if(%victim.aboutToKill)
 		{
 			%victim.aboutToKill.health = $Despair::CritThreshold;
@@ -185,13 +184,23 @@ function despairOnKill(%victim, %attacker, %crit)
 			//	$DefaultMiniGame.subEventSchedule = schedule($Despair::MissingLength*1000, 0, "despairStartInvestigation");
 			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] murdered " @ 
 					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
-			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ getCharacterName(%attacker.character, 1, 1) SPC "murdered" SPC getCharacterName(%victim.character, 1, 1) @ "!";
+
+			if(isObject(%player.attackImage[%player.attackCount]))
+				%happening = getCharacterName(%attacker.character, 1, 1) SPC "murdered" SPC getCharacterName(%victim.character, 1, 1) SPC "with" SPC %player.attackImage[%player.attackCount].item.uiName;
+			else
+				%happening = getCharacterName(%attacker.character, 1, 1) SPC "murdered" SPC getCharacterName(%victim.character, 1, 1) SPC "with" SPC %player.attackType[%player.attackCount];
+			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ %happening @ "!";
 		}
 		else
 		{
 			RS_Log("[DMGLOG]" SPC %attacker.getPlayerName() SPC "[" @ %attacker.getBLID() @ "] critted " @ 
 					%victim.getPlayerName() SPC "[" @ %victim.getBLID() @ "]", "\c4");
-			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ getCharacterName(%attacker.character, 1, 1) SPC "struck down" SPC getCharacterName(%victim.character, 1, 1) @ "!";
+
+			if(isObject(%player.attackImage[%player.attackCount]))
+				%happening = getCharacterName(%attacker.character, 1, 1) SPC "struck down" SPC getCharacterName(%victim.character, 1, 1) SPC "with" SPC %player.attackImage[%player.attackCount].item.uiName;
+			else
+				%happening = getCharacterName(%attacker.character, 1, 1) SPC "struck down" SPC getCharacterName(%victim.character, 1, 1) SPC "with" SPC %player.attackType[%player.attackCount];
+			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ %happening @ "!";
 		}
 		return 1;
 	}
@@ -681,6 +690,7 @@ function courtPlayers()
 
 	for(%i = 0; %i < ClientGroup.getCount(); %i++)
 	{
+		%client = ClientGroup.getObject(%i);
 		if(isObject($mangled))
 		{
 			//aim the camera at the target

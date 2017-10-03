@@ -67,8 +67,9 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[RULES]";
 			%text[%count++] = " \c31\c6. \c0Don't be a dick!\c6 We're all here to have fun. If you block doorways, lock people in your rooms or break room doors as a non-killer w/o a reason you will be banned.";
 			%text[%count++] = " \c32\c6. \c0Do not gamethrow!\c6 This means don't play at expense of others, deliberately act extra suspicious or pretend to be the culprit. Not taking trials seriously also counts as gamethrowing.";
-			%text[%count++] = " \c33\c6. \c0Follow chat etiquette!\c6 Don't reference people by their in-game names, don't spam chat and please don't abuse emoticons.";
-			%text[%count++] = " \c34\c6. \c0Don't freekill!\c6 It's really obvious to admins when you freekill. We will figure if it's self-defence or not, but expect to be banned if you kill someone without a reason.";
+			%text[%count++] = " \c33\c6. \c0Follow chat etiquette!\c6 Don't reference people by their in-game names, don't spam chat and please don't abuse emoticons. Being offensive for a meme is also bad.";
+			%text[%count++] = " \c34\c6. \c0Don't freekill!\c6 You CANNOT attack people for any other reason than self-defence. Threatening people or warning them is \c0NOT AN EXCUSE.";
+			%text[%count++] = "           \c6If they swing their weapon at you or are hiding in your closet with their weapon out it counts as SELF-DEFENCE.";
 			%text[%count++] = " \c35\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
 			%text[%count++] = " \c36\c6. \c0Don't ERP (Erotic RolePlay)!\c6 It is obnoxious as fuck and serves no purpose other than to get some preteens' dick wet and annoy everyone else.";
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";

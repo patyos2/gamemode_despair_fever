@@ -40,7 +40,10 @@ function fxDtsBrick::doorDamage(%brick, %damage)
 		%brick.doorOpen(%brick.isCCW, %obj.client);
 		%brick.lockState = false;
 		%brick.broken = true;
+		RS_Log("[DMGLOG] Door" SPC $roomNum[strReplace(%brick.lockID, "R", "")] SPC "was broken", "\c4");
 	}
+	else
+		RS_Log("[DMGLOG] Door" SPC $roomNum[strReplace(%brick.lockID, "R", "")] SPC "was damaged", "\c4");
 }
 
 package DespairDoors

@@ -85,7 +85,7 @@ package DespairHealth
 			%damage *= 3;
 		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
 		{
-			%type = "self";
+			%type = "accident";
 			%blood = false;
 		}
 
@@ -131,6 +131,7 @@ package DespairHealth
 		%player.attackDot[%player.attackCount] = %dot;
 		%player.attackSource[%player.attackCount] = %src;
 		%player.attackClient[%player.attackCount] = %attacker;
+		%player.attackImage[%player.attackCount] = %sourceObject.getMountedImage(0);
 		%player.attackCharacter[%player.attackCount] = %attacker.character;
 		%player.attackTime[%player.attackCount] = $Sim::Time;
 		%player.attackDayTime[%player.attackCount] = getDayCycleTime();

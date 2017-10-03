@@ -163,7 +163,10 @@ function Player::KnockOutTick(%this, %ticks, %done)
 			%dream = %choice[getRandom(%high)];
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
 			if(getRandom() < 0.4)
+			{
+				%this.forcedEmote = true;
 				serverCmdMe(%this.client, "gasp");
+			}
 		}
 		else if (getRandom() < 0.1)
 		{
