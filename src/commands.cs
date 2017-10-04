@@ -158,6 +158,7 @@ function serverCmdKill(%this, %target)
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
 	{
+		%target.player.kill();
 		%target.camera.setMode("Observer");
 		%target.setControlObject(%target.camera);
 		%target.camera.setControlObject(%target.camera);
@@ -192,7 +193,7 @@ function serverCmdPM(%this, %target, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9
 	{
 		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /pm '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")" SPC %text @ "'", "\c2");
 		messageClient(%target, '', '\c4Admin PM from \c5%1\c6: %2',%this.getPlayerName(), %text);
-		%target.play2d(AdminBwoinkSound);
+		%target.play2d(DespairAdminBwoinkSound);
 		%msg = "\c4PM from \c5"@ %this.getPlayerName() @"\c6 to \c3"@ %target.getPlayerName() @"\c6: "@%text;
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
@@ -233,7 +234,7 @@ function serverCmdReport(%this, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m1
 		if (%other.isAdmin)
 		{
 			messageClient(%other, '', %msg);
-			%other.play2d(AdminBwoinkSound);
+			%other.play2d(DespairAdminBwoinkSound);
 		}
 	}
 }

@@ -61,7 +61,7 @@ function GameConnection::updateBottomprint(%this)
 		%mod12 = getWord(%time, 1);
 		%time = getWord(%time, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-		%timestr = %time TAB %subtimer;
+		%timestr = "D" @ $days @ "\c7|\c6" @ %time TAB %subtimer;
 	}
 
 	//NAME AND STUFF
@@ -95,7 +95,7 @@ function GameConnection::updateBottomprint(%this)
 		else
 			%role = "\c2Innocent";
 	}
-	%str = "<font:Verdana:26><tab:120,240><color:FFFFFF>" @ %timestr @ "<just:right>" @ %stats @ "<just:left>\n" @ %name @ %a @ "<just:right>" @ %cosmetics @ "<just:left>\n\c6Role: " @ %role;
+	%str = "<font:Verdana:26><tab:150,240><color:FFFFFF>" @ %timestr @ "<just:right>" @ %stats @ "<just:left>\n" @ %name @ %a @ "<just:right>" @ %cosmetics @ "<just:left>\n\c6Role: " @ %role;
 
 	commandToClient(%this, 'bottomPrint', %str, 0, 1);
 }

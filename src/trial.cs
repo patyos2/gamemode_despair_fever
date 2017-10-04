@@ -122,8 +122,26 @@ function despairOnKill(%victim, %attacker, %crit)
 
 	if(!%victim.aboutToKill && !%victim.killer && !%attacker.killer)
 	{
-		%attacker.player.setSpeedScale(0.1);
-		%attacker.player.noWeapons = true;
+		%player = %attacker.player;
+		%player.setSpeedScale(0.1);
+		%player.noWeapons = true;
+
+		%hold = %player.carryObject;
+
+		%hold.lastTosser = %player;
+		%hold.carryEnd = $Sim::Time;
+		%hold.carryPlayer = 0;
+		%player.carryObject = 0;
+		%player.startCarrying = false;
+		%player.lastNormal = "";
+		%player.playThread(2, "root");
+		ServerPlay3D("BodyDropSound" @ getRandom(1, 3), %hold.getPosition());
+		if(%player.choking)
+		{
+			%hold.stopAudio(0);
+			%player.choking = "";
+		}
+
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
 		//echo("-+ " @ %msg);
 		RS_Log("[RDM]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] RDMed " @
@@ -251,18 +269,13 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 	%time = %time - mFloor(%time); //get rid of excess stuff
 
 	%time = getDayCycleTimeString(%time, 1);
-	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7]\c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
-		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), %time);
-
-	%tod = getDayCycleTime();
-	%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
-	%tod = %tod - mFloor(%tod); //get rid of excess stuff
-	%tod = getDayCycleTimeString(%tod, 1);
+	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7] \c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
+		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), "D" @ $days @ "|" @ %time);
 
 	%msg = "Body Announcement - " @ (%unfound ? "Undiscovered corpses" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
 
 	RS_Log("[GAME]" @ %msg, "\c5");
-	$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c2" @ %msg;
+	$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %time @ "] \c2" @ %msg;
 	%profile = DespairMusicInvestigationIntro1;
 
 	if(%unfound)

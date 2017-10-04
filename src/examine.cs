@@ -27,6 +27,8 @@ function GameConnection::examineObject(%client, %col)
 				%text = %text @ "\n\c5It was suicide...";
 			if(%player.character.trait["investigative"])
 			{
+				%day = %col.attackDay[%col.attackCount];
+
 				%tod = %col.attackDayTime[%col.attackCount];
 				%tod += 0.25; //so Zero = 6 AM aka morning, Youse's daycycle begins from morning at 0 fraction
 				%tod = %tod - mFloor(%tod); //get rid of excess stuff
@@ -43,13 +45,14 @@ function GameConnection::examineObject(%client, %col)
 				%mod12 = getWord(%tod2, 1);
 				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				%fresh = "recently ";
-				if($Sim::Time - %col.attackTime[%col.attackCount] > 120)
-					%fresh = "";
-				if($Sim::Time - %col.attackTime[%col.attackCount] > $Despair::DayLength)
-					%fresh = "long ago ";
+				if(%day == $days)
+					%when = "today";
+				else if(%day == $days - 1)
+					%when = "yesterday";
+				else
+					%when = "long ago";
 
-				%text = %text @ "\n\c6" @ "They died \c3" @ %fresh @ "\c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
+				%text = %text @ "\n\c6" @ "They died \c3" @ %when @ " \c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
 				for(%i=0;%i<=%col.attackCount;%i++)
 				{
 					%wounds[%col.attackType[%i]]++;

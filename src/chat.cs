@@ -70,6 +70,8 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 		%time = %time - mFloor(%time); //get rid of excess stuff
 
 		%time = getDayCycleTimeString(%time, 1);
+
+		%time = "D" @ $days @ "|" @ %time;
 	}
 	else
 	{
@@ -94,7 +96,7 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 				%_name = "Someone";
 		}
 
-		messageClient(%other, '', '\c7[%1]<color:ffff80>%2 %3', %time, %_name, %text);
+		messageClient(%other, '', '\c7[%1] <color:ffff80>%2 %3', %time, %_name, %text);
 	}
 }
 
@@ -139,6 +141,8 @@ package DespairChat
 			%time = %time - mFloor(%time); //get rid of excess stuff
 
 			%time = getDayCycleTimeString(%time, 1);
+
+			%time = "D" @ $days @ "|" @ %time;
 		}
 		else
 		{
@@ -154,7 +158,7 @@ package DespairChat
 
 				if (!isObject(%member.player) || isEventPending($DefaultMiniGame.restartSchedule) || %member.miniGame != $DefaultMiniGame)
 				{
-					messageClient(%member, '', '\c7[%1]<color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
+					messageClient(%member, '', '\c7[%1] <color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
 				}
 				$lastDeadText = %text; //for medium
 			}
@@ -239,9 +243,9 @@ package DespairChat
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
 				if(%member.miniGame != $DefaultMiniGame)
-					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name SPC "(" @ %client.getPlayerName() @ ")", %type, %text);
+					messageClient(%member, '', '\c7[%1] <color:ffff80>%2 %3<color:fffff0>, %4', %time, %name SPC "(" @ %client.getPlayerName() @ ")", %type, %text);
 				else
-					messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
+					messageClient(%member, '', '\c7[%1] <color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
 				continue;
 			}
 			%_name = %name;
@@ -289,7 +293,7 @@ package DespairChat
 					%_text = scrambleText(%text, 0.5);
 			}
 	
-			messageClient(%member, '', '\c7[%1]<color:%5>%2 %3<color:%6>, %4', %time, %_name, %type, %_text, %c1, %c2);
+			messageClient(%member, '', '\c7[%1] <color:%5>%2 %3<color:%6>, %4', %time, %_name, %type, %_text, %c1, %c2);
 		}
 	}
 	function serverCmdTeamMessageSent(%client, %text) //Adminchat
@@ -389,7 +393,7 @@ function softSpeakText(%text)
 {
 	if (%text $= "")
 		return;
-	%result = strlwr(%text);
+	%result = %text;//strlwr(%text);
 	for (%i=0;%i<strlen(%text);%i++)
 	{
 		if ((%char = getSubStr(%result, %i, 1)) $= " ") //space character

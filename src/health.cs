@@ -126,6 +126,9 @@ package DespairHealth
 			}
 		}
 
+		//if(%player.isMurdered && !%attacker.killer)
+		//	return; //no damage
+
 		%player.attackCount++;
 		%player.attackType[%player.attackCount] = %type;
 		%player.attackDot[%player.attackCount] = %dot;
