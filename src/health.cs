@@ -126,8 +126,8 @@ package DespairHealth
 			}
 		}
 
-		//if(%player.isMurdered && !%attacker.killer)
-		//	return; //no damage
+		if(%player.isMurdered && !%client.killer && !%attacker.killer)
+			return; //no damage if attempted RDM
 
 		%player.attackCount++;
 		%player.attackType[%player.attackCount] = %type;
