@@ -240,6 +240,12 @@ function RazorImage::onRaze(%this, %obj, %col)
 
 	if(isObject(%col.character))
 	{
+		%app = %col.character.appearance;
+		%color = getField(%app, 7);
+		%col.spawnFiber(%color);
+		%col.spawnFiber(%color);
+		%col.spawnFiber(%color);
+		%col.spawnFiber(%color);
 		%col.character.appearance = setField(%col.character.appearance, 3, "");
 		%col.applyAppearance();
 	}

@@ -158,7 +158,18 @@ function serverCmdKill(%this, %target)
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
 	{
-		%target.player.kill();
+		if(%target.player.health <= 0)
+		{
+			%target.player.health = $Despair::CritThreshold;
+			%target.player.critLoop();
+		}
+		else
+		{
+			for(%i=0;%i<%target.player.getDataBlock().maxTools;%i++)
+			{
+				serverCmdDropTool(%target, %i);
+			}
+		}
 		%target.camera.setMode("Observer");
 		%target.setControlObject(%target.camera);
 		%target.camera.setControlObject(%target.camera);

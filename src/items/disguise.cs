@@ -38,7 +38,7 @@ function DisguiseImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
 	if (isObject(%obj.client) && %obj.client.killer)
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Click on a corpse to completely steal their identity.\nThis is one use and will mangle the corpse beyond recognition.");
+		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Click on a corpse to completely steal their identity.\nThis is one use and will mangle the corpse beyond recognition.\n\c0WARNING\c6: Be sure to switch your keys with the victim!");
 }
 
 function DisguiseImage::onUnMount(%this, %obj, %slot)

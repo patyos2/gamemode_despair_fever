@@ -4,40 +4,56 @@ datablock StaticShapeData(fiberDecal)
 	canClean = true;
 };
 
-function Player::spawnFiber(%this)
+function Player::spawnFiber(%this, %color)
 {
-	%char = %this.character;
-	%app = %char.appearance;
-	%shirtColor = getField(%app, 4);
-	%pantsColor = getField(%app, 5);
-	%shoesColor = getField(%app, 6);
-	%hairColor = getField(%app, 7);
-	if(isObject(%this.getMountedImage(1)) && %this.getMountedImage(1).item.hideAppearance)
-		%hideApp = true;
-	if(isObject(%hat = %this.tool[%this.hatSlot]) && isObject(%this.getMountedImage(2)) && %this.getMountedImage(2) == nameToID(%hat.image))
+	if(getWordCount(%color) < 3)
 	{
-		if(%hat.hideHair)
-			%hairColor = "0.25 0.25 0.25 1";
-
-		if(%hideApp)
+		%char = %this.character;
+		%app = %char.appearance;
+		%hairName = getField(%app, 3);
+		%shirtColor = getField(%app, 4);
+		%pantsColor = getField(%app, 5);
+		%shoesColor = getField(%app, 6);
+		%hairColor = getField(%app, 7);
+		if(isObject(%this.getMountedImage(1)) && %this.getMountedImage(1).item.hideAppearance)
+			%hideApp = true;
+		if(isObject(%hat = %this.tool[%this.hatSlot]) && isObject(%this.getMountedImage(2)) && %this.getMountedImage(2) == nameToID(%hat.image))
 		{
-			%shoesColor = "0.25 0.25 0.25 1";
-			%shirtColor = "0.05 0.05 0.08 1";
-			%pantsColor = "0.05 0.05 0.08 1";
+			if(%hat.hideHair || %hairName $= "")
+				%hairColor = "";
+
+			if(%hideApp)
+			{
+				%shoesColor = "";
+				%shirtColor = "";
+				%pantsColor = "";
+			}
 		}
+
+		//If color is null, dont tabulate it
+		%colors = (%shirtColor !$= "" ? %shirtColor @ "\t" : "") @ (%pantsColor !$= "" ? %pantsColor @ "\t" : "") @
+				  (%shoesColor !$= "" ? %shoesColor @ "\t" : "") @ (%hairColor !$= "" ? %hairColor @ "\t" : "");
+		%color = getField(%colors, getRandom(0, getFieldCount(%colors) - 1));
+	}
+	else
+	{
+		if(getWordCount(%color) == 3)
+			%color = %color SPC "1"; //alpha channel
 	}
 
-	%colors = %shirtColor TAB %pantsColor TAB %shoesColor TAB %hairColor;
-	%color = getField(%colors, getRandom(0, getFieldCount(%colors) - 1));
+	//Seems like they're fully obscured
+	if(%color $= "")
+		return;
 
 	%pos = vectorAdd(%this.getPosition(), "0 0 1");
-	%ray = containerRayCast(%pos, VectorSub(%pos, "0 0 5"), $SprayBloodMask); //Fibers fall
+	%end = VectorSub(%pos, vectorSpread("0 0 5", 0.1));
+
+	%ray = containerRayCast(%pos, %end, $SprayBloodMask); //Fibers fall
+
 	if(%ray)
 	{
-		%decal = spawnDecalFromRayCast(fiberDecal, %ray);
+		%size = 0.5 + getRandom();
+		%decal = spawnDecal(fiberDecal, getWords(%ray, 1, 3), getWords(%ray, 4, 6), %size, %color, "", "", 1); //noUnclutterCheck is true
 		%decal.color = %color;
-		%decal.setNodeColor("ALL", %decal.color);
-		%size = 0.5 + (getRandom() * 0.5);
-		%decal.setScale(%size SPC %size SPC 1);
 	}
 }
