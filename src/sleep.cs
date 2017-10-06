@@ -280,7 +280,7 @@ function Player::Slip(%this, %ticks)
 		serverPlay3d(SlipSound @ getRandom(1, 3), %this.getPosition());
 
 		if(isObject(%this.getMountedImage(0)) && getRandom() < 0.3)
-			serverCmdDropTool(%this.client, %this.currTool);
+			%this.dropTool(%this.currTool);
 	}
 	%this.wakeUpSchedule = %this.schedule(1000, Slip, %ticks--);
 	if(isObject(%client = %this.client))

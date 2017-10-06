@@ -64,7 +64,10 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 			%obj.removeTool(%obj.currTool);
 
 			if (isObject(%obj.client))
+			{
 				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %col.character.name, 2);
+				RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") used a disguise on" SPC %col.character.name @ "!", "\c2");
+			}
 		}
 		else
 		{

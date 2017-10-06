@@ -53,7 +53,13 @@ function serverCmdMenu(%this)
 function serverCmdBanLogs(%this, %targetID)
 {
 
-	if(!%this.isAdmin || %targetID $= "" || !(%targetID > 0))
+	if(!%this.isAdmin || %targetID $= "")
+		return;
+
+	if(!(%targetID > 0))
+		%targetID = findclientbyname(%targetID).bl_id;
+
+	if(%targetID $= "")
 		return;
 
 	messageClient(%this, '', "<font:Palatino Linotype:28>\c4Punishment Logs for \c6 BL_ID " @ %targetID @ "\c4:");

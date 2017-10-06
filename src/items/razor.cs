@@ -70,6 +70,8 @@ datablock itemData(RazorItem)
 
 	customPickupAlways = true;
 	customPickupMultiple = false;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 function RazorProps::onAdd(%this)

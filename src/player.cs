@@ -183,6 +183,11 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 						return;
 					}
 					%data = %ray.getDataBlock();
+					if(%data.waitForKiller && !$pickedKiller) //can't pickup unless killer is on
+					{
+						commandToClient(%obj.client, 'CenterPrint', "<font:cambria:24>\c3You cannot pick up" SPC %data.uiName SPC "before your role is decided!");
+						return;
+					}
 					if(%data.className $= "DespairWeapon")
 					{
 						if(%obj.tool[%obj.weaponSlot] == nameToID(noWeaponIcon))
@@ -246,7 +251,7 @@ function PlayerFrozenArmor::onTrigger(%this, %obj, %slot, %state)
 	PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state);
 }
 
-function Player::dropTool(%obj, %index)
+function Player::dropTool(%obj, %index, %vel)
 {
 	if($DespairTrial)
 	{
@@ -259,13 +264,16 @@ function Player::dropTool(%obj, %index)
 	if(!isObject(%item) || %item.isIcon)
 		return;
 
+	if(%vel $= "")
+		%vel = 15;
+
 	%spawn = new Item() {
 		dataBlock = %item;
 		position = %obj.getEyePoint();
 	};
 	%spawn.setCollisionTimeout(%obj);
 	%spawn.setTransform(getWords(%obj.getEyePoint(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
-	%targVel = VectorScale(%obj.getEyeVector(), 15);
+	%targVel = VectorScale(%obj.getEyeVector(), %vel);
 	%spawn.setVelocity(VectorAdd(%obj.getVelocity(), %targVel));
 	%spawn.schedulePop();
 	%spawn.sourceObject = %obj;

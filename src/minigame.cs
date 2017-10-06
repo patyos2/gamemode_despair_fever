@@ -628,7 +628,7 @@ package DespairFever
 			{
 				for(%i=0;%i<%pl.getDataBlock().maxTools;%i++)
 				{
-					serverCmdDropTool(%client, %i);
+					%pl.dropTool(%i);
 				}
 			}
 		}

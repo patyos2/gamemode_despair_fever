@@ -158,17 +158,17 @@ package DespairHealth
 				%player.bloody["head"] = true;
 				%client.applyBodyParts();
 			case "rleg":
-				%player.setNodeColor("RShoe", %color);
+				//%player.setNodeColor("RShoe", %color);
 			case "lleg":
-				%player.setNodeColor("LShoe", %color);
+				//%player.setNodeColor("LShoe", %color);
 			case "rarm":
-				%player.setNodeColor("RArm", %color);
-				%player.setNodeColor("RHand", %color);
+				//%player.setNodeColor("RArm", %color);
+				//%player.setNodeColor("RHand", %color);
 			case "larm":
-				%player.setNodeColor("LArm", %color);
-				%player.setNodeColor("LHand", %color);
+				//%player.setNodeColor("LArm", %color);
+				//%player.setNodeColor("LHand", %color);
 			case "hip":
-				%player.setNodeColor("pants", %color);
+				//%player.setNodeColor("pants", %color);
 			case "chest":
 				%player.bloody[%dot > 0 ? "chest_back" : "chest_front"] = true;
 				%client.applyBodyParts();
@@ -237,6 +237,9 @@ package DespairHealth
 			if(%player.character.trait["Hemophiliac"])
 				%player.bleedTicks = 13;
 		}
+
+		if(%dot > 0) //Backstab
+			%player.setStatusEffect($SE_damageSlot1, "shock");
 
 		if(%player.unconscious)
 		{

@@ -16,6 +16,8 @@ datablock ItemData(mopItem)
 	image = mopImage;
 
 	canDrop = true;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 function mopItem::onPickup(%this, %obj, %player, %i)
@@ -133,6 +135,9 @@ function mopImage::onFire(%this, %obj, %slot)
 		%col.setNodeColor("ALL", %col.color);
 		%col.setScale(vectorScale(%col.getScale(), 0.8));
 	}
+
+	if(%clean)
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the mop!", "\c1");
 }
 
 function mopImage::onStopFire(%this, %obj, %slot)

@@ -1,6 +1,7 @@
 $SE_sleepSlot = 0; //reserved sleepo
 $SE_passiveSlot = 1;
 $SE_damageSlot = 2;
+$SE_damageSlot1 = 3;
 $SE_maxStatusEffects = 6;
 
 function Player::clearStatusEffects(%player)
@@ -22,14 +23,16 @@ function Player::removeStatusEffect(%player, %slot, %effect)
 		%player.client.updateBottomPrint();
 }
 
-function Player::setStatusEffect(%player, %slot, %effect)
+function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 {
 	//onAdd, essentially
 	switch$ (%effect)
 	{
 		//Sleep-related
 		case "sleepy":
-			if(isObject(%player.client))
+			%player.updateSpeedScale(1);
+			%player.swingSpeedMod = 1;
+			if(!%nomsg && isObject(%player.client))
 				%player.client.chatMessage("\c5You are getting sleepy... Find a \c3bed\c5 and type \c3/sleep\c5!");
 		case "tired":
 			%player.setSpeedScale(0.9);
@@ -38,7 +41,8 @@ function Player::setStatusEffect(%player, %slot, %effect)
 			%player.setSpeedScale(0.6);
 			%player.swingSpeedMod = 1.6;
 		case "sleeping":
-
+			%player.updateSpeedScale(1);
+			%player.swingSpeedMod = 1;
 		//passive buffs/debuffs
 		case "drowsy":
 			%player.setSpeedScale(0.8);
@@ -53,6 +57,8 @@ function Player::setStatusEffect(%player, %slot, %effect)
 		case "fresh":
 			if(%player.statusEffect[%slot] $= "sore back" || %player.statusEffect[%slot] $= "shining")
 				return 0;
+			%player.updateSpeedScale(1);
+			%player.swingSpeedMod = 1;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(20000, removeStatusEffect, %slot, %effect);
 		case "shining":
@@ -60,7 +66,7 @@ function Player::setStatusEffect(%player, %slot, %effect)
 			%player.swingSpeedMod = 0.9;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
-			if(isObject(%player.client))
+			if(!%nomsg && isObject(%player.client))
 				%player.client.chatMessage("\c5You had a \c3good night's sleep\c5!");
 
 		//damage-related
@@ -68,22 +74,50 @@ function Player::setStatusEffect(%player, %slot, %effect)
 			%player.bleedTicks = 6;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
+			if(!%nomsg && isObject(%player.client))
+				%player.client.chatMessage("\c5You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!");
 		case "shock":
-			//slowdown and inability to speak
+			if(%player.statusEffect[%slot] $= "shock")
+				return 0; //Don't stack it
+
+			%player.setSpeedScale(0.6);
+			%player.swingSpeedMod = 1.6;
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
+			if(!%nomsg && isObject(%player.client))
+				%player.client.chatMessage("\c5You are suffering " @ getStatusEffectColor(%effect) @ "shock\c5!");
 
 		//damage modelling
 		case "wounded arm":
-			//random chance to drop shit
+			%player.swingSpeedMod = 1.4;
+			if(getRandom() < 0.25)
+				%player.dropTool(%player.currTool, 5);
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 		case "wounded leg":
-			//
+			%player.setSpeedScale(0.7);
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 		case "concussion":
-			//
-		case "abdominal trauma":
-			//
+			%player.setWhiteOut(0.4); //BOOM!! FREAK THE FUCK OUT!!
+			%player.swingSpeedMod = 1.2;
+			%player.setSpeedScale(0.8);
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
+		case "abdominal trauma": //Todo: puking blood
+			%player.swingSpeedMod = 1.2;
+			%player.setSpeedScale(0.8);
+			cancel(%player.statusSchedule[%slot]);
+			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 
 		default:
-			%player.updateSpeedScale(1);
-			%player.swingSpeedMod = 1;
+			if(%player.statusEffect[%slot] !$= "")
+				%player.setStatusEffect($SE_sleepSlot, %player.statusEffect[%slot], 1); //Sleep slot is priority when it comes to slowdowns
+			else
+			{
+				%player.updateSpeedScale(1);
+				%player.swingSpeedMod = 1;
+			}
 	}
 	%player.statusEffect[%slot] = %effect;
 	return %slot;
@@ -139,7 +173,7 @@ function Player::updateStatusEffect(%player, %slot)
 			if(getRandom() < 0.45)
 				serverPlay3d(BloodSplat @ getRandom(1,3), getWords(%ray, 1, 3));
 			%player.health = getMax(1, %player.health - 2);
-			%player.setDamageFlash(0.1);
+			%player.setDamageFlash(0.2);
 			%player.statusSchedule[%slot] = %player.schedule(1000, updateStatusEffect, %slot);
 		case "shock":
 			//beep

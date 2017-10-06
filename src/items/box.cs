@@ -43,7 +43,12 @@ function KillerBoxImage::onMount(%this, %obj, %slot)
 {
 	fixArmReady(%obj);
 	if (isObject(%obj.client))
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This box contains something...\nClick to dump its contents! Rightclick to dispose of it.");
+	{
+		if(%obj.client.killer)
+			commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This box contains something...\nClick to dump its contents! Rightclick to dispose of it.");
+		else
+			commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This box looks suspicious...");
+	}
 }
 
 function KillerBoxImage::onUnMount(%this, %obj, %slot)
@@ -55,6 +60,8 @@ function KillerBoxImage::onUnMount(%this, %obj, %slot)
 
 function KillerBoxImage::onUse(%this, %obj, %slot)
 {
+	if (isObject(%obj.client) && !%obj.client.killer)
+		return;
 	%count = 3;
 	%loot[0] = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem";
 	%loot[1] = "TaserItem DisguiseItem FlashbangItem";
@@ -91,6 +98,8 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 function KillerBoxImage::onRightClick(%this, %obj, %slot)
 {
 	if(%obj.getImageState(0) !$= "Ready")
+		return;
+	if (isObject(%obj.client) && !%obj.client.killer)
 		return;
 	%obj.removeTool(%obj.currTool);
 	if (isObject(%obj.client))

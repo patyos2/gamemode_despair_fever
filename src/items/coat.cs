@@ -12,6 +12,8 @@ datablock ItemData(CoatItem)
 	canDrop = true;
 
 	hideAppearance = true; //hides arms, chest and pants
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 datablock ShapeBaseImageData(CoatImage)
 {

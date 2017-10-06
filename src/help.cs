@@ -71,7 +71,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c34\c6. \c0Don't freekill!\c6 You CANNOT attack people for any other reason than self-defence. Threatening people or warning them is \c0NOT AN EXCUSE.";
 			%text[%count++] = "           \c6If they swing their weapon at you or are hiding in your closet with their weapon out it counts as SELF-DEFENCE.";
 			%text[%count++] = " \c35\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
-			%text[%count++] = " \c36\c6. \c0Don't ERP (Erotic RolePlay)!\c6 It is obnoxious as fuck and serves no purpose other than to get some preteens' dick wet and annoy everyone else.";
+			%text[%count++] = " \c36\c6. \c0Don't ERP (Erotic RolePlay)!\c6 This is a murder sim, not get-it-on sim. If you want to screw some virtual babe do it somewhere else.";
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";
 			//%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
 			%text[%count++] = " \c5Page Up to read the above.";
@@ -79,6 +79,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[COMMANDS]";
 			%text[%count++] = " \c6/keepchar \c7- \c6Enable or disable character persistance (if you survive a round, you keep your character for the next)";
 			%text[%count++] = " \c6/forcevote \c7- \c6Skip the discussion phase and get straight to the voting (Trial)";
+			%text[%count++] = " \c6/spectate \c7- \c6Become a spectator to be excluded from rounds";
 			if (%this.isAdmin)
 			{
 				%text[%count++] = "\c3[ADMIN]";
@@ -86,10 +87,9 @@ function serverCmdHelp(%this, %cat)
 				%text[%count++] = " \c3@\c6 before Team Chat e.g. \c3@message \c7- \c6Talk to the killer directly (cannot see killer chat when alive)";
 				%text[%count++] = " \c6/menu \c7- \c6Bring up the logs";
 				%text[%count++] = " \c6/whoIs \c3name \c7- \c6Find out who \c3name\c6's in-game alias is";
-				%text[%count++] = " \c6/spectate \c7- \c6Become a spectator to be excluded from rounds";
 				%text[%count++] = " \c6/showroles \c7- \c6See who's killer or innocent when spectating";
 				%text[%count++] = " \c6/announce \c3message \c7- \c6Send a server-wide announcement";
-				%text[%count++] = " \c6/banlogs \c3bl_id \c7- \c6See someone's punishment history";
+				%text[%count++] = " \c6/banlogs \c3bl_id OR name \c7- \c6See someone's punishment history";
 				%text[%count++] = " \c6/warn \c3name warning \c7- \c6Warn someone";
 				%text[%count++] = " \c6/kill \c3name \c7- \c6Forcekill someone";
 			}

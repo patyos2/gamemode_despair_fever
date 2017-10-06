@@ -182,5 +182,6 @@ function FlashbangImage::onUse(%this, %obj, %slot)
 			commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ " seconds\c3!\n\c5Throw it away!");
 		%props.primed = true;
 		%props.timerSchedule();
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") primed a flashbang!", "\c2");
 	}
 }

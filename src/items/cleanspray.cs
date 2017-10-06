@@ -88,6 +88,8 @@ datablock ItemData(CleanSprayItem)
 
 	customPickupAlways = true;
 	customPickupMultiple = false;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 function CleanerProps::onAdd(%this)
@@ -232,4 +234,7 @@ function CleanSprayImage::onFire(%this, %obj, %slot)
 		%col.setScale(vectorScale(%col.getScale(), 0.8));
 		%props.ammo--;
 	}
+
+	if(%clean)
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the clean spray!", "\c1");
 }

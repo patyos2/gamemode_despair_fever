@@ -35,6 +35,7 @@ datablock ItemData(LockpickItem)
 
 	canDrop = true;
 
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 datablock ShapeBaseImageData(LockpickImage)
