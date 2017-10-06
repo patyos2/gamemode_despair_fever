@@ -7,11 +7,12 @@ function serverCmdHelp(%this, %cat)
 		case "1" or "gamemode":
 			%text[%count++] = "\c3[GAMEMODE]";
 			%text[%count++] = " \c6The first day is the day without the killer. However, as soon as night strikes, the culprit is picked.";
-			%text[%count++] = " \c6Killer's objective is to murder someone and get away with it. They can only kill up to three people (two if investigation period has started).";
+			%text[%count++] = " \c6Killer's objective is to murder someone and get away with it.";
 			%text[%count++] = " \c6Once the killer does their job, they have to blend in and try to seem least suspicious.";
 			%text[%count++] = " \c6A body discovery announcement is initated when at least two people examine/scream at the body.";
 			%text[%count++] = " \c6After a body has been discovered, investigation period starts.";
 			%text[%count++] = " \c6During investigation, the crime scene is \c3\"frozen\"\c6 - Nobody can modify the state of the scene and nobody will be able to use weapons.";
+			%text[%count++] = " \c6During this period, you will gather \c3Evidence\c6 - \c3Fibers, Alibis, Murder Weapon, Murder Method\c6 - gather as much information as possible!!!";
 			%text[%count++] = " \c6After investigation period ends, the trial period starts.";
 			%text[%count++] = " \c6In trial, everyone is teleported to the courtroom where you are given time to discuss everyone's alibis and possible suspects.";
 			%text[%count++] = " \c6After trial period is over, it's time to vote the most suspicious person.";
@@ -30,9 +31,9 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[KILLER]";
 			%text[%count++] = " \c6You can become the killer at first night or by killing the killer.";
 			%text[%count++] = " \c6Once you become the killer, you have to kill someone and get away with it. Killing people in public or having a killing spree is completely discouraged.";
-			%text[%count++] = " \c6You can only kill so much. When you hit an arbitrary kill limit, your weapon will be disabled and you will be unable to kill.";
+			%text[%count++] = " \c6You can only kill so much. After investigation starts, your weapon will be disabled after a minute and you will be unable to kill directly.";
 			%text[%count++] = " \c6You can clean up the blood with a mop. To wash blood off yourself, you can use sinks, showers, water pumps, buckets or anything of the like.";
-			%text[%count++] = " \c6Sinks only clean your hands and head. Showers, buckets, water pumps clean you head to toe.";
+			%text[%count++] = " \c6Sinks, showers, buckets, water pumps clean you head to toe.";
 			%text[%count++] = " \c6To clean your weapon, take it out when washing and use \c3\"Paint Key\"\c6 to activate events.";
 			%text[%count++] = " \c6You also have a number of cool abilities!";
 			%text[%count++] = " \c6You can sprint with \c3\"JET\" \c6key (default\c3: \"RightClick\"\c6)";
@@ -50,7 +51,6 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c6To navigate the inventory menu, scroll w/ mouse and click to take something out. To plant something on the corpse, drop an item when looking at it.";
 			%text[%count++] = " \c3\"Hold-click\" and move your mouse\c6 to carry around a corpse.";
 			%text[%count++] = " \c6You can \c3Scream\c6 with \c3\"ALARM\"\c6 key (default\c3: \"H\"\c6). However, you must be looking at something screwed up, like blood or a body.";
-			%text[%count++] = " \c6Every morning, \c3papers\c6 will spawn. These papers will range from \c3trash\c6, \c3gameplay tips\c6 and \c3news articles\c6.";
 			%text[%count++] = " \c6People leave \c3Fibers\c6 during fights, sleeping or dragging bodies! The fibers take on the colors of their hair or clothes. Coats and hair-hiding masks obscure fibers!";
 			%text[%count++] = " \c6There are \c0NO NON-LETHAL WEAPONS\c6 in this gamemode. Everything will kill.";
 			%text[%count++] = " \c5Page Up to read the above.";
@@ -58,7 +58,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[COMBAT]";
 			%text[%count++] = " \c6You can find melee weapons all over the map.";
 			%text[%count++] = " \c6EVERYTHING can \c3BREAK DOWN DOORS\c6, however, it takes a while to do so and it's incredibly loud, and effectiveness varies on the weapon.";
-			//%text[%count++] = " \c6Attacks from behind have multiplied damage. Use this to your advantage!";
+			%text[%count++] = " \c6Attacks from behind cause \c3Shock\c6. This causes the victim to be slow and sluggish. Use this to your advantage!";
 			%text[%count++] = " \c6If you fall in combat, you will enter \c0Critical Health\c6. In that state, your speaking range will be reduced and you will not able to scream as much.";
 			%text[%count++] = " \c0You cannot be saved\c6 from that state. However, you can leave your last message with \c3/w[rite] [msg]\c6! Be sure to be aiming at a surface.";
 			%text[%count++] = " \c6There are plans to expand the combat system, so stay tuned for updates!";

@@ -690,7 +690,7 @@ package DespairFever
 			%last = %client;
 		}
 
-		$maxDeaths = getMax(1, $aliveCount - 4);
+		//$maxDeaths = 99;//getMax(1, $aliveCount - 4);
 
 		//if($deathCount >= $maxDeaths)
 		//	DespairSetWeapons(0);

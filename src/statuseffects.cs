@@ -111,7 +111,7 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 
 		default:
-			if(%player.statusEffect[%slot] !$= "")
+			if($SE_sleepSlot !$= %slot && %player.statusEffect[%slot] !$= "")
 				%player.setStatusEffect($SE_sleepSlot, %player.statusEffect[%slot], 1); //Sleep slot is priority when it comes to slowdowns
 			else
 			{

@@ -80,7 +80,7 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxSideCrouchSpeed = 0;
 
 	minImpactSpeed = 15;
-	speedDamageScale = 10;
+	speedDamageScale = 20;
 
 	jumpForce = 0;
 
@@ -183,7 +183,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 						return;
 					}
 					%data = %ray.getDataBlock();
-					if(%data.waitForKiller && !$pickedKiller) //can't pickup unless killer is on
+					if((%data.waitForKiller || %data.disguise) && !$pickedKiller) //can't pickup unless killer is on
 					{
 						commandToClient(%obj.client, 'CenterPrint', "<font:cambria:24>\c3You cannot pick up" SPC %data.uiName SPC "before your role is decided!", 2);
 						return;

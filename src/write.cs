@@ -38,7 +38,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 
 		%a = %player.getEyePoint();
 		%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
-		%mask =	$TypeMasks::FxBrickObjectType;
+		%mask =	$SprayBloodMask;
 		%ray = containerRayCast(%a, %b, %mask, %player);
 		if(isObject(%ray))
 		{
@@ -110,9 +110,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 	%a = %player.getEyePoint();
 	%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
 
-	%mask =
-		$TypeMasks::FxBrickObjectType |
-		$TypeMasks::ItemObjectType;
+	%mask = $SprayBloodMask;
 
 	%ray = containerRayCast(%a, %b, %mask, %player);
 

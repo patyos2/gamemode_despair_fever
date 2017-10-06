@@ -213,9 +213,6 @@ function Player::carryTick(%this)
 		}
 		else
 		{
-			%player.bloody["rhand"] = true;
-			%player.bloody["lhand"] = true;
-			%player.applyAppearance();
 			%this.health = $Despair::CritThreshold;
 			%this.damage(%player, %this.getPosition(), 5, "choking");
 			%this.pools = 1000;
