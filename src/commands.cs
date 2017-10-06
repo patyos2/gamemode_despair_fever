@@ -158,22 +158,15 @@ function serverCmdKill(%this, %target)
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
 	{
-		if(%target.player.health <= 0)
+		for(%i=0;%i<%target.player.getDataBlock().maxTools;%i++)
 		{
-			%target.player.health = $Despair::CritThreshold;
-			%target.player.critLoop();
-		}
-		else
-		{
-			for(%i=0;%i<%target.player.getDataBlock().maxTools;%i++)
-			{
-				%target.player.dropTool(%i);
-			}
+			%target.player.dropTool(%i);
 		}
 		%target.camera.setMode("Observer");
 		%target.setControlObject(%target.camera);
 		%target.camera.setControlObject(%target.camera);
 		%target.player.delete(); //Should be safe to do
+		$defaultMiniGame.checkLastManStanding();
 	}
 }
 

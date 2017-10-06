@@ -235,6 +235,6 @@ function CleanSprayImage::onFire(%this, %obj, %slot)
 		%props.ammo--;
 	}
 
-	if(%clean)
-		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the clean spray!", "\c1");
+	//if(%clean)
+	//	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the clean spray!", "\c1");
 }

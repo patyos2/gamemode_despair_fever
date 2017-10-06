@@ -170,6 +170,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 				$TypeMasks::PlayerObjectType |
 				$TypeMasks::CorpseObjectType |
 				$TypeMasks::StaticShapeObjectType |
+				$TypeMasks::TerrainObjectType |
 				$TypeMasks::ItemObjectType;
 
 			%ray = containerRayCast(%a, %b, %mask, %obj);

@@ -136,8 +136,8 @@ function mopImage::onFire(%this, %obj, %slot)
 		%col.setScale(vectorScale(%col.getScale(), 0.8));
 	}
 
-	if(%clean)
-		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the mop!", "\c1");
+	//if(%clean)
+	//	RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") cleaned something with the mop!", "\c1");
 }
 
 function mopImage::onStopFire(%this, %obj, %slot)

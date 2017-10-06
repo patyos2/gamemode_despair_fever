@@ -44,8 +44,7 @@ function Player::critLoop(%this)
 	}
 	if(%this.health <= $Despair::CritThreshold)
 	{
-		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 5, "bleed");
-		return;
+		%this.damage(%this.attackSource[%this.attackCount], %this.getPosition(), 100, "bleed");
 	}
 	%this.critLoop = %this.schedule(getMax(400, %delay), "critLoop");
 }
@@ -195,7 +194,7 @@ package DespairHealth
 				%p.explode();
 				if(%playPain)
 					%player.playDeathCry();
-				%player.setDamageLevel(100);
+				%player.setDamageLevel(1000);
 			}
 			else
 			{
@@ -209,10 +208,12 @@ package DespairHealth
 		{
 			if(despairOnKill(%client, %attacker, true))
 			{
+				%health = %player.health;
 				%player.wakeUp();
 				%player.changeDataBlock(PlayerCorpseArmor);
 				%player.playThread(0, "sit");
 				%player.noWeapons = true;
+				%player.health = %health; //Dunno why but it might make health wrong
 				%player.critLoop();
 				messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
 				commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);

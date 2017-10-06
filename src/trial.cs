@@ -120,7 +120,7 @@ function despairOnKill(%victim, %attacker, %crit)
 		return 1;
 	}
 
-	if(!%victim.aboutToKill && !%victim.killer && !%attacker.killer)
+	if(!%victim.player.aboutToKill && !%victim.killer && !%attacker.killer)
 	{
 		%player = %attacker.player;
 		%player.setSpeedScale(0.1);
@@ -162,16 +162,16 @@ function despairOnKill(%victim, %attacker, %crit)
 	%player = %victim.player;
 	if(!isObject(%player))
 		%player = %victim.character.player;
-	if(%victim.aboutToKill || %victim.killer || %attacker.killer)
+	if(%player.aboutToKill || %victim.killer || %attacker.killer)
 	{
-		if(%victim.aboutToKill)
+		if(%player.aboutToKill)
 		{
-			%victim.aboutToKill.health = $Despair::CritThreshold;
-			%victim.aboutToKill.critLoop();
-			%victim.aboutToKill = "";
+			%player.aboutToKill.health = $Despair::CritThreshold;
+			%player.aboutToKill.critLoop();
+			%player.aboutToKill = "";
 		}
 
-		%attacker.aboutToKill = %player; //Attacker can be killed
+		%attacker.player.aboutToKill = %player; //Attacker can be killed
 		%player.isMurdered = true; //rip they're legit
 
 		//log stuff
@@ -185,7 +185,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			$deathCount++;
 			if(%victim.killer && !%attacker.killer)
 			{
-				%attacker.aboutToKill = "";
+				%attacker.player.aboutToKill = "";
 				%attacker.killer = true;
 				$currentKiller = %attacker;
 				%attacker.play2d(KillerJingleSound);
