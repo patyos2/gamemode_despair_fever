@@ -16,6 +16,8 @@ datablock ItemData(HatDisguiseItem)
 
 	disguise = true;
 	hidehair = false;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 datablock ShapeBaseImageData(HatDisguiseImage)
 {

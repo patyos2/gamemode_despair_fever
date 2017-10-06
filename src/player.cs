@@ -185,7 +185,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 					%data = %ray.getDataBlock();
 					if(%data.waitForKiller && !$pickedKiller) //can't pickup unless killer is on
 					{
-						commandToClient(%obj.client, 'CenterPrint', "<font:cambria:24>\c3You cannot pick up" SPC %data.uiName SPC "before your role is decided!");
+						commandToClient(%obj.client, 'CenterPrint', "<font:cambria:24>\c3You cannot pick up" SPC %data.uiName SPC "before your role is decided!", 2);
 						return;
 					}
 					if(%data.className $= "DespairWeapon")

@@ -15,9 +15,10 @@ datablock ItemData(HatMummyItem)
 	iconName = $Despair::Path @ "res/shapes/hats/icon_hat";
 
 	disguise = true;
-	hidehair = false;
-	replaceHairMale = "hair_messy";
-	replaceHairFemale = "hair_ponytail";
+	hidehair = true;
+	nodeColor = "0.75 0.75 0.75";
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 datablock ShapeBaseImageData(HatMummyImage)
 {

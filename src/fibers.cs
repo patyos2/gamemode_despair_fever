@@ -1,6 +1,6 @@
 datablock StaticShapeData(fiberDecal)
 {
-	shapeFile = $Despair::Path @ "res/shapes/strand.dts";
+	shapeFile = $Despair::Path @ "res/shapes/fiber.dts";
 	canClean = true;
 };
 

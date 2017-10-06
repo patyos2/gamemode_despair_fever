@@ -17,6 +17,8 @@ datablock ItemData(HatClownItem)
 	disguise = true;
 	disguiseName = "Bozo the Clown";
 	hidehair = false;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 datablock ShapeBaseImageData(HatClownImage)
 {

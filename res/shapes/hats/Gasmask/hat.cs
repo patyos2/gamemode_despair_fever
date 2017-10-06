@@ -17,6 +17,8 @@ datablock ItemData(HatGasmaskItem)
 	disguise = true;
 	hidehair = true;
 	nodeColor = "0.25 0.25 0.25";
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 datablock ShapeBaseImageData(HatGasmaskImage)
 {
