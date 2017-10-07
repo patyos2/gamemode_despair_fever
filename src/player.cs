@@ -26,7 +26,7 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 
 	maxEnergy = 100;
 
-	minImpactSpeed = 23;
+	minImpactSpeed = 20;
 
 	jumpForce = 1200;
 	jumpDelay = 30;

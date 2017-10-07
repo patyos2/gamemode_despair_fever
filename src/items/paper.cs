@@ -237,7 +237,7 @@ function getPaperTips()
 {
 	%high = -1;
 
-	%choice[%high++] = "Choking people leaves your hands bloody! Causing accidents doesn't, however.";
+	%choice[%high++] = "Attacking people leaves your hands bloody! Choking and causing accidents doesn't, however.";
 	%choice[%high++] = "Spilled Coke on your shirt? Just throw a coat on - nobody will see your dirty shirt from under it!";
 	%choice[%high++] = "Be sure to admire yourself in the mirror by clicking it! There may be something on your face that you can't otherwise see.";
 	%choice[%high++] = "A shower will not only completely clean you off, but will leave you feeling fresh and good about yourself!";

@@ -183,7 +183,7 @@ package DespairChat
 		{
 			%type = "stammers";
 			%range = 8;
-			%text = stutterText(%text, 0.1);
+			%text = stutterText(%text, 0.05);
 		}
 		if(getSubStr(%text, 0, 1) $= "@") //Whispering
 		{
@@ -414,7 +414,7 @@ function stutterText(%text, %prob)
 	if (%text $= "")
 		return;
 	if (%prob $= "")
-		%prob = 0.2;
+		%prob = 0.1;
 	if (%prob <= 0)
 		return %text;
 	%result = %text;

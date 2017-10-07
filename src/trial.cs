@@ -427,7 +427,7 @@ function despairOnMorning()
 	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			banBLID($pickedKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
+			banBLID($currentKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
 		else
 			despairStartInvestigation();
 	}

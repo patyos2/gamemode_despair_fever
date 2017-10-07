@@ -1,6 +1,6 @@
-datablock StaticShapeData(fiberDecal)
+datablock StaticShapeData(strandDecal)
 {
-	shapeFile = $Despair::Path @ "res/shapes/fiber.dts";
+	shapeFile = $Despair::Path @ "res/shapes/strand.dts";
 	canClean = true;
 };
 
@@ -50,7 +50,7 @@ function Player::spawnFiber(%this, %color)
 	if(%ray)
 	{
 		%size = 0.5 + getRandom();
-		%decal = spawnDecal(fiberDecal, getWords(%ray, 1, 3), getWords(%ray, 4, 6), %size, %color, "", "", 1); //noUnclutterCheck is true
+		%decal = spawnDecal(strandDecal, getWords(%ray, 1, 3), getWords(%ray, 4, 6), %size, %color, "", "", 1); //noUnclutterCheck is true
 		%decal.color = %color;
 	}
 }

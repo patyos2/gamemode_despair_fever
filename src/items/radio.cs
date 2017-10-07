@@ -111,6 +111,7 @@ function RadioItem::onDrop(%this, %player, %slot)
 }
 function RadioImage::onUse(%this, %obj, %slot)
 {
+	return; //Nobody needs more than one channel, really.
 	%props = %obj.getItemProps();
 	radioLeft(%obj, %props.channel);
 	%props.channel = (%props.channel + 1) % $Despair::radioNumChannels;

@@ -423,9 +423,9 @@ function despairPrepareGame()
 	SunLight.sendUpdate();
 
 	//update fog
-	$EnvGuiServer::VisibleDistance = 80;
+	$EnvGuiServer::VisibleDistance = 130;
 	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
-	$EnvGuiServer::FogDistance = 50;
+	$EnvGuiServer::FogDistance = 100;
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
 

@@ -105,6 +105,14 @@ function GameConnection::examineObject(%client, %col)
 			{
 				%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " bloody.";
 			}
+
+			if(isObject(%img = %col.getMountedImage(1)))
+			{
+				%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " is wearing a \c3" @ %img.item.uiName;
+			}
+
+			if((!isObject(%img) || !%img.item.hideAppearance) && %col.health/%col.maxHealth <= 0.9) //Coats obscure injuries, injuries are only displayed at 90% health
+				%text = %text @ "\n\c6" @ "They are \c0injured\c6!";
 		}
 		if(isObject(%img = %col.getMountedImage(0)))
 			%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " has a \c3" @ %img.item.uiName;

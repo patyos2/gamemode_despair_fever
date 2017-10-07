@@ -67,27 +67,6 @@ package DespairHealth
 		if(%player.character.trait["Extra Tough"] && (%type $= "blunt" || %type $= "sharp"))
 			%damage *= 0.9;
 
-		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
-		{
-			if(%client.killer)
-				%damage = 1;
-			%fatal = %player.health - %damage <= 0;
-			%sound = %fatal ? fallFatalSound : fallInjurySound;
-			%playPain = 0;
-			serverPlay3D(%sound, %pos);
-			%type = "fall";
-			if(%fatal)
-				%player.health = $Despair::CritThreshold;
-			%blood = false;
-		}
-		else if(%player.isCrouched())
-			%damage *= 3;
-		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
-		{
-			%type = "accident";
-			%blood = false;
-		}
-
 		if(isObject(%src))
 		{
 			if (%src.getType() & $TypeMasks::PlayerObjectType)
@@ -125,8 +104,33 @@ package DespairHealth
 			}
 		}
 
+		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
+		{
+			if(%client.killer && %attacker == %client)
+				%damage = 1;
+
+			if((%attacker != %client || %player.isSlipping || %player.unconscious) && !%client.killer && !%attacker.killer) //O no it's an accident
+				%damage *= 0.1;
+
+			%fatal = %player.health - %damage <= 0;
+			%sound = %fatal ? fallFatalSound : fallInjurySound;
+			%playPain = 0;
+			serverPlay3D(%sound, %pos);
+			%type = "fall";
+			if(%fatal)
+				%player.health = $Despair::CritThreshold;
+			%blood = false;
+		}
+		else if(%player.isCrouched())
+			%damage *= 3;
+		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
+		{
+			%type = "accident";
+			%blood = false;
+		}
+
 		if(%player.isMurdered && !%client.killer && !%attacker.killer)
-			return; //no damage if attempted RDM
+			return; //no damage if attempted RDM on crit
 
 		%player.attackCount++;
 		%player.attackType[%player.attackCount] = %type;
