@@ -16,18 +16,15 @@ function Player::spawnFiber(%this, %color)
 		%shoesColor = getField(%app, 6);
 		%hairColor = getField(%app, 7);
 		if(isObject(%this.getMountedImage(1)) && %this.getMountedImage(1).item.hideAppearance)
-			%hideApp = true;
+		{
+			%shirtColor = "";
+			%pantsColor = "";
+			%shoesColor = "";
+		}
 		if(isObject(%hat = %this.tool[%this.hatSlot]) && isObject(%this.getMountedImage(2)) && %this.getMountedImage(2) == nameToID(%hat.image))
 		{
 			if(%hat.hideHair || %hairName $= "")
 				%hairColor = "";
-
-			if(%hideApp)
-			{
-				%shoesColor = "";
-				%shirtColor = "";
-				%pantsColor = "";
-			}
 		}
 
 		//If color is null, dont tabulate it

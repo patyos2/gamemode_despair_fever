@@ -74,7 +74,7 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			%player.bleedTicks = 6;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
-			if(!%nomsg && isObject(%player.client))
+			if(!%nomsg && isObject(%player.client) && %player.statusEffect[%slot] !$= "bleeding")
 				%player.client.chatMessage("\c5You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!");
 		case "shock":
 			if(%player.statusEffect[%slot] $= "shock")
@@ -154,7 +154,7 @@ function Player::updateStatusEffect(%player, %slot)
 		case "bleeding":
 			cancel(%player.statusSchedule[%slot]);
 			%player.bleedTicks--;
-			if(%player.bleedTicks <= 0)
+			if(%player.bleedTicks <= 0 || %player.health <= 0) //ticks ran out or we're crit
 			{
 				%player.removeStatusEffect(%slot, %effect);
 				return 0;

@@ -270,7 +270,11 @@ function getCharacterName(%char, %ignoreDisguised, %revealFakeName)
 	if(isObject(%player))
 	{
 		if(!%ignoreDisguised && isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%img = %player.getMountedImage(2)) && %img == nameToID(%hat.image))
+		{
 			%name = "Unknown";
+			if(%hat.disguiseName !$= "")
+				%name = %hat.disguiseName;
+		}
 		if(%player.mangled)
 			%name = "Unknown";
 		if(%player.fakeName !$= "")

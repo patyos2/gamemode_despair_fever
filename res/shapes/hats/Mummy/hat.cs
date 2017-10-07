@@ -16,6 +16,7 @@ datablock ItemData(HatMummyItem)
 
 	disguise = true;
 	hidehair = true;
+	disguiseName = "Mummy";
 	nodeColor = "0.75 0.75 0.75";
 };
 datablock ShapeBaseImageData(HatMummyImage)

@@ -631,7 +631,7 @@ function courtPlayers()
 		%character = GameCharacters.getObject(%a[%i]);
 		%player = %character.player;
 		%client = %character.client;
-		if(%player.afk && !%client.killer)
+		if(%client.afk && !%client.killer)
 		{
 			%player.delete();
 		}

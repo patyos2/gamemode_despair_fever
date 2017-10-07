@@ -208,12 +208,10 @@ package DespairHealth
 		{
 			if(despairOnKill(%client, %attacker, true))
 			{
-				%health = %player.health;
 				%player.wakeUp();
 				%player.changeDataBlock(PlayerCorpseArmor);
 				%player.playThread(0, "sit");
 				%player.noWeapons = true;
-				%player.health = %health; //Dunno why but it might make health wrong
 				%player.critLoop();
 				messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
 				commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);

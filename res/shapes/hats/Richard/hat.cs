@@ -16,6 +16,7 @@ datablock ItemData(HatRichardItem)
 
 	disguise = true;
 	hidehair = true;
+	disguiseName = "Rooster";
 };
 datablock ShapeBaseImageData(HatRichardImage)
 {

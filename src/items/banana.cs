@@ -11,6 +11,8 @@ datablock ItemData(BananaItem)
 
 	image = BananaImage;
 	canDrop = true;
+	
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 datablock ShapeBaseImageData(BananaImage)
@@ -56,6 +58,8 @@ datablock ItemData(BananaPeelItem)
 	canDrop = true;
 
 	slip = 1;
+
+	waitForKiller = true; //Wait for killer to be picked before this can be picked up
 };
 
 datablock ShapeBaseImageData(BananaPeelImage)

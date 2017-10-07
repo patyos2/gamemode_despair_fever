@@ -46,11 +46,16 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 function PlayerDespairArmor::onAdd(%data, %player)
 {
 	parent::onAdd(%data, %player);
-	%player.maxhealth = 100;
-	%player.health = 100;
-	%player.swingSpeedMod = 1;
-	%player.speedScale = 1;
-	%player.traitSchedule();
+	if(%player.maxhealth $= "")
+		%player.maxhealth = 100;
+	if(%player.health $= "")
+		%player.health = 100;
+	if(%player.swingSpeedMod $= "")
+		%player.swingSpeedMod = 1;
+	if(%player.speedScale $= "")
+		%player.speedScale = 1;
+	if(!isEventPending(%player.traitSchedule))
+		%player.traitSchedule();
 }
 
 datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
@@ -358,7 +363,7 @@ function Player::onLight(%this)
 			%member = $DefaultMiniGame.member[%i];
 
 			if (%member.player && %member.player != %this)
-				%client.play3d(HeartBeatSound, %member.player.getEyePoint());
+				%client.schedule(500 * %i, play3d, HeartBeatSound, %member.player.getEyePoint());
 		}
 	}
 }
@@ -409,7 +414,10 @@ function player::applyAppearance(%pl,%char)
 
 
 	if(isObject(%pl.getMountedImage(1)) && %pl.getMountedImage(1).item.hideAppearance)
+	{
 		%hideApp = true;
+		%shoesColor = "0.25 0.25 0.25 1";
+	}
 	if(isObject(%hat = %pl.tool[%pl.hatSlot]) && isObject(%pl.getMountedImage(2)) && %pl.getMountedImage(2) == nameToID(%hat.image))
 	{
 		if(%hairName !$= "" && %hat.replaceHair !$= "")
@@ -422,10 +430,7 @@ function player::applyAppearance(%pl,%char)
 		{
 			%faceName = "smiley";
 			if(%hideApp)
-			{
-				%shoesColor = "0.25 0.25 0.25 1";
 				%handColor = "0.25 0.25 0.25 1";
-			}
 		}
 		if(%hat.nodeColor !$= "")
 			%headColor = %hat.nodeColor SPC "1";

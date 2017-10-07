@@ -15,6 +15,7 @@ datablock ItemData(HatDisguiseItem)
 	iconName = $Despair::Path @ "res/shapes/hats/icon_hat";
 
 	disguise = true;
+	disguiseName = "Villain";
 	hidehair = false;
 };
 datablock ShapeBaseImageData(HatDisguiseImage)

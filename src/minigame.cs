@@ -423,9 +423,9 @@ function despairPrepareGame()
 	SunLight.sendUpdate();
 
 	//update fog
-	$EnvGuiServer::VisibleDistance = 200;
+	$EnvGuiServer::VisibleDistance = 80;
 	Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
-	$EnvGuiServer::FogDistance = 120;
+	$EnvGuiServer::FogDistance = 50;
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
 
@@ -636,7 +636,7 @@ package DespairFever
 		{
 			%client.character.deleteMe = true;
 		}
-		if(!%client.isAdmin && %client.killer && isObject(%client.player))
+		if(!%client.isAdmin && $currentKiller == %client)
 			banBLID(%client.bl_id, 5, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
 	}

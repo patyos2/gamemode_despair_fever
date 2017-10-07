@@ -16,6 +16,7 @@ datablock ItemData(HatSkiMaskItem)
 
 	disguise = true;
 	hidehair = true;
+	disguiseName = "Bandit";
 };
 datablock ShapeBaseImageData(HatSkiMaskImage)
 {
