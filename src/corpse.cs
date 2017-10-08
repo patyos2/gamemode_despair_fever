@@ -129,7 +129,7 @@ function Player::carryTick(%this)
 		}
 		else
 		{
-			%this.carrySchedule = %this.schedule(500, "carryTick");
+			%this.carrySchedule = %this.schedule(100, "carryTick");
 			return;
 		}
 	}

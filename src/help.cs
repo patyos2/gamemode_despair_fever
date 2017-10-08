@@ -23,7 +23,7 @@ function serverCmdHelp(%this, %cat)
 		case "2" or "chat":
 			%text[%count++] = "\c3[CHAT]";
 			%text[%count++] = " \c6Normal chat is local/IC (In-Character) chat. Put @ before your message to whisper (like so: \c3\"@whisper\"\c6)";
-			//%text[%count++] = " \c6You can also say /me *action* to do an IC action, like \c3\"John Doe grabs a weapon.\"";
+			%text[%count++] = " \c6You can also say /me *action* to do an IC action, like \c3\"John Doe grabs a weapon.\"";
 			%text[%count++] = " \c6To use Killer-to-Admin chat as the killer, use \c3TEAM CHAT\c6 (Default key: \c3\"Y\"\c6)";
 			%text[%count++] = " \c6Please follow the chat etiquette defined in the /rules.";
 			%text[%count++] = " \c5Page Up to read the above.";
@@ -31,7 +31,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c3[KILLER]";
 			%text[%count++] = " \c6You can become the killer at first night or by killing the killer.";
 			%text[%count++] = " \c6Once you become the killer, you have to kill someone and get away with it. Killing people in public or having a killing spree is completely discouraged.";
-			%text[%count++] = " \c6You can only kill so much. After investigation starts, your weapon will be disabled after a minute and you will be unable to kill directly.";
+			%text[%count++] = " \c6You can only kill so much. After investigation starts, your weapon will be disabled after 30 seconds and you will be unable to kill directly.";
 			%text[%count++] = " \c6You can clean up the blood with a mop. To wash blood off yourself, you can use sinks, showers, water pumps, buckets or anything of the like.";
 			%text[%count++] = " \c6Sinks, showers, buckets, water pumps clean you head to toe.";
 			%text[%count++] = " \c6To clean your weapon, take it out when washing and use \c3\"Paint Key\"\c6 to activate events.";
@@ -73,7 +73,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c35\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
 			%text[%count++] = " \c36\c6. \c0Don't ERP (Erotic RolePlay)!\c6 This is a murder sim, not get-it-on sim. If you want to screw some virtual babe do it somewhere else.";
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";
-			//%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
+			%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
 			%text[%count++] = " \c5Page Up to read the above.";
 		case "7" or "commands":
 			%text[%count++] = "\c3[COMMANDS]";

@@ -131,6 +131,7 @@ function serverCmdSpectate(%this)
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
 	if(isObject(%this.player) && %this.spectating)
 	{
+		%this.character.deleteMe = true;
 		%this.camera.setMode("Observer");
 		%this.setControlObject(%this.camera);
 		%this.camera.setControlObject(%this.camera);
@@ -162,6 +163,7 @@ function serverCmdKill(%this, %target)
 		{
 			%target.player.dropTool(%i);
 		}
+		%target.character.deleteMe = true;
 		%target.camera.setMode("Observer");
 		%target.setControlObject(%target.camera);
 		%target.camera.setControlObject(%target.camera);

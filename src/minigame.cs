@@ -14,6 +14,25 @@ function ClearFlaggedCharacters()
 	}
 }
 
+function UpdatePeopleScore()
+{
+	for(%i=0; %i < ClientGroup.getCount(); %i++)
+	{
+		%client = ClientGroup.getObject(%i);
+		%client.setScore(%client.score + %client.TempPoints);
+		messageClient(%client, '', '\c2>>Your total score for the round is %2%1 points\c2!', %client.TempPoints, %client.TempPoints > 0 ? "\c6" : "\c0");
+		%client.TempPoints = 0;
+	}
+}
+
+function GameConnection::AddPoints(%client, %num)
+{
+	if(%num $= "" || %num == 0)
+		return;
+	messageClient(%client, '', '\c2>>You recieved %2%1 points\c2!', %num, %num > 0 ? "\c6" : "\c0");
+	%client.TempPoints += %num;
+}
+
 function createPlayer(%client)
 {
 	if(%client.spectating)
@@ -233,7 +252,6 @@ function createPlayer(%client)
 
 function roomPlayers()
 {
-	ClearFlaggedCharacters();
 	$freeCount = 0;
 	for (%i = 0; %i < $Despair::RoomCount; %i++)
 	{
@@ -250,7 +268,6 @@ function roomPlayers()
 		%roomCloset.setItem("");
 		if(isObject($roomOwner[%room])) //$roomOwner[%room] is a character. If that character is deleted, rip.
 		{
-			//talk("Room " @ $roomNum[%room] @ " was occupied.");
 			continue;
 		}
 
@@ -311,6 +328,7 @@ function despairEndGame()
 	}
 
 	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
+	UpdatePeopleScore();
 	$currentKiller.character.deleteMe = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
 }
@@ -320,7 +338,7 @@ function despairPrepareGame()
 	cancel($DefaultMiniGame.restartSchedule);
 	GameRoundCleanup.deleteAll();
 	clearDecals();
-
+	ClearFlaggedCharacters();
 	// Close *all* doors
 	%count = BrickGroup_888888.getCount();
 
@@ -533,7 +551,7 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "You can loot bodies by pressing \c3Light Key\c6 and clicking an item! Plant stuff using \c3Ctrl+W\c6!";
 		%choice[%high++] = "\c3Hold-click\c6 and \c3move your mouse\c6 to start carrying a body! Only killers can carry corpses, though.";
 		%choice[%high++] = "At least two people must scream or examine a body to start the investigation.";
-		%choice[%high++] = "You can choke people by carrying a body and \c3Holding Rightclick\c6! However, both of your hands will get bloody.";
+		%choice[%high++] = "You can choke people by carrying a body and \c3Holding Rightclick\c6! It will take 6 seconds, however.";
 		%choice[%high++] = "Instead of focusing on a single person the entire time, you should check as many people as possible for being the killer.";
 		%choice[%high++] = "You have no idea how important alibis are! If you pay attention and remember who went where, you might figure something out!";
 		%choice[%high++] = "Fibers can be dropped when you swing your weapon, you get hit or you interact with a body! They also drop if you sleep.";

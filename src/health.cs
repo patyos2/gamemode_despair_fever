@@ -259,10 +259,10 @@ package DespairHealth
 		if (%client.miniGame != $DefaultMiniGame)
 			return Parent::onDisabled(%data, %player, %state);
 
+		%player.character.deleteMe = true;
 		if (isObject(%client))
 		{
 			// centerPrint(%client, "");
-			%client.character.deleteMe = true;
 			%client.camera.setMode("Corpse", %player);
 			%client.setControlObject(%client.camera);
 			%client.camera.setControlObject(%client.camera);

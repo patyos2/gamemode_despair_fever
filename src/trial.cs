@@ -230,6 +230,8 @@ function despairCheckInvestigation(%player, %corpse)
 	{
 		if(isObject(%player.client))
 		{
+			if(!%player.client.killer)
+				%player.client.AddPoints(1); //Body found
 			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
 			%player.client.despairCorpseVignette(%corpse.mangled ? 300 : 200);
 			if(!%corpse.discovered)
@@ -325,8 +327,8 @@ function despairStartInvestigation(%no_announce)
 		if(!$DefaultMiniGame.noWeapons && !isEventPending($DefaultMiniGame.subEventSchedule))
 		{
 			if ($pickedKiller)
-				messageClient($pickedKiller, '', "<font:impact:24>\c5Warning! You will be unable to swing your weapons in \c61 minute\c5!");
-			$DefaultMiniGame.subEventSchedule = schedule(60*1000, 0, "DespairSetWeapons", 0); //Only disable weapons a minute after
+				messageClient($pickedKiller, '', "<font:impact:24>\c5Warning! You will be unable to swing your weapons in \c630 seconds\c5!");
+			$DefaultMiniGame.subEventSchedule = schedule(30*1000, 0, "DespairSetWeapons", 0); //Only disable weapons 30 secs after
 		}
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
@@ -407,12 +409,14 @@ function despairOnMorning()
 	if($days == 1 && $deathCount <= 0)
 	{
 		%brick = BrickGroup_888888.NTObject["_r" @ $currentKiller.character.room @ "_closet", 0];
-		if(isObject(%brick))
+		if(isObject(%brick) && $spawnKillerBox)
 		{
 			%brick.setItem("KillerBoxItem");
 			messageClient($currentKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
 			commandToClient($currentKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
 		}
+		else
+			messageClient($currentKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
 		//else if($currentKiller.player.addTool("KillerBoxItem") == -1)
 		//	messageClient($currentKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
 	}
@@ -482,7 +486,7 @@ function despairOnNight()
 			if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons || %cl.afk)
 				continue;
 			
-			%cl.prompted = true;
+			%cl.prompted["Killer"] = true;
 			commandToClient(%cl, 'messageBoxYesNo', "Killer Queue", "Do you wish to be included in the killer queue for this round?", 'KillerAccept');
 		}
 		$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
@@ -527,7 +531,7 @@ function despairOnNight()
 
 function serverCmdKillerAccept(%this)
 {
-	if(%this.prompted && !$pickedKiller)
+	if(%this.prompted["Killer"] && !$pickedKiller)
 	{
 		%queue = $Despair::Queue["Killer"];
 		for(%i = 0; %i < getWordCount(%queue); %i++)
@@ -537,7 +541,7 @@ function serverCmdKillerAccept(%this)
 		}
 		%queue = setWord(%queue, getWordCount(%queue), %this);
 		$Despair::Queue["Killer"] = %queue;
-		%this.prompted = false;
+		%this.prompted["Killer"] = false;
 		commandToClient(%this, 'messageBoxOK', "Killer Queue", "You will now be included in the killer queue.");
 	}
 }
@@ -552,7 +556,9 @@ function DespairPickKiller()
 		%client.play2d(KillerJingleSound);
 		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
 		messageClient(%client, '', "<font:impact:30>" @ %msg);
-		commandToClient(%client, 'messageBoxOK', "MURDER TIME!", %msg);
+		$spawnKillerBox = false;
+		%client.prompted["Box"] = true;
+		commandToClient(%client, 'messageBoxYesNo', "MURDER TIME!", %msg @ "\n<color:000000>Do you wish for a Box of Killer Goodies to spawn?", 'serverCmdKillerBoxAccept');
 		%client.killer = true;
 		//echo(%client.getplayername() SPC "is killa");
 		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
@@ -569,6 +575,23 @@ function DespairPickKiller()
 		}
 		if(%client.player.statusEffect[$SE_sleepSlot] !$= "")
 			%client.player.removeStatusEffect($SE_sleepSlot);
+	}
+}
+
+function serverCmdKillerBoxAccept(%this)
+{
+	if(%this.prompted["Box"] && !$pickedKiller)
+	{
+		%queue = $Despair::Queue["Box"];
+		for(%i = 0; %i < getWordCount(%queue); %i++)
+		{
+			if(getWord(%queue, %i) == %this)
+				return;
+		}
+		%queue = setWord(%queue, getWordCount(%queue), %this);
+		$spawnKillerBox = true;
+		%this.prompted["Box"] = false;
+		commandToClient(%this, 'messageBoxOK', "Killer Box", "A killer box will now spawn in your room at morning.");
 	}
 }
 
@@ -942,6 +965,7 @@ function DespairEndTrial()
 		else
 		{
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
+			$currentKiller.AddPoints(10);
 		}
 	}
 	else
@@ -949,26 +973,24 @@ function DespairEndTrial()
 		$DefaultMiniGame.chatMessageAll('', "\c5Nobody voted. Killer wins.");
 	}
 
-	if(!%win)
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
-		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
+		%client = $DefaultMiniGame.member[%i];
+		%player = %client.player;
+		if(!%win)
 		{
-			%client = $DefaultMiniGame.member[%i];
-			%player = %client.player;
 			if(!%client.killer)
 			{
 				%player.setVelocity(vectorAdd(vectorScale(%player.getForwardVector(), 3), "0 0 10"));//%player.setVelocity(vectorAdd(vectorSub(%player.getPosition(), "0 8 0"), "0 0 10"));
 				%player.kill();
 			}
 		}
-		for (%i = 0; %i < $Despair::RoomCount; %i++)
-		{
-			%room = %i + 1;
-			if(isObject($roomOwner[%room])) //All rooms are cleared
-				$roomOwner[%room] = "";
-		}
-		serverPlay2d("DespairMusicKillerWin");
+		else
+			%client.AddPoints(2);
 	}
+
+	if(!%win)
+		serverPlay2d("DespairMusicKillerWin");
 	else
 		serverPlay2d("DespairMusicInnocentsWin");
 
@@ -1096,6 +1118,7 @@ function DespairTrialOnAlarm(%client)
 
 		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used his loudmouth ability!", "\c2");
 
+		%client.timeOut = $Sim::Time; //Counter-loudmouth
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
