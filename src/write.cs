@@ -43,7 +43,8 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		if(isObject(%ray))
 		{
 			messageClient(%client, '', "\c5You use the last of your strength to write your final message...");
-
+			if(!%player.suicide)
+				%client.AddPoints(2);
 			%rayPosition = getWords(%ray, 1, 3);
 			%rayNormal = getWords(%ray, 4, 6);
 			%rayPosition = VectorAdd(%rayPosition, VectorScale(%rayNormal, 0.01));

@@ -14,25 +14,6 @@ function ClearFlaggedCharacters()
 	}
 }
 
-function UpdatePeopleScore()
-{
-	for(%i=0; %i < ClientGroup.getCount(); %i++)
-	{
-		%client = ClientGroup.getObject(%i);
-		%client.setScore(%client.score + %client.TempPoints);
-		messageClient(%client, '', '\c2>>Your total score for the round is %2%1 points\c2!', %client.TempPoints, %client.TempPoints > 0 ? "\c6" : "\c0");
-		%client.TempPoints = 0;
-	}
-}
-
-function GameConnection::AddPoints(%client, %num)
-{
-	if(%num $= "" || %num == 0)
-		return;
-	messageClient(%client, '', '\c2>>You recieved %2%1 points\c2!', %num, %num > 0 ? "\c6" : "\c0");
-	%client.TempPoints += %num;
-}
-
 function createPlayer(%client)
 {
 	if(%client.spectating)
@@ -537,7 +518,7 @@ function despairCycleStage(%stage)
 		$days++;
 
 		%high = -1;
-		%choice[%high++] = "Did you know we have a <a:discord.gg/4DPjh9t>Discord</a>\c6 channel? Join the discussion!";
+		%choice[%high++] = "Did you know we have a <a:discord.gg/W4rSDac>Discord</a>\c6 channel? Join the discussion!";
 		%choice[%high++] = "\c3/help\c6 contains a lot of useful gameplay information and tips. Check it out!";
 		%choice[%high++] = "Sometimes, it's better to team up with someone instead of going solo. Be careful of traitors, though!";
 		%choice[%high++] = "Pay close attention to your surroundings. You never know what could be used as evidence!";
@@ -581,6 +562,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 		if(!%player.unconscious && !%this.afk)
 		{
 			%this.afk = true;
+			RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
 			messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
@@ -598,6 +580,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 		if(%this.afk)
 		{
 			%this.afk = false;
+			RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is no longer afk!", "\c2");
 			messageClient(%this.client, '', '\c2<font:Impact:20>Notice\c6: You are no longer considered AFK.');
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
@@ -654,8 +637,9 @@ package DespairFever
 		{
 			%client.character.deleteMe = true;
 		}
+		%client.saveData();
 		if(!%client.isAdmin && $currentKiller == %client)
-			banBLID(%client.bl_id, 5, "Leaving the game as the killer.");
+			serverCmdBan(0, %client, %client.bl_id, 5, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
 
@@ -685,6 +669,8 @@ package DespairFever
 		if ($DefaultMiniGame.owner)
 			return Parent::checkLastManStanding($DefaultMiniGame);
 		if (isEventPending($DefaultMiniGame.restartSchedule))
+			return;
+		if($despairTrial)
 			return;
 
 		$aliveCount = 0;
@@ -785,6 +771,14 @@ package DespairFever
 			messageClient(%this, '', '\c4Uh-oh, your \c6Client_RoleplayAdmin \c4is out of date.');
 			messageClient(%this, '', '<a:www.dropbox.com/s/zplta1zrwrft3ru/Client_RoleplayAdmin.zip?dl=1>DOWNLOAD THE ADMIN CLIENT HERE</a>');
 		}
+
+		%this.schedule(5, 'loadRoleplayData');
+	}
+
+	function GameConnection::SetScore(%this, %num)
+	{
+		%num = %this.points;
+		parent::SetScore(%this, %num);
 	}
 };
 activatePackage("DespairFever");

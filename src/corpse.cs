@@ -273,7 +273,7 @@ package DespairCorpses
 							%col.caryPlayer.choking = "";
 						}
 					}
-					if(%col.isDead && !(%obj.client.killer && $investigationStart $= ""))
+					if(%col.isDead && !(%obj.client.killer && !%col.suicide && $investigationStart $= ""))
 						return;
 					%obj.carryObject = %col;
 					%col.carryPlayer.carryObject = 0;

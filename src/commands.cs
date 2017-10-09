@@ -172,6 +172,21 @@ function serverCmdKill(%this, %target)
 	}
 }
 
+function serverCmdForceKiller(%this, %target)
+{
+	if(!%this.isSuperAdmin)
+		return;
+	%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /forcekiller '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
+	messageClient(%this, '', '\c5You have forced %1 to become the killer.', %target);
+	$forceKiller = %target;
+}
+
 function serverCmdShowRoles(%this)
 {
 	if(!%this.isAdmin)

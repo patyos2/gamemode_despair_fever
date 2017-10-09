@@ -146,7 +146,10 @@ package DespairInventory
 					if(isObject(%target.client))
 						messageClient(%target.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
 					if(isObject(%obj.client))
+					{
 						messageClient(%obj.client, 'MsgItemPickup', '', %slot, %target.tool[%slot], 0);
+						RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") looted " @ %target.client.getPlayerName() SPC "(" @ %target.client.getBLID() @ ") of his " @ %target.tool[%slot].uiname, "\c1");
+					}
 				}
 				return;
 			}

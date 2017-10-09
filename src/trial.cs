@@ -431,7 +431,7 @@ function despairOnMorning()
 	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			banBLID($currentKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
+			serverCmdBan(0, $currentKiller, $currentKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
 		else
 			despairStartInvestigation();
 	}
@@ -553,12 +553,15 @@ function DespairPickKiller()
 	{
 		%queue = $Despair::Queue["Killer"];
 		%client = getWord(%queue, getRandom(0, getWordCount(%queue)-1));//chooseNextClient("Killer");
+		if(isObject($forceKiller))
+			%client = $forceKiller;
+		$forceKiller = "";
 		%client.play2d(KillerJingleSound);
 		%msg = "<color:FF0000>You are plotting murder against someone! Kill them and do it in such a way that nobody finds out it\'s you!";
 		messageClient(%client, '', "<font:impact:30>" @ %msg);
 		$spawnKillerBox = false;
 		%client.prompted["Box"] = true;
-		commandToClient(%client, 'messageBoxYesNo', "MURDER TIME!", %msg @ "\n<color:000000>Do you wish for a Box of Killer Goodies to spawn?", 'serverCmdKillerBoxAccept');
+		commandToClient(%client, 'messageBoxYesNo', "MURDER TIME!", %msg @ "\n<color:000000>Do you wish for a Box of Killer Goodies to spawn?", 'KillerBoxAccept');
 		%client.killer = true;
 		//echo(%client.getplayername() SPC "is killa");
 		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
@@ -977,15 +980,14 @@ function DespairEndTrial()
 	{
 		%client = $DefaultMiniGame.member[%i];
 		%player = %client.player;
+		if(%client.killer)
+			continue;
 		if(!%win)
 		{
-			if(!%client.killer)
-			{
-				%player.setVelocity(vectorAdd(vectorScale(%player.getForwardVector(), 3), "0 0 10"));//%player.setVelocity(vectorAdd(vectorSub(%player.getPosition(), "0 8 0"), "0 0 10"));
-				%player.kill();
-			}
+			%player.setVelocity(vectorAdd(vectorScale(%player.getForwardVector(), 3), "0 0 10"));//%player.setVelocity(vectorAdd(vectorSub(%player.getPosition(), "0 8 0"), "0 0 10"));
+			%player.kill();
 		}
-		else
+		else if(isObject(%player))
 			%client.AddPoints(2);
 	}
 
