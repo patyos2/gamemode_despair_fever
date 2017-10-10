@@ -9,8 +9,10 @@ function ClearFlaggedCharacters()
 	for(%i=0; %i < GameCharacters.getCount(); %i++)
 	{
 		%char = GameCharacters.getObject(%i);
-		if(%char.deleteMe || !isObject(%char.client))
-			%char.delete();
+		if(isObject(%char.client) && !%char.deleteMe)
+			continue;
+
+		%char.delete();
 	}
 }
 

@@ -19,6 +19,28 @@ function serverCmdTraits(%this)
 	}
 }
 
+function serverCmdStats(%this, %target)
+{
+	if(%target $= "" || !%this.isAdmin)
+		%target = %this;
+	else
+		%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
+	messageClient(%this, '', '\c5Here are the stats for %1.', %target.getPlayerName());
+	
+	messageClient(%this, '', '\c2++\c5Points\c6: %1', %target.points);
+	messageClient(%this, '', '\c2++\c5Killer Wins\c6: %1', %target.killerWins);
+	messageClient(%this, '', '\c2++\c5Murders\c6: %1', %target.murders);
+	messageClient(%this, '', '\c2++\c5Innocent Wins\c6: %1', %target.innocentWins);
+	messageClient(%this, '', '\c2++\c5Correct Votes\c6: %1', %target.correctVotes);
+	messageClient(%this, '', '\c2++\c5Deaths\c6: %1', %target.deaths);
+}
+
 function serverCmdFakeSpeed(%this, %thing)
 {
 	if(!isObject(%player = %this.player))
@@ -155,7 +177,7 @@ function serverCmdKill(%this, %target)
 		return;
 	}
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
-	messageClient(%this, '', '\c5You have force-killed %1.', %target);
+	messageClient(%this, '', '\c5You have force-killed %1.', %target.getPlayerName());
 	messageClient(%target, '', '\c5You have been force-killed.');
 	if(isObject(%target.player))
 	{
@@ -183,7 +205,7 @@ function serverCmdForceKiller(%this, %target)
 		return;
 	}
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /forcekiller '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
-	messageClient(%this, '', '\c5You have forced %1 to become the killer.', %target);
+	messageClient(%this, '', '\c5You have forced %1 to become the killer.', %target.getPlayerName());
 	$forceKiller = %target;
 }
 

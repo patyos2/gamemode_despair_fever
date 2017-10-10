@@ -208,6 +208,12 @@ function despairOnKill(%victim, %attacker, %crit)
 			else
 				%happening = getCharacterName(%attacker.character, 1, 1) SPC "murdered" SPC getCharacterName(%victim.character, 1, 1) SPC "with" SPC %player.attackType[%player.attackCount];
 			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ %happening @ "!";
+
+			%attacker.murders++;
+			%attacker.saveData();
+			%victim.deaths++; //Only counts legit murders
+			%victim.saveData();
+			%victim.AddPoints(1); //"yay you started the killfest" consolation prize for the victim so they're not TOO salty
 		}
 		else
 		{
@@ -230,7 +236,7 @@ function despairCheckInvestigation(%player, %corpse)
 	{
 		if(isObject(%player.client))
 		{
-			if(!%player.client.killer)
+			if(!%player.client.killer && %player.client.TempPoints <= 0) //Atm only discovering the body gives you a point during investigation
 				%player.client.AddPoints(1); //Body found
 			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
 			%player.client.despairCorpseVignette(%corpse.mangled ? 300 : 200);
@@ -583,7 +589,7 @@ function DespairPickKiller()
 
 function serverCmdKillerBoxAccept(%this)
 {
-	if(%this.prompted["Box"] && !$pickedKiller)
+	if(%this.prompted["Box"] && $days < 1)
 	{
 		%queue = $Despair::Queue["Box"];
 		for(%i = 0; %i < getWordCount(%queue); %i++)
@@ -915,11 +921,18 @@ function DespairEndVote()
 		{
 			%player.voteTarget.votes++;
 			%player.playThread(2, root);
+			%player.correctVote = 0;
 
 			if(isObject(%player.voteTarget))
+			{
 				$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "]\c3" SPC getCharacterName(%client.character, 1, 1) SPC "voted for" SPC getCharacterName(%player.voteTarget.character, 1, 1);
+				if(%player.voteTarget.client.killer)
+					%player.correctVote = 1;
+			}
 			else
+			{
 				$EndLog[$EndLogCount++] = "\c6[" @ getTimeString(mFloor($Sim::Time - $DespairTrial)) @ "]\c3" SPC getCharacterName(%client.character, 1, 1) SPC "didn't vote!";
+			}
 
 			cancel(%player.DespairUpdateCastVote);
 			%player.canCastVote = "";
@@ -969,6 +982,7 @@ function DespairEndTrial()
 		{
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
 			$currentKiller.AddPoints(10);
+			$currentKiller.killerWins++;
 		}
 	}
 	else
@@ -988,7 +1002,11 @@ function DespairEndTrial()
 			%player.kill();
 		}
 		else if(isObject(%player))
-			%client.AddPoints(2);
+		{
+			%client.AddPoints(2 + %player.correctVote*2); //Correct vote gives you 2 more points
+			%client.innocentWins++;
+			%client.correctVotes += %player.correctVote;
+		}
 	}
 
 	if(!%win)

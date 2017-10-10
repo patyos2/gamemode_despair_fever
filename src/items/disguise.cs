@@ -63,6 +63,11 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 			%col.applyAppearance();
 			%obj.removeTool(%obj.currTool);
 
+
+			if(%obj.character.trait["Softspoken"])
+			{
+				%obj.character.trait["Softspoken"] = false; //Can potentially give you away
+			}
 			if (isObject(%obj.client))
 			{
 				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %col.character.name, 2);

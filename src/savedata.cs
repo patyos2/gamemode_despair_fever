@@ -8,7 +8,6 @@ function UpdatePeopleScore()
 			messageClient(%client, '', '\c2>>There must be at least 6 players for the score system.');
 			return;
 		}
-		%client.roundsPlayed++;
 		%client.points += %client.TempPoints;
 		%client.setScore();
 		%client.saveData();
@@ -46,10 +45,12 @@ function gameConnection::saveData(%this)
 
 	%file.writeLine("//data for " @ %this.getPlayerName() @ ", generated at " @ getDateTime());
 
-	if(%this.points > 0)
-		%file.writeLine("score" TAB %this.points);
-
-	%file.writeLine("rounds" TAB %this.roundsPlayed);
+	%file.writeLine("score" TAB %this.points);
+	%file.writeLine("killer wins" TAB %this.killerWins);
+	%file.writeLine("murders" TAB %this.murders);
+	%file.writeLine("innocent wins" TAB %this.innocentWins);
+	%file.writeLine("correct votes" TAB %this.correctVotes);
+	%file.writeLine("deaths" TAB %this.deaths);
 
 	%file.close();
 	%file.delete();
@@ -89,8 +90,16 @@ function GameConnection::loadData(%this)
 			case "score":
 				%this.points = %val;
 				%this.setScore();
-			case "rounds":
-				%this.roundsPlayed = %val;
+			case "killer wins":
+				%this.killerWins = %val;
+			case "murders":
+				%this.murders = %val;
+			case "innocent wins":
+				%this.innocentWins = %val;
+			case "correct votes":
+				%this.correctVotes = %val;
+			case "deaths":
+				%this.deaths = %val;
 		}
 	}
 
