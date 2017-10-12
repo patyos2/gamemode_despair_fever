@@ -27,6 +27,20 @@ datablock AudioProfile(ShoveSound)
 	preload = true;
 };
 
+datablock AudioProfile(ClickSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/click1.wav";
+	description = AudioQuiet3d;
+	preload = true;
+};
+
+datablock AudioProfile(ClickSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/click2.wav";
+	description = AudioQuiet3d;
+	preload = true;
+};
+
 //Motel sounds
 datablock AudioProfile(TrashOpenSound)
 {

@@ -55,7 +55,7 @@ datablock ProjectileData(FlashbangExplosionProjectile)
 function FlashbangExplosionProjectile::radiusDamage(%this, %obj, %col, %factor, %pos, %force)
 {
 	if(isObject(%col.client) && !%col.client.killer)
-		%col.knockOut(20);
+		%col.knockOut(20 + getRandom(-1, 1)); //A bit of variation
 }
 
 datablock ItemData(FlashbangItem)
@@ -159,7 +159,7 @@ function FlashbangImage::onMount(%this, %obj, %slot)
 	fixArmReady(%obj);
 	%props = %obj.getItemProps();
 	if (isObject(%obj.client) && %obj.client.killer)
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This is a \c6flashbang\c3 disguised as a flashlight!\nPrime time is \c6" @ %props.timer @ " seconds\c3. Be sure to drop it, or you'll be knocked out as well!");
+		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>This is a \c0FLASHBANG\c3 disguised as a flashlight!\nPrime time is \c6" @ %props.timer @ " seconds\c3. Radius explosion doesn't affect you.\n\c3Make sure it's not in your inventory when it explodes!");
 }
 
 function FlashbangImage::onUnMount(%this, %obj, %slot)
@@ -176,9 +176,8 @@ function FlashbangImage::onUse(%this, %obj, %slot)
 
 	if(!%props.primed)
 	{
-		if(!%client.killer)
-			commandToClient(%client, 'CenterPrint', "\c3It seems broken...");
-		else
+		serverPlay3d(ClickSound1, %obj.getHackPosition());
+		if(%client.killer)
 			commandToClient(%client, 'CenterPrint', "\c3It is primed to explode in \c6" @ %props.timer @ " seconds\c3!\n\c5Throw it away!");
 		%props.primed = true;
 		%props.timerSchedule();

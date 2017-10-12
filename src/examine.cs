@@ -111,9 +111,11 @@ function GameConnection::examineObject(%client, %col)
 				%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " is wearing a \c3" @ %img.item.uiName;
 			}
 
-			//injuries don't work because there's no possible counterplay from killer side to alleviate the issue.
-			//if((!isObject(%img) || !%img.item.hideAppearance) && %col.health/%col.maxHealth <= 0.9) //Coats obscure injuries, injuries are only displayed at 90% health
-			//	%text = %text @ "\n\c6" @ "They are \c0injured\c6!";
+			if(!$despairTrial && vectorDist(%player.getPosition(), %col.getPosition()) < 2) //practically hug 'em, also no trial stuff
+			{
+				if((!isObject(%img) || !%img.item.hideAppearance) && %col.health/%col.maxHealth <= 0.9) //Coats obscure injuries, injuries are only displayed at 90% health
+					%text = %text @ "\n\c6On closer inspection, they are \c0injured\c6!";
+			}
 		}
 		if(isObject(%img = %col.getMountedImage(0)))
 			%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " has a \c3" @ %img.item.uiName;

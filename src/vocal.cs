@@ -202,7 +202,44 @@ function Player::playShock(%player)
 	RS_Log(%client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1) @ ") [" @ %client.getBLID() @ "] screamed.", "\c1");
 }
 
-function serverCmdAlarm(%client, %susp)
+//Function to check for "suspicious" things around them, 0 = calm, 1 = masked unknowns, armed people, 2 = blood, 3 = CORPSE!!!!!
+function Player::getEnvironmentStress(%player)
+{
+	%stress = 0;
+	%foundCorpse = 0;
+
+	%center = %player.getEyePoint();
+	initContainerRadiusSearch(%center, 64, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType | $TypeMasks::ItemObjectType);
+	while (isObject(%obj = containerSearchNext()))
+	{
+		if(%obj == %player)
+			continue;
+		%point = vectorAdd(%obj.getPosition(), "0 0 1");
+		if(%obj.getType() & $TypeMasks::PlayerObjectType)
+			%point = %obj.getEyePoint();
+		%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
+
+		%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
+		%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
+
+		if(!isObject(%ray) && %player.isWithinView(%point))
+		{
+			if(%stress < 1 && (%hasweapon || %disguised))
+				%stress = 1; //Stress level 1, creepy people
+			if(%stress < 2 && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.bloody))
+				%stress = 2; //Stress level 2, blood
+			if(%stress < 3 && (%obj.isMurdered && %obj.getState() $= "Dead"))
+			{
+				%stress = 3; //OH SHIT BODY
+				%foundCorpse = %obj;
+			}
+		}
+	}
+
+	return %stress SPC %foundCorpse;
+}
+
+function serverCmdAlarm(%client)
 {
 	if($DespairTrial)
 		return DespairTrialOnAlarm(%client);
@@ -212,37 +249,15 @@ function serverCmdAlarm(%client, %susp)
 		if(%player.unconscious)
 			return;
 
-		%scream = false;
-
-		%center = %player.getEyePoint();
-		initContainerRadiusSearch(%center, 64, $TypeMasks::PlayerObjectType | $TypeMasks::CorpseObjectType | $TypeMasks::StaticShapeObjectType | $TypeMasks::ItemObjectType);
-		while (isObject(%obj = containerSearchNext()))
-		{
-			if(%obj == %player)
-				continue;
-			%point = vectorAdd(%obj.getPosition(), "0 0 1");
-			if(%obj.getType() & $TypeMasks::PlayerObjectType)
-				%point = %obj.getEyePoint();
-			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %player);
-
-			%hasweapon = isObject(%img = %obj.getMountedImage(0)) && %img.item.className $= "DespairWeapon";
-			%disguised = isObject(%img = %obj.getMountedImage(2)) && %img.item.disguise;
-			if(!isObject(%ray) && %player.isWithinView(%point) && (%obj.isBlood || (isObject(%obj.itemProps) && %obj.itemProps.bloody) || %obj.isMurdered || %obj.bloody || %hasweapon || %disguised))
-			{
-				%scream = true;
-				if(%obj.isMurdered && %obj.getState() $= "Dead")
-				{
-					%foundCorpse = %obj;
-					if(%susp && %obj.checkedBy[%player])
-						%scream = false; //squeamish don't spam screams
-				}
-				else if(%susp)
-					%scream = false; //squeamish only screams at bodies
-			}
-		}
+		%ges = %player.getEnvironmentStress();
+		%scream = getWord(%ges, 0); //doesn't matter which value we have, we can scream at anything suspicious
+		%foundCorpse = getWord(%ges, 1);
 
 		if(%client.killer)
 			%scream = true; //killers can scream whenever the fuck they want
+
+		if(%player.health <= 0)
+			%scream = true; //crit people can scream whenever the fuck they want too!
 
 		if (!%scream || $Sim::Time - %player.lastScream < %player.screamDelay)
 			return;
@@ -264,7 +279,7 @@ function serverCmdAlarm(%client, %susp)
 		%player.lastScream = $Sim::Time;
 		%player.playShock();
 
-		if(%foundCorpse)
+		if(isObject(%foundCorpse))
 		{
 			%player.emote(AlarmProjectile);
 			DespairCheckInvestigation(%player, %foundCorpse);

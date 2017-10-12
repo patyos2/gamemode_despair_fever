@@ -104,12 +104,13 @@ function Player::KnockOut(%this, %duration)
 		%this.knockoutStart = getSimTime();
 		%this.knockoutLength = %duration;
 	}
-	%this.setStatusEffect($SE_sleepSlot, "sleeping");
+	
 	if(%this.statusEffect[$SE_passiveSlot] $= "fresh")
 	{
 		%this.freshSleep = true;
 		%this.removeStatusEffect($SE_passiveSlot);
 	}
+	%this.setStatusEffect($SE_sleepSlot, "sleeping");
 
 	if(%this.character.trait["Snorer"])
 	{
@@ -251,6 +252,9 @@ function Player::Slip(%this, %ticks)
 			%this.changeDataBlock(PlayerDespairArmor);
 			%this.setActionThread("sit");
 			%this.playThread(0, "root");
+
+			if(getRandom() < 0.1)
+				%this.spawnFiber();
 
 			%this.client.camera.schedule(500, setMode, "Player", %this);
 			%this.client.camera.schedule(500, setControlObject, %client);

@@ -79,7 +79,7 @@ function GameConnection::loadData(%this)
 
 		%var = getField(%line, 0);
 		%val = getFields(%line, 1, getFieldCount(%line));
-
+		echo(%var SPC %val);
 		if(strpos(%var, "//") == 0 || %val $= "")
 		{
 			continue;

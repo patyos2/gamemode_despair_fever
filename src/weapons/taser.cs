@@ -125,7 +125,7 @@ function TaserImage::onUse(%this, %obj, %slot)
 	{
 		%props.spent = true;
 		serverPlay3d(TaserHitSound, getWords(%ray, 1, 3));
-		%ray.knockOut(10);
+		%ray.knockOut(30);
 	}
 	else
 	{

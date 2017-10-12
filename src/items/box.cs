@@ -63,7 +63,7 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 	if (isObject(%obj.client) && !%obj.client.killer)
 		return;
 	%count = 3;
-	%loot[0] = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem";
+	%loot[0] = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem BananaItem";
 	%loot[1] = "TaserItem DisguiseItem FlashbangItem";
 	%gotRare = false;
 	while(%count-- >= 0)
@@ -71,7 +71,9 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 		if(getRandom() <= 0.25 && !%gotRare)
 		{
 			%index = 1;
-			%gotRare = true;
+
+			if(getRandom() > 0.1) //10% chance after the initial 25% check to get MORE rare shit!!!
+				%gotRare = true;
 		}
 		else
 			%index = 0;
