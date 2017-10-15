@@ -115,7 +115,7 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 	%props = %player.getItemProps();
 	if (%object.getType() & $TypeMasks::PlayerObjectType)
 	{
-		sprayBloodWide(%position, VectorScale(%normal, -10));
+		sprayBloodWide(%position, VectorScale(%normal, -10), %object);
 		if(!%props.bloody)
 		{
 			%props.bloody = %object.health - %damage <= 0 || getRandom() < 0.4; //higher chance to get bloody due to heaviness

@@ -56,6 +56,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.freshness = 1;
 			%decal.contents = "\c0" @ %text;
 			%decal.isBlood = true;
+			%decal.source = %player;
 			%player.health = $Despair::CritThreshold;
 			%player.critLoop();
 			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
@@ -146,6 +147,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 1;
 			%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
+			%decal.source = %player;
 			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
 			if(%blood)
 				%decal.isBlood = true;

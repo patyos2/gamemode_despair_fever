@@ -297,13 +297,8 @@ function updateAdminCount()
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "") SPC "[No Admins]";
 		$Pref::Server::Password = "a";	
-		messageAll('', '\c0The server has been passworded due to \c6No Admins\c0.');
-		
-		for(%i = 0; %i < ClientGroup.getCount(); %i++)
-		{
-			%subClient = ClientGroup.getObject(%i);
-			%subClient.schedule(0, "delete", "The server has been closed.");
-		}
+		messageAll('', '\c0The server has been passworded due to \c6No Admins\c0. You will be kicked on \c6round end\c0.');
+		messageAll('', '\c0ALL RULE-BREAKERS WILL BE PUNISHED EVEN IF THERE ARE NO ADMINS!!!');
 	}
 	else if($Pref::Server::Password $= "a")
 	{

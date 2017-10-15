@@ -662,6 +662,23 @@ package DespairFever
 			cancel(DayCycle.timeSchedule);
 
 		Parent::reset(%this, %client);
+
+		for(%a = 0; %a < ClientGroup.getCount(); %a++)
+		{
+			%client = ClientGroup.getObject(%a);
+			if(%client.isAdmin)
+				%admins++;
+		}
+		if(!%admins)
+		{
+			for(%i = 0; %i < ClientGroup.getCount(); %i++)
+			{
+				%subClient = ClientGroup.getObject(%i);
+				%subClient.schedule(0, "delete", "The server has been closed.");
+			}
+			return;
+		}
+
 		if($DefaultMiniGame.numMembers >= 1)
 			despairPrepareGame();
 	}

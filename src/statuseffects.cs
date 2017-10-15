@@ -168,6 +168,7 @@ function Player::updateStatusEffect(%player, %slot)
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 0;
 			%decal.isBlood = true;
+			%decal.source = %player;
 			%size = 1 + 0.5 * getRandom();
 			%decal.setScale(%size SPC %size SPC %size);
 			if(getRandom() < 0.45)

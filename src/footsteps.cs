@@ -149,7 +149,7 @@ function Armor::onFootstep(%this, %obj, %foot)
 		{
 			if (%col.isBlood && %col.freshness >= 1 && $Sim::Time - %col.spillTime < 150) //2.5 minutes dry time
 			{
-				%obj.setBloodyFootprints(getMin(%obj.bloodyFootprints + mCeil(%col.freshness * 2.5), $FOOTSTEPS_MAXBLOODSTEPS), %col.sourceClient); //Default freshness for splatter blood is 3, so 6 footsteps for fresh step.
+				%obj.setBloodyFootprints(getMin(%obj.bloodyFootprints + mCeil(%col.freshness * 2.5), $FOOTSTEPS_MAXBLOODSTEPS), %col.source); //Default freshness for splatter blood is 3, so 6 footsteps for fresh step.
 				%col.freshness--; //Decrease blood freshness
 				//createBloodExplosion(getWords(%ray, 1, 3), %obj.getVelocity(), %col.getScale());
 				serverPlay3d(BloodSplat1, getWords(%ray, 1, 3));

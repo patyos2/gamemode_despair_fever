@@ -113,7 +113,7 @@ function MacheteImage::onMeleeHit(%image, %player, %object, %position, %normal)
 	%props = %player.getItemProps();
 	if (%object.getType() & $TypeMasks::PlayerObjectType)
 	{
-		sprayBloodGush(%position, VectorScale(%normal, -13));
+		sprayBloodGush(%position, VectorScale(%normal, -13), %object);
 		if(!%props.bloody)
 		{
 			%props.bloody = %object.health - %damage <= 0 || getRandom() < 0.7; //High chance to get bloody because sharp

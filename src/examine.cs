@@ -20,12 +20,13 @@ function GameConnection::examineObject(%client, %col)
 
 			%ref = %gender $= "female" ? "She's" : "He's";
 			if(%col.mangled)
-				%ref = "They are";
+				%text = %text @ "\n\c0They are horribly mangled!";
+			else
+				%text = %text @ "\n\c0" @ %ref @ " dead.";
 
-			%text = %text @ "\n\c0" @ %ref @ " dead.";
-			if (%col.suicide)
+			if (%col.suicide && !%col.mangled)
 				%text = %text @ "\n\c5It was suicide...";
-			if(%player.character.trait["investigative"])
+			if(%player.character.trait["investigative"] && !%col.mangled)
 			{
 				%day = %col.attackDay[%col.attackCount];
 
@@ -111,11 +112,12 @@ function GameConnection::examineObject(%client, %col)
 				%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " is wearing a \c3" @ %img.item.uiName;
 			}
 
-			if(!$despairTrial && vectorDist(%player.getPosition(), %col.getPosition()) < 2) //practically hug 'em, also no trial stuff
-			{
-				if((!isObject(%img) || !%img.item.hideAppearance) && %col.health/%col.maxHealth <= 0.9) //Coats obscure injuries, injuries are only displayed at 90% health
-					%text = %text @ "\n\c6On closer inspection, they are \c0injured\c6!";
-			}
+			//HONESTLY FUCK INJURIES AIGHT
+			//if(!$despairTrial && vectorDist(%player.getPosition(), %col.getPosition()) < 2) //practically hug 'em, also no trial stuff
+			//{
+			//	if((!isObject(%img) || !%img.item.hideAppearance) && %col.health/%col.maxHealth <= 0.9) //Coats obscure injuries, injuries are only displayed at 90% health
+			//		%text = %text @ "\n\c6On closer inspection, they are \c0injured\c6!";
+			//}
 		}
 		if(isObject(%img = %col.getMountedImage(0)))
 			%text = %text @ "\n\c6" @ (%gender $= "female" ? "She" : "He") @ " has a \c3" @ %img.item.uiName;

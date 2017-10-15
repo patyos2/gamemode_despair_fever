@@ -131,6 +131,21 @@ datablock AudioProfile(DespairMusicTrialDiscussionLoop3)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicTrialDiscussionIntro4)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionintro4.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 29386;
+	loopProfile = DespairMusicTrialDiscussionLoop4;
+};
+
+datablock AudioProfile(DespairMusicTrialDiscussionLoop4)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionloop4.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
 datablock AudioProfile(DespairMusicInvestigationIntro1)
 {
 	fileName = $Despair::Path @ "res/music/investigationintro1.ogg";
@@ -178,7 +193,7 @@ datablock AudioProfile(DespairMusicKillerWin)
 };
 datablock AudioProfile(DespairMusicInnocentsWin)
 {
-	fileName = $Despair::Path @ "res/music/innocentsWin.ogg";
+	fileName = $Despair::Path @ "res/music/hollowWin.ogg";
 	description = audio2D;
 	preload = true;
 };

@@ -4,7 +4,7 @@ $SprayBloodMask = $TypeMasks::FxBrickObjectType
 $SprayBloodGravity = "0 0 -0.1";
 $SprayBloodDrag = 0.05;
 
-function sprayBloodTick(%position, %velocity, %i)
+function sprayBloodTick(%position, %velocity, %source, %i)
 {
 	%next = VectorAdd(%position, %velocity);
 	%ray = containerRayCast(%position, %next, $SprayBloodMask);
@@ -43,6 +43,7 @@ function sprayBloodTick(%position, %velocity, %i)
 		%decal.spillTime = $Sim::Time;
 		%decal.freshness = %freshness;
 		%decal.isBlood = true;
+		%decal.source = %source;
 		if(getRandom() < 0.45)
 			serverPlay3d(BloodSplat @ getRandom(1,3), %rayPosition);
 		return;
@@ -52,74 +53,74 @@ function sprayBloodTick(%position, %velocity, %i)
 	%velocity = VectorAdd(%velocity, $SprayBloodGravity);
 	
 	if (%i < 40)
-		schedule(50, 0, sprayBloodTick, %next, %velocity, %i + 1);
+		schedule(50, 0, sprayBloodTick, %next, %velocity, %source, %i + 1);
 }
 
-function sprayBlood(%position, %velocity)
+function sprayBlood(%position, %velocity, %source)
 {
-	sprayBloodTick(%position, VectorScale(%velocity, 0.05));
+	sprayBloodTick(%position, VectorScale(%velocity, 0.05), %source);
 }
 
 $SprayBloodHitAngle = 0.0981748;
 $SprayBloodHitAngleWide = 0.785398;
 $SprayBloodHitAngleGush = 0.785398;
 
-function sprayBloodFromHit(%position, %velocity)
+function sprayBloodFromHit(%position, %velocity, %source)
 {
 	sprayBlood(%position, rotateVector(%velocity,
-		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)));
+		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)), %source);
 	sprayBlood(%position, rotateVector(%velocity,
-		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)));
+		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)), %source);
 	%velocity = VectorScale(%velocity, -0.1);
 	sprayBlood(%position, rotateVector(%velocity,
-		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)));
+		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)), %source);
 	sprayBlood(%position, rotateVector(%velocity,
-		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)));
+		getRandomScalar($SprayBloodHitAngle), getRandomScalar($SprayBloodHitAngle)), %source);
 }
 
-function sprayBloodStab(%position, %velocity)
+function sprayBloodStab(%position, %velocity, %source)
 {
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	%velocity = VectorScale(%velocity, -1);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 }
 
-function sprayBloodWide(%position, %velocity)
+function sprayBloodWide(%position, %velocity, %source)
 {
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)));
+		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)));
+		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)));
+		getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)), %source);
 	//sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-	//	getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)));
+	//	getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)), %source);
 	//sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-	//	getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)));
+	//	getRandomScalar($SprayBloodHitAngleWide), getRandomScalar($SprayBloodHitAngleWide)), %source);
 }
 
-function sprayBloodGush(%position, %velocity)
+function sprayBloodGush(%position, %velocity, %source)
 {
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	//sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-	//	getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+	//	getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	%velocity = VectorScale(%velocity, -1);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 	sprayBlood(%position, rotateVector(VectorScale(%velocity, 0.5 + getRandom()),
-		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)));
+		getRandomScalar($SprayBloodHitAngleGush), getRandomScalar($SprayBloodHitAngleGush)), %source);
 }
 
-function updateCorpseBloodPool(%pos)
+function updateCorpseBloodPool(%pos, %source)
 {
 	%ray = containerRayCast(%pos, VectorSub(%pos, "0 0 1"), $SprayBloodMask);
 	if(%ray)
@@ -159,6 +160,7 @@ function updateCorpseBloodPool(%pos)
 			%decal.unHideNode("blood5");
 			%decal.color = 0.6 + 0.2 * getRandom() @ " 0 0 1";
 			%decal.setNodeColor("ALL", %decal.color);
+			%decal.source = %source;
 		}
 	}
 }
@@ -182,13 +184,14 @@ function Player::doBloodyFootprint(%this, %ray, %foot, %alpha)
 	%decal.freshness = 0.5; //freshness < 1 means can't get bloody footprints from it
 	%decal.color = %color;
 	%decal.isBlood = true;
+	%decal.source = isObject(%this.bloodSource) ? %this.bloodSource : %this;
 }
 
-function Player::setBloodyFootprints(%this, %val, %bloodclient)
+function Player::setBloodyFootprints(%this, %val, %source)
 {
 	%this.bloodyFootprints = %val;
 	%this.bloodyFootprintsLast = %val;
-	%this.bloodClient = %bloodclient;
+	%this.bloodSource = %source;
 	%this.bloody["lshoe"] = true;
 	%this.bloody["rshoe"] = true;
 	if (%this.client)

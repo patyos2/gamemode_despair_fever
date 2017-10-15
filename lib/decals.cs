@@ -108,6 +108,16 @@ function clearDecals()
 		DecalGroup.deleteAll();
 }
 
+function clearBloodBySource(%source) //used for RDM blood-clearing mostly
+{
+	for(%i = 0; %i < DecalGroup.getCount(); %i++)
+	{
+		%decal = DecalGroup.getObject(%i);
+		if(%decal.isBlood && %decal.source == %source)
+			%decal.schedule(0, delete);
+	}
+}
+
 function serverCmdClearDecals(%this)
 {
 	if (!%this.isAdmin)

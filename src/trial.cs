@@ -142,6 +142,13 @@ function despairOnKill(%victim, %attacker, %crit)
 			%player.choking = "";
 		}
 
+		//Clear all blood involved
+		schedule(2500, 0, clearBloodBySource, %player);
+		schedule(2500, 0, clearBloodBySource, %victim.player);
+		%player.setBloody(0, 0, 0);
+		%victim.player.setBloody(0, 0, 0);
+
+
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
 		//echo("-+ " @ %msg);
 		RS_Log("[RDM]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] RDMed " @
@@ -870,9 +877,15 @@ function DespairStartDiscussion()
 	$DespairTrialOpening = false;
 	$DespairTrialDiscussion = $Sim::Time;
 	$chatDelay = 0.75; //less spam, please
-	ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
 
 	%time = $Despair::DiscussPeriod + (60 * ($deathCount - 1)); //extra minute for every extra body
+	if(isObject($mangled))
+		%time = getMax(%time, $Despair::DiscussPeriod + 120); //+2 mins for mangled
+
+	if(%time >= 420) //7 mins
+		ServerPlaySong("DespairMusicTrialDiscussionIntro4");
+	else
+		ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
 
 	$DefaultMiniGame.chatMessageAll('', "\c5You have \c3" @ %time / 60 @ " minutes\c5 to discuss and reveal the killer.");
 	$DefaultMiniGame.chatMessageAll('', "\c5After time has passed you will have to \c0eliminate the killer\c5 by \c3voting.");

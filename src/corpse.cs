@@ -159,7 +159,7 @@ function Player::carryTick(%this)
 
 	if(%this.isDead && getRandom() < 0.45 && %this.pools < 1000) //blood
 	{
-		updateCorpseBloodPool(%this.getPosition());
+		updateCorpseBloodPool(%this.getPosition(), %this);
 		%this.pools++;
 	}
 
@@ -186,7 +186,7 @@ function Player::carryTick(%this)
 	%target = vectorAdd(%eyePoint, vectorScale(%eyeVector, 3));
 
 	%maxdist = 4;
-	if (vectorDist(%center, %target) > 4 || (%player.choking && vectorLen(%player.getVelocity()) > 4))
+	if (vectorDist(%center, %target) > 4 || (%player.choking && vectorLen(%player.getVelocity()) > 4) || getWord(%center, 2) - getWord(%player.getPosition(), 2) < -1)
 	{
 		%this.lastTosser = %player;
 		%this.carryEnd = $Sim::Time;
@@ -216,6 +216,8 @@ function Player::carryTick(%this)
 			%this.health = $Despair::CritThreshold;
 			%this.damage(%player, %this.getPosition(), 5, "choking");
 			%this.pools = 1000;
+
+			%player.spawnFiber(); //Guaranteed killer fiber
 		}
 	}
 
