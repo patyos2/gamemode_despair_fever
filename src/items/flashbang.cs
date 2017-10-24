@@ -55,7 +55,21 @@ datablock ProjectileData(FlashbangExplosionProjectile)
 function FlashbangExplosionProjectile::radiusDamage(%this, %obj, %col, %factor, %pos, %force)
 {
 	if(isObject(%col.client) && !%col.client.killer)
-		%col.knockOut(20 + getRandom(-1, 1)); //A bit of variation
+	{
+		//Log shit for accident triggers and stuff
+		%col.attackCount++;
+		%col.attackType[%col.attackCount] = "flashbang";
+		%col.attackDot[%col.attackCount] = 0; //lol who cares
+		%col.attackSource[%col.attackCount] = %obj.sourceObject;
+		%col.attackClient[%col.attackCount] = %obj.client;
+		%col.attackImage[%col.attackCount] = FlashbangImage;
+		%col.attackCharacter[%col.attackCount] = %obj.client.character;
+		%col.attackTime[%col.attackCount] = $Sim::Time;
+		%col.attackDayTime[%col.attackCount] = getDayCycleTime();
+		%col.attackDay[%col.attackCount] = $days;
+
+		%col.knockOut(25 + getRandom(-1, 1)); //A bit of variation
+	}
 }
 
 datablock ItemData(FlashbangItem)

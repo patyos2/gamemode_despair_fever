@@ -85,7 +85,7 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxSideCrouchSpeed = 0;
 
 	minImpactSpeed = 15;
-	speedDamageScale = 20;
+	speedDamageScale = 15;
 
 	jumpForce = 0;
 

@@ -138,7 +138,7 @@ package DespairInventory
 				}
 				if(isFunction(%itemName, "onDrop"))
 					%item.onDrop(%target, %slot);
-				if(%slot != -1)
+				if(%slot !$= "" && %slot != -1)
 				{
 					%obj.playThread(2, "activate2");
 					%target.playThread(2, "plant");

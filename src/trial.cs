@@ -217,9 +217,9 @@ function despairOnKill(%victim, %attacker, %crit)
 			$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c0" @ %happening @ "!";
 
 			%attacker.murders++;
-			%attacker.saveData();
+			%attacker.dfSaveData();
 			%victim.deaths++; //Only counts legit murders
-			%victim.saveData();
+			%victim.dfSaveData();
 			%victim.AddPoints(1); //"yay you started the killfest" consolation prize for the victim so they're not TOO salty
 		}
 		else
@@ -535,11 +535,12 @@ function despairOnNight()
 		}
 	}
 
-	%brick = BrickGroup_888888.NTObject["_guestlist", 0];
-	%brick.setItem("PaperItem");
-	%props = %brick.item.getItemProps();
-	%props.name = "Guest List";
-	%props.contents = getGuestList(0);
+	//rip guest list
+	//%brick = BrickGroup_888888.NTObject["_guestlist", 0];
+	//%brick.setItem("PaperItem");
+	//%props = %brick.item.getItemProps();
+	//%props.name = "Guest List";
+	//%props.contents = getGuestList(0);
 }
 
 function serverCmdKillerAccept(%this)

@@ -36,11 +36,8 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 	if($DespairTrialOpening && %client != $DespairTrialCurrSpeaker)
 		return;
 
-	if($Sim::Time - %client.lastSpeakTime < $chatDelay)
-	{
-		messageClient(%client, '', '\c5Slow down\c6!');
+	if($Sim::Time - %client.lastEmoteTime < $chatDelay)
 		return;
-	}
 
 	if($Sim::Time < %client.timeOut) //Special trial ability
 	{
@@ -61,6 +58,7 @@ function serverCmdMe(%client, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m10,
 		return;
 	
 	%client.lastSpeakTime = $Sim::Time;
+	%client.lastEmoteTime = $Sim::Time;
 	%name = getCharacterName(%client.character, $despairTrial);
 
 	if(!$despairTrial)
@@ -325,8 +323,8 @@ package DespairChat
 			{
 				if(%killer)
 				{
-					if(isObject(%member.player) && %member.miniGame == $DefaultMiniGame)
-						continue;
+					//if(isObject(%member.player) && %member.miniGame == $DefaultMiniGame)
+					//	continue;
 					messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
 				}
 				else

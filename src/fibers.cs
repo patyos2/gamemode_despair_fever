@@ -52,5 +52,6 @@ function Player::spawnFiber(%this, %color)
 		%size = 0.5 + getRandom();
 		%decal = spawnDecal(strandDecal, getWords(%ray, 1, 3), getWords(%ray, 4, 6), %size, %color, "", "", 1); //noUnclutterCheck is true
 		%decal.color = %color;
+		%this.lastFiber = $Sim::Time;
 	}
 }

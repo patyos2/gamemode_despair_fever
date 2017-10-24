@@ -106,11 +106,14 @@ package DespairHealth
 
 		if(%type $= $DamageType::Impact || %type $= $DamageType::Fall)
 		{
+			if(isObject(%player.carryPlayer))
+				return; //hopefully fixes shitty bugs
+
 			if(%client.killer && %attacker == %client)
 				%damage = 1;
 
 			if((%attacker != %client || %player.isSlipping || %player.unconscious) && !%client.killer && !%attacker.killer) //O no it's an accident
-				%damage *= 0.1;
+				%damage *= 0.5;
 
 			%fatal = %player.health - %damage <= 0;
 			%sound = %fatal ? fallFatalSound : fallInjurySound;

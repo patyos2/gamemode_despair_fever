@@ -558,21 +558,18 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (%transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
+	if (!%player.unconscious && !%this.afk && %transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
 	{
-		%delay = 2000;
-		if(!%player.unconscious && !%this.afk)
+		%delay = 1000;
+		%this.afk = true;
+		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
+		messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
-			%this.afk = true;
-			RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
-			messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
-			for (%i = 0; %i < ClientGroup.getCount(); %i++)
+			%member = ClientGroup.getObject(%i);
+			if(%member.isAdmin)
 			{
-				%member = ClientGroup.getObject(%i);
-				if(%member.isAdmin)
-				{
-					messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
-				}
+				messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
 			}
 		}
 	}
@@ -616,6 +613,7 @@ package DespairFever
 			createPlayer(%client);
 
 		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
+		commandToClient(%client, 'messageBoxOK', "Welcome!", "Please read /rules and /help!");
 	}
 
 	function MiniGameSO::removeMember($DefaultMiniGame, %client)
@@ -639,7 +637,7 @@ package DespairFever
 		{
 			%client.character.deleteMe = true;
 		}
-		%client.saveData();
+		%client.dfSaveData();
 		if(!%client.isAdmin && $currentKiller == %client)
 			serverCmdBan(0, %client, %client.bl_id, 5, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
@@ -791,7 +789,7 @@ package DespairFever
 			messageClient(%this, '', '<a:www.dropbox.com/s/zplta1zrwrft3ru/Client_RoleplayAdmin.zip?dl=1>DOWNLOAD THE ADMIN CLIENT HERE</a>');
 		}
 
-		%this.schedule(5, 'loadRoleplayData');
+		%this.schedule(16, 'dfLoadData');
 	}
 
 	function GameConnection::SetScore(%this, %num)

@@ -134,9 +134,9 @@ function Player::carryTick(%this)
 		}
 	}
 
-	if(getRandom() < 0.001)
+	if($Sim::Time - %this.lastFiber > 2 && getRandom() < 0.005)
 		%this.spawnFiber();
-	if(getRandom() < 0.001)
+	if($Sim::Time - %player.lastFiber > 2 && getRandom() < 0.005)
 		%player.spawnFiber();
 
 	if (!%this.isBody)
@@ -210,14 +210,13 @@ function Player::carryTick(%this)
 		{
 			%this.stopAudio(0);
 			%player.choking = "";
+			%player.spawnFiber(); //Guaranteed killer fiber
 		}
 		else
 		{
 			%this.health = $Despair::CritThreshold;
 			%this.damage(%player, %this.getPosition(), 5, "choking");
 			%this.pools = 1000;
-
-			%player.spawnFiber(); //Guaranteed killer fiber
 		}
 	}
 

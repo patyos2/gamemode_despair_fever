@@ -31,6 +31,7 @@ exec("./lib/noObservers.cs");
 exec("./lib/pathCamera.cs");
 exec("./lib/scope.cs");
 //src
+exec("./src/savedata.cs");
 exec("./src/sounds.cs"); //Important to be first - contains audio descriptions
 exec("./src/logging.cs"); //Logging
 exec("./src/blood.cs");
@@ -51,7 +52,6 @@ exec("./src/music.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
 exec("./src/queuechooser.cs");
-exec("./src/savedata.cs");
 exec("./src/sleep.cs");
 exec("./src/statuseffects.cs");
 exec("./src/traits.cs");

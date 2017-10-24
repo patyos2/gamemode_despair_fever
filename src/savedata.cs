@@ -10,7 +10,7 @@ function UpdatePeopleScore()
 		}
 		%client.points += %client.TempPoints;
 		%client.setScore();
-		%client.saveData();
+		%client.dfSaveData();
 		messageClient(%client, '', '\c2>>Your total score for the round is %2%1 points\c2!', %client.TempPoints, %client.TempPoints > 0 ? "\c6" : "\c0");
 		%client.TempPoints = 0;
 	}
@@ -26,7 +26,7 @@ function GameConnection::AddPoints(%client, %num)
 	%client.TempPoints += %num;
 }
 
-function gameConnection::saveData(%this)
+function gameConnection::dfSaveData(%this)
 {
 	%name = "config/server/despairfever/data/" @ %this.getBLID() @ ".txt";
 
@@ -35,7 +35,7 @@ function gameConnection::saveData(%this)
 
 	if(!%file)
 	{
-		error("ERROR: GameConnection::saveData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for write");
+		error("ERROR: GameConnection::dfSaveData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for write");
 
 		%file.delete();
 		return;
@@ -56,7 +56,7 @@ function gameConnection::saveData(%this)
 	%file.delete();
 }
 
-function GameConnection::loadData(%this)
+function GameConnection::dfLoadData(%this)
 {
 	%name = "config/server/despairfever/data/" @ %this.getBLID() @ ".txt";
 
@@ -65,7 +65,7 @@ function GameConnection::loadData(%this)
 
 	if(!%file)
 	{
-		error("ERROR: GameConnection::loadData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for read");
+		error("ERROR: GameConnection::dfLoadData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for read");
 
 		%file.delete();
 		return;

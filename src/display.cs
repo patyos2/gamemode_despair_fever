@@ -77,7 +77,7 @@ function GameConnection::updateBottomprint(%this)
 			%stats = %stats SPC %color @ %se;
 		}
 
-		if(%player.bloody)
+		if(%player.bloody || (isObject(%player.itemProps[%player.weaponSlot]) && %player.itemProps[%player.weaponSlot].bloody))
 			%cosmetics = %cosmetics @ "\c0bloody";
 		if(isObject(%hat = %player.tool[%player.hatSlot]) && %hat.disguise && isObject(%player.getMountedImage(2)) && %player.getMountedImage(2) == nameToID(%hat.image))
 			%cosmetics = %cosmetics SPC "\c5disguised";
