@@ -144,7 +144,7 @@ function PlayerDespairArmor::killerDash(%this, %obj, %end)
 {
 	if(%end)
 	{
-		%obj.updateSpeedScale();
+		%obj.updateSpeedScale(1);
 		return;
 	}
 	%obj.setWhiteOut(0.1);

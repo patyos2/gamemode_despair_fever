@@ -148,9 +148,9 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 	{
 		%mood = getMoodName(%player.mood);
 		if (%mood $= "sad")
-			%extra += 0.05; // a BIT slower
+			%extra += 0.1; // slower
 		else if (%mood $= "depressed")
-			%extra += 0.1; // significantly slower
+			%extra += 0.2; // significantly slower
 	}
 
 	%time = %image.fireDelay * (%player.swingSpeedMod + %extra);

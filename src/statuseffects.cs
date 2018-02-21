@@ -36,11 +36,11 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 				%player.client.chatMessage("\c5You are getting sleepy... Find a \c3bed\c5 and type \c3/sleep\c5!");
 		case "tired":
 			%player.updateSpeedScale(0.9);
-			%player.addMood(-2, "You feel tired...");
+			%player.addMood(-2, "You feel tired...", 1);
 			%player.swingSpeedMod = 1.1;
 		case "exhausted":
 			%player.updateSpeedScale(0.6);
-			%player.addMood(-4, "You feel exhausted...");
+			%player.addMood(-4, "You feel exhausted...", 1);
 			%player.swingSpeedMod = 1.6;
 		case "sleeping":
 			%player.updateSpeedScale(1);
@@ -49,13 +49,13 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 		case "drowsy":
 			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.5;
-			%player.addMood(-3, "You feel drowsy...");
+			%player.addMood(-3, "You feel drowsy...", 1);
 			cancel(%player.statusSchedule[%slot]);
-			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
+			%player.statusSchedule[%slot] = %player.schedule(30000, removeStatusEffect, %slot, %effect);
 		case "sore back":
 			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.2;
-			%player.addMood(-3, "Your back is sore...");
+			%player.addMood(-3, "Your back is sore...", 1);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(75000, removeStatusEffect, %slot, %effect);
 		case "fresh":
@@ -64,13 +64,15 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
 			if(%player.statusEffect[%slot] !$= "fresh" && %player.lastMoodText !$= "You had a good shower!")
-				%player.addMood(2, "You had a good shower!");
+				%player.addMood(2, "You had a good shower!", 1);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(20000, removeStatusEffect, %slot, %effect);
 		case "shining":
-			%player.addMood(7, (%nomsg? "": "You had a \c3good night's sleep\c5!"));
+			%player.updateSpeedScale(1);
+			%player.swingSpeedMod = 0.9;
+			%player.addMood(7, (%nomsg? "": "You had a \c3good night's sleep\c5!"), 1);
 			cancel(%player.statusSchedule[%slot]);
-			return %slot; //Only mood bonus
+			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
 
 		//damage-related
 		case "bleeding":
@@ -78,7 +80,7 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
 			if(!%nomsg && isObject(%player.client) && %player.statusEffect[%slot] !$= "bleeding")
-				%player.addMood(-3, "You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!");
+				%player.addMood(-3, "You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!", 1);
 		case "shock":
 			if(%player.statusEffect[%slot] $= "shock")
 				return %slot; //Don't stack it
@@ -89,7 +91,7 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 			if(!%nomsg && isObject(%player.client))
-				%player.client.chatMessage("\c5You are suffering " @ getStatusEffectColor(%effect) @ "shock\c5!");
+				%player.client.chatMessage("\c5You are suffering " @ getStatusEffectColor(%effect) @ "shock\c5!", 1);
 
 		//damage modelling
 		case "wounded arm":

@@ -51,7 +51,7 @@ function createPlayer(%client)
 		while(%traitCount-- >= 0)
 		{
 			%lastType = %typeStr;
-			%lastTrait[%lastType] = %trait;
+			%lastTrait = %trait;
 			if(%neutralCount > 0)
 			{
 				%neutralCount--;
@@ -69,10 +69,7 @@ function createPlayer(%client)
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
 
 			//Check if we picked conflicting traits
-			if((findField(%character.traitList, "Extra Tough") != -1 && %trait $= "Frail") ||
-				(findField(%character.traitList, "Athletic") != -1 && %trait $= "Sluggish") ||
-				(findField(%character.traitList, "Investigative") != -1 && %trait $= "Squeamish") ||
-				(findField(%character.traitList, "Loudmouth") != -1 && %trait $= "Softspoken"))
+			if(checkTraitConflicts(%character.traitList, %trait))
 			{
 				%trait = %lastTrait; //rollback a bit, we still need a negative
 				%typeStr = %lastType;
@@ -781,11 +778,11 @@ package DespairFever
 		GameRoundCleanup.add(%this);
 	}
 
-	function ItemData::onAdd(%this, %item)
+	function ItemData::onAdd(%this, %obj)
 	{
-		Parent::onAdd(%this, %item);
+		Parent::onAdd(%this, %obj);
 		if (%this.canPickUp !$= "")
-			%item.canPickUp = %this.canPickUp;
+			%obj.canPickUp = %this.canPickUp;
 	}
 
 	function GameConnection::onClientEnterGame(%this)

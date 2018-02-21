@@ -1,8 +1,8 @@
 $Despair::Traits::Tick = 3000; //miliseconds
 
-$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth"; //Medium
-$Despair::Traits::Neutral = "Snorer	Feel No Pain	Hatter	Chain Smoker";
-$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken	Social Anxiety"; //Schizo Narcoleptic
+$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth	Optimistic"; //Medium
+$Despair::Traits::Neutral = "Snorer	Feel No Pain	Hatter	Chain Smoker	Apathetic";
+$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken	Social Anxiety	Mood Swings	Melancholic"; //Schizo Narcoleptic
 
 //positive
 $Despair::Traits::Description["Investigative"] = "You will get more information from corpses.";
@@ -13,6 +13,7 @@ $Despair::Traits::Description["Bodybuilder"] = "Faster weapon swings!";
 $Despair::Traits::Description["Athletic"] = "Slightly faster run speed!";
 $Despair::Traits::Description["Loudmouth"] = "Louder speech, as well as a Scream ability during trial to shut everyone up.";
 $Despair::Traits::Description["Pickpocket"] = "Can loot people even if they're conscious! Can't steal weapons and worn items.";
+$Despair::Traits::Description["Optimistic"] = "Nothing will make you feel depressed!";
 //disabled
 $Despair::Traits::Description["Medium"] = "You're not supposed to have this";//"Hear the dead when sleeping...";
 
@@ -21,6 +22,7 @@ $Despair::Traits::Description["Snorer"] = "Snore loudly when sleeping.";
 $Despair::Traits::Description["Feel No Pain"] = "No pain effects!";
 $Despair::Traits::Description["Hatter"] = "Spawn with a random hat in your room!";
 $Despair::Traits::Description["Chain Smoker"] = "Cough constantly.";
+$Despair::Traits::Description["Apathetic"] = "Completely unaffected by mood.";
 
 //negative
 $Despair::Traits::Description["Clumsy"] = "Trip on blood and dropped items, chance to drop held item when tripping!";
@@ -33,6 +35,8 @@ $Despair::Traits::Description["Hemophiliac"] = "Bleed more.";
 $Despair::Traits::Description["Squeamish"] = "Blood makes you scream! Seeing corpses will make you faint.";
 $Despair::Traits::Description["Softspoken"] = "quieter speech, unable to use caps...";
 $Despair::Traits::Description["Social Anxiety"] = "Being near (living) people for too long makes you freak out and faint.";
+$Despair::Traits::Description["Mood Swings"] = "Your mood is swayed a lot easier.";
+$Despair::Traits::Description["Melancholic"] = "You just can't ever feel happy.";
 //disabled
 $Despair::Traits::Description["Narcoleptic"] = "You're not supposed to have this";//"Randomly pass out.";
 $Despair::Traits::Description["Schizo"] = "You're not supposed to have this";//"Daydreaming and spooky voices!!";
@@ -180,4 +184,37 @@ function Player::traitSchedule(%obj)
 		}
 	}
 	%obj.traitSchedule = %obj.schedule(getMax(500, $Despair::Traits::Tick), traitSchedule, %obj);
+}
+
+function checkTraitConflicts(%list, %trait)
+{
+	if (%trait $= "" || %list $= "")
+		return false;
+
+	%c = -1;
+	%conflicts[%c++] = "Extra Tough	Frail";
+	%conflicts[%c++] = "Athletic	Sluggish";
+	%conflicts[%c++] = "Investigative	Squeamish";
+	%conflicts[%c++] = "Optimistic	Mood Swings	Melancholic	Apathetic";
+	%conflicts[%c++] = "Loudmouth	Softspoken";
+
+	%v = -1;
+	while(%v++ <= %c)
+	{
+		if (findField(%conflicts[%v], %trait) != -1)
+		{
+			%conflist = %conflicts[%v];
+			break;
+		}
+	}
+	if (%conflist $= "") return false;
+
+	for(%i = 0; %i < getFieldCount(%list); %i++)
+	{
+		%a = getField(%list, %i);
+		if(%a $= %trait || findField(%conflist, %a) != -1)
+			return true;
+	}
+
+	return false;
 }

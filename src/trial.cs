@@ -293,8 +293,16 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 	%time = %time - mFloor(%time); //get rid of excess stuff
 
 	%time = getDayCycleTimeString(%time, 1);
-	$DefaultMiniGame.messageAll('', '\c7[\c6%3\c7] \c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
-		MCeil(($investigationStart - $Sim::Time)/60), %unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"), "D" @ $days @ "|" @ %time);
+	for (%i = 0; %i < ClientGroup.getCount(); %i++)
+	{
+		%cl = ClientGroup.getObject(%i);
+		messageClient(%cl, '', '\c7[\c6%3\c7] \c0%2 on premises! \c5You guys have %1 minutes to investigate them before the trial starts.',
+			MCeil(($investigationStart - $Sim::Time)/60),
+			%unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"),
+			"D" @ $days @ "|" @ %time);
+		if(isObject(%cl.player) && %cl.miniGame == $defaultMiniGame)
+			%cl.player.addMood(-2);
+	}
 
 	%msg = "Body Announcement - " @ (%unfound ? "Undiscovered corpses" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));
 
@@ -367,6 +375,20 @@ function despairStartInvestigation(%no_announce)
 	}
 }
 
+function dropFoods()
+{
+	%charCount = GameCharacters.getCount();
+	%foodCount = mCeil(%charCount * 0.8) + getRandom(-3, 2);
+
+	while(%foodCount >= 0)
+	{
+		%brick = BrickGroup_888888.NTObject["_food", getRandom(0, BrickGroup_888888.NTObjectCount["_food"] - 1)];
+		%brick.setItem(getRandom() > 0.1 ? "BurgerItem" : "BananaItem"); //I'm too lazy to check if the brick already has food spawned sooo....
+		%foodCount--;
+	}
+	$DefaultMiniGame.chatMessageAll('', '\c5  Food has been restocked! Go eat your cheeseburgers.', $days, %choice[getRandom(%high)]);
+}
+
 function despairOnMorning()
 {
 	RS_Log("[GAME] Good morning!", "\c5");
@@ -381,15 +403,7 @@ function despairOnMorning()
 		}
 	}
 
-	%charCount = GameCharacters.getCount();
-	%foodCount = %charCount + getRandom(-3, 2);
-
-	while(%foodCount >= 0)
-	{
-		%brick = BrickGroup_888888.NTObject["_food", getRandom(0, BrickGroup_888888.NTObjectCount["_food"] - 1)];
-		%brick.setItem(getRandom() > 0.1 ? "BurgerItem" : "BananaItem"); //I'm too lazy to check if the brick already has food spawned sooo....
-		%foodCount--;
-	}
+	dropFoods();
 
 	%count = BrickGroup_888888.NTObjectCount["_evidence"];
 	if(%count <= 0)
@@ -465,7 +479,7 @@ function despairOnMorning()
 	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			serverCmdBan(0, $currentKiller, $currentKiller.bl_id, 5, "Stalling for 3 days straight as the killer.");
+			$currentKiller.player.kill();
 		else
 			despairStartInvestigation();
 	}
@@ -701,7 +715,7 @@ function courtPlayers()
 		if(!isObject(%client) || !isObject(%player) || %player.isDead)
 		{
 			$memorial[%i].setTransform(%transform);
-			%state = "LEFT";
+			%state = "MISSING";
 			if(isObject(%player))
 			{
 				if(%player.isMurdered)
@@ -901,6 +915,9 @@ function DespairStartDiscussion()
 	$chatDelay = 0.75; //less spam, please
 
 	%time = $Despair::DiscussPeriod + (60 * ($deathCount - 1)); //extra minute for every extra body
+
+	if(isObject($mangled))
+		%time = 600; //10 minutes
 
 	if(%time >= 420) //7 mins
 		ServerPlaySong("DespairMusicTrialDiscussionIntro4");

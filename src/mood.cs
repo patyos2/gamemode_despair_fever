@@ -1,9 +1,13 @@
+$Despair::Mood::Enabled = true;
 $Despair::Mood::Tick = 60000; //1 minute
 
 function Player::moodSchedule(%obj)
 {
 	cancel(%obj.moodSchedule);
 	if(%obj.getState() $= "Dead")
+		return;
+
+	if (!$Despair::Mood::Enabled || %obj.character.trait["Apathetic"])
 		return;
 
 	if($despairTrial $= "")
@@ -58,20 +62,41 @@ function Player::moodSchedule(%obj)
 
 function Player::setMood(%obj, %int, %text, %textcheck)
 {
+	if (!$Despair::Mood::Enabled || %obj.character.trait["Apathetic"])
+		return;
+
 	if(%textcheck && %obj.lastMoodText $= %text)
 		return;
+	%moodMin = -15;
+	%moodMax = 10;
+
+	if (%obj.character.trait["Optimistic"])
+		%moodMin = -7; //Can only be sad
+	if (%obj.character.trait["Melancholic"])
+		%moodMax = 1; //can't be happy, rip
 
     %obj.lastMoodChange = $Sim::Time;
     %obj.mood = mClamp(%int, -15, 10);
     if(isObject(%obj.client) && %text !$= "")
     {
-        %obj.client.chatMessage((%int >= 0 ? "\c2++" : "\c0--") @ "\c5MOOD: " @ %text);
+        %obj.client.chatMessage((%int >= 0 ? "  \c2++" : "  \c0--") @ "MOOD\c5: " @ %text);
         %obj.lastMoodText = %text;
     }
 }
 
 function Player::addMood(%obj, %int, %text, %textcheck)
 {
+	if (!$Despair::Mood::Enabled || %obj.character.trait["Apathetic"])
+		return;
+
+	if (%obj.character.trait["Mood Swings"])
+		%int *= 2; //Eat burger to feel overjoyed.
+    if(isObject(%obj.client) && %text !$= "")
+    {
+        %obj.client.chatMessage((%int >= 0 ? "  \c2++" : "  \c0--") @ "\c6MOOD\c5: " @ %text);
+        %obj.lastMoodText = %text;
+		%text = "";
+    }
     %obj.setMood(%obj.mood + %int, %text, %textcheck);
 }
 

@@ -11,7 +11,18 @@ datablock itemData(DisguiseItem)
 	colorShiftColor = "0.6 0.6 0.6 1";
 	uiName = "Disguise";
 	canDrop = true;
+
+	itemPropsClass = "DisguiseProps";
+	itemPropsAlways = true;
+
+	customPickupAlways = true;
+	customPickupMultiple = false;
 };
+
+function DisguiseProps::onAdd(%this)
+{
+	%this.kira = false;
+}
 
 datablock ShapeBaseImageData(DisguiseImage)
 {
@@ -36,9 +47,13 @@ datablock ShapeBaseImageData(DisguiseImage)
 
 function DisguiseImage::onMount(%this, %obj, %slot)
 {
+	%props = %obj.getItemProps(%obj.currTool);
 	fixArmReady(%obj);
 	if (isObject(%obj.client) && %obj.client.killer)
-		commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>Click on a corpse to completely steal their identity.\nThis is one use and will mangle the corpse beyond recognition.\n\c0WARNING\c6: Be sure to switch your keys with the victim!");
+		commandToClient(%obj.client, 'CenterPrint',
+		"<color:FFFF00>Click on a corpse to completely steal their identity."
+		@ (%props.kira ? "\nThis is the \c0KIRA VERSION\c3!!! Infinite use and the body disappears!" : "\nThis is one use and will mangle the corpse beyond recognition.") @
+		"\n\c0WARNING\c6: Be sure to switch your keys with the victim!");
 }
 
 function DisguiseImage::onUnMount(%this, %obj, %slot)
@@ -49,6 +64,7 @@ function DisguiseImage::onUnMount(%this, %obj, %slot)
 
 function DisguiseImage::onUse(%this, %obj, %slot)
 {
+	%props = %obj.getItemProps(%obj.currTool);
 	if(!isObject(%obj.client) || !%obj.client.killer)
 		return;
 	if(isObject(%col = %obj.findCorpseRayCast()))
@@ -61,8 +77,6 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 			%col.mangled = true;
 			%obj.applyAppearance();
 			%col.applyAppearance();
-			%obj.removeTool(%obj.currTool);
-
 
 			if(%obj.character.trait["Softspoken"])
 			{
@@ -73,6 +87,16 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 				commandToClient(%obj.client, 'CenterPrint', "<color:FFFF00>You take on the appearance of\c6" SPC %col.character.name, 2);
 				RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") used a disguise on" SPC %col.character.name @ "!", "\c2");
 			}
+			if (%props.kira)
+			{
+				for(%i=0;%i<%col.getDataBlock().maxTools;%i++)
+				{
+					%col.dropTool(%i);
+				}
+				%col.delete();
+			}
+			else
+				%obj.removeTool(%obj.currTool);
 		}
 		else
 		{
