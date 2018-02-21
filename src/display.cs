@@ -20,7 +20,9 @@ function GameConnection::despairCorpseVignette(%this, %ticks, %intensity)
 
 	if(%ticks <= 0)
 	{
-		commandToClient(%this, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
+		if(%this.vignette $= "")
+			%this.vignette = $EnvGuiServer::VignetteColor SPC $EnvGuiServer::VignetteMultiply;
+		commandToClient(%this, 'SetVignette', true, %this.vignette);
 		return;
 	}
 
@@ -66,6 +68,9 @@ function GameConnection::updateBottomprint(%this)
 
 	//NAME AND STUFF
 	%name = %name @ "\c6" @ getCharacterName(%client.character, 1);
+
+	if ((%mood = %client.player.mood) !$= "")
+		%name = %name @ " " @ getMoodSmiley(getMoodName(%mood));
 
 	//STATUS
 	if(isObject(%player = %client.player))

@@ -19,6 +19,13 @@ function serverCmdTraits(%this)
 	}
 }
 
+function serverCmdMood(%this)
+{
+	if(!isObject(%obj = %this.player))
+		return;
+	messageClient(%this, '', '\c5You are %1%2\c5.', getMoodColor(getMoodName(%obj.mood)), getMoodName(%obj.mood));
+}
+
 function serverCmdStats(%this, %target)
 {
 	if(%target $= "" || !%this.isAdmin)
@@ -65,12 +72,15 @@ function serverCmdFakeSpeed(%this, %thing)
 
 function serverCmdForceVote(%client)
 {
-	if (!$DespairTrial)
-		return;
-
-	if ($DespairTrialOpening || $DespairTrialVote)
+	if ($DespairTrial && ($DespairTrialOpening || $DespairTrialVote))
 	{
 		messageClient(%client, '', '\c5You can only force vote at discussion phase!');
+		return;
+	}
+
+	if (!$DespairTrial && !$investigationStart)
+	{
+		messageClient(%client, '', '\c5You can only force vote during investigation or trial!');
 		return;
 	}
 
@@ -78,11 +88,13 @@ function serverCmdForceVote(%client)
 	{
 		if (!isObject(%client.player) || !isObject(%client.character))
 			return;
-
-		%currTime = $Sim::Time - $DespairTrialDiscussion;
-		if (%currTime < $Despair::CanForceVote)
+		if ($DespairTrial)
+			%currTime = $Sim::Time - $DespairTrialDiscussion;
+		else if($investigationStart)
+			%currTime = $Sim::Time - ($investigationStart - $investigationLength);
+		if (%currTime < ($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial))
 		{
-			messageClient(%client, '', '\c5You can only vote %1 minutes after trial had started!', mCeil($Despair::CanForceVote / 60));
+			messageClient(%client, '', '\c5You can only vote %1 minutes after %2 had started!', mCeil($Despair::CanForceVote / 60), $DespairTrial ? "trial" : "investigation");
 			return;
 		}
 		for (%i = 0; %i < $defaultMiniGame.numMembers; %i++)
@@ -110,20 +122,25 @@ function serverCmdForceVote(%client)
 		%validVotes++;
 		if (%validVotes >= (MFloor(%alivePlayers * 0.8))) // if at least 90% of alive players voted
 		{
-			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 There are enough votes to force the voting period.',
-				getCharacterName(%client.character, 1));
+			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the %2 early!\c6 There are enough votes to force the %2.',
+				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "tral");
 			%start = true;
 		}
 		else
 		{
-			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the vote early!\c6 Do /forcevote to concur. %2 votes left.',
-				getCharacterName(%client.character, 1), MFloor(%alivePlayers * 0.8) - %validVotes);
+			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the %2 early!\c6 Do /forcevote to concur. %3 votes left.',
+				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "tral", MFloor(%alivePlayers * 0.8) - %validVotes);
 		}
 	}
 	else if (%client.isAdmin) //"Admin" forcevote only works outside minigame
 		%start = true;
 	if (%start)
-		DespairStartVote();
+	{
+		if ($DespairTrial)
+			DespairStartVote();
+		else
+			CourtPlayers();
+	}
 }
 
 //ADMIN ONLY
@@ -339,6 +356,22 @@ function serverCmdUnLockServer(%this)
 	$Pref::Server::Password = "";
 	messageAll('MsgAdminForce', '<bitmap:base/client/ui/ci/star> \c3%1\c0 has \c3unlocked \c0the server.', %this.getPlayerName());
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /unlockserver", "\c2");
+}
+
+function serverCmdReset(%this, %do)
+{
+	if (!%this.isAdmin) return;
+	if (%do)
+	{
+		$defaultMiniGame.reset(0);
+		return;
+	}
+	%message = "\c2Are you sure you want to reset the minigame?";
+	commandToClient(%this, 'messageBoxYesNo', "Reset", %message, 'resetAccept');
+}
+function serverCmdResetAccept(%this)
+{
+	serverCmdReset(%this, true);
 }
 
 package DespairAdmins

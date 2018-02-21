@@ -64,8 +64,19 @@ package DespairHealth
 
 		%playPain = 1;
 		%blood = true;
-		if(%player.character.trait["Extra Tough"] && (%type $= "blunt" || %type $= "sharp"))
-			%damage *= 0.9;
+		if (%type $= "blunt" || %type $= "sharp")
+		{
+			if(%player.character.trait["Extra Tough"])
+				%damage *= 0.9;
+			if(%player.mood !$= "")
+			{
+				%mood = getMoodName(%player.mood);
+				if (%mood $= "sad")
+					%damage *= 1.1; //More damage
+				else if (%mood $= "depressed")
+					%damage *= 1.2; //Even more damage
+			}
+		}
 
 		if(isObject(%src))
 		{
@@ -151,6 +162,11 @@ package DespairHealth
 					%client.getPlayerName() SPC "[" @ %client.getBLID() @ "], type " @ %type @ " for " @ %damage @ " damage.", "\c4");
 		else
 			RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] harmed himself, type " @ %type @ " for " @ %damage @ " damage.", "\c4");
+
+		%player.addMood(-3, $Sim::Time - %this.lastMoodChange > 10 ? "You got hurt!" : "");
+
+		if(%attacker && isObject(%attacker.player))
+			%attacker.player.addMood(-2, $Sim::Time - %this.lastMoodChange > 10 ? "You hurt someone!" : "");
 
 		if (%pos !$= "" && %blood)
 		{

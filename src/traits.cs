@@ -93,7 +93,7 @@ function Player::traitSchedule(%obj)
 
 			if(%stress)
 			{
-				if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule) && %obj.anxiety >= 4 && $Sim::Time - %obj.lastKO < 60)
+				if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule) && %obj.anxiety > 3 && $Sim::Time - %obj.lastKO < 30)
 				{
 					messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3social anxiety\c5...");
 					%obj.passOutSchedule = %obj.schedule(5000, knockOut, 30);
@@ -107,9 +107,17 @@ function Player::traitSchedule(%obj)
 					if(%obj.anxiety == 1)
 						%level = "\c3a bit ";
 					else if(%obj.anxiety == 2)
+					{
 						%level = "\c3pretty ";
+						if ($Sim::Time - %obj.lastMoodChange > 30)
+							%obj.addMood(-2);
+					}
 					else if(%obj.anxiety >= 3)
+					{
 						%level = "\c0very ";
+						if ($Sim::Time - %obj.lastMoodChange > 30)
+							%obj.addMood(-5);
+					}
 
 					%high = -1;
 					%text[%high++] = "trembles!";
@@ -158,12 +166,18 @@ function Player::traitSchedule(%obj)
 			%text[%high++] = "coughs!";
 			%text = %text[getRandom(%high)];
 			serverCmdMe(%obj.client, %text);
+			if(getRandom() < 0.1)
+				%obj.addMood(-1);
 		}
 	}
 	if(%obj.character.trait["Chain Smoker"])
 	{
 		if(getRandom() < 0.015)
+		{
 			serverCmdMe(%obj.client, "coughs!");
+			if(getRandom() < 0.1)
+				%obj.addMood(-1);
+		}
 	}
 	%obj.traitSchedule = %obj.schedule(getMax(500, $Despair::Traits::Tick), traitSchedule, %obj);
 }

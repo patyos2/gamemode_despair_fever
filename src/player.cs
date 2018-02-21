@@ -54,8 +54,12 @@ function PlayerDespairArmor::onAdd(%data, %player)
 		%player.swingSpeedMod = 1;
 	if(%player.speedScale $= "")
 		%player.speedScale = 1;
+	if(%player.mood $= "")
+		%player.setMood(0, "Your mood is neutral.");
 	if(!isEventPending(%player.traitSchedule))
 		%player.traitSchedule();
+	if(!isEventPending(%player.moodSchedule))
+		%player.moodSchedule();
 }
 
 datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
@@ -84,7 +88,7 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	maxBackwardCrouchSpeed = 2;
 	maxSideCrouchSpeed = 0;
 
-	minImpactSpeed = 15;
+	minImpactSpeed = 14;
 	speedDamageScale = 15;
 
 	jumpForce = 0;
@@ -310,9 +314,9 @@ function Player::setSpeedScale(%obj, %scale)
 	%obj.setMaxCrouchSideSpeed(%db.maxSideCrouchSpeed * %scale);
 }
 
-function Player::updateSpeedScale(%obj)
+function Player::updateSpeedScale(%obj, %int)
 {
-	%obj.speedScale = 1;
+	%obj.speedScale = %int;
 	if(isObject(%obj.character))
 	{
 		if (%obj.character.trait["Athletic"])
@@ -320,7 +324,13 @@ function Player::updateSpeedScale(%obj)
 		else if (%obj.character.trait["Sluggish"])
 			%obj.speedScale -= 0.1;
 	}
-	%obj.setSpeedScale(%obj.speedScale);
+
+	if (getMoodName(%obj.mood) $= "overjoyed")
+		%obj.speedScale += 0.1;
+	else if (getMoodName(%obj.mood) $= "depressed")
+		%obj.speedScale -= 0.1;
+
+	%obj.setSpeedScale(getMin(%obj.speedScale, 1.2));
 }
 
 function Player::onLight(%this)

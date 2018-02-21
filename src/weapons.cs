@@ -144,6 +144,15 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 	if(isObject(%player.character) && %player.character.trait["Bodybuilder"])
 		%extra = -0.05; // a BIT faster
 
+	if(%player.mood !$= "")
+	{
+		%mood = getMoodName(%player.mood);
+		if (%mood $= "sad")
+			%extra += 0.05; // a BIT slower
+		else if (%mood $= "depressed")
+			%extra += 0.1; // significantly slower
+	}
+
 	%time = %image.fireDelay * (%player.swingSpeedMod + %extra);
 	if ($Sim::Time - %player.lastFireTime < %time && !%ignoreTime)
 	{

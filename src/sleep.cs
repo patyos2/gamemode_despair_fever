@@ -224,6 +224,8 @@ function Player::WakeUp(%this)
 			%this.setStatusEffect($SE_passiveSlot, "drowsy");
 		else if(%this.freshSleep)
 			%this.setStatusEffect($SE_passiveSlot, "shining");
+		else
+			%this.addMood(4, "You slept undisturbed.");
 		%this.freshSleep = "";
 	}
 	%this.currResting = false;
@@ -283,6 +285,9 @@ function Player::Slip(%this, %ticks)
 
 		serverPlay3d(SlipSound @ getRandom(1, 3), %this.getPosition());
 
+		if ($Sim::Time - %this.lastMoodChange > 30)
+			%this.addMood(-3, "You got pranked!");
+
 		if(isObject(%this.getMountedImage(0)) && getRandom() < 0.3)
 			%this.dropTool(%this.currTool);
 	}
@@ -327,7 +332,24 @@ function serverCmdSleep(%this, %bypass)
 		%this.chatMessage("\c6You can't sleep yet - you don't feel tired!");
 		return;
 	}
-	%sec = %se $= "exhausted" ? 80 : 60;
+
+	%mood = getMoodName(%pl.mood);
+
+	switch$ (%mood)
+	{
+		case "overjoyed":
+			%sec = 50;
+		case "happy":
+			%sec = 55;
+		case "sad":
+			%sec = 65;
+		case "depressed":
+			%sec = 70;
+		default:
+			%sec = 60;
+	}
+
+	%sec = %se $= "exhausted" ? 80 : %sec;
 	%pos = %pl.getPosition();
 
 	if(!%this.character.trait["Heavy Sleeper"])
@@ -348,7 +370,7 @@ function serverCmdSleep(%this, %bypass)
 		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is sleeping!", "\c2");
 		return;
 	}
-	%message = "Are you sure you want to sleep" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!";
+	%message = "Are you sure you want to sleep" @ %cold @ "?\n<color:0000FF>You will be unconscious for<color:000000>" SPC %sec SPC "<color:0000FF>seconds!\n(The surface and your mood affect sleeping times)";
 	commandToClient(%this, 'messageBoxYesNo', "Sleep Prompt", %message, 'SleepAccept');
 }
 

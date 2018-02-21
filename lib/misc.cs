@@ -156,3 +156,14 @@ function addExtraResource(%name)
 	$EnvGuiServer::ResourceCount++;
 	setManifestDirty();
 }
+
+function findField(%fields, %f)
+{
+	for(%i = 0; %i < getFieldCount(%fields); %i++)
+	{
+		%a = getField(%fields, %i);
+		if(%a $= %f)
+			return %i;
+	}
+	return -1;
+}

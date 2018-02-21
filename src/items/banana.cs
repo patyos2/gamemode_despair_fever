@@ -12,7 +12,7 @@ datablock ItemData(BananaItem)
 	image = BananaImage;
 	canDrop = true;
 	
-	waitForKiller = true; //Wait for killer to be picked before this can be picked up
+	waitForKiller = false; //Wait for killer to be picked before this can be picked up
 };
 
 datablock ShapeBaseImageData(BananaImage)
@@ -59,7 +59,7 @@ datablock ItemData(BananaPeelItem)
 
 	slip = 1;
 
-	waitForKiller = true; //Wait for killer to be picked before this can be picked up
+	waitForKiller = false; //Wait for killer to be picked before this can be picked up
 };
 
 datablock ShapeBaseImageData(BananaPeelImage)
@@ -79,5 +79,7 @@ function BananaImage::onEat(%this, %obj, %slot)
 {
 	%obj.unMountImage(0);
 	%obj.setTool(%obj.currTool, BananaPeelItem);
+	%obj.lastEat = $Sim::Time;
 	serverPlay3d("EatSound", %obj.getEyePoint());
+	%obj.addMood(3, "Mmm, that was tasty!");
 }

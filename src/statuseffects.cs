@@ -35,39 +35,42 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			if(!%nomsg && isObject(%player.client))
 				%player.client.chatMessage("\c5You are getting sleepy... Find a \c3bed\c5 and type \c3/sleep\c5!");
 		case "tired":
-			%player.setSpeedScale(0.9);
+			%player.updateSpeedScale(0.9);
+			%player.addMood(-2, "You feel tired...");
 			%player.swingSpeedMod = 1.1;
 		case "exhausted":
-			%player.setSpeedScale(0.6);
+			%player.updateSpeedScale(0.6);
+			%player.addMood(-4, "You feel exhausted...");
 			%player.swingSpeedMod = 1.6;
 		case "sleeping":
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
 		//passive buffs/debuffs
 		case "drowsy":
-			%player.setSpeedScale(0.8);
+			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.5;
+			%player.addMood(-3, "You feel drowsy...");
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
 		case "sore back":
-			%player.setSpeedScale(0.8);
+			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.2;
+			%player.addMood(-3, "Your back is sore...");
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(75000, removeStatusEffect, %slot, %effect);
 		case "fresh":
 			if(%player.statusEffect[%slot] $= "sore back" || %player.statusEffect[%slot] $= "shining")
-				return 0;
+				return %slot;
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
+			if(%player.statusEffect[%slot] !$= "fresh" && %player.lastMoodText !$= "You had a good shower!")
+				%player.addMood(2, "You had a good shower!");
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(20000, removeStatusEffect, %slot, %effect);
 		case "shining":
-			%player.setSpeedScale(1.1);
-			%player.swingSpeedMod = 0.9;
+			%player.addMood(7, (%nomsg? "": "You had a \c3good night's sleep\c5!"));
 			cancel(%player.statusSchedule[%slot]);
-			%player.statusSchedule[%slot] = %player.schedule(60000, removeStatusEffect, %slot, %effect);
-			if(!%nomsg && isObject(%player.client))
-				%player.client.chatMessage("\c5You had a \c3good night's sleep\c5!");
+			return %slot; //Only mood bonus
 
 		//damage-related
 		case "bleeding":
@@ -75,13 +78,14 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
 			if(!%nomsg && isObject(%player.client) && %player.statusEffect[%slot] !$= "bleeding")
-				%player.client.chatMessage("\c5You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!");
+				%player.addMood(-3, "You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!");
 		case "shock":
 			if(%player.statusEffect[%slot] $= "shock")
-				return 0; //Don't stack it
+				return %slot; //Don't stack it
 
-			%player.setSpeedScale(0.6);
+			%player.updateSpeedScale(0.6);
 			%player.swingSpeedMod = 1.6;
+			%player.addMood(-3);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 			if(!%nomsg && isObject(%player.client))
@@ -95,18 +99,18 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 		case "wounded leg":
-			%player.setSpeedScale(0.7);
+			%player.updateSpeedScale(0.7);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 		case "concussion":
 			%player.setWhiteOut(0.4); //BOOM!! FREAK THE FUCK OUT!!
 			%player.swingSpeedMod = 1.2;
-			%player.setSpeedScale(0.8);
+			%player.updateSpeedScale(0.8);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 		case "abdominal trauma": //Todo: puking blood
 			%player.swingSpeedMod = 1.2;
-			%player.setSpeedScale(0.8);
+			%player.updateSpeedScale(0.8);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);
 

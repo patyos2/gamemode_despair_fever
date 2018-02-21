@@ -69,7 +69,10 @@ function createPlayer(%client)
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
 
 			//Check if we picked conflicting traits
-			if((%lastTrait["Positive"] $= "Extra Tough" && %trait $= "Frail") || (%lastTrait["Positive"] $= "Athletic" && %trait $= "Sluggish") || (%lastTrait["Positive"] $= "Loudmouth" && %trait $= "Softspoken"))
+			if((findField(%character.traitList, "Extra Tough") != -1 && %trait $= "Frail") ||
+				(findField(%character.traitList, "Athletic") != -1 && %trait $= "Sluggish") ||
+				(findField(%character.traitList, "Investigative") != -1 && %trait $= "Squeamish") ||
+				(findField(%character.traitList, "Loudmouth") != -1 && %trait $= "Softspoken"))
 			{
 				%trait = %lastTrait; //rollback a bit, we still need a negative
 				%typeStr = %lastType;
@@ -313,7 +316,7 @@ function despairEndGame()
 	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
 	UpdatePeopleScore();
 	$currentKiller.character.deleteMe = true;
-	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(10000, reset, 0);
+	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(20000, reset, 0);
 }
 
 function despairPrepareGame()
@@ -362,7 +365,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem BananaItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
@@ -376,6 +379,13 @@ function despairPrepareGame()
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_evidence"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_evidence", %i];
+		%brick.setItem("");
+	}
+
+	//Reset Foods
+	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_food"]; %i++)
+	{
+		%brick = BrickGroup_888888.NTObject["_food", %i];
 		%brick.setItem("");
 	}
 
@@ -402,6 +412,7 @@ function despairPrepareGame()
 	$days = 0;
 	$deathCount = 0;
 	$maxDeaths = 99;//getMax(1, $aliveCount);
+	$forceVoteCount = 0;
 
 	//EoR report reset
 	$EndLogCount = -1;
@@ -558,18 +569,21 @@ function GameConnection::updateAFKCheck(%this, %previous)
 
 	%transform = %player.getTransform();
 
-	if (!%player.unconscious && !%this.afk && %transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
+	if (!%player.unconscious && %transform $= %previous && $Sim::Time - %this.lastSpeakTime >= 60)
 	{
 		%delay = 1000;
-		%this.afk = true;
-		RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
-		messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
-		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		if (!%this.afk)
 		{
-			%member = ClientGroup.getObject(%i);
-			if(%member.isAdmin)
+			%this.afk = true;
+			RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
+			messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
+			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
-				messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
+				%member = ClientGroup.getObject(%i);
+				if(%member.isAdmin)
+				{
+					messageClient(%member, '', '\c2--[\c5%1 is afk.', %this.getPlayerName());
+				}
 			}
 		}
 	}
@@ -789,7 +803,7 @@ package DespairFever
 			messageClient(%this, '', '<a:www.dropbox.com/s/zplta1zrwrft3ru/Client_RoleplayAdmin.zip?dl=1>DOWNLOAD THE ADMIN CLIENT HERE</a>');
 		}
 
-		%this.schedule(16, 'dfLoadData');
+		%this.schedule(16, "dfLoadData");
 	}
 
 	function GameConnection::SetScore(%this, %num)

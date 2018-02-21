@@ -92,7 +92,7 @@ package DespairInventory
 		{
 			%client.stopViewingInventory();
 		}
-		Parent::serverCmdUseTool(%client, %slot);
+		Parent::serverCmdUnUseTool(%client, %slot);
 	}
 	function Armor::onTrigger(%this, %obj, %slot, %state)
 	{

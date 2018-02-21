@@ -148,7 +148,8 @@ function despairOnKill(%victim, %attacker, %crit)
 		%player.setBloody(0, 0, 0);
 		%victim.player.setBloody(0, 0, 0);
 
-
+		messageClient(%victim, '', "<font:Impact:30>You just got RDMed!\c6 Please \c3/report [msg]\c6 the situation leading up to this.");
+		messageClient(%attacker, '', "<font:Impact:30>You just RDMed!\c6 Please \c3/report [msg]\c6 the situation leading up to this.");
 		%msg = "<font:Impact:30>" @ %attacker.getplayername() SPC "RDMed" SPC %victim.getPlayerName() @ "!";
 		//echo("-+ " @ %msg);
 		RS_Log("[RDM]" SPC %attacker.getPlayerName() SPC "(" @ getCharacterName(%attacker.character, 1) @ ") [" @ %attacker.getBLID() @ "] RDMed " @
@@ -202,6 +203,11 @@ function despairOnKill(%victim, %attacker, %crit)
 					%attacker.player.WakeUp();
 				if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
 					%attacker.player.removeStatusEffect($SE_sleepSlot);
+				%attacker.player.addMood(-10, "Oh, god... What have you done?");
+			}
+			else if ($deathCount <= 0)
+			{
+				%attacker.player.addMood(10, "You did it... Now you finally have a chance of escape!");
 			}
 			if ($deathCount >= $maxDeaths)
 				DespairSetWeapons(0);
@@ -256,6 +262,8 @@ function despairCheckInvestigation(%player, %corpse)
 				%tod = getDayCycleTimeString(%tod, 1);
 				$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c3" @ getCharacterName(%player.client.character, 1, 1) SPC "discovered" SPC %corpse.character.name @ "'s corpse!";
 			}
+			if ($Sim::Time - %player.lastMoodChange > 30 && %player.lastMoodText !$= "You discovered a body!")
+				%player.addMood(-5, "You discovered a body!");
 		}
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
@@ -265,11 +273,12 @@ function despairCheckInvestigation(%player, %corpse)
 			despairMakeBodyAnnouncement("", %corpse.mangled);
 			%corpse.discovered = true;
 		}
-		if(!%player.client.killer && %player.character.trait["Squeamish"] && !isEventPending(%player.passOutSchedule))
+		if(!%player.client.killer && %player.character.trait["Squeamish"] && !%player.squeamishFainted && !isEventPending(%player.passOutSchedule))
 		{
 			messageClient(%player.client, '', "\c5You're about to \c3faint\c5...!");
 			%player.setSpeedScale(0.5);
 			%player.passOutSchedule = %player.schedule(2000, knockOut, 30);
+			%player.squeamishFainted = true; //Only one squeamish faint per round, otherwise life is pain
 		}
 	}
 }
@@ -330,10 +339,12 @@ function despairStartInvestigation(%no_announce)
 	//	DespairSetWeapons(0);
 	if ($deathCount > 0)
 	{
-		%length = $investigationStart $= "" ? $Despair::InvestigationLength : $Despair::InvestigationExtraLength;
-		if($investigationStart > $Sim::Time + %length) //investigation longer than extralength
-			return;
-		$investigationStart = $Sim::Time + %length;
+		$investigationLength = $investigationStart $= "" ? $Despair::InvestigationLength : ($investigationStart - $Sim::Time) + $Despair::InvestigationExtraLength;
+		//if($investigationStart > $Sim::Time + $investigationLength) //investigation longer than extralength
+		//	return;
+		if ($investigationLength > 600) //10 mins
+			$investigationLength = 600;
+		$investigationStart = $Sim::Time + $investigationLength;
 		if (!%no_announce)
 			despairMakeBodyAnnouncement(1);
 		//cancel($DefaultMiniGame.subEventSchedule);
@@ -344,7 +355,7 @@ function despairStartInvestigation(%no_announce)
 			$DefaultMiniGame.subEventSchedule = schedule(30*1000, 0, "DespairSetWeapons", 0); //Only disable weapons 30 secs after
 		}
 		cancel($DefaultMiniGame.eventSchedule);
-		$DefaultMiniGame.eventSchedule = schedule(%length*1000, 0, "courtPlayers");
+		$DefaultMiniGame.eventSchedule = schedule($investigationLength*1000, 0, "courtPlayers");
 		serverPlay2d("DespairMusicInvestigationStart");
 		RS_Log("[GAME] Investigation has started", "\c5");
 		%tod = getDayCycleTime();
@@ -368,6 +379,16 @@ function despairOnMorning()
 			%player.schedule(1000 * (getRandom() * 3), updateStatusEffect, $SE_sleepSlot); //Update all tiredness-related status effects
 			%client.updateBottomprint();
 		}
+	}
+
+	%charCount = GameCharacters.getCount();
+	%foodCount = %charCount + getRandom(-3, 2);
+
+	while(%foodCount >= 0)
+	{
+		%brick = BrickGroup_888888.NTObject["_food", getRandom(0, BrickGroup_888888.NTObjectCount["_food"] - 1)];
+		%brick.setItem(getRandom() > 0.1 ? "BurgerItem" : "BananaItem"); //I'm too lazy to check if the brick already has food spawned sooo....
+		%foodCount--;
 	}
 
 	%count = BrickGroup_888888.NTObjectCount["_evidence"];
@@ -500,7 +521,7 @@ function despairOnNight()
 				continue;
 			
 			%cl.prompted["Killer"] = true;
-			commandToClient(%cl, 'messageBoxYesNo', "Killer Queue", "Do you wish to be included in the killer queue for this round?", 'KillerAccept');
+			commandToClient(%cl, 'messageBoxYesNo', "Killer Ballot", "Do you wish to be included in the killer lottery for this round?", 'KillerAccept');
 		}
 		$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
 	}
@@ -556,7 +577,7 @@ function serverCmdKillerAccept(%this)
 		%queue = setWord(%queue, getWordCount(%queue), %this);
 		$Despair::Queue["Killer"] = %queue;
 		%this.prompted["Killer"] = false;
-		commandToClient(%this, 'messageBoxOK', "Killer Queue", "You will now be included in the killer queue.");
+		commandToClient(%this, 'messageBoxOK', "Killer Ballot", "You will now be included in the killer lottery.");
 	}
 }
 
@@ -880,8 +901,6 @@ function DespairStartDiscussion()
 	$chatDelay = 0.75; //less spam, please
 
 	%time = $Despair::DiscussPeriod + (60 * ($deathCount - 1)); //extra minute for every extra body
-	if(isObject($mangled))
-		%time = getMax(%time, $Despair::DiscussPeriod + 120); //+2 mins for mangled
 
 	if(%time >= 420) //7 mins
 		ServerPlaySong("DespairMusicTrialDiscussionIntro4");

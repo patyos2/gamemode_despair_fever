@@ -48,6 +48,7 @@ exec("./src/hats.cs");
 exec("./src/health.cs");
 exec("./src/help.cs");
 exec("./src/minigame.cs");
+exec("./src/mood.cs");
 exec("./src/music.cs");
 exec("./src/namelist.cs");
 exec("./src/player.cs");
@@ -64,6 +65,7 @@ exec("./src/events.cs"); //exec events last 'cuz it takes some variables from st
 //items
 exec("./src/items/banana.cs");
 exec("./src/items/box.cs");
+exec("./src/items/burger.cs");
 exec("./src/items/cleanspray.cs");
 exec("./src/items/coat.cs");
 exec("./src/items/disguise.cs");

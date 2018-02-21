@@ -1,11 +1,12 @@
 //Base
 $Despair::DayLength = 360; //6 minutes for a full cycle
-$Despair::InvestigationLength = 300; //5 mins
-$Despair::InvestigationExtraLength = 180; //3 mins if new bodies were found
+$Despair::InvestigationLength = 360; //6 mins
+$Despair::InvestigationExtraLength = 90; //+1:30 mins for every new body
 $Despair::CritThreshold = -150; //How much negative health can the player take before dying
 //Trial
 $Despair::DiscussPeriod = 300; //5 mins
 $Despair::CanForceVote = 60; //1 min has to pass before you can forcevote
+$Despair::CanForceTrial = 300; //5 mins have to pass before you can force trial
 $Despair::MissingLength = 120; //2 mins until body announcement is made automatically
 
 $map = "motel";
