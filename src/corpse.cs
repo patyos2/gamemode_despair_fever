@@ -326,11 +326,10 @@ package DespairCorpses
 				else
 					return;
 			}
-			else if(!%item.isIcon && %target.addTool(%item, %props, 1, 2) != -1)
+			else if(!%item.isIcon && (%slot = %target.addTool(%item, %props, 1, 2)) != -1)
 			{
 				%obj.removeTool(%obj.currTool, 1, 2);
 				%obj.itemProps[%obj.currTool] = "";
-				%slot = %obj.currTool;
 			}
 			if(%slot >= 0)
 			{

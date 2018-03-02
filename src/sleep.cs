@@ -129,7 +129,7 @@ function Player::KnockOutTick(%this, %ticks, %done)
 	if (%this.getState() $= "Dead" || !%this.unconscious)
 		return;
 
-	if (isObject(%killer = %this.carryPlayer) && %killer.choking)
+	if (isObject(%killer = %this.carryPlayer) && %killer.choking && %killer.health > 0) //not in crit TODO: reward killers who kill when in crit by "second wind"
 	{
 		%choking = true;
 	}
@@ -189,6 +189,8 @@ function Player::KnockOutTick(%this, %ticks, %done)
 			messageClient(%this.client, '', '   \c1... %1 ...', %dream);
 		}
 	}
+	if(getRandom() < 0.01)
+		%this.spawnFiber();
 	%this.wakeUpSchedule = %this.schedule(1000, KnockOutTick, %ticks, %done);
 }
 

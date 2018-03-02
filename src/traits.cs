@@ -14,6 +14,7 @@ $Despair::Traits::Description["Athletic"] = "Slightly faster run speed!";
 $Despair::Traits::Description["Loudmouth"] = "Louder speech, as well as a Scream ability during trial to shut everyone up.";
 $Despair::Traits::Description["Pickpocket"] = "Can loot people even if they're conscious! Can't steal weapons and worn items.";
 $Despair::Traits::Description["Optimistic"] = "Nothing will make you feel depressed!";
+$Despair::Traits::Description["Chekhov's Gunman"] = "Spawn with a golden revolver. Every round you survive you will get a bullet. Make sure to conceal it!";
 //disabled
 $Despair::Traits::Description["Medium"] = "You're not supposed to have this";//"Hear the dead when sleeping...";
 
@@ -41,99 +42,155 @@ $Despair::Traits::Description["Melancholic"] = "You just can't ever feel happy."
 $Despair::Traits::Description["Narcoleptic"] = "You're not supposed to have this";//"Randomly pass out.";
 $Despair::Traits::Description["Schizo"] = "You're not supposed to have this";//"Daydreaming and spooky voices!!";
 
+function GenerateTraits(%character, %client)
+{
+	%typePositive = $Despair::Traits::Positive;
+	%typeNeutral = $Despair::Traits::Neutral;
+	%typeNegative = $Despair::Traits::Negative;
+	%traitCount = getRandom(1, 2); //In actuality this decides how many positive-negative trait combos there are
+	%neutralCount = getRandom(1, 2);
+	while(%traitCount-- >= 0)
+	{
+		%lastType = %typeStr;
+		%lastTrait = %trait;
+		if(%neutralCount > 0)
+		{
+			%neutralCount--;
+			%traitCount++;
+			%typeStr = "neutral";
+		}
+		else if(%typeStr $= "positive")
+			%typeStr = "negative";
+		else
+		{
+			%typeStr = "positive";
+			%traitCount++; //Positive-Negative combinations count as a single trait essentialy
+		}
+		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.1)
+		{
+			%trait = "Chekhov's Gunman";
+			$gunmanChar = %character;
+		}
+		else
+		{
+			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
+			%type[%typeStr] = removeField(%type[%typeStr], %index);
+		}
+
+		//Check if we picked conflicting traits
+		if(checkTraitConflicts(%character.traitList, %trait))
+		{
+			%trait = %lastTrait; //rollback a bit, we still need a negative
+			%typeStr = %lastType;
+			%traitCount++;
+			continue;
+		}
+		%character.trait[%trait] = true;
+		%character.traitList = setField(%character.traitList, getFieldCount(%character.traitList), %trait);
+
+		%color = %typeStr $= "positive" ? "\c2" : (%typeStr $= "negative" ? "\c0" : "\c6");
+		%desc = $Despair::Traits::Description[%trait];
+		if(isObject(%client))
+			messageClient(%client, '', '\c5You now have %1%2\c5 trait! %3', %color, %trait, %desc);
+	}
+	if(isObject(%client))
+		messageClient(%client, '', '\c5Say \c3/traits\c5 to bring up your traits again.');
+}
+
 function Player::traitSchedule(%obj)
 {
 	cancel(%obj.traitSchedule);
+	if(!$Despair::Traits::Enabled)
+		return;
 	if(%obj.getState() $= "Dead")
 		return;
+	if($despairTrial !$= "") //It's very annoying to cough during trials let's face it
+		return;
 
-	if($despairTrial $= "")
+	if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule))
 	{
-		if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule))
+		if((%se = %obj.statusEffect[$SE_sleepSlot]) $= "exhausted" && getRandom() < 0.05)
 		{
-			if((%se = %obj.statusEffect[$SE_sleepSlot]) $= "exhausted" && getRandom() < 0.05)
+			messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3exhaustion\c5...");
+			%obj.passOutSchedule = %obj.schedule(1000, knockOut, 90);
+		}
+	}
+	if(%obj.character.trait["Squeamish"])
+	{
+		%ges = %obj.getEnvironmentStress();
+		%stress = getWord(%ges, 0);
+		%foundCorpse = getWord(%ges, 1);
+
+		if(%obj.client.killer)
+			%foundCorpse = ""; //what corpse?
+
+		if(isObject(%foundCorpse) && !%foundcorpse.checkedBy[%obj])
+			serverCmdAlarm(%obj.client, 1); //very easy (and lazy) way of doing this. despairCheckInvestigation has Squeamish check for fainting, too.
+		else if(%stress && getRandom() < 0.03 * %stress)
+		{
+			%high = -1;
+			%text[%high++] = "hyperventilates!";
+			%text[%high++] = "freaks out!";
+			%text[%high++] = "gasps!";
+			%text = %text[getRandom(%high)];
+			serverCmdMe(%obj.client, %text);
+		}
+	}
+	if(%obj.character.trait["Social Anxiety"])
+	{
+		%center = %obj.getEyePoint();
+		initContainerRadiusSearch(%center, 48, $TypeMasks::PlayerObjectType);
+		while (isObject(%found = containerSearchNext()))
+		{
+			if(%found == %obj || %found.getState() $= "Dead")
+				continue;
+			%point = %found.getEyePoint();
+			%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %obj);
+
+			if(!isObject(%ray) && %obj.isWithinView(%point)) //So you can't "detect presence" of the killer sneaking up on you or something.
 			{
-				messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3exhaustion\c5...");
-				%obj.passOutSchedule = %obj.schedule(1000, knockOut, 90);
+				%stress++; //More people = more stress
 			}
 		}
-		if(%obj.character.trait["Squeamish"])
+
+		if(%stress)
 		{
-			%ges = %obj.getEnvironmentStress();
-			%stress = getWord(%ges, 0);
-			%foundCorpse = getWord(%ges, 1);
-
-			if(%obj.client.killer)
-				%foundCorpse = ""; //what corpse?
-
-			if(isObject(%foundCorpse) && !%foundcorpse.checkedBy[%obj])
-				serverCmdAlarm(%obj.client, 1); //very easy (and lazy) way of doing this. despairCheckInvestigation has Squeamish check for fainting, too.
-			else if(%stress && getRandom() < 0.03 * %stress)
+			if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule) && %obj.anxiety > 3 && $Sim::Time - %obj.lastKO < 30)
 			{
+				messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3social anxiety\c5...");
+				%obj.passOutSchedule = %obj.schedule(5000, knockOut, 30);
+				%obj.anxiety = 0;
+			}
+			else if(getRandom() < 0.1 * %stress)
+			{
+				if($Sim::Time - %obj.client.lastEmoteTime >= 60)
+					%obj.anxiety = 0;
+				%obj.anxiety++;
+				if(%obj.anxiety == 1)
+					%level = "\c3a bit ";
+				else if(%obj.anxiety == 2)
+				{
+					%level = "\c3pretty ";
+					if ($Sim::Time - %obj.lastMoodChange > 30)
+						%obj.addMood(-2);
+				}
+				else if(%obj.anxiety >= 3)
+				{
+					%level = "\c0very ";
+					if ($Sim::Time - %obj.lastMoodChange > 30)
+						%obj.addMood(-5);
+				}
+
 				%high = -1;
-				%text[%high++] = "hyperventilates!";
-				%text[%high++] = "freaks out!";
-				%text[%high++] = "gasps!";
+				%text[%high++] = "trembles!";
+				%text[%high++] = "blushes!";
+				%text[%high++] = "fidgets!";
+				%text[%high++] = "sweats!";
+				%text[%high++] = "clears their throat!";
+				%text[%high++] = "twitches!";
 				%text = %text[getRandom(%high)];
 				serverCmdMe(%obj.client, %text);
-			}
-		}
-		if(%obj.character.trait["Social Anxiety"])
-		{
-			%center = %obj.getEyePoint();
-			initContainerRadiusSearch(%center, 48, $TypeMasks::PlayerObjectType);
-			while (isObject(%found = containerSearchNext()))
-			{
-				if(%found == %obj || %found.getState() $= "Dead")
-					continue;
-				%point = %found.getEyePoint();
-				%ray = containerRayCast(%center, %point, $TypeMasks::FxBrickObjectType, %obj);
-
-				if(!isObject(%ray) && %obj.isWithinView(%point)) //So you can't "detect presence" of the killer sneaking up on you or something.
-				{
-					%stress++; //More people = more stress
-				}
-			}
-
-			if(%stress)
-			{
-				if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule) && %obj.anxiety > 3 && $Sim::Time - %obj.lastKO < 30)
-				{
-					messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3social anxiety\c5...");
-					%obj.passOutSchedule = %obj.schedule(5000, knockOut, 30);
-					%obj.anxiety = 0;
-				}
-				else if(getRandom() < 0.1 * %stress)
-				{
-					if($Sim::Time - %obj.client.lastEmoteTime >= 60)
-						%obj.anxiety = 0;
-					%obj.anxiety++;
-					if(%obj.anxiety == 1)
-						%level = "\c3a bit ";
-					else if(%obj.anxiety == 2)
-					{
-						%level = "\c3pretty ";
-						if ($Sim::Time - %obj.lastMoodChange > 30)
-							%obj.addMood(-2);
-					}
-					else if(%obj.anxiety >= 3)
-					{
-						%level = "\c0very ";
-						if ($Sim::Time - %obj.lastMoodChange > 30)
-							%obj.addMood(-5);
-					}
-
-					%high = -1;
-					%text[%high++] = "trembles!";
-					%text[%high++] = "blushes!";
-					%text[%high++] = "fidgets!";
-					%text[%high++] = "sweats!";
-					%text[%high++] = "clears their throat!";
-					%text[%high++] = "twitches!";
-					%text = %text[getRandom(%high)];
-					serverCmdMe(%obj.client, %text);
-					messageClient(%obj.client, '', '\c5You\'re feeling %1anxious...', %level);
-				}
+				messageClient(%obj.client, '', '\c5You\'re feeling %1anxious...', %level);
 			}
 		}
 	}
@@ -207,7 +264,6 @@ function checkTraitConflicts(%list, %trait)
 			break;
 		}
 	}
-	if (%conflist $= "") return false;
 
 	for(%i = 0; %i < getFieldCount(%list); %i++)
 	{

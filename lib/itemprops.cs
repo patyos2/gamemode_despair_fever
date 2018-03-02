@@ -38,6 +38,8 @@ function ItemData::newItemProps(%this, %player, %slot)
 		sourceClient = %player.client;
 
 		itemSlot = %slot;
+
+		noDeleteAlways = false;
 	};
 
 	%props.onOwnerChange(%player);
@@ -60,7 +62,7 @@ package ItemPropsPackage
 
 		for (%i = %data.maxTools; %i < %maxTools; %i++)
 		{
-			if (isObject(%this.itemProps[%i]))
+			if (isObject(%this.itemProps[%i]) && !%this.itemProps[%i].noDeleteAlways)
 				%this.itemProps[%i].delete();
 		}
 
@@ -82,7 +84,7 @@ package ItemPropsPackage
 
 		for (%i = 0; %i < %this.maxTools; %i++)
 		{
-			if (isObject(%player.itemProps[%i]))
+			if (isObject(%player.itemProps[%i]) && !%player.itemProps[%i].noDeleteAlways)
 				%player.itemProps[%i].delete();
 		}
 	}
@@ -107,7 +109,7 @@ package ItemPropsPackage
 	{
 		Parent::onRemove(%this, %obj);
 
-		if (isObject(%obj.itemProps))
+		if (isObject(%obj.itemProps) && !%obj.itemProps.noDeleteAlways)
 			%obj.itemProps.delete();
 	}
 
@@ -232,7 +234,7 @@ package ItemPropsPackage
 
 		if (!isObject(%player.tool[%index]) && isObject(%player.itemProps[%index]))
 		{
-			if (isObject($DroppedItemProps))
+			if (isObject($DroppedItemProps) && !$DroppedItemProps.noDeleteAlways)
 				$DroppedItemProps.delete();
 			else
 				$DroppedItemProps = "";
@@ -276,7 +278,7 @@ package ItemPropsPackage
 
 			if (%player.tool[%slot] != %this.startEquip[%slot])
 			{
-				if (isObject(%player.itemProps[%slot]))
+				if (isObject(%player.itemProps[%slot]) && !%player.itemProps[%slot].noDeleteAlways)
 					%player.itemProps[%slot].delete();
 
 				if (%this.startEquip[%slot].itemPropsAlways)

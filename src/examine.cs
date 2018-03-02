@@ -1,11 +1,9 @@
 function GameConnection::examineObject(%client, %col)
 {
-	if(!isObject(%player = %client.player))
-		return;
-
 	if(%col.noExamine)
 		return;
-
+	%player = %client.player;
+	%character = %client.character;
 	%text = "<font:cambria:24><color:FFFFFF>";
 
 	if(%col.getType() & ($TypeMasks::playerObjectType | $TypeMasks::CorpseObjectType))
@@ -15,7 +13,7 @@ function GameConnection::examineObject(%client, %col)
 		%gender = %col.character.gender;
 		if (%col.isDead)
 		{
-			if(!%client.killer)
+			if(!%client.killer && isObject(%player))
 				DespairCheckInvestigation(%player, %col);
 
 			%ref = %gender $= "female" ? "She's" : "He's";
@@ -26,7 +24,7 @@ function GameConnection::examineObject(%client, %col)
 
 			if (%col.suicide && !%col.mangled)
 				%text = %text @ "\n\c5It was suicide...";
-			if(%player.character.trait["investigative"] && !%col.mangled)
+			if(isObject(%player) && %character.trait["investigative"] && !%col.mangled)
 			{
 				%day = %col.attackDay[%col.attackCount];
 
@@ -46,12 +44,13 @@ function GameConnection::examineObject(%client, %col)
 				%mod12 = getWord(%tod2, 1);
 				%tod2 = getWord(%tod2, 0) SPC (%mod12 $= "PM" ? "<color:7e7eff>" : "<color:ffbf7e>") @ %mod12;
 
-				if(%day == $days)
-					%when = "today";
-				else if(%day == $days - 1)
-					%when = "yesterday";
-				else
-					%when = "long ago";
+				%when = "Day" SPC %day;
+				// if(%day == $days)
+				// 	%when = "today";
+				// else if(%day == $days - 1)
+				// 	%when = "yesterday";
+				// else
+				// 	%when = "long ago";
 
 				%text = %text @ "\n\c6" @ "They died \c3" @ %when @ " \c6between\c5" SPC %tod1 SPC "\c6and\c5" SPC %tod2 @ ".";
 				for(%i=0;%i<=%col.attackCount;%i++)
@@ -66,6 +65,11 @@ function GameConnection::examineObject(%client, %col)
 				if(%wounds["sharp"] > 0)
 				{
 					%field = %wounds["sharp"] SPC "cuts";
+					%haswounds = true;
+				}
+				if(%wounds["gun"] > 0)
+				{
+					%field = %wounds["gun"] SPC "bullet holes";
 					%haswounds = true;
 				}
 
@@ -102,7 +106,7 @@ function GameConnection::examineObject(%client, %col)
 				%text = %text @ "\n\c5" @ (%gender $= "female" ? "She's" : "He's") @ " sleeping.";
 			}
 			
-			if(%col.bloody)
+			if(%col.IsBloody())
 			{
 				%text = %text @ "\n\c0" @ (%gender $= "female" ? "She's" : "He's") @ " bloody.";
 			}
@@ -151,6 +155,10 @@ function GameConnection::examineObject(%client, %col)
 		{
 			%text = %text @ "This is a " @ (%col.isBlood ? "\c0bloody" : "") SPC "scribble.";
 			%text = %text @ "\n" @ %col.contents;
+		}
+		else if(%col.getDataBlock().getID() == nameToID("strandDecal"))
+		{
+			%text = %text @ "This is a " @ "<color:" @ rgbToHex(vectorScale(getWords(%col.color, 0, 2), 255)) @ ">strand.";
 		}
 		else
 		{

@@ -147,7 +147,6 @@ function LeadpipeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		{
 			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
-			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}

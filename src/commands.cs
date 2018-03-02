@@ -94,7 +94,7 @@ function serverCmdForceVote(%client)
 			%currTime = $Sim::Time - ($investigationStart - $investigationLength);
 		if (%currTime < ($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial))
 		{
-			messageClient(%client, '', '\c5You can only vote %1 minutes after %2 had started!', mCeil($Despair::CanForceVote / 60), $DespairTrial ? "trial" : "investigation");
+			messageClient(%client, '', '\c5You can only vote %1 minutes after %2 had started!', mCeil(($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial) / 60), $DespairTrial ? "trial" : "investigation");
 			return;
 		}
 		for (%i = 0; %i < $defaultMiniGame.numMembers; %i++)
@@ -123,13 +123,13 @@ function serverCmdForceVote(%client)
 		if (%validVotes >= (MFloor(%alivePlayers * 0.8))) // if at least 90% of alive players voted
 		{
 			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the %2 early!\c6 There are enough votes to force the %2.',
-				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "tral");
+				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "trial");
 			%start = true;
 		}
 		else
 		{
 			$defaultMiniGame.messageAll('', '\c3%1 has voted to start the %2 early!\c6 Do /forcevote to concur. %3 votes left.',
-				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "tral", MFloor(%alivePlayers * 0.8) - %validVotes);
+				getCharacterName(%client.character, 1), $DespairTrial ? "vote" : "trial", MFloor(%alivePlayers * 0.8) - %validVotes);
 		}
 	}
 	else if (%client.isAdmin) //"Admin" forcevote only works outside minigame
@@ -316,6 +316,7 @@ function updateAdminCount()
 		$Pref::Server::Password = "a";	
 		messageAll('', '\c0The server has been passworded due to \c6No Admins\c0. You will be kicked on \c6round end\c0.');
 		messageAll('', '\c0ALL RULE-BREAKERS WILL BE PUNISHED EVEN IF THERE ARE NO ADMINS!!!');
+		RS_Log("Last admin left the game, locking server.", "\c2");
 	}
 	else if($Pref::Server::Password $= "a")
 	{

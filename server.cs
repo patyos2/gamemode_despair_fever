@@ -30,6 +30,8 @@ exec("./lib/misc.cs");
 exec("./lib/noObservers.cs");
 exec("./lib/pathCamera.cs");
 exec("./lib/scope.cs");
+exec("./lib/timedfiring.cs");
+exec("./lib/timedraycast.cs");
 //src
 exec("./src/savedata.cs");
 exec("./src/sounds.cs"); //Important to be first - contains audio descriptions
@@ -86,6 +88,7 @@ exec("./src/weapons/katana.cs");
 exec("./src/weapons/knife.cs");
 exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
+exec("./src/weapons/revolver.cs");
 exec("./src/weapons/wrench.cs");
 exec("./src/weapons/sledgehammer.cs");
 exec("./src/weapons/taser.cs");

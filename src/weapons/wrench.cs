@@ -130,7 +130,6 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 		{
 			%player.bloodyWriting = 2;
 			%player.bloody["rhand"] = true;
-			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}
@@ -139,7 +138,6 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 		{
 			%player.bloodyWriting = 2;
 			%player.bloody["chest_front"] = true;
-			%player.bloody = true;
 			if (isObject(%player.client))
 				%player.client.applyBodyParts();
 		}

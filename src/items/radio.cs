@@ -1,4 +1,4 @@
-$Despair::radioNumChannels = 3;
+$Despair::radioNumChannels = 1;
 
 datablock AudioProfile(radioGetSound)
 {
@@ -111,7 +111,8 @@ function RadioItem::onDrop(%this, %player, %slot)
 }
 function RadioImage::onUse(%this, %obj, %slot)
 {
-	return; //Nobody needs more than one channel, really.
+	if ($Despair::radioNumChannels <= 1)
+		return;
 	%props = %obj.getItemProps();
 	radioLeft(%obj, %props.channel);
 	%props.channel = (%props.channel + 1) % $Despair::radioNumChannels;

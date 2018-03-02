@@ -141,10 +141,10 @@ function Player::fireWeapon(%player, %ignoreTime, %manual)
 	if (!%image)
 		return;
 
-	if(isObject(%player.character) && %player.character.trait["Bodybuilder"])
+	if(!%image.gun && isObject(%player.character) && %player.character.trait["Bodybuilder"])
 		%extra = -0.05; // a BIT faster
 
-	if(%player.mood !$= "")
+	if(!%image.gun && %player.mood !$= "")
 	{
 		%mood = getMoodName(%player.mood);
 		if (%mood $= "sad")

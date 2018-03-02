@@ -68,50 +68,60 @@ package DespairHealth
 		{
 			if(%player.character.trait["Extra Tough"])
 				%damage *= 0.9;
-			if(%player.mood !$= "")
-			{
-				%mood = getMoodName(%player.mood);
-				if (%mood $= "sad")
-					%damage *= 1.1; //More damage
-				else if (%mood $= "depressed")
-					%damage *= 1.2; //Even more damage
-			}
+		}
+
+		if(%player.mood !$= "")
+		{
+			%mood = getMoodName(%player.mood);
+			if (%mood $= "sad")
+				%damage *= 1.1; //More damage
+			else if (%mood $= "depressed")
+				%damage *= 1.2; //Even more damage
 		}
 
 		if(isObject(%src))
 		{
-			if (%src.getType() & $TypeMasks::PlayerObjectType)
+			if (isObject(%src.source))
+			{
+				%attacker = %src.source;
+				%sourceObject = %attacker.player;
+			}
+			else if (%src.getType() & $TypeMasks::PlayerObjectType)
 			{
 				%sourceObject = %src;
 				%attacker = %sourceObject.client;
 			}
 			else
 			{
-				%sourceObject = %src.sourceObject;
 				%attacker = %sourceObject.sourceClient;
+				%sourceObject = %src.sourceObject;
 			}
 			%normal = %sourceObject.getEyeVector();
 			%dot = vectorDot(%player.getForwardVector(), %normal);
 		}
 		else
 		{
-			if(isObject(%player.attackSource[%player.attackCount]) && $Sim::Time - %player.attackTime[%player.attackCount] <= 5)
-			{
-				%src = %player.attackSource[%player.attackCount];
-				%sourceObject = %src;
-				%attacker = %sourceObject.client;
-			}
-			else if(isObject(%player.lastShover) && $Sim::Time - %player.lastShoved <= 5) //Pushed off a building or something
+			%earliest = 5;
+			if(isObject(%player.lastShover) && $Sim::Time - %player.lastShoved <= %earliest) //Pushed off a building or something
 			{
 				%src = %player.lastShover;
 				%sourceObject = %src;
 				%attacker = %sourceObject.client;
+				%earliest = $Sim::Time - %player.lastShoved;
 			}
-			else if(isObject(%player.lastTosser) && $Sim::Time - %player.carryEnd <= 5) //Assisted suicide
+			if(isObject(%player.lastTosser) && $Sim::Time - %player.carryEnd < %earliest) //Assisted suicide
 			{
 				%src = %player.lastTosser;
 				%sourceObject = %src;
 				%attacker = %sourceObject.client;
+				%earliest = $Sim::Time - %player.carryEnd;
+			}
+			if(isObject(%player.attackSource[%player.attackCount]) && $Sim::Time - %player.attackTime[%player.attackCount] <= %earliest)
+			{
+				%src = %player.attackSource[%player.attackCount];
+				%sourceObject = %src;
+				%attacker = %sourceObject.client;
+				%earliest = $Sim::Time - %player.attackTime[%player.attackCount];
 			}
 		}
 
@@ -143,6 +153,12 @@ package DespairHealth
 			%blood = false;
 		}
 
+		if(%type $= "gun" && %player.unconscious)
+		{
+			%player.health = $Despair::CritThreshold;
+			%blood = true;
+		}
+
 		if(%player.isMurdered && !%client.killer && !%attacker.killer)
 			return; //no damage if attempted RDM on crit
 
@@ -165,10 +181,10 @@ package DespairHealth
 
 		%player.addMood(-3, $Sim::Time - %this.lastMoodChange > 10 ? "You got hurt!" : "");
 
-		if(%attacker && isObject(%attacker.player))
+		if(%attacker && !%attacker.killer && isObject(%attacker.player))
 			%attacker.player.addMood(-2, $Sim::Time - %this.lastMoodChange > 10 ? "You hurt someone!" : "");
 
-		if (%pos !$= "" && %blood)
+		if (%pos !$= "")
 		{
 			%region = %player.getRegion(%pos, true);
 			%player.attackRegion[%player.attackCount] = %region;
@@ -177,8 +193,17 @@ package DespairHealth
 			switch$ (%region)
 			{
 			case "head":
-				%player.bloody["head"] = true;
-				%client.applyBodyParts();
+				if (%type $= "gun") //HEADSHOT
+				{
+					%player.health = $Despair::CritThreshold;
+					%player.bloody["headshot"] = true;
+					%client.applyBodyParts();
+				}
+				else if(%blood)
+				{
+					%player.bloody["head"] = true;
+					%client.applyBodyParts();
+				}
 			case "rleg":
 				//%player.setNodeColor("RShoe", %color);
 			case "lleg":
@@ -192,11 +217,14 @@ package DespairHealth
 			case "hip":
 				//%player.setNodeColor("pants", %color);
 			case "chest":
-				%player.bloody[%dot > 0 ? "chest_back" : "chest_front"] = true;
-				%client.applyBodyParts();
+				if(%blood)
+				{
+					%player.bloody[%dot > 0 ? "chest_back" : "chest_front"] = true;
+					%client.applyBodyParts();
+				}
 			}
-			%player.bloody = true;
-			%player.bloodyWriting = 2;
+			if(%blood)
+				%player.bloodyWriting = 2;
 		}
 
 		if(getRandom() < 0.3)
@@ -253,7 +281,8 @@ package DespairHealth
 				%player.playPain();
 			%player.setDamageFlash((%player.maxhealth - %player.health) / %player.maxhealth * 0.5);
 		}
-		if((%type $= "blunt" || %type $= "sharp") && (%player.character.trait["Hemophiliac"] || getRandom() > (%type $= "sharp" ? 0.3 : 0.15)))
+
+		if(%type $= "gun" || ((%type $= "blunt" || %type $= "sharp") && (%player.character.trait["Hemophiliac"] || getRandom() > (%type $= "sharp" ? 0.3 : 0.15))))
 		{
 			%player.setStatusEffect($SE_damageSlot, "bleeding");
 			if(%player.character.trait["Hemophiliac"])

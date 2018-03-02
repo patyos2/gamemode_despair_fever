@@ -356,11 +356,16 @@ function despairStartInvestigation(%no_announce)
 		if (!%no_announce)
 			despairMakeBodyAnnouncement(1);
 		//cancel($DefaultMiniGame.subEventSchedule);
-		if(!$DefaultMiniGame.noWeapons && !isEventPending($DefaultMiniGame.subEventSchedule))
+		if(!$DefaultMiniGame.noWeapons && !isEventPending($DefaultMiniGame.subEventSchedule) && $Despair::DisableWepsInvest)
 		{
-			if ($pickedKiller)
-				messageClient($pickedKiller, '', "<font:impact:24>\c5Warning! You will be unable to swing your weapons in \c630 seconds\c5!");
-			$DefaultMiniGame.subEventSchedule = schedule(30*1000, 0, "DespairSetWeapons", 0); //Only disable weapons 30 secs after
+			if ($Despair::DisableWepsTimer > 0)
+			{
+				if ($pickedKiller)
+					messageClient($pickedKiller, '', '<font:impact:24>\c5Warning! You will be unable to swing your weapons in \c6%1 seconds\c5!', $Despair::DisableWepsTimer);
+				$DefaultMiniGame.subEventSchedule = schedule($Despair::DisableWepsTimer*1000, 0, "DespairSetWeapons", 0); //Only disable weapons 30 secs after
+			}
+			else
+				DespairSetWeapons(0);
 		}
 		cancel($DefaultMiniGame.eventSchedule);
 		$DefaultMiniGame.eventSchedule = schedule($investigationLength*1000, 0, "courtPlayers");
@@ -378,7 +383,7 @@ function despairStartInvestigation(%no_announce)
 function dropFoods()
 {
 	%charCount = GameCharacters.getCount();
-	%foodCount = mCeil(%charCount * 0.8) + getRandom(-3, 2);
+	%foodCount = mCeil(%charCount * 0.6) + getRandom(-2, 2);
 
 	while(%foodCount >= 0)
 	{
@@ -386,7 +391,7 @@ function dropFoods()
 		%brick.setItem(getRandom() > 0.1 ? "BurgerItem" : "BananaItem"); //I'm too lazy to check if the brick already has food spawned sooo....
 		%foodCount--;
 	}
-	$DefaultMiniGame.chatMessageAll('', '\c5  Food has been restocked! Go eat your cheeseburgers.', $days, %choice[getRandom(%high)]);
+	$DefaultMiniGame.chatMessageAll('', '\c3~~ Food has been restocked!\c6 Go eat your cheeseburgers.', $days, %choice[getRandom(%high)]);
 }
 
 function despairOnMorning()
@@ -487,11 +492,12 @@ function despairOnMorning()
 
 function despairOnNoon()
 {
-	
+
 }
 
 function despairOnEvening()
 {
+	dropFoods();
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -558,7 +564,6 @@ function despairOnNight()
 		%a[%j] = %x;
 	}
 
-	//pick traits
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%a[%i]];
@@ -734,7 +739,7 @@ function courtPlayers()
 			};
 			%doll.setTransform(%transform);
 			%doll.setScale("1 0.05 1");
-			%doll.mangled = %player.mangled;
+			%doll.mangled = %character.mangled;
 			%doll.desaturate = true;
 			%doll.applyAppearance(%character);
 			%doll.hideNode("larm");

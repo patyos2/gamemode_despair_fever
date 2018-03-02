@@ -16,7 +16,6 @@ datablock PlayerData(PlayerDespairArmor : PlayerStandardArmor)
 
 	canJet = 0;
 	mass = 120;
-	maxTools = 5;
 
 	runForce = 6000;
 
@@ -78,7 +77,6 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 
 	canJet = 0;
 	mass = 120;
-	maxTools = 5;
 
 	maxForwardSpeed = 0;
 	maxBackwardSpeed = 1;
@@ -107,7 +105,6 @@ datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
 
 	canJet = 0;
 	mass = 120;
-	maxTools = 5;
 
 	maxForwardSpeed = 0;
 	maxBackwardSpeed = 0;
@@ -280,6 +277,7 @@ function Player::dropTool(%obj, %index, %vel)
 	%spawn = new Item() {
 		dataBlock = %item;
 		position = %obj.getEyePoint();
+		itemProps = %obj.itemProps[%index];
 	};
 	%spawn.setCollisionTimeout(%obj);
 	%spawn.setTransform(getWords(%obj.getEyePoint(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
@@ -287,7 +285,6 @@ function Player::dropTool(%obj, %index, %vel)
 	%spawn.setVelocity(VectorAdd(%obj.getVelocity(), %targVel));
 	%spawn.schedulePop();
 	%spawn.sourceObject = %obj;
-	%spawn.itemProps = %obj.itemProps[%index];
 
 	if(isObject(%obj.itemProps[%index]))
 		%obj.itemProps[%index].onOwnerChange(%spawn);
@@ -376,6 +373,14 @@ function Player::onLight(%this)
 				%client.schedule(500 * %i, play3d, HeartBeatSound, %member.player.getEyePoint());
 		}
 	}
+}
+
+function player::IsBloody(%pl)
+{
+	return %pl.bloody["lshoe"] || %pl.bloody["rshoe"] ||
+	%pl.bloody["lhand"] || %pl.bloody["rhand"] ||
+	%pl.bloody["head"] || %pl.bloody["headshot"] ||
+	%pl.bloody["chest_front"] || %pl.bloody["chest_back"];
 }
 
 function player::applyAppearance(%pl,%char)
@@ -488,6 +493,8 @@ function player::applyAppearance(%pl,%char)
 		%pl.unHideNode("rhand_blood");
 	if (%pl.bloody["head"])
 		%pl.unHideNode("blood_head");
+	if (%pl.bloody["headshot"])
+		%pl.unHideNode("HeadShot");
 	if(!%hideApp)
 	{
 		if (%pl.bloody["chest_front"])
@@ -532,6 +539,7 @@ function player::applyAppearance(%pl,%char)
 	%pl.setNodeColor("lhand_blood", "0.7 0 0 1");
 	%pl.setNodeColor("rhand_blood", "0.7 0 0 1");
 	%pl.setNodeColor("blood_head", "0.7 0 0 1");
+	%pl.setNodeColor("HeadShot", "0.7 0 0 1");
 	%pl.setNodeColor("chest_blood_front", "0.7 0 0 1");
 	%pl.setNodeColor("chest_blood_back", "0.7 0 0 1");
 	%pl.setNodeColor("femchest_blood_front", "0.7 0 0 1");
@@ -588,6 +596,8 @@ package DespairPlayerPackage
 	function Observer::onTrigger(%this, %obj, %slot, %state)
 	{
 		%client = %obj.getControllingClient();
+		%cam = %client.getControlObject();
+		%orbit = %cam.getOrbitObject();
 		if (isObject(%pl = %client.player))
 		{
 			if (%pl.currResting && %state)
@@ -598,6 +608,34 @@ package DespairPlayerPackage
 
 			if (%pl.isSlipping)
 				return;
+		}
+		else if (%slot == 0 && %state && !isObject(%orbit))
+		{
+			%range = 48;
+
+			%a = %cam.getEyePoint();
+			%b = vectorAdd(%a, vectorScale(%cam.getEyeVector(), %range));
+
+			%mask =
+				$TypeMasks::FxBrickObjectType |
+				$TypeMasks::PlayerObjectType |
+				$TypeMasks::CorpseObjectType |
+				$TypeMasks::StaticShapeObjectType |
+				$TypeMasks::TerrainObjectType |
+				$TypeMasks::ItemObjectType;
+
+			%ray = containerRayCast(%a, %b, %mask, %cam);
+			if(isObject(%ray))
+			{
+				%client.examineObject(%ray);
+			}
+			initContainerRadiusSearch(getWords(%ray, 1, 3), 0.1,
+				$TypeMasks::StaticShapeObjectType | $TypeMasks::CorpseObjectType);
+
+			if (isObject(%col = containerSearchNext()))
+			{
+				%client.examineObject(%col);
+			}
 		}
 		Parent::onTrigger(%this, %obj, %slot, %state);
 	}

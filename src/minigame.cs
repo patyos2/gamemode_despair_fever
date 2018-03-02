@@ -43,47 +43,9 @@ function createPlayer(%client)
 		};
 		GameCharacters.add(%character);
 		//pick traits
-		%typePositive = $Despair::Traits::Positive;
-		%typeNeutral = $Despair::Traits::Neutral;
-		%typeNegative = $Despair::Traits::Negative;
-		%traitCount = getRandom(1, 2); //In actuality this decides how many positive-negative trait combos there are
-		%neutralCount = getRandom(1, 2);
-		while(%traitCount-- >= 0)
-		{
-			%lastType = %typeStr;
-			%lastTrait = %trait;
-			if(%neutralCount > 0)
-			{
-				%neutralCount--;
-				%traitCount++;
-				%typeStr = "neutral";
-			}
-			else if(%typeStr $= "positive")
-				%typeStr = "negative";
-			else
-			{
-				%typeStr = "positive";
-				%traitCount++; //Positive-Negative combinations count as a single trait essentialy
-			}
-			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
-			%type[%typeStr] = removeField(%type[%typeStr], %index);
+		if($Despair::Traits::Enabled)
+			GenerateTraits(%character, %client);
 
-			//Check if we picked conflicting traits
-			if(checkTraitConflicts(%character.traitList, %trait))
-			{
-				%trait = %lastTrait; //rollback a bit, we still need a negative
-				%typeStr = %lastType;
-				%traitCount++;
-				continue;
-			}
-			%character.trait[%trait] = true;
-			%character.traitList = setField(%character.traitList, getFieldCount(%character.traitList), %trait);
-
-			%color = %typeStr $= "positive" ? "\c2" : (%typeStr $= "negative" ? "\c0" : "\c6");
-			%desc = $Despair::Traits::Description[%trait];
-			messageClient(%client, '', '\c5You now have %1%2\c5 trait! %3', %color, %trait, %desc);
-		}
-		messageClient(%client, '', '\c5Say \c3/traits\c5 to bring up your traits again.');
 		%client.character = %character;
 	}
 	else
@@ -119,6 +81,8 @@ function createPlayer(%client)
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
 		%roomCloset = BrickGroup_888888.NTObject["_r" @ %room @ "_closet", 0];
 	}
+
+	RS_Log("[NewRound]" SPC %client.getPlayerName() SPC "(" @ %client.getBLID() @ ")'s character is '" @ %character.name @ "'", "\c1");
 
 	%character.room = %room;
 	//Assign character to client
@@ -185,6 +149,20 @@ function createPlayer(%client)
 		HatGangsterRedItem.onPickup("", %player);
 	}
 
+	if(%character.trait["Chekhov's Gunman"])
+	{
+		%revolverSlot = %player.setTool(%player.weaponSlot, "RevolverItem", $gunmanProps);
+		if (!isObject($gunmanProps) || $gunmanProps.character != %character)
+		{
+			if(isObject($gunmanProps))
+				$gunmanProps.delete();
+
+			$gunmanProps = %player.getItemProps(%revolverSlot);
+			$gunmanProps.character = %character;
+			$gunmanProps.noDeleteAlways = true;
+		}
+	}
+
 	if(%survivalPerk)
 	{
 		messageClient(%client, '', '\c5Since you survived last round, you will be \c6%1\c5 once more and receive a survival bonus!', %character.name);
@@ -215,7 +193,7 @@ function createPlayer(%client)
 			case 2:
 				if(isObject(%roomCloset))
 				{
-					messageClient(%client, '', '\c5Your closet now contains a useful item!', %character.name);
+					messageClient(%client, '', '\c5Your closet now contains a \c3useful item!');
 					%choices = "LockpickItem FlashlightItem RadioItem CleanSprayItem BananaItem";
 					%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
 					%roomCloset.spawnItem("0 0 1", %pick);
@@ -223,11 +201,16 @@ function createPlayer(%client)
 			case 3:
 				if(isObject(%roomCloset))
 				{
-					messageClient(%client, '', '\c5Your closet now contains a weapon!', %character.name);
+					messageClient(%client, '', '\c5Your closet now contains a \c3weapon!');
 					%choices = "KnifeItem BatItem UmbrellaItem";
 					%pick = getWord(%choices, %index = getRandom(0, getWordCount(%choices)-1));
 					%roomCloset.spawnItem("0 0 1", %pick);
 				}
+		}
+		if($gunmanChar == %character && isObject($gunmanProps))
+		{
+			$gunmanProps.ammo = getMin($gunmanProps.ammo + 1, $gunmanProps.maxAmmo);
+			messageClient(%client, '', '\c5You got an \c3additional bullet\c5 for your gun!');
 		}
 	}
 	return %player;
@@ -310,7 +293,7 @@ function despairEndGame()
 		$DefaultMiniGame.chatMessageAll('', $EndLog[%i]);
 	}
 
-	$DefaultMiniGame.chatMessageAll('', '\c6%1 (as %2)\c5 was the killer!', $currentKiller.getPlayerName(), $currentKiller.character.name);
+	$DefaultMiniGame.chatMessageAll('', '\c6%1\c5 was the killer!', $currentKiller.character.name);
 	UpdatePeopleScore();
 	$currentKiller.character.deleteMe = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(20000, reset, 0);
@@ -698,7 +681,7 @@ package DespairFever
 			return Parent::checkLastManStanding($DefaultMiniGame);
 		if (isEventPending($DefaultMiniGame.restartSchedule))
 			return;
-		if($despairTrial)
+		if($despairTrial && $DespairTrialVote)
 			return;
 
 		$aliveCount = 0;
@@ -732,16 +715,31 @@ package DespairFever
 			talk("Everybody is dead dave");
 			despairEndGame();
 		}
-		if(!%killerAlive && $pickedKiller)
+		else if(!%killerAlive && $pickedKiller)
 		{
 			talk("Killer is dead, rip");
 			despairEndGame();
 		}
-		if($aliveCount == 1)
+		else if($aliveCount == 1)
 		{
 			talk("I AM THE ONE AND ONLY");
 			despairEndGame();
 		}
+		else if(%killerAlive && $aliveCount == 2)
+		{
+			if(!$FinalBoss)
+			{
+				$DefaultMiniGame.chatMessageAll('', 'ONLY TWO PEOPLE REMAIN\c6. If the killer doesn\'t kill the last person alive, he will die! \c3You have 5 minutes.');
+				$FinalBoss = true;
+				cancel($DefaultMiniGame.eventSchedule);
+				$DefaultMiniGame.eventSchedule = $pickedKiller.player.schedule(300*1000, 0, "kill");
+				ServerPlaySong("DespairMusicIntense");
+				DespairSetWeapons(1);
+			}
+		}
+		else
+ 			$FinalBoss = false;
+
 		return 0;
 	}
 

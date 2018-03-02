@@ -1,4 +1,3 @@
-$Despair::Mood::Enabled = true;
 $Despair::Mood::Tick = 60000; //1 minute
 
 function Player::moodSchedule(%obj)

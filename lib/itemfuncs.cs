@@ -11,7 +11,7 @@ function Player::addTool(%this, %data, %props, %ignoreProps, %stealth)
 
 		if (!%data.customPickupMultiple && %this.tool[%i] == %data)
 		{
-			if (!%ignoreProps && isObject(%props))
+			if (!%ignoreProps && isObject(%props) && !%props.noDeleteAlways)
 				%props.delete();
 			return -1;
 		}
@@ -19,7 +19,7 @@ function Player::addTool(%this, %data, %props, %ignoreProps, %stealth)
 
 	if (%i == %maxTools)
 	{
-		if (!%ignoreProps && isObject(%props))
+		if (!%ignoreProps && isObject(%props) && !%props.noDeleteAlways)
 			%props.delete();
 		return -1;
 	}
@@ -46,7 +46,7 @@ function Player::setTool(%this, %index, %data, %props, %ignoreProps, %stealth)
 	if(%stealth $= "") %stealth = 1;
 	%data = %data.getID();
 
-	if (!%ignoreProps && isObject(%this.itemProps[%index]))
+	if (!%ignoreProps && isObject(%this.itemProps[%index]) && !%this.itemProps[%index].noDeleteAlways)
 		%this.itemProps[%index].delete();
 
 	%this.tool[%index] = %data;
@@ -72,7 +72,7 @@ function Player::removeTool(%this, %index, %ignoreProps, %stealth)
 	if(%stealth $= "") %stealth = 1;
 	%this.tool[%index] = 0;
 
-	if (!%ignoreProps && isObject(%this.itemProps[%index]))
+	if (!%ignoreProps && isObject(%this.itemProps[%index]) && !%this.itemProps[%index].noDeleteAlways)
 		%this.itemProps[%index].delete();
 
 	if (isObject(%this.client) && %stealth != 2)

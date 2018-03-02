@@ -66,13 +66,15 @@ function KillerBoxImage::onUse(%this, %obj, %slot)
 	%loot[0] = "HatSkimaskItem CoatItem LockpickItem CleanSprayItem KnifeItem BananaItem";
 	%loot[1] = "TaserItem DisguiseItem FlashbangItem";
 	%gotRare = false;
+
+	%chance = GameCharacters.getCount() * 0.035; //10 players = 35% chance for rare shit
 	while(%count-- >= 0)
 	{
-		if(getRandom() <= 0.25 && !%gotRare)
+		if(getRandom() <= %chance && !%gotRare)
 		{
 			%index = 1;
 
-			if(getRandom() > 0.1) //10% chance after the initial 25% check to get MORE rare shit!!!
+			if(getRandom() > 0.1) //10% chance after the initial check to get MORE rare shit!!!
 				%gotRare = true;
 		}
 		else

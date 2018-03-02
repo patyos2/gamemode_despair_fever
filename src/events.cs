@@ -47,7 +47,6 @@ function Player::setBloody(%this, %type, %dir, %bool)
 			if(!%bool)
 				%this.bloodyFootprints = 0;
 	}
-	%this.bloody = %this.bloody["lhand"] || %this.bloody["rhand"] || %this.bloody["chest_front"] || %this.bloody["chest_back"] || %this.bloody["head"];
 	%this.applyAppearance();
 }
 

@@ -174,7 +174,7 @@ function CleanSprayImage::onEmptyFire(%this, %obj, %slot)
 
 function CleanSprayImage::onFire(%this, %obj, %slot)
 {
-	if($investigationStart !$= "")
+	if($investigationStart !$= "" && !%obj.client.killer)
 		return;
 	%props = %obj.getItemProps();
 	if (%props.ammo <= 0)

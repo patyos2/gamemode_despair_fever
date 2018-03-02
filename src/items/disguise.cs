@@ -75,6 +75,7 @@ function DisguiseImage::onUse(%this, %obj, %slot)
 			%obj.fakeName = %col.character.name;
 			%obj.character.gender = %col.character.gender;
 			%col.mangled = true;
+			%col.character.mangled = true;
 			%obj.applyAppearance();
 			%col.applyAppearance();
 

@@ -198,6 +198,13 @@ datablock AudioProfile(DespairMusicInnocentsWin)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicWorldendDominator)
+{
+	fileName = $Despair::Path @ "res/music/Worldend_dominator.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
 function ServerStopSong()
 {
 	if(isObject(ServerMusic))
