@@ -111,13 +111,15 @@ if (!isObject(MissionCleanup))
 
 function despairOnKill(%victim, %attacker, %crit)
 {
-	if(!isObject(%victim) || !isObject(%attacker))
+	if(!isObject(%victim))
 		return;
 
-	if(%victim == %attacker)
+	if(!isObject(%attacker) || %victim == %attacker)
 	{
-		%victim.player.suicide = true;
-		return 1;
+		cancel(%victim.player.critLoop);
+		%victim.player.health = %player.maxhealth / 4; //rip
+		%victim.player.KnockOut(30);
+		return 0;
 	}
 
 	if(!%victim.player.aboutToKill && !%victim.killer && !%attacker.killer)
@@ -164,6 +166,9 @@ function despairOnKill(%victim, %attacker, %crit)
 				%other.play2d(DespairAdminBwoinkSound);
 			}
 		}
+		cancel(%victim.player.critLoop);
+		%victim.player.health = %player.maxhealth;
+		%victim.player.KnockOut(30);
 		return 0;
 	}
 
@@ -195,7 +200,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			{
 				%attacker.player.aboutToKill = "";
 				%attacker.killer = true;
-				$currentKiller = %attacker;
+				$pickedKiller = %attacker;
 				%attacker.play2d(KillerJingleSound);
 				%msg = "<color:FF0000>You murdered the killer in cold blood! Now it's your turn to get away with it...";
 				messageClient(%attacker, '', "<font:impact:30>" @ %msg);
@@ -461,30 +466,30 @@ function despairOnMorning()
 
 	if($days == 1 && $deathCount <= 0)
 	{
-		%brick = BrickGroup_888888.NTObject["_r" @ $currentKiller.character.room @ "_closet", 0];
+		%brick = BrickGroup_888888.NTObject["_r" @ $pickedKiller.character.room @ "_closet", 0];
 		if(isObject(%brick) && $spawnKillerBox)
 		{
 			%brick.setItem("KillerBoxItem");
-			messageClient($currentKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
-			commandToClient($currentKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
+			messageClient($pickedKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
+			commandToClient($pickedKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
 		}
+		else if($pickedKiller.player.addTool("KillerBoxItem") == -1)
+			messageClient($pickedKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
 		else
-			messageClient($currentKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
-		//else if($currentKiller.player.addTool("KillerBoxItem") == -1)
-		//	messageClient($currentKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
+			messageClient($pickedKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
 	}
 
 	if($days == 2)
 	{
 		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! Have you found any evidence?");
 		if($deathCount <= 0)
-			messageClient($currentKiller, '', "<font:impact:30>WARNING\c6: This is your last chance to kill. If you don't commit murder you will be \c0AUTOBANNED\c6.");
+			messageClient($pickedKiller, '', "<font:impact:30>WARNING\c6: This is your last chance to kill. If you don't commit murder you will be \c0AUTOBANNED\c6.");
 	}
 
 	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			$currentKiller.player.kill();
+			$pickedKiller.player.kill();
 		else
 			despairStartInvestigation();
 	}
@@ -620,7 +625,6 @@ function DespairPickKiller()
 		//echo(%client.getplayername() SPC "is killa");
 		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
 		$pickedKiller = %client;
-		$currentKiller = %client;
 		ServerPlaySong("DespairMusicOpeningIntro");
 
 		if(%client.player.unconscious)
@@ -917,14 +921,14 @@ function DespairStartDiscussion()
 	}
 	$DespairTrialOpening = false;
 	$DespairTrialDiscussion = $Sim::Time;
-	$chatDelay = 0.75; //less spam, please
+	$chatDelay = $Despair::TrialChatDelay; //less spam, please
 
-	%time = $Despair::DiscussPeriod + (60 * ($deathCount - 1)); //extra minute for every extra body
+	%time = $Despair::DiscussPeriod + ($Despair::DiscussExtraLength * ($deathCount - 1)); //extra 1.30 mins for every extra body
 
 	if(isObject($mangled))
-		%time = 600; //10 minutes
+		%time = $Despair::MangleTimer;
 
-	if(%time >= 420) //7 mins
+	if(%time >= $Despair::DiscussPeriod)
 		ServerPlaySong("DespairMusicTrialDiscussionIntro4");
 	else
 		ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
@@ -1036,8 +1040,8 @@ function DespairEndTrial()
 		else
 		{
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
-			$currentKiller.AddPoints(10);
-			$currentKiller.killerWins++;
+			$pickedKiller.AddPoints(10);
+			$pickedKiller.killerWins++;
 		}
 	}
 	else

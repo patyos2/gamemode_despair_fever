@@ -332,10 +332,10 @@ package DespairChat
 				%member.play2d(DespairAdminChatSound);
 			}
 		}
-		if(%killer && isObject($currentKiller))
+		if(%killer && isObject($pickedKiller))
 		{
-			messageClient($currentKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
-			$currentKiller.play2d(DespairAdminChatSound);
+			messageClient($pickedKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
+			$pickedKiller.play2d(DespairAdminChatSound);
 		}
 	}
 };

@@ -1,16 +1,26 @@
 //Base
-$Despair::DayLength = 360; //6 minutes for a full cycle
-$Despair::InvestigationLength = 360; //6 mins
+$Despair::DayLength = 480; //8 minutes for a full cycle
+$Despair::InvestigationLength = 420; //7 mins
 $Despair::InvestigationExtraLength = 90; //+1:30 mins for every new body
 $Despair::CritThreshold = -150; //How much negative health can the player take before dying
 
 $Despair::DisableWepsInvest = true; //Disable weapons when investgation starts?
 $Despair::DisableWepsTimer = 30; //How many seconds until the weps are disabled.
 //Trial
-$Despair::DiscussPeriod = 300; //5 mins
+$Despair::TrialChatDelay = 0.75; //Chat delay in seconds to prevent spamming
+$Despair::DiscussPeriod = 420; //7 mins
+$Despair::DiscussExtraLength = 90; //+1:30 mins for every body in trial
+$Despair::MangleTimer = 900; //15 minutes if a mangled body turns up for discusison phase
 $Despair::CanForceVote = 60; //1 min has to pass before you can forcevote
 $Despair::CanForceTrial = 240; //4 mins have to pass before you can force trial
 $Despair::MissingLength = 120; //2 mins until body announcement is made automatically
+//Sleep
+$Despair::SleepOverjoyed = 60;
+$Despair::SleepHappy = 70;
+$Despair::SleepSad = 85;
+$Despair::SleepDepressed = 90;
+$Despair::SleepDefault = 80;
+
 
 //Mood
 $Despair::Mood::Enabled = true;

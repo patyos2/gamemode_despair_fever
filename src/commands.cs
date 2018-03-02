@@ -178,7 +178,7 @@ function serverCmdSpectate(%this)
 	}
 	else
 	{
-		if(!$currentKiller)
+		if(!$pickedKiller)
 			createPlayer(%this);
 	}
 }
@@ -310,7 +310,7 @@ function updateAdminCount()
 		if(%client.isAdmin)
 			%admins++;
 	}
-	if(!%admins)
+	if($Pref::Server::Password $= "" && !%admins)
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "") SPC "[No Admins]";
 		$Pref::Server::Password = "a";	

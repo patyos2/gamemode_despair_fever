@@ -293,9 +293,9 @@ function despairEndGame()
 		$DefaultMiniGame.chatMessageAll('', $EndLog[%i]);
 	}
 
-	$DefaultMiniGame.chatMessageAll('', '\c6%1\c5 was the killer!', $currentKiller.character.name);
+	$DefaultMiniGame.chatMessageAll('', '\c6%1\c5 was the killer!', $pickedKiller.character.name);
 	UpdatePeopleScore();
-	$currentKiller.character.deleteMe = true;
+	//$pickedKiller.character.deleteMe = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(20000, reset, 0);
 }
 
@@ -388,7 +388,6 @@ function despairPrepareGame()
 	$announcements = 0;
 	$investigationStart = "";
 	$pickedKiller = "";
-	$currentKiller = "";
 	$days = 0;
 	$deathCount = 0;
 	$maxDeaths = 99;//getMax(1, $aliveCount);
@@ -603,7 +602,7 @@ package DespairFever
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 
-		if(!$currentKiller)
+		if(!$pickedKiller)
 			createPlayer(%client);
 
 		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
@@ -632,7 +631,7 @@ package DespairFever
 			%client.character.deleteMe = true;
 		}
 		%client.dfSaveData();
-		if(!%client.isAdmin && $currentKiller == %client)
+		if(!%client.isAdmin && $pickedKiller == %client)
 			serverCmdBan(0, %client, %client.bl_id, 5, "Leaving the game as the killer.");
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
@@ -661,7 +660,7 @@ package DespairFever
 			if(%client.isAdmin)
 				%admins++;
 		}
-		if(!%admins)
+		if(!%admins && $Pref::Server::Password $= "a")
 		{
 			for(%i = 0; %i < ClientGroup.getCount(); %i++)
 			{

@@ -268,12 +268,7 @@ package DespairHealth
 				commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);
 			}
 			else
-			{
-				cancel(%player.critLoop);
-				%player.health = %player.maxhealth;
-				%player.KnockOut(30);
 				return 1;
-			}
 		}
 		if(!%player.character.trait["Feel No Pain"])
 		{

@@ -340,18 +340,18 @@ function serverCmdSleep(%this, %bypass)
 	switch$ (%mood)
 	{
 		case "overjoyed":
-			%sec = 50;
+			%sec = $Despair::SleepOverjoyed;
 		case "happy":
-			%sec = 55;
+			%sec = $Despair::SleepHappy;
 		case "sad":
-			%sec = 65;
+			%sec = $Despair::SleepSad;
 		case "depressed":
-			%sec = 70;
+			%sec = $Despair::SleepDepressed;
 		default:
-			%sec = 60;
+			%sec = $Despair::SleepDefault;
 	}
 
-	%sec = %se $= "exhausted" ? 80 : %sec;
+	%sec = %se $= "exhausted" ? $Despair::SleepDepressed : %sec;
 	%pos = %pl.getPosition();
 
 	if(!%this.character.trait["Heavy Sleeper"])
