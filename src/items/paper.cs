@@ -45,6 +45,8 @@ datablock ItemData(PaperItem)
 	uiName = "Paper";
 	canDrop = true;
 
+	smallItem = true;
+
 	itemPropsClass = "PaperProps";
 	itemPropsAlways = true;
 
@@ -98,120 +100,150 @@ function PaperImage::onUnMount(%this, %obj, %slot)
 
 function getPaperEvidence()
 {
-	%count = GameCharacters.getCount();
-	%innoCount = -1;
-	for (%i = 0; %i < %count; %i++)
-	{
-		%char = GameCharacters.getObject(%i);
-		if(!%char.killer)
-			%inno[%innoCount++] = %char;
-	}
-	// prepare
-	for (%i = 0; %i < %count; %i++)
-		%a[%i] = %i;
-	// shuffle
-	while (%i--)
-	{
-		%j = getRandom(%i);
-		%x = %a[%i - 1];
-		%a[%i - 1] = %a[%j];
-		%a[%j] = %x;
-	}
-	%r = getRandom(1, 3);
-	switch (%r)
-	{
-		case 1:
-			%msg = "Investigation into robbery suspect reveals them to be";
-			%decals = "";
-			for (%i = 0; %i < %innoCount && getWordCount(%decals) < 3; %i++)
-			{
-				%char = GameCharacters.getObject(%a[%i]);
-				%decal = getField(%char.appearance, 2);
-				if(%decal $= "")
-					%decal = "blank";
-				if(strpos(%decals, %decal) == -1)
-				{
-					%decals = setWord(%decals, getWordCount(%decals), %decal);
-				}
-			}
-			%killer = $pickedKiller.character;
-			%decal = getField(%killer.appearance, 2);
-			if(strpos(%decals, %decal) == -1)
-			{
-				%decals = setWord(%decals, getRandom(1, getWordCount(%decals)) - 1, %decal);
-			}
-			for(%i = 0; %i < getWordCount(%decals); %i++)
-			{
-				%decal = getWord(%decals, %i);
-				switch$ (%decal)
-				{
-					case "Mod-Suit":
-						%a = "a wealthy progeny";
-					case "Mod-Pilot":
-						%a = "an aspiring aviator";
-					case "Mod-Army":
-						%a = "an US Army fanatic";
-					case "Meme-Mongler":
-						%a = "a dinosaur enthusiast";
-					case "Medieval-YARLY":
-						%a = "a fan of Night Owls";
-					case "Medieval-Rider":
-						%a = "a Riders fan";
-					case "Medieval-ORLY":
-						%a = "a fan of White Owls";
-					case "Medieval-Lion":
-						%a = "a Lions fan";
-					case "Medieval-Eagle":
-						%a = "an Eagles fan";
-					case "Hoodie":
-						%a = "wearing a hoodie";
-					case "Alyx":
-						%a = "a Block Mesa fan";
-					default:
-						%a = "a Plain Shirt";
-				}
-				%list = setField(%list, getFieldCount(%list), %a);
-			}
-			%list = naturalGrammarList(%list, "or");
-			%msg = %msg SPC %list;
+	// %count = GameCharacters.getCount();
+	// %innoCount = -1;
+	// for (%i = 0; %i < %count; %i++)
+	// {
+	// 	%char = GameCharacters.getObject(%i);
+	// 	if(!%char.killer)
+	// 		%inno[%innoCount++] = %char;
+	// }
+	// // prepare
+	// for (%i = 0; %i < %count; %i++)
+	// 	%a[%i] = %i;
+	// // shuffle
+	// while (%i--)
+	// {
+	// 	%j = getRandom(%i);
+	// 	%x = %a[%i - 1];
+	// 	%a[%i - 1] = %a[%j];
+	// 	%a[%j] = %x;
+	// }
 
-		case 2:
-			%character = %inno[getRandom(0, %innoCount-1)];
-			%a = getSubStr(getWord(%character.name, 0), 0, 1);
-			%b = getSubStr(getWord(%character.name, 1), 0, 1);
-			%rng = getRandom(0, 2);
-			if(%rng == 1)
-				%a = "#";
-			if(%rng == 2)
-				%b = "#";
-
-			%msg = %a @ "." @ %b @ ". was falsely accused of murder!";
-
-		case 3:
-			%msg = "A number of people -";
-
-			%pick[1] = %inno[getRandom(0, %innoCount-1)];
-			%pick[2] = %inno[getRandom(0, %innoCount-1)];
-			%pick[3] = %inno[getRandom(0, %innoCount-1)];
-
-			%pick[getRandom(1, 3)] = $pickedKiller.character;
-			%i = 0;
-			while(%i++ <= 3)
-			{
-				%a = getSubStr(getWord(%pick[%i].name, 0), 0, 1);
-				%b = getSubStr(getWord(%pick[%i].name, 1), 0, 1);
-				%rng = getRandom(1, 2);
-				if(%rng == 1)
-					%a = "#";
-				if(%rng == 2)
-					%b = "#";
-				%list = %list @ (%i == 1 ? "" : "	") @ %a @ "." @ %b @ ".";
-			}
-			%list = naturalGrammarList(%list);
-			%msg = %msg @ %list @ "- have been considered as possible murder suspects! Drama on page 5.";
-	}
+	%character = GameCharacters.getObject(getRandom(0, GameCharacters.getCount() - 1));
+	%trait = getField(%character.traitList, getRandom(0, getFieldCount(%character.traitList) - 1);
+	if(%trait $= "Chekhov's Gunman")
+		return "meem";
+	%msg = getWord(%character.name, 0) @ " is " @ aOrAn(%trait) SPC %trait SPC " kind of person!";
 	return %msg;
 }
+
+// function getPaperEvidence()
+// {
+// 	%count = GameCharacters.getCount();
+// 	%innoCount = -1;
+// 	for (%i = 0; %i < %count; %i++)
+// 	{
+// 		%char = GameCharacters.getObject(%i);
+// 		if(!%char.killer)
+// 			%inno[%innoCount++] = %char;
+// 	}
+// 	// prepare
+// 	for (%i = 0; %i < %count; %i++)
+// 		%a[%i] = %i;
+// 	// shuffle
+// 	while (%i--)
+// 	{
+// 		%j = getRandom(%i);
+// 		%x = %a[%i - 1];
+// 		%a[%i - 1] = %a[%j];
+// 		%a[%j] = %x;
+// 	}
+// 	%r = getRandom(1, 3);
+// 	switch (%r)
+// 	{
+// 		case 1:
+// 			%msg = "Investigation into robbery suspect reveals them to be";
+// 			%decals = "";
+// 			for (%i = 0; %i < %innoCount && getWordCount(%decals) < 3; %i++)
+// 			{
+// 				%char = GameCharacters.getObject(%a[%i]);
+// 				%decal = getField(%char.appearance, 2);
+// 				if(%decal $= "")
+// 					%decal = "blank";
+// 				if(strpos(%decals, %decal) == -1)
+// 				{
+// 					%decals = setWord(%decals, getWordCount(%decals), %decal);
+// 				}
+// 			}
+// 			%killer = $pickedKiller.character;
+// 			%decal = getField(%killer.appearance, 2);
+// 			if(strpos(%decals, %decal) == -1)
+// 			{
+// 				%decals = setWord(%decals, getRandom(1, getWordCount(%decals)) - 1, %decal);
+// 			}
+// 			for(%i = 0; %i < getWordCount(%decals); %i++)
+// 			{
+// 				%decal = getWord(%decals, %i);
+// 				switch$ (%decal)
+// 				{
+// 					case "Mod-Suit":
+// 						%a = "a wealthy progeny";
+// 					case "Mod-Pilot":
+// 						%a = "an aspiring aviator";
+// 					case "Mod-Army":
+// 						%a = "an US Army fanatic";
+// 					case "Meme-Mongler":
+// 						%a = "a dinosaur enthusiast";
+// 					case "Medieval-YARLY":
+// 						%a = "a fan of Night Owls";
+// 					case "Medieval-Rider":
+// 						%a = "a Riders fan";
+// 					case "Medieval-ORLY":
+// 						%a = "a fan of White Owls";
+// 					case "Medieval-Lion":
+// 						%a = "a Lions fan";
+// 					case "Medieval-Eagle":
+// 						%a = "an Eagles fan";
+// 					case "Hoodie":
+// 						%a = "wearing a hoodie";
+// 					case "Alyx":
+// 						%a = "a Block Mesa fan";
+// 					default:
+// 						%a = "a Plain Shirt";
+// 				}
+// 				%list = setField(%list, getFieldCount(%list), %a);
+// 			}
+// 			%list = naturalGrammarList(%list, "or");
+// 			%msg = %msg SPC %list;
+
+// 		case 2:
+// 			%character = %inno[getRandom(0, %innoCount-1)];
+// 			%a = getSubStr(getWord(%character.name, 0), 0, 1);
+// 			%b = getSubStr(getWord(%character.name, 1), 0, 1);
+// 			%rng = getRandom(0, 2);
+// 			if(%rng == 1)
+// 				%a = "#";
+// 			if(%rng == 2)
+// 				%b = "#";
+
+// 			%msg = %a @ "." @ %b @ ". was falsely accused of murder!";
+
+// 		case 3:
+// 			%msg = "A number of people -";
+
+// 			%pick[1] = %inno[getRandom(0, %innoCount-1)];
+// 			%pick[2] = %inno[getRandom(0, %innoCount-1)];
+// 			%pick[3] = %inno[getRandom(0, %innoCount-1)];
+
+// 			%pick[getRandom(1, 3)] = $pickedKiller.character;
+// 			%i = 0;
+// 			while(%i++ <= 3)
+// 			{
+// 				%a = getSubStr(getWord(%pick[%i].name, 0), 0, 1);
+// 				%b = getSubStr(getWord(%pick[%i].name, 1), 0, 1);
+// 				%rng = getRandom(1, 2);
+// 				if(%rng == 1)
+// 					%a = "#";
+// 				if(%rng == 2)
+// 					%b = "#";
+// 				%list = %list @ (%i == 1 ? "" : "	") @ %a @ "." @ %b @ ".";
+// 			}
+// 			%list = naturalGrammarList(%list);
+// 			%msg = %msg @ %list @ "- have been considered as possible murder suspects! Drama on page 5.";
+// 	}
+// 	return %msg;
+// }
 
 function getPaperTrash()
 {

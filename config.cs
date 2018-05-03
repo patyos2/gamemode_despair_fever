@@ -21,13 +21,12 @@ $Despair::SleepSad = 85;
 $Despair::SleepDepressed = 90;
 $Despair::SleepDefault = 80;
 
-
 //Mood
 $Despair::Mood::Enabled = true;
 //Traits
 $Despair::Traits::Enabled = true;
 
-$map = "motel";
+$map = "school";
 //MOTEL MAP PREFS:
 if($map $= "motel")
 {
@@ -87,22 +86,29 @@ if($map $= "mansion")
 //SCHOOL MAP PREFS:
 if($map $= "school")
 {
-	$Despair::RoomCount = 16;
+	$Despair::RoomCount = 22;
 
-	$roomNum[1] = "1";
-	$roomNum[2] = "2";
-	$roomNum[3] = "3";
-	$roomNum[4] = "4";
-	$roomNum[5] = "5";
-	$roomNum[6] = "6";
-	$roomNum[7] = "7";
-	$roomNum[8] = "8";
-	$roomNum[9] = "9";
-	$roomNum[10] = "10";
-	$roomNum[11] = "11";
-	$roomNum[12] = "12";
-	$roomNum[13] = "13";
-	$roomNum[14] = "14";
-	$roomNum[15] = "15";
-	$roomNum[16] = "16";
+	$roomNum[1] = "11 Condo";
+	$roomNum[2] = "12 Condo";
+	$roomNum[3] = "13 Condo";
+	$roomNum[4] = "14 Condo";
+	$roomNum[5] = "15 Condo";
+	$roomNum[6] = "16 Condo";
+	$roomNum[7] = "21 Condo";
+	$roomNum[8] = "22 Condo";
+	$roomNum[9] = "23 Condo";
+	$roomNum[10] = "24 Condo";
+	$roomNum[11] = "25 Condo";
+
+	$roomNum[12] = "11 Xing";
+	$roomNum[13] = "12 Xing";
+	$roomNum[14] = "13 Xing";
+	$roomNum[15] = "14 Xing";
+	$roomNum[16] = "15 Xing";
+	$roomNum[17] = "16 Xing";
+	$roomNum[18] = "21 Xing";
+	$roomNum[19] = "22 Xing";
+	$roomNum[20] = "23 Xing";
+	$roomNum[21] = "24 Xing";
+	$roomNum[22] = "25 Xing";
 }

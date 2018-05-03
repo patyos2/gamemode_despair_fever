@@ -149,7 +149,7 @@ package DespairHealth
 			%damage *= 3;
 		if(%type $= $DamageType::Direct || %type $= $DamageType::Suicide)
 		{
-			%type = "accident";
+			%type = "env";
 			%blood = false;
 		}
 
@@ -233,6 +233,13 @@ package DespairHealth
 		%player.health -= %damage;
 		if(%player.health <= $Despair::CritThreshold)
 		{
+			if (%client == %attacker && %type $= "fall")
+			{
+				cancel(%player.critLoop);
+				%player.health = %player.maxhealth / 4;
+				%player.KnockOut(30);
+				return 1;
+			}
 			if(despairOnKill(%client, %attacker))
 			{
 				%player.wakeUp();
@@ -262,13 +269,17 @@ package DespairHealth
 				%player.wakeUp();
 				%player.changeDataBlock(PlayerCorpseArmor);
 				%player.playThread(0, "sit");
-				%player.noWeapons = true;
 				%player.critLoop();
 				messageClient(%client, '', "\c5You can use the last of your strength to \c6/write\c5 your final message! Be sure to look at a surface.");
 				commandToClient(%client, 'CenterPrint', "\c5You can \c6/write\c5 your final message!\nBe sure to look at a surface.", 4);
 			}
 			else
+			{
+				cancel(%player.critLoop);
+				%player.health = %player.maxhealth;
+				%player.KnockOut(30);
 				return 1;
+			}
 		}
 		if(!%player.character.trait["Feel No Pain"])
 		{

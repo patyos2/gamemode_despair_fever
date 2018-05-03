@@ -12,6 +12,8 @@ datablock itemData(PenItem)
 	uiName = "Pen";
 	canDrop = true;
 
+	smallItem = true;
+
 	itemPropsClass = "PenProps";
 	itemPropsAlways = true;
 

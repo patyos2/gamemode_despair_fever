@@ -30,35 +30,49 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 	{
 		//Sleep-related
 		case "sleepy":
+			if(%slot != $SE_sleepSlot)
+				return %slot;
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
 			if(!%nomsg && isObject(%player.client))
 				%player.client.chatMessage("\c5You are getting sleepy... Find a \c3bed\c5 and type \c3/sleep\c5!");
 		case "tired":
+			if(%slot != $SE_sleepSlot)
+				return %slot;
 			%player.updateSpeedScale(0.9);
 			%player.addMood(-2, "You feel tired...", 1);
 			%player.swingSpeedMod = 1.1;
 		case "exhausted":
+			if(%slot != $SE_sleepSlot)
+				return %slot;
 			%player.updateSpeedScale(0.6);
 			%player.addMood(-4, "You feel exhausted...", 1);
 			%player.swingSpeedMod = 1.6;
 		case "sleeping":
+			if(%slot != $SE_sleepSlot)
+				return %slot;
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 1;
 		//passive buffs/debuffs
 		case "drowsy":
+			if(%slot != $SE_passiveSlot)
+				return %slot;
 			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.5;
 			%player.addMood(-3, "You feel drowsy...", 1);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(30000, removeStatusEffect, %slot, %effect);
 		case "sore back":
+			if(%slot != $SE_passiveSlot)
+				return %slot;
 			%player.updateSpeedScale(0.8);
 			%player.swingSpeedMod = 1.2;
 			%player.addMood(-3, "Your back is sore...", 1);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(75000, removeStatusEffect, %slot, %effect);
 		case "fresh":
+			if(%slot != $SE_passiveSlot)
+				return %slot;
 			if(%player.statusEffect[%slot] $= "sore back" || %player.statusEffect[%slot] $= "shining")
 				return %slot;
 			%player.updateSpeedScale(1);
@@ -68,6 +82,8 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(20000, removeStatusEffect, %slot, %effect);
 		case "shining":
+			if(%slot != $SE_passiveSlot)
+				return %slot;
 			%player.updateSpeedScale(1);
 			%player.swingSpeedMod = 0.9;
 			%player.addMood(7, (%nomsg? "": "You had a \c3good night's sleep\c5!"), 1);
@@ -76,12 +92,16 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 
 		//damage-related
 		case "bleeding":
+			if(%slot != $SE_damageSlot)
+				return %slot;
 			%player.bleedTicks = 6;
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(2000, updateStatusEffect, %slot);
 			if(!%nomsg && isObject(%player.client) && %player.statusEffect[%slot] !$= "bleeding")
 				%player.addMood(-3, "You are " @ getStatusEffectColor(%effect) @ "bleeding\c5!", 1);
 		case "shock":
+			if(%slot != $SE_damageSlot)
+				return %slot;
 			if(%player.statusEffect[%slot] $= "shock")
 				return %slot; //Don't stack it
 

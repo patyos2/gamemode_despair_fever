@@ -146,7 +146,7 @@ function GameConnection::examineObject(%client, %col)
 			if(%props.bloody)
 				%b = "\c0It's bloody.";
 		}
-		%text = %text @ "This is \c3" @ %name @ "\n" @ %b;
+		%text = %text @ "This is " @ aOrAn(%name) @ " \c3" @ %name @ "\n" @ %b;
 	}
 
 	if(%col.getType() & $TypeMasks::StaticShapeObjectType)

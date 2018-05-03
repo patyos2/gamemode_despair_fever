@@ -31,7 +31,7 @@ datablock AudioProfile(WoodHitSound)
 
 function fxDtsBrick::doorDamage(%brick, %damage)
 {
-	if (!%brick.getDatablock().isDoor || %brick.impervious)
+	if (!%brick.getDatablock().isDoor || %brick.lockId $= "")
 		return;
 
 	%brick.doorHits += %damage;

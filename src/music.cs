@@ -200,7 +200,7 @@ datablock AudioProfile(DespairMusicInnocentsWin)
 
 datablock AudioProfile(DespairMusicWorldendDominator)
 {
-	fileName = $Despair::Path @ "res/music/Worldend_dominator.ogg";
+	fileName = $Despair::Path @ "res/music/WorldendDominator.ogg";
 	description = AudioLooping2D;
 	preload = true;
 };

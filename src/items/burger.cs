@@ -56,4 +56,5 @@ function BurgerImage::onEat(%this, %obj, %slot)
     %obj.lastEat = $Sim::Time;
 	serverPlay3d("EatSound", %obj.getEyePoint());
 	%obj.addMood(5, "Mmm, that was delicious!");
+	%obj.health = getMin(%obj.health + 25, %obj.maxHealth);
 }

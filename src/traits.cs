@@ -136,7 +136,7 @@ function Player::traitSchedule(%obj)
 			serverCmdMe(%obj.client, %text);
 		}
 	}
-	if(%obj.character.trait["Social Anxiety"])
+	if(%obj.character.trait["Social Anxiety"] && %obj.unconscious)
 	{
 		%center = %obj.getEyePoint();
 		initContainerRadiusSearch(%center, 48, $TypeMasks::PlayerObjectType);
@@ -155,13 +155,13 @@ function Player::traitSchedule(%obj)
 
 		if(%stress)
 		{
-			if(!%obj.client.killer && !%obj.unconscious && !isEventPending(%obj.passOutSchedule) && %obj.anxiety > 3 && $Sim::Time - %obj.lastKO < 30)
+			if(!%obj.client.killer && !isEventPending(%obj.passOutSchedule) && %obj.anxiety > 6 && $Sim::Time - %obj.lastKO > 60)
 			{
 				messageClient(%obj.client, '', "\c5You're about to pass out due to your \c3social anxiety\c5...");
-				%obj.passOutSchedule = %obj.schedule(5000, knockOut, 30);
+				%obj.passOutSchedule = %obj.schedule(5000, knockOut, 20);
 				%obj.anxiety = 0;
 			}
-			else if(getRandom() < 0.1 * %stress)
+			else if(getRandom() < 0.05 * %stress)
 			{
 				if($Sim::Time - %obj.client.lastEmoteTime >= 60)
 					%obj.anxiety = 0;
@@ -181,15 +181,18 @@ function Player::traitSchedule(%obj)
 						%obj.addMood(-5);
 				}
 
-				%high = -1;
-				%text[%high++] = "trembles!";
-				%text[%high++] = "blushes!";
-				%text[%high++] = "fidgets!";
-				%text[%high++] = "sweats!";
-				%text[%high++] = "clears their throat!";
-				%text[%high++] = "twitches!";
-				%text = %text[getRandom(%high)];
-				serverCmdMe(%obj.client, %text);
+				if (%obj.anxiety >= 2)
+				{
+					%high = -1;
+					%text[%high++] = "trembles!";
+					%text[%high++] = "blushes!";
+					%text[%high++] = "fidgets!";
+					%text[%high++] = "sweats!";
+					%text[%high++] = "clears their throat!";
+					%text[%high++] = "twitches!";
+					%text = %text[getRandom(%high)];
+					serverCmdMe(%obj.client, %text);
+				}
 				messageClient(%obj.client, '', '\c5You\'re feeling %1anxious...', %level);
 			}
 		}

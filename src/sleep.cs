@@ -318,6 +318,7 @@ function serverCmdSleep(%this, %bypass)
 		%pl.unconscious = 1;
 		%pl.currResting = 1;
 		%pl.isBody = true;
+		%pl.spawnFiber();
 		%this.chatMessage("\c6You are faking sleep. Press any key to get up.");
 		if(%this.character.trait["Snorer"])
 		{

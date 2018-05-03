@@ -111,15 +111,13 @@ if (!isObject(MissionCleanup))
 
 function despairOnKill(%victim, %attacker, %crit)
 {
-	if(!isObject(%victim))
+	if(!isObject(%victim) || !isObject(%attacker))
 		return;
 
-	if(!isObject(%attacker) || %victim == %attacker)
+	if(%victim == %attacker)
 	{
-		cancel(%victim.player.critLoop);
-		%victim.player.health = %player.maxhealth / 4; //rip
-		%victim.player.KnockOut(30);
-		return 0;
+		%victim.player.suicide = true;
+		return 1;
 	}
 
 	if(!%victim.player.aboutToKill && !%victim.killer && !%attacker.killer)
@@ -229,6 +227,13 @@ function despairOnKill(%victim, %attacker, %crit)
 
 			%attacker.murders++;
 			%attacker.dfSaveData();
+
+			if(isEventPending(%attacker.player.critLoop))
+			{
+				cancel(%attacker.player.critLoop);
+				%attacker.player.health = %attacker.player.maxhealth / 4;
+				messageClient(%attacker, '', "\c5The kill has given you \c6second wind\c5!");
+			}
 			%victim.deaths++; //Only counts legit murders
 			%victim.dfSaveData();
 			%victim.AddPoints(1); //"yay you started the killfest" consolation prize for the victim so they're not TOO salty
@@ -413,6 +418,26 @@ function despairOnMorning()
 		}
 	}
 
+	if (getRandom() <= 0.4)
+	{
+		//update fog
+		$EnvGuiServer::VisibleDistance = 80;
+		Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
+		$EnvGuiServer::FogDistance = 0;
+		Sky.fogDistance = $EnvGuiServer::FogDistance;
+		Sky.sendUpdate();
+		$DefaultMiniGame.chatMessageAll('', '\c3~~ Oh, no! There is a \c6dust storm!');
+	}
+	else
+	{
+		//update fog
+		$EnvGuiServer::VisibleDistance = 130;
+		Sky.visibleDistance = $EnvGuiServer::VisibleDistance;
+		$EnvGuiServer::FogDistance = 100;
+		Sky.fogDistance = $EnvGuiServer::FogDistance;
+		Sky.sendUpdate();
+	}
+
 	dropFoods();
 
 	%count = BrickGroup_888888.NTObjectCount["_evidence"];
@@ -430,7 +455,7 @@ function despairOnMorning()
 		%a[%j] = %x;
 	}
 
-	%evidencePapers = 0; //$deathCount <= 0; //single paper per day //HOW ABOUT NO PAPER A DAY
+	%evidencePapers = getRandom(0, 2);
 	%tipsPapers = getRandom(3, 6);
 	%trashPapers = getRandom(3, 6);
 	//Spawn evidence
@@ -479,17 +504,22 @@ function despairOnMorning()
 			messageClient($pickedKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
 	}
 
-	if($days == 2)
+	if($days % 4 == 2)
 	{
-		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is the last day! Have you found any evidence?");
+		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: Next day, the body announcement will trigger if there were any deaths.");
 		if($deathCount <= 0)
-			messageClient($pickedKiller, '', "<font:impact:30>WARNING\c6: This is your last chance to kill. If you don't commit murder you will be \c0AUTOBANNED\c6.");
+			messageClient($pickedKiller, '', "<font:impact:30>WARNING\c6: This is your last chance to kill. If you don't commit murder you will be \c0EXECUTED\c6.");
 	}
 
-	if($days >= 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
+	if($days % 4 == 3 && $investigationStart $= "") //Court 'em on the third day if there's no investigation
 	{
 		if($deathCount <= 0)
-			$pickedKiller.player.kill();
+		{
+			%ass = $pickedKiller;
+			DespairPickKiller(true);
+			if(isObject(%ass) && isObject(%ass.player))
+				%ass.player.kill();
+		}
 		else
 			despairStartInvestigation();
 	}
@@ -605,11 +635,14 @@ function serverCmdKillerAccept(%this)
 	}
 }
 
-function DespairPickKiller()
+function DespairPickKiller(%repick)
 {
-	cancel($DefaultMiniGame.eventSchedule);
-	if(!$pickedKiller)
+	if(!%repick)
+		cancel($DefaultMiniGame.eventSchedule);
+	if(!$pickedKiller || %repick)
 	{
+		if(isObject($pickedKiller))
+			$pickedKiller.killer = false;
 		%queue = $Despair::Queue["Killer"];
 		%client = getWord(%queue, getRandom(0, getWordCount(%queue)-1));//chooseNextClient("Killer");
 		if(isObject($forceKiller))
@@ -767,6 +800,7 @@ function courtPlayers()
 			{
 				$mangled = %doll;
 				%secs = 40;
+				%doll.setShapeName("Unknown" SPC "(" @ %state @ ")", "8564862");
 			}
 		}
 		else
@@ -928,7 +962,9 @@ function DespairStartDiscussion()
 	if(isObject($mangled))
 		%time = $Despair::MangleTimer;
 
-	if(%time >= $Despair::DiscussPeriod)
+	if(%time >= $Despair::DiscussPeriod * 1.5)
+		ServerPlaySong("DespairMusicWorldendDominator");
+	else if(%time >= $Despair::DiscussPeriod && getRandom(0, 1) == 1)
 		ServerPlaySong("DespairMusicTrialDiscussionIntro4");
 	else
 		ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
@@ -1036,12 +1072,22 @@ function DespairEndTrial()
 			%unfortunate.setVelocity(vectorAdd(vectorScale(%unfortunate.getForwardVector(), 3), "0 0 10"));
 			%unfortunate.kill();
 			%win = 1;
+			while(getWordCount($shuttersOpen) < $shutterCount)
+			{
+				%num = getRandom(1, $shutterCount);
+				if(strpos($shuttersOpen, %num) == -1)
+				{
+					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen)++, %num);
+					break;
+				}
+			}
 		}
 		else
 		{
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
 			$pickedKiller.AddPoints(10);
 			$pickedKiller.killerWins++;
+			$shuttersOpen = "";
 		}
 	}
 	else

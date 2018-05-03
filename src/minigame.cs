@@ -378,6 +378,19 @@ function despairPrepareGame()
 		$stand[%i].setTransform("0 0 -300");
 		$memorial[%i].setTransform("0 0 -300");
 	}
+
+	//Reset shutters
+	$shutterCount = 0;
+	while(isObject(BrickGroup_888888.NTObject["_shutter" @ $shutterCount++]))
+	{
+		for(%i = 0; %i < BrickGroup_888888.NTObjectCount["_shutter" @ %num]; %i++)
+		{
+			%shutter = BrickGroup_888888.NTObject["_shutter" @ %num, %i];
+			if(strpos($shuttersOpen, %num) == -1)
+				%shutter.disappear(0);
+		}
+	}
+
 	$courtVoid.setTransform("0 0 -300");
 	$courtvoid.setScale("1 1 1");
 
@@ -632,7 +645,7 @@ package DespairFever
 		}
 		%client.dfSaveData();
 		if(!%client.isAdmin && $pickedKiller == %client)
-			serverCmdBan(0, %client, %client.bl_id, 5, "Leaving the game as the killer.");
+			DespairPickKiller(true);
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
 

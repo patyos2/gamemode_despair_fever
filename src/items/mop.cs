@@ -114,7 +114,7 @@ function mopImage::onFire(%this, %obj, %slot)
 		%pos = %stop;
 	}
 
-	initContainerRadiusSearch(%pos, 0.75,
+	initContainerRadiusSearch(%pos, 1.1,
 		$TypeMasks::StaticShapeObjectType);
 
 	while (isObject(%col = containerSearchNext()))

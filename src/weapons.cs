@@ -122,6 +122,9 @@ function Player::tryStartFireWeapon(%player, %manual)
 
 	%image = %player.getMountedImage(0);
 
+	if (isEventPending(%player.critLoop) && !%image.gun)
+		return;
+
 	if (%manual || (!%image.fireManual && %player.getImageTrigger(0)))
 		%player.fireWeapon(false, %manual);
 }

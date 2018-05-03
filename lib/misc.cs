@@ -186,3 +186,8 @@ function rgbPartToHex(%color)
 
 	return getSubStr(%hex, %left, 1) @ getSubStr(%hex, %color, 1);
 }
+
+function aOrAn(%string) 
+{
+	return strpos("aeiou", getSubStr(%string, 0, 1)) != -1 ? "an" : "a";
+}

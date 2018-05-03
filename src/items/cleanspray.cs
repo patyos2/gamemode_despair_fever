@@ -94,7 +94,7 @@ datablock ItemData(CleanSprayItem)
 
 function CleanerProps::onAdd(%this)
 {
-	%this.ammo = getRandom(25, 40);
+	%this.ammo = getRandom(40, 60);
 }
 datablock ShapeBaseImageData(CleanSprayImage)
 {

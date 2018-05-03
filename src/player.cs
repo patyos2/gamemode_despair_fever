@@ -274,6 +274,63 @@ function Player::dropTool(%obj, %index, %vel)
 	if(%vel $= "")
 		%vel = 15;
 
+	%range = 6;
+
+	%a = %obj.getEyePoint();
+	%b = vectorAdd(%a, vectorScale(%obj.getEyeVector(), %range));
+
+	%mask =
+		$TypeMasks::FxBrickObjectType |
+		$TypeMasks::PlayerObjectType |
+		$TypeMasks::CorpseObjectType |
+		$TypeMasks::StaticShapeObjectType |
+		$TypeMasks::TerrainObjectType |
+		$TypeMasks::ItemObjectType;
+
+	%ray = containerRayCast(%a, %b, %mask, %obj);
+	if(isObject(%ray))
+	{
+		if(%ray.getClassName() $= "fxDTSBrick" && %ray.getName() $= "_furnace")
+		{
+			if(!%obj.client.killer)
+			{
+				messageClient(%obj.client, '', "\c5You're too pure for burning things!");
+				return;
+			}
+			if(%item.className $= "DespairWeapon")
+			{
+				messageClient(%obj.client, '', "\c5This object is too big to burn!");
+				return;
+			}
+			if($Sim::Time - $FurnaceLastUsage > 300)
+			{
+				$FurnaceLastUsage = $Sim::Time;
+				for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_furnace_smoke"]; %i++)
+				{
+					%brick = BrickGroup_888888.NTObject["_furnace_smoke", %i];
+					%brick.setEmitter("FogEmitterA");
+					%brick.schedule(300 * 1000, "setEmitter", "");
+				}
+
+				if(isObject(%obj.itemProps[%index]))
+					%obj.itemProps[%index].delete();
+				%obj.itemProps[%index] = "";
+
+				if(isFunction(%item.getName(), "onDrop"))
+					%item.onDrop(%obj, %index);
+				else
+					%obj.removeTool(%index, 1, 0, 0);
+
+				RS_Log(%obj.client.getPlayerName() SPC "(" @ %obj.client.getBLID() @ ") burned '" @ %item.uiName @ "' in the furnace", "\c1");
+			}
+			else
+			{
+				messageClient(%obj.client, '', "\c5The furnace is still burning! You'll have to wait.");
+			}
+			return;
+		}
+	}
+
 	%spawn = new Item() {
 		dataBlock = %item;
 		position = %obj.getEyePoint();
@@ -667,8 +724,13 @@ package DespairPlayerPackage
 				if(%slipcheck && !isEventPending(%obj.wakeUpSchedule) && $Sim::Time - %obj.lastSlip > 3)
 				{
 					%obj.slip(%col.getDatablock().slip);
-					%obj.lastShover = %col.sourceObject;
-					%obj.lastShoved = $Sim::Time;
+					%obj.attackCount++;
+					%obj.attackType[%obj.attackCount] = "slip";
+					%obj.attackDot[%obj.attackCount] = 0; //lol who cares
+					%obj.attackSource[%obj.attackCount] = %col.sourceObject;
+					%obj.attackTime[%obj.attackCount] = $Sim::Time;
+					%obj.attackDayTime[%obj.attackCount] = getDayCycleTime();
+					%obj.attackDay[%obj.attackCount] = $days;
 				}
 				%col.setTransform(getWords(%col.getTransform(), 0, 2) SPC getWords(%obj.getTransform(), 3, 7));
 				%col.setCollisionTimeout(%obj);

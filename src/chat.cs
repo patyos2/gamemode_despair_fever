@@ -240,7 +240,7 @@ package DespairChat
 			%member = ClientGroup.getObject(%i);
 			if (!isObject(%member.player) || %member.miniGame != $DefaultMiniGame)
 			{
-				if(%member.miniGame != $DefaultMiniGame)
+				if(%member.miniGame != $DefaultMiniGame && %member.isAdmin)
 					messageClient(%member, '', '\c7[%1] <color:ffff80>%2 %3<color:fffff0>, %4', %time, %name SPC "(" @ %client.getPlayerName() @ ")", %type, %text);
 				else
 					messageClient(%member, '', '\c7[%1] <color:ffff80>%2 %3<color:fffff0>, %4', %time, %name, %type, %text);
