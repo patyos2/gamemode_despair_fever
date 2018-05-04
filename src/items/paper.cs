@@ -121,7 +121,7 @@ function getPaperEvidence()
 	// }
 
 	%character = GameCharacters.getObject(getRandom(0, GameCharacters.getCount() - 1));
-	%trait = getField(%character.traitList, getRandom(0, getFieldCount(%character.traitList) - 1);
+	%trait = getField(%character.traitList, getRandom(0, getFieldCount(%character.traitList) - 1));
 	if(%trait $= "Chekhov's Gunman")
 		return "meem";
 	%msg = getWord(%character.name, 0) @ " is " @ aOrAn(%trait) SPC %trait SPC " kind of person!";

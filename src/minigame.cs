@@ -388,8 +388,13 @@ function despairPrepareGame()
 			%shutter = BrickGroup_888888.NTObject["_shutter" @ %num, %i];
 			if(strpos($shuttersOpen, %num) == -1)
 				%shutter.disappear(0);
+			else
+				%open++;
 		}
 	}
+
+	if(%open > 0)
+		talk("There are now " @ %open @ "open shutters!");
 
 	$courtVoid.setTransform("0 0 -300");
 	$courtvoid.setScale("1 1 1");

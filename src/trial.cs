@@ -418,7 +418,7 @@ function despairOnMorning()
 		}
 	}
 
-	if (getRandom() <= 0.4)
+	if (getRandom() <= 0.4 && $Despair::Sandstorm)
 	{
 		//update fog
 		$EnvGuiServer::VisibleDistance = 80;
@@ -1034,8 +1034,9 @@ function DespairEndVote()
 			%player.voteTarget = "";
 		}
 	}
-	$DefaultMiniGame.chatMessageAll('', "\c5Your votes have been cast.");
-	$DefaultMiniGame.eventSchedule = schedule(5000, 0, DespairEndTrial);
+	$DefaultMiniGame.chatMessageAll('', "\c5Your votes have been cast. Did you make the right choice? Or the dreadfully wrong one?");
+	$DefaultMiniGame.chatMessageAll('', "\c620 seconds to say your prayers...");
+	$DefaultMiniGame.eventSchedule = schedule(20000, 0, DespairEndTrial);
 }
 
 function DespairEndTrial()
@@ -1077,7 +1078,7 @@ function DespairEndTrial()
 				%num = getRandom(1, $shutterCount);
 				if(strpos($shuttersOpen, %num) == -1)
 				{
-					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen)++, %num);
+					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen) + 1, %num);
 					break;
 				}
 			}

@@ -30,6 +30,9 @@ $map = "school";
 //MOTEL MAP PREFS:
 if($map $= "motel")
 {
+	//Allow sandstorms
+	$Despair::Sandstorm = true;
+
 	$mapCenter = "-87.7265 -20.5779 0.20202";
 	$boundaries = 170;
 	$Despair::RoomCount = 22;
@@ -64,6 +67,9 @@ if($map $= "motel")
 //MANSION MAP PREFS:
 if($map $= "mansion")
 {
+	//Allow sandstorms
+	$Despair::Sandstorm = false;
+
 	$Despair::RoomCount = 14;
 	//underground
 	$roomNum[1] = "B1";
@@ -86,6 +92,9 @@ if($map $= "mansion")
 //SCHOOL MAP PREFS:
 if($map $= "school")
 {
+	//Allow sandstorms
+	$Despair::Sandstorm = false;
+
 	$Despair::RoomCount = 22;
 
 	$roomNum[1] = "11 Condo";
