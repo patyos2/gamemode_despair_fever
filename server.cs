@@ -86,6 +86,7 @@ exec("./src/weapons/axe.cs");
 exec("./src/weapons/bat.cs");
 exec("./src/weapons/katana.cs");
 exec("./src/weapons/knife.cs");
+	exec("./src/weapons/scalpel.cs"); //Reskinned knife
 exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
 exec("./src/weapons/revolver.cs");

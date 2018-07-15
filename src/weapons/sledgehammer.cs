@@ -144,7 +144,11 @@ function SledgehammerImage::onMeleeHit(%image, %player, %object, %position, %nor
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
 	{
-		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(10);
+		%dam = %object.doorDamage(10);
+		if(%dam)
+		{
+			ServerPlay3D(WoodHitSound, %position);
+			return %dam;
+		}
 	}
 }

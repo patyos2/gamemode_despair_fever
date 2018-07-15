@@ -206,7 +206,7 @@ function Player::carryTick(%this)
 
 	if(%player.choking && $Sim::Time - %player.choking > 6)
 	{
-		if(%this.isDead || $deathCount >= $maxDeaths)
+		if(%this.isDead || $deathCount >= $maxDeaths || %player.noWeapons)
 		{
 			%this.stopAudio(0);
 			%player.choking = "";
@@ -286,7 +286,7 @@ package DespairCorpses
 			}
 			else if (%slot == 4 && isObject(%item) && isEventPending(%item.carrySchedule) && %item.carryPlayer $= %obj && %item.unconscious)
 			{
-				if(%state && !%item.isDead && $deathCount < $maxDeaths)
+				if(%state && !%item.isDead && $deathCount < $maxDeaths && !%obj.noWeapons)
 				{
 					%item.playAudio(0, BodyChokeSound);
 					%obj.choking = $Sim::Time;

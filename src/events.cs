@@ -82,6 +82,22 @@ function fxDTSBrick::setCameraDir(%brick, %dir, %client)
 	%client.player.inCameraEvent = true;
 }
 
+//Set door damageable and max hits
+registerOutputEvent("fxDTSBrick", "setDoorStrength", "int 0 100" TAB "bool 1", 1);
+function fxDTSBrick::setDoorStrength(%brick, %int, %bool, %client)
+{
+	if (!%bool)
+	{
+		%brick.broken = false;
+		%brick.doorHits = 0;
+		%brick.doorMaxHits = "";
+		return;
+	}
+	%brick.broken = false;
+	%brick.doorHits = 0;
+	%brick.doorMaxHits = %int;
+}
+
 $str = "int 0" SPC $SE_maxStatusEffects TAB "string 50 80";
 registerOutputEvent(Player, _setStatusEffect, $str, 1);
 $str = "";

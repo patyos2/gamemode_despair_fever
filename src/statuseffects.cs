@@ -107,6 +107,7 @@ function Player::setStatusEffect(%player, %slot, %effect, %nomsg)
 
 			%player.updateSpeedScale(0.6);
 			%player.swingSpeedMod = 1.6;
+			%player.lastFireTime = $Sim::Time; //Makes you unable to immediately swing
 			%player.addMood(-3);
 			cancel(%player.statusSchedule[%slot]);
 			%player.statusSchedule[%slot] = %player.schedule(3000, removeStatusEffect, %slot, %effect);

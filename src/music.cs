@@ -69,6 +69,13 @@ datablock AudioProfile(DespairMusicVoteStart)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicPreamble)
+{
+	fileName = $Despair::Path @ "res/music/rolesDecided.ogg";
+	description = audio2D;
+	preload = true;
+};
+
 datablock AudioProfile(DespairMusicOpeningIntro)
 {
 	fileName = $Despair::Path @ "res/music/OpeningIntro.ogg";
@@ -178,9 +185,41 @@ datablock AudioProfile(DespairMusicInvestigationLoop2)
 	preload = true;
 };
 
+datablock AudioProfile(DespairMusicInvestigationIntro3)
+{
+	fileName = $Despair::Path @ "res/music/investigationintro3.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 97387;
+	loopProfile = DespairMusicInvestigationLoop3;
+};
+
+datablock AudioProfile(DespairMusicInvestigationLoop3)
+{
+	fileName = $Despair::Path @ "res/music/investigationloop3.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
 datablock AudioProfile(DespairMusicIntense)
 {
 	fileName = $Despair::Path @ "res/music/deadManWalking.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
+
+datablock AudioProfile(DespairMusicWonderfulIntro)
+{
+	fileName = $Despair::Path @ "res/music/wonderfulStoryIntro.ogg";
+	description = audio2D;
+	preload = true;
+	loopStart = 5245;
+	loopProfile = DespairMusicWonderfulLoop;
+};
+
+datablock AudioProfile(DespairMusicWonderfulLoop)
+{
+	fileName = $Despair::Path @ "res/music/wonderfulStoryLoop.ogg";
 	description = AudioLooping2D;
 	preload = true;
 };
@@ -235,4 +274,18 @@ function ServerPlaySong(%profile)
 	scopeToAll(ServerMusic);
 	if(isObject(%profile.loopProfile))
 		ServerMusic.loopSchedule = schedule(%profile.loopStart, 0, ServerPlaySong, %profile.loopProfile);
+}
+
+function IndexSongs()
+{
+	%size = getDataBlockGroupSize();
+
+	for(%i=0;%i<%size;%i++)
+	{
+		%data = getDataBlock(%i);
+		%class = %data.getClassName();
+		if (%class !$= "AudioProfile")
+			continue;
+		echo(%data.getName() SPC %class);
+	}
 }

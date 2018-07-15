@@ -239,8 +239,12 @@ function FeverProjectile::onCollision(%data, %projectile, %object, %fade, %posit
         spawnDecal(BulletHoleShape, VectorAdd(%position, VectorScale(%normal, 0.02)), %normal, 3, %color, "", "", 1); //noUnclutterCheck is true
         if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
         {
-            ServerPlay3D(WoodHitSound, %position);
-            %object.doorDamage(10);
+            %dam = %object.doorDamage(10);
+            if(%dam)
+            {
+                ServerPlay3D(WoodHitSound, %position);
+                return %dam;
+            }
         }
         return;
     }

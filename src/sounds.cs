@@ -13,6 +13,55 @@ datablock AudioDescription(AudioQuietLooping3d : AudioClose3d)
 	isLooping = 1;
 };
 
+datablock AudioProfile(DescerationSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/desceration-01.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(DescerationSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/desceration-02.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(DescerationSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/desceration-03.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(DescerationSound4)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/desceration-04.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BoneSound1)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/bone_break-01.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BoneSound2)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/bone_break-02.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
+datablock AudioProfile(BoneSound3)
+{
+	fileName = $Despair::Path @ "res/sounds/gore/bone_break-03.wav";
+	description = audioClosest3D;
+	preload = true;
+};
+
 datablock AudioProfile(EatSound)
 {
 	fileName = $Despair::Path @ "res/sounds/eat.wav";

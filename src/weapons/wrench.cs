@@ -146,7 +146,11 @@ function PipewrenchImage::onMeleeHit(%image, %player, %object, %position, %norma
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
 	{
-		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(2);
+		%dam = %object.doorDamage(2);
+		if(%dam)
+		{
+			ServerPlay3D(WoodHitSound, %position);
+			return %dam;
+		}
 	}
 }

@@ -34,7 +34,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 
 	if(%player.health <= 0) //Critical state
 	{
-		%text = scrambleText(%text, 0.1);
+		%text = scrambleText(%text, mClampF(strlen(%text) * 0.01, 0.1, 0.9));
 
 		%a = %player.getEyePoint();
 		%b = vectorAdd(%a, vectorScale(%player.getEyeVector(), 6));
@@ -57,6 +57,8 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.contents = "\c0" @ %text;
 			%decal.isBlood = true;
 			%decal.source = %player;
+			%player.bloody["rhand"] = true; //They used their hand to write the message
+			%player.applyAppearance();
 			%player.health = $Despair::CritThreshold;
 			%player.critLoop();
 			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");

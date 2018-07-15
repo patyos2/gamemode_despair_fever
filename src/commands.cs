@@ -375,6 +375,14 @@ function serverCmdResetAccept(%this)
 	serverCmdReset(%this, true);
 }
 
+
+function ServerCmdPlaySong(%this, %profile)
+{
+	if (!%this.isAdmin) return;
+	serverPLaySong(%profile);
+	messageAll('', '\c6%1\c2 has played song \c3%2\c2.', %this.getPlayerName(), %proifle);
+}
+
 package DespairAdmins
 {
 	function GameConnection::onClientLeaveGame(%this)

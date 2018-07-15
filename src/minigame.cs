@@ -299,6 +299,29 @@ function despairEndGame()
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(20000, reset, 0);
 }
 
+function despairResetShutters()
+{
+	//Reset shutters
+	$shutterCount = 0;
+	while(isObject(BrickGroup_888888.NTObject["_shutter" @ $shutterCount + 1, 0]))
+	{
+		$shutterCount++;
+		for(%i = 0; %i < BrickGroup_888888.NTObjectCount["_shutter" @ $shutterCount]; %i++)
+		{
+			%shutter = BrickGroup_888888.NTObject["_shutter" @ $shutterCount, %i];
+			if(strpos($shuttersOpen, $shutterCount) == -1)
+				%shutter.disappear(0);
+			else
+			{
+				%shutter.disappear(-1);
+			}
+		}
+	}
+
+	if(getWordCount($shuttersOpen) > 0)
+		talk("There are now " @ getWordCount($shuttersOpen) @  " open shutters!");
+}
+
 function despairPrepareGame()
 {
 	cancel($DefaultMiniGame.restartSchedule);
@@ -320,6 +343,7 @@ function despairPrepareGame()
 			%brick.doorHits = 0;
 			%brick.broken = false;
 			%brick.setDataBlock(%brick.isCCW ? %data.closedCCW : %data.closedCW);
+			%brick.onDoorClose();
 			%brick.doorMaxHits = 4;
 		}
 		//Consistent item spawns
@@ -379,22 +403,7 @@ function despairPrepareGame()
 		$memorial[%i].setTransform("0 0 -300");
 	}
 
-	//Reset shutters
-	$shutterCount = 0;
-	while(isObject(BrickGroup_888888.NTObject["_shutter" @ $shutterCount++]))
-	{
-		for(%i = 0; %i < BrickGroup_888888.NTObjectCount["_shutter" @ %num]; %i++)
-		{
-			%shutter = BrickGroup_888888.NTObject["_shutter" @ %num, %i];
-			if(strpos($shuttersOpen, %num) == -1)
-				%shutter.disappear(0);
-			else
-				%open++;
-		}
-	}
-
-	if(%open > 0)
-		talk("There are now " @ %open @ "open shutters!");
+	despairResetShutters();
 
 	$courtVoid.setTransform("0 0 -300");
 	$courtvoid.setScale("1 1 1");
@@ -649,7 +658,7 @@ package DespairFever
 			%client.character.deleteMe = true;
 		}
 		%client.dfSaveData();
-		if(!%client.isAdmin && $pickedKiller == %client)
+		if(!%client.isAdmin && $pickedKiller == %client && $deathCount <= 0)
 			DespairPickKiller(true);
 		Parent::removeMember($DefaultMiniGame, %client);
 	}
@@ -750,7 +759,7 @@ package DespairFever
 				$FinalBoss = true;
 				cancel($DefaultMiniGame.eventSchedule);
 				$DefaultMiniGame.eventSchedule = $pickedKiller.player.schedule(300*1000, 0, "kill");
-				ServerPlaySong("DespairMusicIntense");
+				ServerPlaySong(pickField("DespairMusicIntense" TAB "DespairMusicWonderfulIntro"));
 				DespairSetWeapons(1);
 			}
 		}

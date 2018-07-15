@@ -157,7 +157,7 @@ function KnifeImage::onMeleeHit(%image, %player, %object, %position, %normal)
 		}
 		ServerPlay3D("KnifeHitSound" @ getRandom(1, 3), %position);
 		if(%obj.unconscious)
-			%damage *= 10;
+			%damage *= 2;
 		return %object.damage(%player, %position, %damage, %image.type);
 	}
 }

@@ -123,7 +123,7 @@ function despairOnKill(%victim, %attacker, %crit)
 	if(!%victim.player.aboutToKill && !%victim.killer && !%attacker.killer)
 	{
 		%player = %attacker.player;
-		%player.setSpeedScale(0.1);
+		%player.KnockOut(60);
 		%player.noWeapons = true;
 
 		%hold = %player.carryObject;
@@ -318,7 +318,8 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 
 	RS_Log("[GAME]" @ %msg, "\c5");
 	$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %time @ "] \c2" @ %msg;
-	%profile = DespairMusicInvestigationIntro1;
+
+	%profile = DespairMusicInvestigationIntro @ pickField("1\t3");
 
 	if(%unfound)
 	{
@@ -579,6 +580,7 @@ function despairOnNight()
 			commandToClient(%cl, 'messageBoxYesNo', "Killer Ballot", "Do you wish to be included in the killer lottery for this round?", 'KillerAccept');
 		}
 		$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
+		ServerPlaySong("DespairMusicPreamble");
 	}
 
 	if($days > 0)
@@ -658,7 +660,6 @@ function DespairPickKiller(%repick)
 		//echo(%client.getplayername() SPC "is killa");
 		RS_Log("[KILLER]" SPC %client.getPlayerName() SPC "(" @ getCharacterName(%client.character, 1, 1) @ ") [" @ %client.getBLID() @ "] became the killer!", "\c2");
 		$pickedKiller = %client;
-		ServerPlaySong("DespairMusicOpeningIntro");
 
 		if(%client.player.unconscious)
 		{
@@ -851,7 +852,7 @@ function courtPlayers()
 	}
 
 	if(isObject($mangled))
-		ServerPlaySong("DespairMusicIntense");
+		ServerPlaySong(pickField("DespairMusicIntense" TAB "DespairMusicWonderfulIntro"));
 	else
 		ServerPlaySong("DespairMusicOpeningIntro");
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
@@ -1034,9 +1035,10 @@ function DespairEndVote()
 			%player.voteTarget = "";
 		}
 	}
+	$DefaultMiniGame.subEventSchedule = schedule(4000, 0, "ServerPlaySong", "DespairMusicPreamble");
 	$DefaultMiniGame.chatMessageAll('', "\c5Your votes have been cast. Did you make the right choice? Or the dreadfully wrong one?");
-	$DefaultMiniGame.chatMessageAll('', "\c620 seconds to say your prayers...");
-	$DefaultMiniGame.eventSchedule = schedule(20000, 0, DespairEndTrial);
+	$DefaultMiniGame.chatMessageAll('', "\c6One minute to say your prayers...");
+	$DefaultMiniGame.eventSchedule = schedule(60000, 0, DespairEndTrial);
 }
 
 function DespairEndTrial()
@@ -1078,7 +1080,7 @@ function DespairEndTrial()
 				%num = getRandom(1, $shutterCount);
 				if(strpos($shuttersOpen, %num) == -1)
 				{
-					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen) + 1, %num);
+					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
 					break;
 				}
 			}
@@ -1088,7 +1090,20 @@ function DespairEndTrial()
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
 			$pickedKiller.AddPoints(10);
 			$pickedKiller.killerWins++;
+
 			$shuttersOpen = "";
+			//Always have at least X shutters open
+			%done = 0;
+			%shutters = mCeil($pref::server::maxplayers * 0.1); //20% of max players
+			while(getWordCount($shuttersOpen) < $shutterCount && %done <= %shutters)
+			{
+				%num = getRandom(1, $shutterCount);
+				if(strpos($shuttersOpen, %num) == -1)
+				{
+					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
+					%done++;
+				}
+			}
 		}
 	}
 	else

@@ -2,7 +2,7 @@
 $Despair::DayLength = 480; //8 minutes for a full cycle
 $Despair::InvestigationLength = 420; //7 mins
 $Despair::InvestigationExtraLength = 90; //+1:30 mins for every new body
-$Despair::CritThreshold = -150; //How much negative health can the player take before dying
+$Despair::CritThreshold = -110; //How much negative health can the player take before dying
 
 $Despair::DisableWepsInvest = true; //Disable weapons when investgation starts?
 $Despair::DisableWepsTimer = 30; //How many seconds until the weps are disabled.

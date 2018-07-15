@@ -136,7 +136,11 @@ function BatImage::onMeleeHit(%image, %player, %object, %position, %normal)
 	}
 	if(%object.getType() & $TypeMasks::FxBrickObjectType && %object.getDataBlock().isDoor)
 	{
-		ServerPlay3D(WoodHitSound, %position);
-		return %object.doorDamage(0.5);
+		%dam = %object.doorDamage(0.5);
+		if(%dam)
+		{
+			ServerPlay3D(WoodHitSound, %position);
+			return %dam;
+		}
 	}
 }

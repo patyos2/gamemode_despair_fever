@@ -231,6 +231,29 @@ package DespairHealth
 			%player.spawnFiber();
 
 		%player.health -= %damage;
+
+		if(%player.health <= 0)
+		{
+			if (%type $= "sharp")
+			{
+				%sound = "DescerationSound" @ mCeil(4*%player.health/$Despair::CritThreshold);
+				ServerPlay3D(%sound, %pos);
+				if(isObject(%client))
+					%client.play2d(%sound);
+				if(isObject(%attacker))
+					%attacker.play2d(%sound);
+			}
+			else if (%type $= "blunt")
+			{
+				%sound = "BoneSound" @ mCeil(3*%player.health/$Despair::CritThreshold);
+				ServerPlay3D(%sound, %pos);
+				if(isObject(%client))
+					%client.play2d(%sound);
+				if(isObject(%attacker))
+					%attacker.play2d(%sound);
+			}
+		}
+
 		if(%player.health <= $Despair::CritThreshold)
 		{
 			if (%client == %attacker && %type $= "fall")
@@ -240,6 +263,7 @@ package DespairHealth
 				%player.KnockOut(30);
 				return 1;
 			}
+
 			if(despairOnKill(%client, %attacker))
 			{
 				%player.wakeUp();
@@ -281,7 +305,11 @@ package DespairHealth
 				return 1;
 			}
 		}
-		if(!%player.character.trait["Feel No Pain"])
+
+		if(%dot > 0) //Backstab
+			%player.setStatusEffect($SE_damageSlot1, "shock");
+
+		if(!%player.character.trait["Feel No Pain"] || %player.statusEffect[$SE_damageSlot1] $= "shock")
 		{
 			if(%playPain && %player.health > 0 && !%player.unconscious)
 				%player.playPain();
@@ -294,9 +322,6 @@ package DespairHealth
 			if(%player.character.trait["Hemophiliac"])
 				%player.bleedTicks = 13;
 		}
-
-		if(%dot > 0) //Backstab
-			%player.setStatusEffect($SE_damageSlot1, "shock");
 
 		if(%player.unconscious)
 		{

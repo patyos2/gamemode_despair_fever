@@ -82,6 +82,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c6/forcevote \c7- \c6Skip the discussion phase and get straight to the voting (Trial)";
 			%text[%count++] = " \c6/spectate \c7- \c6Become a spectator to be excluded from rounds";
 			%text[%count++] = " \c6/stats \c7- \c6See your statistics!";
+			%text[%count++] = " \c6/sleep \c7- \c6Sleep.";
 			if (%this.isAdmin)
 			{
 				%text[%count++] = "\c3[ADMIN]";

@@ -66,16 +66,16 @@ function GenerateTraits(%character, %client)
 			%typeStr = "positive";
 			%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 		}
-		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.1)
-		{
-			%trait = "Chekhov's Gunman";
-			$gunmanChar = %character;
-		}
-		else
-		{
+		// if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.1)
+		// {
+		// 	%trait = "Chekhov's Gunman";
+		// 	$gunmanChar = %character;
+		// }
+		// else
+		// {
 			%trait = getField(%type[%typeStr], %index = getRandom(0, getFieldCount(%type[%typeStr]) - 1));
 			%type[%typeStr] = removeField(%type[%typeStr], %index);
-		}
+		// }
 
 		//Check if we picked conflicting traits
 		if(checkTraitConflicts(%character.traitList, %trait))

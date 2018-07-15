@@ -168,6 +168,12 @@ function findField(%fields, %f)
 	return -1;
 }
 
+//Randomly pick a field
+function pickField(%fields)
+{
+	return getField(%fields, getRandom(0, getFieldCount(%fields)-1));
+}
+
 function rgbToHex(%rgb)
 {
 	return
