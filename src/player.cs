@@ -242,7 +242,7 @@ function PlayerDespairArmor::onTrigger(%this, %obj, %slot, %state)
 		}
 	}
 	Parent::onTrigger(%this, %obj, %slot, %state);
-	if(%obj.client.killer && %slot == 4 && %state)
+	if(%obj.client.killer && $deathCount <= 0 && %slot == 4 && %state) //No more sprinting if there's already a victim
 	{
 		if(isObject(%img = %obj.getMountedImage(0)) && %img.item.className !$= "DespairWeapon")
 			return;

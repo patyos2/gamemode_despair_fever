@@ -122,13 +122,20 @@ package LockpickPackage
 		if (%data.isDoor && %data.isOpen || isEventPending(%obj.lockpickDoAfter))
 			return;
 
+		if (%data.isDoor && %ray.lockpickDifficulty $= "")
+		{
+			if (isObject(%obj.client))
+				%obj.client.centerPrint("\c6This door is impossible to lockpick!", 2);
+			return;
+		}
+
 		if (%slot == 0) //do the thang
 		{
 			if (%ray.lockState)
 			{
 				serverPlay3d(DoorJiggleSound, %ray.getWorldBoxCenter(), 1);
 				%obj.playThread(2, "activate");
-				%obj.lockpickDoAfter(6000, %ray, 5);
+				%obj.lockpickDoAfter(%ray.lockpickDifficulty * 1000, %ray, %ray.lockpickDifficulty);
 			}
 			else
 			{

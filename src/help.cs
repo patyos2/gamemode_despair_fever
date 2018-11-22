@@ -110,6 +110,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "   \c37\c6 - \c3commands\c6: Various slash commands";
 			%text[%count++] = "\c6======";
 			%text[%count++] = "\c5Say \c3/help *category*\c5 for more info on certain topics.";
+			%text[%count++] = "\c5If you want to read the game regulations (e.g. game rules), use \c3/regulations\c5.";
 	}
 
 	for (%i=1; %i<=%count; %i++)
@@ -119,4 +120,20 @@ function serverCmdHelp(%this, %cat)
 function serverCmdRules(%this)
 {
 	serverCmdHelp(%this, "rules");
+}
+
+function serverCmdRegulations(%this, %cat)
+{
+	%text[%count++] = "\c3[SCHOOL REGULATIONS]";
+	%text[%count++] = " \c31\c6. The killer, later referred to as the \c7'Wolf'\c6, is a person to deal the final killing blow on their victim.\c6";
+	%text[%count++] = " \c32\c6. Should the current \c7'Wolf'\c6 be murdered, the person to deal the Killing Blow will be the \c7'Wolf'\c6.\c6";
+	%text[%count++] = " \c33\c6. Should the victim's death be caused indirectly, the \c7'Wolf'\c6 is the recent person to push or attack the victim, or the setter of the trap.";
+	%text[%count++] = " \c34\c6. A Class Trial will be held when a body is discovered by \c3two\c6 or more people.\c6";
+	%text[%count++] = " \c35\c6. In the Class Trial, the 'Sheep' will have to face against the single \c7'Wolf'\c6.\c6";
+	%text[%count++] = " \c36\c6. The \c7'Wolf'\c6 is determined at the end of a Class Trial by a majority vote. In the event of a tie it's a \c7'Wolf'\c6 victory.\c6";
+	%text[%count++] = " \c37\c6. Should only two people remain alive, they will be forced to engage in combat for the last man standing.\c6";
+	%text[%count++] = " \c5Page Up to read the above.";
+
+	for (%i=1; %i<=%count; %i++)
+		messageClient(%this, '', %text[%i]);
 }

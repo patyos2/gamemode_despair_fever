@@ -157,7 +157,7 @@ function Player::carryTick(%this)
 		return;
 	}
 
-	if(%this.isDead && getRandom() < 0.45 && %this.pools < 700) //blood
+	if(%this.isDead && getRandom() < 0.45 && %this.pools < 300) //blood
 	{
 		updateCorpseBloodPool(%this.getPosition(), %this);
 		%this.pools++;

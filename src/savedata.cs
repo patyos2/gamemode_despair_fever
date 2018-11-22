@@ -51,6 +51,7 @@ function gameConnection::dfSaveData(%this)
 	%file.writeLine("innocent wins" TAB %this.innocentWins);
 	%file.writeLine("correct votes" TAB %this.correctVotes);
 	%file.writeLine("deaths" TAB %this.deaths);
+	%file.writeLine("killerbanned" TAB %this.killerbanned);
 
 	%file.close();
 	%file.delete();
@@ -100,6 +101,8 @@ function GameConnection::dfLoadData(%this)
 				%this.correctVotes = %val;
 			case "deaths":
 				%this.deaths = %val;
+			case "killerbanned":
+				%this.killerbanned = %val;
 		}
 	}
 

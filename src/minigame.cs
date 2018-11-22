@@ -128,6 +128,10 @@ function createPlayer(%client)
 		%props.id = %roomDoor.lockId;
 
 		%player.addTool(KeyItem, %props);
+
+		%roomDoor.doorMaxHits = 4;
+		%roomDoor.lockpickDifficulty = 5;
+		%roomDoor.setColor(57); //Bring back color to used doors
 	}
 
 	if(%character.trait["Hatter"])
@@ -227,6 +231,9 @@ function roomPlayers()
 			%roomDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_door", %a];
 			%roomDoor.lockId = "R"@%room;
 			%roomDoor.lockState = true;
+			%roomDoor.doorMaxHits = "";
+			%roomDoor.lockpickDifficulty = "";
+			%roomDoor.setColor(50); //Gray out unused doors
 		}
 		%roomBathDoor = BrickGroup_888888.NTObject["_r" @ %room @ "_bathdoor", 0];
 		%roomSpawn = BrickGroup_888888.NTObject["_r" @ %room @ "_spawn", 0];
@@ -345,6 +352,7 @@ function despairPrepareGame()
 			%brick.setDataBlock(%brick.isCCW ? %data.closedCCW : %data.closedCW);
 			%brick.onDoorClose();
 			%brick.doorMaxHits = 4;
+            %brick.lockpickDifficulty = 5; //6 seconds
 		}
 		//Consistent item spawns
 		if(isObject(%brick.itemData))
@@ -408,7 +416,7 @@ function despairPrepareGame()
 	$courtVoid.setTransform("0 0 -300");
 	$courtvoid.setScale("1 1 1");
 
-	$chatDelay = 0.5;
+	$chatDelay = $Despair::chatDelay;
 
 	$DespairTrial = "";
 	$DespairTrialVote = false;
@@ -657,7 +665,8 @@ package DespairFever
 		{
 			%client.character.deleteMe = true;
 		}
-		%client.dfSaveData();
+		if (isObject(%client))
+			%client.dfSaveData();
 		if(!%client.isAdmin && $pickedKiller == %client && $deathCount <= 0)
 			DespairPickKiller(true);
 		Parent::removeMember($DefaultMiniGame, %client);

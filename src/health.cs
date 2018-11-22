@@ -26,7 +26,7 @@ function Player::critLoop(%this)
 	//{
 	//	cancel(%this.critLoop);
 	//	%this.health = %this.maxhealth;
-	//	%this.KnockOut(30);
+	//	%this.KnockOut($Despair::SleepKnockout);
 	//	return;
 	//}
 
@@ -260,7 +260,7 @@ package DespairHealth
 			{
 				cancel(%player.critLoop);
 				%player.health = %player.maxhealth / 4;
-				%player.KnockOut(30);
+				%player.KnockOut($Despair::SleepKnockout);
 				return 1;
 			}
 
@@ -282,7 +282,7 @@ package DespairHealth
 			{
 				cancel(%player.critLoop);
 				%player.health = %player.maxhealth;
-				%player.KnockOut(30);
+				%player.KnockOut($Despair::SleepKnockout);
 			}
 			return 1;
 		}
@@ -301,7 +301,7 @@ package DespairHealth
 			{
 				cancel(%player.critLoop);
 				%player.health = %player.maxhealth;
-				%player.KnockOut(30);
+				%player.KnockOut($Despair::SleepKnockout);
 				return 1;
 			}
 		}

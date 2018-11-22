@@ -211,6 +211,42 @@ function serverCmdKill(%this, %target)
 	}
 }
 
+function serverCmdKillerBan(%this, %target)
+{
+	if(!%this.isAdmin)
+		return;
+	%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /killerban '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
+	messageClient(%this, '', '\c5You have killer-banned %1.', %target.getPlayerName());
+	messageClient(%target, '', '\c5You have been banned from being a killer.');
+	
+	%target.killerbanned = true;
+	%target.dfSaveData();
+}
+
+function serverCmdKillerUnban(%this, %target)
+{
+	if(!%this.isAdmin)
+		return;
+	%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /killerunban '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
+	messageClient(%this, '', '\c5You have killer-unbanned %1.', %target.getPlayerName());
+	messageClient(%target, '', '\c5You have been unbanned from being a killer.');
+	
+	%target.killerbanned = false;
+	%target.dfSaveData();
+}
+
 function serverCmdForceKiller(%this, %target)
 {
 	if(!%this.isSuperAdmin)
