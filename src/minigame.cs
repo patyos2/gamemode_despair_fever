@@ -317,7 +317,9 @@ function despairResetShutters()
 		{
 			%shutter = BrickGroup_888888.NTObject["_shutter" @ $shutterCount, %i];
 			if(strpos($shuttersOpen, $shutterCount) == -1)
+			{
 				%shutter.disappear(0);
+			}
 			else
 			{
 				%shutter.disappear(-1);
@@ -326,7 +328,13 @@ function despairResetShutters()
 	}
 
 	if(getWordCount($shuttersOpen) > 0)
-		talk("There are now " @ getWordCount($shuttersOpen) @  " open shutters!");
+    {
+        talk("There are now " @ getWordCount($shuttersOpen) @  " open shutters!");
+		for(%i=1; %i <= getWordCount($shuttersOpen); %i++)
+            talk("\c3" @ $shutterNum[getWord($shuttersOpen, %i-1)] @ "\c6 is open for this round!");
+	}
+	else
+        talk("There are no open shutters.");
 }
 
 function despairPrepareGame()

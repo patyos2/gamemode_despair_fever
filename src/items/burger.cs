@@ -9,6 +9,8 @@ datablock ItemData(BurgerItem)
 
 	uiName = "Burger";
 
+	iconName = $Despair::Path @ "res/shapes/food/Icon_Cheeseburger";
+
 	image = BurgerImage;
 	canDrop = true;
 	

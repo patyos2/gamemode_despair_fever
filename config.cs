@@ -124,4 +124,12 @@ if($map $= "school")
 	$roomNum[20] = "23 Xing";
 	$roomNum[21] = "24 Xing";
 	$roomNum[22] = "25 Xing";
+
+	$shutterNum[1] = "Gym";
+	$shutterNum[2] = "Botany";
+	$shutterNum[3] = "Woodworking";
+	$shutterNum[4] = "Library";
+	$shutterNum[5] = "Cafeteria";
+	$shutterNum[6] = "Infirmary";
+	$shutterNum[7] = "Tailoring";
 }

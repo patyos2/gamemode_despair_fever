@@ -76,11 +76,14 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		if(%props.ink <= 0)
 		{
 			messageClient(%client, '', "\c5Your pen ran out of ink!");
-			return;
+			%pen = false;
 		}
-		%pen = true;
-		%prob = getMax(0, 1 - ((%props.ink*2)/%props.maxink));
-		%text = scrambleText(%text, %prob);
+		else
+		{
+			%pen = true;
+			%prob = getMax(0, 1 - ((%props.ink*2)/%props.maxink));
+			%text = scrambleText(%text, %prob);
+		}
 	}
 	else if(%player.bloodyWriting > 0)
 	{
@@ -89,22 +92,16 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		%player.bloodyWriting--;
 	}
 
-	if(!%blood && !%pen)
-	{
-		messageClient(%client, '', "\c5You need something to write with!");
-		return;
-	}
-
 	if (%player.tool[%player.currTool] == nameToID(PaperItem))
 	{
 		%props = %player.getItemProps();
-		%color = %pen ? "\c6" : "\c0";
+		%color = %pen ? "\c1" : (%blood ? "\c0" : "\c6");
 		if(%props.name $= "Daily News")
 			messageClient(%client, '', "\c5You are unable to write on this paper!");
 		else
 		{
 			%props.contents = %props.contents @ %color @ %text;
-			if(%pen)
+			if(!%blood)
 				serverPlay3d("WriteSound", %player.getHackPosition());
 		}
 		PaperImage.onMount(%player, 0);
@@ -125,7 +122,7 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			if (%ray.getDataBlock() == nameToID(PaperItem))
 			{
 				%props = %ray.itemProps;
-				%color = %pen ? "\c6" : "\c0";
+				%color = %pen ? "\c1" : (%blood ? "\c0" : "\c6");
 				if(%props.name $= "Daily News")
 					messageClient(%client, '', "\c5You are unable to write on this paper!");
 				else
@@ -138,6 +135,11 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 		}
 		else
 		{
+            if(!%blood && !%pen)
+            {
+                messageClient(%client, '', "\c5You need something to write with!");
+                return;
+            }
 			%rayPosition = getWords(%ray, 1, 3);
 			%rayNormal = getWords(%ray, 4, 6);
 			%rayPosition = VectorAdd(%rayPosition, VectorScale(%rayNormal, 0.01));
@@ -148,15 +150,16 @@ function serverCmdWrite(%client, %a1, %a2, %a3, %a4, %a5, %a6, %a7, %a8, %a9, %a
 			%decal.color = %color;
 			%decal.spillTime = $Sim::Time;
 			%decal.freshness = 1;
-			%decal.contents = (%pen ? "\c6" : "\c0") @ %text;
+			%decal.contents = (%pen ? "\c1" : "\c0") @ %text;
 			%decal.source = %player;
 			RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used /write '" @ %text @ "'", "\c2");
 			if(%blood)
 				%decal.isBlood = true;
+            else
+                serverPlay3d("WriteSound", %player.getHackPosition());
 			if(%pen)
 			{
 				%props.ink--; //More ink consumed
-				serverPlay3d("WriteSound", %player.getHackPosition());
 			}
 		}
 	}

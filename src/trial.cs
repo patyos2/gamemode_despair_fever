@@ -29,7 +29,7 @@ datablock ShapeBaseImageData(MemorialCrossImage)
 
 function createShape(%data, %position, %rotation, %scale, %color)
 {
-	if (%color $= "") %color = "0.5 0.3 0.1 1";
+	if (%color $= "") %color = $defCol;
 	%shape = new StaticShape()
 	{
 		datablock = %data;
@@ -50,8 +50,10 @@ function createCourtroom()
 	%oldInstantGroup = $instantGroup;
 	$instantGroup = CourtroomGroup;
 
+	$defCol = (getRandom() * 0.6) SPC (getRandom() * 0.6) SPC (getRandom() * 0.6) SPC 1;
+
 	$courtvoid = createShape(DespairCourtVoid,  "0 0 -300");
-	$courtvoid.setNodeColor("ALL", "0.2 0.1 0.2 1");
+	$courtvoid.setNodeColor("ALL", (getRandom() * 0.3) SPC (getRandom() * 0.3) SPC (getRandom() * 0.3) SPC 1);
 	//$courtvoid.playThread(0, "spin"); //VERY nauseating effect
 
 	$stand0 = createShape(DespairStand,  "0 0 -300");
@@ -586,32 +588,46 @@ function despairOnLateEvening()
 		$DefaultMiniGame.chatMessageAll('', "\c0<font:impact:30>WARNING\c5: This is going to be your last night! After this, trial period starts. Have you gathered enough evidence?");	
 }
 
+function despairKillerLottery()
+{
+	$Despair::Queue["Killer"] = "";
+	for (%i = 0; %i < ClientGroup.getCount(); %i++)
+	{
+		%cl = ClientGroup.getObject(%i);
+		if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons || %cl.afk)
+			continue;
+		
+		if (%cl.killerbanned)
+		{
+			commandToClient(%cl, 'messageBoxOK', "Killer Ballot", "You are banned from being the killer.");
+			continue;
+		}
+		
+		%cl.prompted["Killer"] = true;
+		commandToClient(%cl, 'messageBoxYesNo', "Killer Ballot", "Do you wish to be included in the killer lottery for this round?", 'KillerAccept');
+	}
+	$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
+	ServerPlaySong("DespairMusicPreamble");
+}
+
 function despairOnNight()
 {
 	RS_Log("[GAME] Good night...", "\c5");
 	if ($investigationStart !$= "")
 		return;
 
-	if(!$pickedKiller)
+    if (!$pickedKiller)
+		despairKillerLottery();
+
+	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
-		$Despair::Queue["Killer"] = "";
-		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		%client = $DefaultMiniGame.member[%a[%i]];
+		%player = %client.player;
+		if(isObject(%player))
 		{
-			%cl = ClientGroup.getObject(%i);
-			if (!isObject(%pl = %cl.player) || %cl.miniGame != $defaultMiniGame || %pl.noWeapons || %cl.afk)
-				continue;
-			
-			if (%cl.killerbanned)
-			{
-				commandToClient(%cl, 'messageBoxOK', "Killer Ballot", "You are banned from being the killer.");
-				continue;
-			}
-			
-			%cl.prompted["Killer"] = true;
-			commandToClient(%cl, 'messageBoxYesNo', "Killer Ballot", "Do you wish to be included in the killer lottery for this round?", 'KillerAccept');
+			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			%client.updateBottomprint();
 		}
-		$DefaultMiniGame.eventSchedule = schedule(30000, 0, DespairPickKiller);
-		ServerPlaySong("DespairMusicPreamble");
 	}
 
 	if($days > 0)
@@ -638,17 +654,6 @@ function despairOnNight()
 	//%props = %brick.item.getItemProps();
 	//%props.name = "Guest List";
 	//%props.contents = getGuestList(0);
-
-	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
-	{
-		%client = $DefaultMiniGame.member[%a[%i]];
-		%player = %client.player;
-		if(isObject(%player))
-		{
-			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
-			%client.updateBottomprint();
-		}
-	}
 }
 
 function serverCmdKillerAccept(%this)
@@ -656,11 +661,8 @@ function serverCmdKillerAccept(%this)
 	if(%this.prompted["Killer"] && !$pickedKiller)
 	{
 		%queue = $Despair::Queue["Killer"];
-		for(%i = 0; %i < getWordCount(%queue); %i++)
-		{
-			if(getWord(%queue, %i) == %this)
-				return;
-		}
+		if (findWord(%queue, %this))
+			return;
 		%queue = setWord(%queue, getWordCount(%queue), %this);
 		$Despair::Queue["Killer"] = %queue;
 		%this.prompted["Killer"] = false;
@@ -674,9 +676,12 @@ function DespairPickKiller(%repick)
 		cancel($DefaultMiniGame.eventSchedule);
 	if(!$pickedKiller || %repick)
 	{
-		if(isObject($pickedKiller))
-			$pickedKiller.killer = false;
 		%queue = $Despair::Queue["Killer"];
+		if(isObject($pickedKiller))
+        {
+			$pickedKiller.killer = false;
+			%queue = removeWorld(%queue, findWord(%queue, $pickedKiller));
+		}
 		while (getWordCount(%queue) > 0 && !isObject(%client))
 		{
 			%int = getRandom(0, getWordCount(%queue)-1);
@@ -758,6 +763,8 @@ function DespairSpecialChat(%client, %text)
 
 function courtPlayers()
 {
+	createCourtroom(); //Update dem colors
+
 	SunLight.flareSize = 0;
 	SunLight.sendUpdate();
 	cancel($DefaultMiniGame.subEventSchedule);
@@ -911,7 +918,7 @@ function courtPlayers()
 		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c0The victim had their \c6identity stolen\c0. One of you shouldn't be alive . . .");
 	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
 
-	$chatDelay = 0.25
+	$chatDelay = 0.25;
 
 	$forceVoteCount = 0;
 	$DespairTrialCurrSpeaker = "";
@@ -1125,41 +1132,12 @@ function DespairEndTrial()
 			%unfortunate.setVelocity(vectorAdd(vectorScale(%unfortunate.getForwardVector(), 3), "0 0 10"));
 			%unfortunate.kill();
 			%win = 1;
-			while(getWordCount($shuttersOpen) < $shutterCount)
-			{
-				%num = getRandom(1, $shutterCount);
-				if(strpos($shuttersOpen, %num) == -1)
-				{
-					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
-					break;
-				}
-			}
 		}
 		else
-		{
 			$DefaultMiniGame.chatMessageAll('', '\c5Majority vote - \c6%1\c5 - is innocent. Killer wins.', %unfortunate.client.getPlayerName());
-			$pickedKiller.AddPoints(10);
-			$pickedKiller.killerWins++;
-
-			$shuttersOpen = "";
-			//Always have at least X shutters open
-			%done = 0;
-			%shutters = mCeil($DefaultMiniGame.numMembers * 0.15); //20% of current players
-			while(getWordCount($shuttersOpen) < $shutterCount && %done <= %shutters)
-			{
-				%num = getRandom(1, $shutterCount);
-				if(strpos($shuttersOpen, %num) == -1)
-				{
-					$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
-					%done++;
-				}
-			}
-		}
 	}
 	else
-	{
 		$DefaultMiniGame.chatMessageAll('', "\c5Nobody voted. Killer wins.");
-	}
 
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
@@ -1181,9 +1159,38 @@ function DespairEndTrial()
 	}
 
 	if(!%win)
+	{
 		serverPlay2d("DespairMusicKillerWin");
+		$pickedKiller.AddPoints(10);
+		$pickedKiller.killerWins++;
+
+		$shuttersOpen = "";
+		//Always have at least X shutters open
+		%done = 0;
+		%shutters = mCeil($DefaultMiniGame.numMembers * 0.15); //20% of current players
+		while(getWordCount($shuttersOpen) < $shutterCount && %done <= %shutters)
+		{
+			%num = getRandom(1, $shutterCount);
+			if(strpos($shuttersOpen, %num) == -1)
+			{
+				$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
+				%done++;
+			}
+		}
+	}
 	else
+	{
 		serverPlay2d("DespairMusicInnocentsWin");
+		while(getWordCount($shuttersOpen) < $shutterCount)
+		{
+			%num = getRandom(1, $shutterCount);
+			if(strpos($shuttersOpen, %num) == -1)
+			{
+				$shuttersOpen = setWord($shuttersOpen, getWordCount($shuttersOpen), %num);
+				break;
+			}
+		}
+	}
 
 	despairEndGame();
 }
