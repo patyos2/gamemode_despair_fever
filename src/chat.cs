@@ -126,12 +126,6 @@ package DespairChat
 			return;
 		}
 
-		if($Sim::Time < %client.timeOut) //Special trial ability
-		{
-			messageClient(%client, '', '\c5You\'re unable to speak\c6!');
-			return;
-		}
-
 		if(!$despairTrial)
 		{
 			%time = getDayCycleTime();

@@ -196,6 +196,7 @@ function despairOnKill(%victim, %attacker, %crit)
 		if(!%crit) //only give pass to final blow/bleed out
 		{
 			$deathCount++;
+			$lastVictim = %victim.character;
 			if(%victim.killer && !%attacker.killer)
 			{
 				%attacker.player.aboutToKill = "";
@@ -299,6 +300,8 @@ function despairCheckInvestigation(%player, %corpse)
 
 function despairMakeBodyAnnouncement(%unfound, %kira)
 {
+	if ($FinalBoss)
+		return; //Final boss means you gotta killaroni
 	serverPlay2d(AnnouncementSound);
 	if (!%unfound)
 		$announcements++;
@@ -416,7 +419,7 @@ function dropFoods()
 		%brick.setItem(getRandom() > 0.1 ? "BurgerItem" : "BananaItem"); //I'm too lazy to check if the brick already has food spawned sooo....
 		%foodCount--;
 	}
-	$DefaultMiniGame.chatMessageAll('', '\c3~~ Food has been restocked!\c6 Go eat your cheeseburgers.', $days, %choice[getRandom(%high)]);
+	$DefaultMiniGame.chatMessageAll('', '\c3~~ Food has been restocked!\c6 Go eat your cheeseburgers.');
 }
 
 function despairOnMorning()
@@ -510,15 +513,18 @@ function despairOnMorning()
 
 	if($days == 1 && $deathCount <= 0)
 	{
-		%brick = BrickGroup_888888.NTObject["_r" @ $pickedKiller.character.room @ "_closet", 0];
-		if(isObject(%brick) && $spawnKillerBox)
+		if($spawnKillerBox)
 		{
-			%brick.setItem("KillerBoxItem");
-			messageClient($pickedKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
-			commandToClient($pickedKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
+			%brick = BrickGroup_888888.NTObject["_r" @ $pickedKiller.character.room @ "_closet", 0];
+			if(isObject(%brick))
+			{
+				%brick.setItem("KillerBoxItem");
+				messageClient($pickedKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
+				commandToClient($pickedKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
+			}
+			else if($pickedKiller.player.addTool("KillerBoxItem") != -1)
+				messageClient($pickedKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
 		}
-		else if($pickedKiller.player.addTool("KillerBoxItem") == -1)
-			messageClient($pickedKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
 		else
 			messageClient($pickedKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
 	}
@@ -732,13 +738,9 @@ function serverCmdKillerBoxAccept(%this)
 {
 	if(%this.prompted["Box"] && $days < 1)
 	{
-		%queue = $Despair::Queue["Box"];
-		for(%i = 0; %i < getWordCount(%queue); %i++)
-		{
-			if(getWord(%queue, %i) == %this)
-				return;
-		}
-		%queue = setWord(%queue, getWordCount(%queue), %this);
+		%queue = $Despair::Queue["Killer"];
+		if (findWord(%queue, %this))
+			return;
 		$spawnKillerBox = true;
 		%this.prompted["Box"] = false;
 		commandToClient(%this, 'messageBoxOK', "Killer Box", "A killer box will now spawn in your room at morning.");
@@ -758,6 +760,20 @@ function DespairSpecialChat(%client, %text)
 		return 1;
 	}
 
+	if($Sim::Time - %client.lastMemeSpeakTime < 10 && getWordCount(%text) <= 1) //No towerposting!
+	{
+		messageClient(%client, '', '\c5Speak in full sentences\c6!');
+		return 1;
+	}
+
+	if (getWordCount(%text) == 1)
+		%client.lastMemeSpeakTime = $Sim::Time;
+
+	if($Sim::Time < %client.timeOut) //Special trial ability
+	{
+		messageClient(%client, '', '\c5You\'re unable to speak\c6!');
+		return 1;
+	}
 	return 0;
 }
 
@@ -915,7 +931,9 @@ function courtPlayers()
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Everyone now has %1 seconds to prepare their opening statements! Before that, nobody can talk.', %secs);
 	$DefaultMiniGame.chatMessageAll('', '\c5<font:impact:30>Suggested topics of discussion: \c6Your Alibi, Friend\'s Alibi, Crime Scene, Murder Weapon, Thoughts and Suspicions');
 	if(isObject($mangled))
-		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c0The victim had their \c6identity stolen\c0. One of you shouldn't be alive . . .");
+		$DefaultMiniGame.schedule(1000, chatMessageAll, '', "<font:impact:30>\c0A victim had their \c6identity stolen\c0. One of you shouldn't be alive . . .");
+	else if($deathCount > 2) //Throw them a bone.
+		$DefaultMiniGame.chatMessageAll('', '<font:impact:30>\c5Due to the number of deaths, only the killer of \c6%1\c5 will be relevant for this trial.', getCharacterName($lastVictim, 1));
 	$DefaultMiniGame.eventSchedule = schedule(%secs * 1000, 0, DespairStartOpeningStatements);
 
 	$chatDelay = 0.25;
@@ -1161,6 +1179,7 @@ function DespairEndTrial()
 	if(!%win)
 	{
 		serverPlay2d("DespairMusicKillerWin");
+		$defaultMiniGame.winRounds = 0;
 		$pickedKiller.AddPoints(10);
 		$pickedKiller.killerWins++;
 
@@ -1181,6 +1200,7 @@ function DespairEndTrial()
 	else
 	{
 		serverPlay2d("DespairMusicInnocentsWin");
+		$defaultMiniGame.winRounds += 1;
 		while(getWordCount($shuttersOpen) < $shutterCount)
 		{
 			%num = getRandom(1, $shutterCount);

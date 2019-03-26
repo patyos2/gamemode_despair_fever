@@ -86,13 +86,13 @@ function serverCmdForceVote(%client)
 
 	if (%client.miniGame == $defaultMiniGame)
 	{
-		if (!isObject(%client.player) || !isObject(%client.character))
+		if (!%client.isAdmin && (!isObject(%client.player) || !isObject(%client.character)))
 			return;
 		if ($DespairTrial)
 			%currTime = $Sim::Time - $DespairTrialDiscussion;
 		else if($investigationStart)
 			%currTime = $Sim::Time - ($investigationStart - $investigationLength);
-		if (%currTime < ($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial))
+		if (!%client.isAdmin && %currTime < ($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial))
 		{
 			messageClient(%client, '', '\c5You can only vote %1 minutes after %2 had started!', mCeil(($DespairTrial ? $Despair::CanForceVote : $Despair::CanForceTrial) / 60), $DespairTrial ? "trial" : "investigation");
 			return;
@@ -143,6 +143,31 @@ function serverCmdForceVote(%client)
 	}
 }
 
+function serverCmdSpectate(%this)
+{
+	if ($despairTrial !$= "")
+	{
+		messageClient(%this, '', '\c5You cannot spectate - trial is in progress!');
+		return;
+	}
+	%this.spectating = !%this.spectating;
+	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
+	if(isObject(%this.player) && %this.spectating)
+	{
+		%this.character.isDead = true;
+		%this.camera.setMode("Observer");
+		%this.setControlObject(%this.camera);
+		%this.camera.setControlObject(%this.camera);
+		%this.player.delete(); //Should be safe to do
+	}
+	else
+	{
+		if(!$pickedKiller && !$DefaultMiniGame.permaDeath)
+			createPlayer(%this);
+	}
+}
+
 //ADMIN ONLY
 function serverCmdWhoIs(%client, %a, %b)
 {
@@ -163,24 +188,12 @@ function serverCmdWhoIs(%client, %a, %b)
 	}
 }
 
-function serverCmdSpectate(%this)
+function serverCmdPermadeath(%this)
 {
-	%this.spectating = !%this.spectating;
-	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
-	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
-	if(isObject(%this.player) && %this.spectating)
-	{
-		%this.character.deleteMe = true;
-		%this.camera.setMode("Observer");
-		%this.setControlObject(%this.camera);
-		%this.camera.setControlObject(%this.camera);
-		%this.player.delete(); //Should be safe to do
-	}
-	else
-	{
-		if(!$pickedKiller)
-			createPlayer(%this);
-	}
+	if (!%this.isAdmin)
+		return;
+    DespairSetPermadeath(!$DefaultMiniGame.permaDeath);
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /permadeath '" @ ($DefaultMiniGame.permaDeath ? "yes" : "no") @ "'", "\c2");
 }
 
 function serverCmdKill(%this, %target)
@@ -202,7 +215,7 @@ function serverCmdKill(%this, %target)
 		{
 			%target.player.dropTool(%i);
 		}
-		%target.character.deleteMe = true;
+		%target.character.isDead = true;
 		%target.camera.setMode("Observer");
 		%target.setControlObject(%target.camera);
 		%target.camera.setControlObject(%target.camera);
@@ -349,8 +362,9 @@ function updateAdminCount()
 	if($Pref::Server::Password $= "" && !%admins)
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "") SPC "[No Admins]";
-		$Pref::Server::Password = "a";	
-		messageAll('', '\c0The server has been passworded due to \c6No Admins\c0. You will be kicked on \c6round end\c0.');
+		$Pref::Server::Password = "a";
+        DespairSetPermadeath(true);
+		messageAll('', '\c0The server has been passworded due to \c6No Admins\c0. You will be kicked on \c6killer victory\c0 or when \c6nobody else is alive\c0.');
 		messageAll('', '\c0ALL RULE-BREAKERS WILL BE PUNISHED EVEN IF THERE ARE NO ADMINS!!!');
 		RS_Log("Last admin left the game, locking server.", "\c2");
 	}
@@ -358,6 +372,8 @@ function updateAdminCount()
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "");
 		$Pref::Server::Password = "";
+		if($DefaultMiniGame.permaDeath)
+        	DespairSetPermadeath(false);
 	}
 	webcom_postServer();
 }

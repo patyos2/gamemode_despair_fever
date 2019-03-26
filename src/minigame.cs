@@ -9,7 +9,7 @@ function ClearFlaggedCharacters()
 	for(%i=0; %i < GameCharacters.getCount(); %i++)
 	{
 		%char = GameCharacters.getObject(%i);
-		if(isObject(%char.client) && !%char.deleteMe)
+		if(isObject(%char.client) && !%char.isDead)
 			continue;
 
 		%char.delete();
@@ -24,9 +24,15 @@ function createPlayer(%client)
 		return;
 	}
 
-	//Create character if none exists
-	%gender = getRandomGender();
-	if(!isObject(%character = %client.character) || %character.deleteMe || %character.client.noPersistance)
+	if (isObject(%client.character))
+		%nopersist = %client.character.client.noPersistance;
+
+	if ($defaultMiniGame.permaDeath)
+		%nopersist = false;
+
+    //Create character if none exists
+    %gender = getRandomGender();
+	if(!isObject(%character = %client.character) || %character.isDead || %nopersist)
 	{
 		if(isObject(%character))
 			%character.delete();
@@ -105,7 +111,7 @@ function createPlayer(%client)
 	%player.setTransform(%roomSpawn.getSpawnPoint());
 	%client.updateAFKCheck();
 
-	centerPrint(%client, "<bitmap:" @ $Despair::Path @ "res/logo>", 6);
+	centerPrint(%client, "<bitmap:" @ $Despair::Path @ "res/logo><br><br><br><br><br><br><br><font:impact:30>\c6CHAPTER " @ $defaultMiniGame.winRounds+1, 6);
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
 	commandToClient(%client, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
 
@@ -257,16 +263,16 @@ function roomPlayers()
 			%client.player.delete();
 
 		%player = createPlayer(%client);
-		%ln = getWord(%player.character.name, 1);
-		if(%sibling[%ln] !$= "")
-		{
-			messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, $roomNum[%sibling[%ln].character.room]);
-			messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, $roomNum[%player.character.room]);
-		}
-		%sibling[%ln] = %player;
 
 		if(isObject(%player))
 		{
+			%ln = getWord(%player.character.name, 1);
+			if(%sibling[%ln] !$= "")
+			{
+				messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, $roomNum[%sibling[%ln].character.room]);
+				messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, $roomNum[%player.character.room]);
+			}
+			%sibling[%ln] = %player;
 			%client.playPath(IntroPath);
 			%client.schedule(6000, setControlObject, %player);
 			%client.camera.schedule(6000, setControlObject, %client.camera);
@@ -302,7 +308,7 @@ function despairEndGame()
 
 	$DefaultMiniGame.chatMessageAll('', '\c6%1\c5 was the killer!', $pickedKiller.character.name);
 	UpdatePeopleScore();
-	//$pickedKiller.character.deleteMe = true;
+	//$pickedKiller.character.isDead = true;
 	$DefaultMiniGame.restartSchedule = $DefaultMiniGame.schedule(20000, reset, 0);
 }
 
@@ -342,7 +348,8 @@ function despairPrepareGame()
 	cancel($DefaultMiniGame.restartSchedule);
 	GameRoundCleanup.deleteAll();
 	clearDecals();
-	ClearFlaggedCharacters();
+	if (!$DefaultMiniGame.permaDeath || $DefaultMiniGame.winRounds <= 0)
+		ClearFlaggedCharacters();
 	// Close *all* doors
 	%count = BrickGroup_888888.getCount();
 
@@ -431,6 +438,7 @@ function despairPrepareGame()
 	$announcements = 0;
 	$investigationStart = "";
 	$pickedKiller = "";
+	$lastVictim = "";
 	$days = 0;
 	$deathCount = 0;
 	$maxDeaths = 99;//getMax(1, $aliveCount);
@@ -463,6 +471,9 @@ function despairPrepareGame()
 	Sky.fogDistance = $EnvGuiServer::FogDistance;
 	Sky.sendUpdate();
 
+    if ($defaultMiniGame.winRounds < 0)
+		$defaultMiniGame.winRounds = 0;
+
 	roomPlayers();
 
 	DespairSetWeapons(1);
@@ -483,6 +494,20 @@ function DespairSetWeapons(%tog)
 			messageClient(%member, '', "<font:impact:24>\c5You will be unable to swing your weapons anymore.");
 		//if (%player.getMountedImage(0) && %player.getMountedImage(0).item.className $= "DespairWeapon")
 		//	%player.unMountImage(0);
+	}
+}
+
+function DespairSetPermadeath(%tog)
+{
+	$DefaultMiniGame.permaDeath = %tog;
+	if ($defaultMiniGame.permaDeath)
+	{
+		$DefaultMiniGame.chatMessageAll('', '\c0<font:impact:30>Permadeath mode has been enabled\c5!');
+		$DefaultMiniGame.chatMessageAll('', '<font:impact:30>\c5From this point on, your death will mean you will only be able to spectate until innocents lose or there\'s only two people remaining!');
+	}
+	else
+	{
+		$DefaultMiniGame.chatMessageAll('', '<font:impact:30>\c5Permadeath mode has been disabled.');
 	}
 }
 
@@ -530,6 +555,7 @@ function despairCycleStage(%stage)
 	talk("It is now \c3" @ %stage);
 	if(%stage $= "NIGHT")
 	{
+		$days++;
 		despairOnNight();
 	}
 
@@ -550,8 +576,6 @@ function despairCycleStage(%stage)
 
 	if(%stage $= "MORNING")
 	{
-		$days++;
-
 		%high = -1;
 		%choice[%high++] = "Did you know we have a <a:discord.gg/W4rSDac>Discord</a>\c6 channel? Join the discussion!";
 		%choice[%high++] = "\c3/help\c6 contains a lot of useful gameplay information and tips. Check it out!";
@@ -645,11 +669,17 @@ package DespairFever
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 
-		if(!$pickedKiller)
-			createPlayer(%client);
-
 		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
 		commandToClient(%client, 'messageBoxOK', "Welcome!", "Please read /rules and /help!");
+		if(!$pickedKiller && (!$defaultMiniGame.permaDeath || $defaultMiniGame.winRounds <= 0))
+			createPlayer(%client);
+		else
+		{
+			if ($defaultMiniGame.permaDeath)
+				messageClient(%client, '', '\c5You didn\'t spawn because permadeath mode is enabled - you can only spawn in the first round.');
+			else if ($pickedKiller)
+				messageClient(%client, '', '\c5You didn\'t spawn because the round is already in progress.');
+		}
 	}
 
 	function MiniGameSO::removeMember($DefaultMiniGame, %client)
@@ -671,7 +701,7 @@ package DespairFever
 		}
 		if(isObject(%client.character))
 		{
-			%client.character.deleteMe = true;
+			%client.character.isDead = true;
 		}
 		if (isObject(%client))
 			%client.dfSaveData();
@@ -704,7 +734,7 @@ package DespairFever
 			if(%client.isAdmin)
 				%admins++;
 		}
-		if(!%admins && $Pref::Server::Password $= "a")
+		if(!%admins && $Pref::Server::Password $= "a" && $DefaultMiniGame.winRounds <= 0) //despair
 		{
 			for(%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
@@ -756,6 +786,7 @@ package DespairFever
 		if(!%otherAlive)
 		{
 			talk("Everybody is dead dave");
+			$defaultMiniGame.winRounds = 0; //Reset the winrounds counter for permadeath
 			despairEndGame();
 		}
 		else if(!%killerAlive && $pickedKiller)
@@ -766,6 +797,7 @@ package DespairFever
 		else if($aliveCount == 1)
 		{
 			talk("I AM THE ONE AND ONLY");
+			$defaultMiniGame.winRounds = 0; //Reset the winrounds counter for permadeath
 			despairEndGame();
 		}
 		else if(%killerAlive && $aliveCount == 2)

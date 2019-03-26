@@ -338,7 +338,7 @@ package DespairHealth
 		if (%client.miniGame != $DefaultMiniGame)
 			return Parent::onDisabled(%data, %player, %state);
 
-		%player.character.deleteMe = true;
+		%player.character.isDead = true;
 		if (isObject(%client))
 		{
 			// centerPrint(%client, "");

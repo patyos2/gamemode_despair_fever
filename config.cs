@@ -15,7 +15,7 @@ $Despair::DiscussPeriod = 420; //7 mins
 $Despair::DiscussExtraLength = 90; //+1:30 mins for every body in trial
 $Despair::MangleTimer = 900; //15 minutes if a mangled body turns up for discusison phase
 $Despair::CanForceVote = 60; //1 min has to pass before you can forcevote
-$Despair::CanForceTrial = 240; //4 mins have to pass before you can force trial
+$Despair::CanForceTrial = 90; //1 min 30 seconds have to pass before you can force trial
 $Despair::MissingLength = 120; //2 mins until body announcement is made automatically
 //Sleep
 $Despair::SleepOverjoyed = 60;

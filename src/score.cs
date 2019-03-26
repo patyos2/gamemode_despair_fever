@@ -3,7 +3,7 @@ function UpdatePeopleScore()
 	for(%i=0; %i < ClientGroup.getCount(); %i++)
 	{
 		%client = ClientGroup.getObject(%i);
-		if($DefaultMiniGame.numMembers < 6)
+		if(!$DefaultMiniGame.permaDeath && $DefaultMiniGame.numMembers < 6)
 		{
 			messageClient(%client, '', '\c2>>There must be at least 6 players for the score system.');
 			return;
@@ -19,9 +19,15 @@ function GameConnection::AddPoints(%client, %num)
 {
 	if(%num $= "" || %num == 0)
 		return;
-	if($DefaultMiniGame.numMembers < 6)
+	if(!$DefaultMiniGame.permaDeath && $DefaultMiniGame.numMembers < 6)
 		return;
 	messageClient(%client, '', '\c2>>You recieved %2%1 points\c2!', %num, %num > 0 ? "\c6" : "\c0");
+	if($DefaultMiniGame.permaDeath && %num > 0)
+	{
+		%bonus = %num; //double the points
+		messageClient(%client, '', '\c2>>Due to active \c0PERMADEATH\c2, you recieved \c6%1 points bonus\c2!', %bonus);
+		%num += %bonus;
+	}
 	%client.TempPoints += %num;
 }
 
