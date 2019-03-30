@@ -23,7 +23,7 @@ function createPlayer(%client)
 		messageClient(%client, '', '\c5You didn\'t spawn because you are spectating.');
 		return;
 	}
-
+	cleanupCharacterCreation(%client);
 	if (isObject(%client.character))
 		%nopersist = %client.character.client.noPersistance;
 
@@ -34,6 +34,11 @@ function createPlayer(%client)
     %gender = getRandomGender();
 	if(!isObject(%character = %client.character) || %character.isDead || %nopersist)
 	{
+		if ($defaultMiniGame.permaDeath && $defaultMiniGame.winRounds > 0)
+		{
+            messageClient(%client, '', '\c5You are dead - you cannot respawn during permadeath.');
+            return;
+		}
 		if(isObject(%character))
 			%character.delete();
 		%character = new ScriptObject()
@@ -111,7 +116,7 @@ function createPlayer(%client)
 	%player.setTransform(%roomSpawn.getSpawnPoint());
 	%client.updateAFKCheck();
 
-	centerPrint(%client, "<bitmap:" @ $Despair::Path @ "res/logo><br><br><br><br><br><br><br><font:impact:30>\c6CHAPTER " @ $defaultMiniGame.winRounds+1, 6);
+	centerPrint(%client, "<bitmap:" @ $Despair::Path @ "res/logo><br><br><br><br><br><br><br><font:impact:30>\c6CHAPTER " @ ($defaultMiniGame.winRounds+1), 6);
 	commandToClient(%client,'PlayGui_CreateToolHud',PlayerDespairArmor.maxTools);
 	commandToClient(%client, 'SetVignette', true, $EnvGuiServer::VignetteMultiply SPC $EnvGuiServer::VignetteColor);
 
@@ -266,13 +271,13 @@ function roomPlayers()
 
 		if(isObject(%player))
 		{
-			%ln = getWord(%player.character.name, 1);
-			if(%sibling[%ln] !$= "")
-			{
-				messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, $roomNum[%sibling[%ln].character.room]);
-				messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, $roomNum[%player.character.room]);
-			}
-			%sibling[%ln] = %player;
+			// %ln = getWord(%player.character.name, 1);
+			// if(%sibling[%ln] !$= "")
+			// {
+			// 	messageClient(%client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %sibling[%ln].character.name, $roomNum[%sibling[%ln].character.room]);
+			// 	messageClient(%sibling[%ln].client, '', '\c5You have a \c6sibling\c5 this round! Their name is %1 and they live in room %2.', %player.character.name, $roomNum[%player.character.room]);
+			// }
+			// %sibling[%ln] = %player;
 			%client.playPath(IntroPath);
 			%client.schedule(6000, setControlObject, %player);
 			%client.camera.schedule(6000, setControlObject, %client.camera);
@@ -807,7 +812,7 @@ package DespairFever
 				$DefaultMiniGame.chatMessageAll('', 'ONLY TWO PEOPLE REMAIN\c6. If the killer doesn\'t kill the last person alive, he will die! \c3You have 5 minutes.');
 				$FinalBoss = true;
 				cancel($DefaultMiniGame.eventSchedule);
-				$DefaultMiniGame.eventSchedule = $pickedKiller.player.schedule(300*1000, 0, "kill");
+				$DefaultMiniGame.eventSchedule = schedule(300*1000, $pickedKiller.player, "kill");
 				ServerPlaySong(pickField("DespairMusicIntense" TAB "DespairMusicWonderfulIntro"));
 				DespairSetWeapons(1);
 			}

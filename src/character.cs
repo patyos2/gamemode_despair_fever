@@ -12,6 +12,21 @@ function getRandomAppearance(%gender)
 	return %appearance;
 }
 
+function getSkinColorList()
+{
+	%index = -1;
+	%color[%index++] = "0.956863 0.878431 0.784314 1";
+	%color[%index++] = "1 0.878431 0.611765 1";
+	%color[%index++] = "1 0.603922 0.423529 1";
+	%color[%index++] = "0.392157 0.196078 0 1"; //rare color
+	%i = -1;
+	while(%i++ <= %index)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %color[%i]);
+	}
+	return %fields;
+}
+
 function getRandomSkinColor()
 {
 	%index = -1;
@@ -28,122 +43,162 @@ function getRandomSkinColor()
 	return %r SPC %g SPC %b SPC 1;
 }
 
+function getHairColorList()
+{
+	//Grays/"blues"
+	%high = -1;
+	%color[%high++] = "0.753 0.816 0.816 1";
+	%color[%high++] = "0.439 0.502 0.565 1";
+	%color[%high++] = "0.251 0.251 0.376 1";
+	%color[%high++] = "0.125 0.063 0.188 1";
+	//Browns (light)
+	%color[%high++] = "0.816 0.816 0.69 1";
+	%color[%high++] = "0.627 0.502 0.376 1";
+	%color[%high++] = "0.376 0.251 0.251 1";
+	%color[%high++] = "0.251 0.125 0.125 1";
+	//Browns
+	%color[%high++] = "0.878 0.69 0.376 1";
+	%color[%high++] = "0.753 0.502 0.251 1";
+	%color[%high++] = "0.627 0.314 0.125 1";
+	%color[%high++] = "0.251 0 0 1";
+	//Orange
+	%color[%high++] = "1 0.502 0.251 1";
+	%color[%high++] = "0.753 0.251 0 1";
+	%color[%high++] = "0.502 0.125 0 1";
+	%color[%high++] = "0.251 0.063 0 1";
+	//Blonde
+	%color[%high++] = "1 1 0.627 1";
+	%color[%high++] = "1 0.753 0.251 1";
+	%color[%high++] = "0.753 0.502 0 1";
+	%color[%high++] = "0.502 0.251 0 1";
+	//Ginger
+	%color[%high++] = "1 0.251 0 1";
+	%color[%high++] = "1 0.502 0 1";
+	%color[%high++] = "1 0.878 0 1";
+	%i = -1;
+	while(%i++ <= %high)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %color[%i]);
+	}
+	return %fields;
+}
+
+function getDyedHairColorList()
+{
+	%high = -1;
+	%color[%high++] = "0.753 1 0 1";
+	%color[%high++] = "0.251 0.753 0 1";
+	%color[%high++] = "0 0.502 0.251 1";
+	%color[%high++] = "0 0.251 0.251 1";
+	//Teal
+	%color[%high++] = "0 1 0.502 1";
+	%color[%high++] = "0 0.753 0.502 1";
+	%color[%high++] = "0 0.502 0.502 1";
+	%color[%high++] = "0 0.251 0.376 1";
+	//Blues
+	%color[%high++] = "0.502 0.941 1 1";
+	%color[%high++] = "0 0.753 1 1";
+	%color[%high++] = "0 0.251 0.753 1";
+	%color[%high++] = "0.125 0 0.502 1";
+	//Purple
+	%color[%high++] = "0.878 0.627 1 1";
+	%color[%high++] = "0.753 0.251 1 1";
+	%color[%high++] = "0.502 0 0.753 1";
+	//Pinks
+	%color[%high++] = "1 0.753 0.753 1";
+	%color[%high++] = "1 0.376 0.502 1";
+	%color[%high++] = "0.753 0 0.376 1";
+	%color[%high++] = "0.502 0 0.376 1";
+	%i = -1;
+	while(%i++ <= %high)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %color[%i]);
+	}
+	return %fields;
+}
+
 function getRandomHairColor()
 {
-	//Natural colors
-	//Grays/"blues"
-	%i = -1;
-	%color[%i++] = "0.753 0.816 0.816";
-	%color[%i++] = "0.439 0.502 0.565";
-	%color[%i++] = "0.251 0.251 0.376";
-	%color[%i++] = "0.125 0.063 0.188";
-	//Browns (light)
-	%color[%i++] = "0.816 0.816 0.69";
-	%color[%i++] = "0.627 0.502 0.376";
-	%color[%i++] = "0.376 0.251 0.251";
-	%color[%i++] = "0.251 0.125 0.125";
-	//Browns
-	%color[%i++] = "0.878 0.69 0.376";
-	%color[%i++] = "0.753 0.502 0.251";
-	%color[%i++] = "0.627 0.314 0.125";
-	%color[%i++] = "0.251 0 0";
-	//Orange
-	%color[%i++] = "1 0.502 0.251";
-	%color[%i++] = "0.753 0.251 0";
-	%color[%i++] = "0.502 0.125 0";
-	%color[%i++] = "0.251 0.063 0";
-	//Blonde
-	%color[%i++] = "1 1 0.627";
-	%color[%i++] = "1 0.753 0.251";
-	%color[%i++] = "0.753 0.502 0";
-	%color[%i++] = "0.502 0.251 0";
-	//Ginger
-	%color[%i++] = "1 0.251 0";
-	%color[%i++] = "1 0.502 0";
-	%color[%i++] = "1 0.878 0";
+    //Natural colors
+    %fields = getHairColorList();
 	//Dyed colors
 	if (getRandom(1, 3) == 1) //sorta rarer
 	{
-		//Green
-		%color[%i++] = "0.753 1 0";
-		%color[%i++] = "0.251 0.753 0";
-		%color[%i++] = "0 0.502 0.251";
-		%color[%i++] = "0 0.251 0.251";
-		//Teal
-		%color[%i++] = "0 1 0.502";
-		%color[%i++] = "0 0.753 0.502";
-		%color[%i++] = "0 0.502 0.502";
-		%color[%i++] = "0 0.251 0.376";
-		//Blues
-		%color[%i++] = "0.502 0.941 1";
-		%color[%i++] = "0 0.753 1";
-		%color[%i++] = "0 0.251 0.753";
-		%color[%i++] = "0.125 0 0.502";
-		//Purple
-		%color[%i++] = "0.878 0.627 1";
-		%color[%i++] = "0.753 0.251 1";
-		%color[%i++] = "0.502 0 0.753";
-		//Pinks
-		%color[%i++] = "1 0.753 0.753";
-		%color[%i++] = "1 0.376 0.502";
-		%color[%i++] = "0.753 0 0.376";
-		%color[%i++] = "0.502 0 0.376";
+		%fields = %fields TAB getDyedHairColorList();
 	}
 
-	return %color[getRandom(0, %i)] SPC 1;
+	return pickField(%fields);
+}
+
+function getGenericColorList()
+{
+	%color0 = "0.9 0 0 1";
+	%color2 = "0.74902 0.180392 0.482353 1";
+	%color3 = "0.388235 0 0.117647 1";
+	%color4 = "0.133333 0.270588 0.270588 1";
+	%color5 = "0 0.141176 0.333333 1";
+	%color6 = "0.105882 0.458824 0.768627 1";
+	%color7 = "1 1 1 1";
+	%color8 = "0.0784314 0.0784314 0.0784314 1";
+	%color9 = "0.92549 0.513726 0.678431 1";
+	%color10 = "0 0.5 0.25 1";
+	%color11 = "0.784314 0.921569 0.490196 1";
+	%color12 = "0.541176 0.698039 0.552941 1";
+	%color13 = "0.560784 0.929412 0.960784 1";
+	%color14 = "0.698039 0.662745 0.905882 1";
+	%color15 = "0.878431 0.560784 0.956863 1";
+	%color16 = "0.888 0 0 1";
+	%color17 = "1 0.5 0 1";
+	%color18 = "0.99 0.96 0 1";
+	%color19 = "0.2 0 0.8 1";
+	%color20 = "0 0.471 0.196 1";
+	%color21 = "0 0.2 0.64 1";
+	%color22 = "0.596078 0.160784 0.392157 1";
+	%color23 = "0.55 0.7 1 1";
+	%color24 = "0.85 0.85 0.85 1";
+	%color25 = "0.1 0.1 0.1 1";
+	%color27 = "0.75 0.75 0.75 1";
+	%color28 = "0.5 0.5 0.5 1";
+	%color29 = "0.2 0.2 0.2 1";
+	%color30 = "0.901961 0.341176 0.0784314 1";
+
+	%i = -1;
+	while(%i++ <= 30)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %color[%i]);
+	}
+	return %fields;
 }
 
 function getRandomGenericColor()
 {
-	%color0 = "0.9 0 0";
-	%color1 = "0.9 0 0";
-	%color2 = "0.74902 0.180392 0.482353";
-	%color3 = "0.388235 0 0.117647";
-	%color4 = "0.133333 0.270588 0.270588";
-	%color5 = "0 0.141176 0.333333";
-	%color6 = "0.105882 0.458824 0.768627";
-	%color7 = "1 1 1";
-	%color8 = "0.0784314 0.0784314 0.0784314";
-	%color9 = "0.92549 0.513726 0.678431";
-	%color10 = "0 0.5 0.25";
-	%color11 = "0.784314 0.921569 0.490196";
-	%color12 = "0.541176 0.698039 0.552941";
-	%color13 = "0.560784 0.929412 0.960784";
-	%color14 = "0.698039 0.662745 0.905882";
-	%color15 = "0.878431 0.560784 0.956863";
-	%color16 = "0.888 0 0";
-	%color17 = "1 0.5 0";
-	%color18 = "0.99 0.96 0";
-	%color19 = "0.2 0 0.8";
-	%color20 = "0 0.471 0.196";
-	%color21 = "0 0.2 0.64";
-	%color22 = "0.596078 0.160784 0.392157";
-	%color23 = "0.55 0.7 1";
-	%color24 = "0.85 0.85 0.85";
-	%color25 = "0.1 0.1 0.1";
-	%color26 = "0.9 0.9 0.9";
-	%color27 = "0.75 0.75 0.75";
-	%color28 = "0.5 0.5 0.5";
-	%color29 = "0.2 0.2 0.2";
-	%color30 = "0.901961 0.341176 0.0784314";
-
-	return %color[getRandom(0, 30)] SPC 1;
+	return pickField(getGenericColorList());
 }
+
+function getPantsColorList()
+{
+	%color0 = "0.75 0.75 0.75 1";
+	%color1 = "0.2 0.2 0.2 1";
+	%color2 = "0.388 0 0.117 1";
+	%color3 = "0.133 0.27 0.27 1";
+	%color4 = "0 0.141 0.333 1";
+	%color5 = "0.078 0.078 0.078 1";
+	%i = -1;
+	while(%i++ <= 5)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %color[%i]);
+	}
+	return %fields;
+}
+
 function getRandomPantsColor()
 {
-	%color0 = "0.75 0.75 0.75";
-	%color1 = "0.2 0.2 0.2";
-	%color2 = "0.388 0 0.117";
-	%color3 = "0.133 0.27 0.27";
-	%color4 = "0 0.141 0.333";
-	%color5 = "0.078 0.078 0.078";
-
-	return %color[getRandom(0, 5)] SPC 1;
+	return pickField(getPantsColorList());
 }
 
 
 //Some faces are from winterbite face pack located here: https://www.dropbox.com/s/misn71lpawwi8le/Face_WinterBite.zip
-function getRandomFaceName(%gender)
+function getFaceList(%gender)
 {
 	%high = -1;
 	%choice[%high++] = "smiley";
@@ -161,7 +216,7 @@ function getRandomFaceName(%gender)
 		%choice[%high++] = "kleinerSmiley2ST";
 		%choice[%high++] = "kleinerSmiley2";
 	}
-	else
+	else if(%gender $= "female")
 	{
 		//Winterbite faces:
 		%choice[%high++] = "smileyfST";
@@ -170,11 +225,21 @@ function getRandomFaceName(%gender)
 		%choice[%high++] = "KleinerfSmileysST";
 		%choice[%high++] = "KleinerfSmiley";
 	}
+	%i = -1;
+	while(%i++ <= %high)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %choice[%i]);
+	}
 
-	return %choice[getRandom(%high)];
+	return %fields;
 }
 
-function getRandomDecalName()
+function getRandomFaceName(%gender)
+{
+	return pickField(getFaceList(%gender));
+}
+
+function getDecalList()
 {
 	%high = -1;
 
@@ -190,11 +255,32 @@ function getRandomDecalName()
 	%choice[%high++] = "Medieval-Eagle";
 	%choice[%high++] = "Hoodie";
 	%choice[%high++] = "Alyx";
+	%i = -1;
+	while(%i++ <= %high)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %choice[%i]);
+	}
 
-	return %choice[getRandom(%high)];
+	return %fields;
+}
+
+function getRandomDecalName()
+{
+	return pickField(getDecalList());
 }
 
 function getRandomHairName(%gender)
+{
+	%fields = getHairList(%gender);
+
+	if (getRandom(1, 2) == 1) //rare hairs
+	{
+		%fields = %fields TAB getHairList("rare");
+	}
+	return pickField(%fields);
+}
+
+function getHairList(%gender)
 {
 	%high = -1;
 	//Unisex hairs
@@ -213,7 +299,7 @@ function getRandomHairName(%gender)
 		%choice[%high++] = "hair_shaggy";
 		%choice[%high++] = "hair_fabio";
 	}
-	else //Female hairs
+	else if (%gender $= "female")//Female hairs
 	{
 		%choice[%high++] = "hair_broad";
 		%choice[%high++] = "hair_bunn";
@@ -224,13 +310,18 @@ function getRandomHairName(%gender)
 		%choice[%high++] = "hair_mahiru";
 		%choice[%high++] = "hair_maya";
 	}
-
-	if (getRandom(1, 2) == 1) //rare hairs
+	else if (%gender $= "rare")//Rare unisex
 	{
 		%choice[%high++] = "hair_mohawk";
 		%choice[%high++] = "hair_rocker";
 	}
-	return %choice[getRandom(%high)];
+	%i = -1;
+	while(%i++ <= %high)
+	{
+		%fields = setField(%fields, getFieldCount(%fields), %choice[%i]);
+	}
+
+	return %fields;
 }
 
 

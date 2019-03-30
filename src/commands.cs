@@ -26,6 +26,65 @@ function serverCmdMood(%this)
 	messageClient(%this, '', '\c5You are %1%2\c5.', getMoodColor(getMoodName(%obj.mood)), getMoodName(%obj.mood));
 }
 
+function serverCmdCustomChar(%this, %do)
+{
+	if (!isObject(%this.character) || !isObject(%this.player) || $days > 0)
+	{
+		messageClient(%this, '', '\c5You must be alive and use this command before roles have been decided.');
+		return;
+	}
+    if ($DefaultMiniGame.permaDeath && $DefaultMiniGame.winRounds > 0)
+	{
+		messageClient(%this, '', '\c5You cannot change your character during permadeath mode.');
+		return;
+	}
+	if (%do)
+	{
+        enterCharacterCreation(%this);
+		return;
+	}
+	%message = "\c2Are you sure you want to customize your character? You will need to finish your character before night hits!\nYou also need to use /customname <firstname> <lastname> to rename your character.";
+	commandToClient(%this, 'messageBoxYesNo', "CustomChar", %message, 'CustomCharAccept');
+}
+function serverCmdCustomCharAccept(%this)
+{
+    serverCmdCustomChar(%this, true);
+}
+
+function serverCmdCC(%this) //shorthand for "customchar"
+{
+	serverCmdCustomChar(%this);
+}
+
+function serverCmdCustomName(%this, %firstname, %lastname)
+{
+	if (!isObject(%this.character) || !isObject(%this.player) || $days > 0)
+	{
+		messageClient(%this, '', '\c5You must be alive and use this command before roles have been decided.');
+		return;
+	}
+    if ($DefaultMiniGame.permaDeath && $DefaultMiniGame.winRounds > 0)
+	{
+		messageClient(%this, '', '\c5You cannot change your character during permadeath mode.');
+		return;
+	}
+	if (%firstname $= "" || %lastname $= "")
+	{
+		messageClient(%this, '', '\c5Invalid argument! Correct usage: /customname <firstname> <lastname>.');
+		return;
+	}
+	if (strlen(%firstname) < 2 || strlen(%lastname) < 2)
+	{
+		messageClient(%this, '', '\c5You must use more than a single letter for your name!');
+		return;
+	}
+	//Make 'em correct
+	%firstname = strupr(getSubStr(%firstname, 0, 1)) @ strlwr(getSubStr(%firstname, 1, strlen(%lastname)));
+	%lastname = strupr(getSubStr(%lastname, 0, 1)) @ strlwr(getSubStr(%lastname, 1, strlen(%lastname)));
+	%this.character.name = %firstname SPC %lastname;
+	messageClient(%this, '', '\c5Your new name is now %1.', %this.character.name);
+}
+
 function serverCmdStats(%this, %target)
 {
 	if(%target $= "" || !%this.isAdmin)
@@ -37,7 +96,7 @@ function serverCmdStats(%this, %target)
 		messageClient(%this, '', '\c5Invalid target!');
 		return;
 	}
-	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /kill '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /stats '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2");
 	messageClient(%this, '', '\c5Here are the stats for %1.', %target.getPlayerName());
 	
 	messageClient(%this, '', '\c2++\c5Points\c6: %1', %target.points);
@@ -224,6 +283,27 @@ function serverCmdKill(%this, %target)
 	}
 }
 
+function serverCmdSetName(%client, %target, %name)
+{
+	if(!%this.isAdmin)
+		return;
+	%target = findclientbyname(%target);
+	if(!isObject(%target))
+	{
+		messageClient(%this, '', '\c5Invalid target!');
+		return;
+	}
+	if(%name $= "")
+	{
+        messageClient(%this, '', '\c5Invalid argument - intended rename must not be empty!');
+        return;
+    }
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /setname '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ") '" @ %name @ "'", "\c2");
+	messageClient(%this, '', '\c5You have changed %1\'s name to %2.', %target.getPlayerName(), %name);
+	messageClient(%target, '', '\c5Your name has been changed to %1.', %name);
+	%target.character.name = %name;
+}
+
 function serverCmdKillerBan(%this, %target)
 {
 	if(!%this.isAdmin)
@@ -368,7 +448,7 @@ function updateAdminCount()
 		messageAll('', '\c0ALL RULE-BREAKERS WILL BE PUNISHED EVEN IF THERE ARE NO ADMINS!!!');
 		RS_Log("Last admin left the game, locking server.", "\c2");
 	}
-	else if($Pref::Server::Password $= "a")
+	else if($Pref::Server::Password $= "a" && %admins)
 	{
 		$Pref::Server::Name = strReplace($Pref::Server::Name, " [No Admins]", "");
 		$Pref::Server::Password = "";

@@ -111,6 +111,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "\c6======";
 			%text[%count++] = "\c5Say \c3/help *category*\c5 for more info on certain topics.";
 			%text[%count++] = "\c5If you want to read the game regulations (e.g. game rules), use \c3/regulations\c5.";
+			%text[%count++] = "\c5We also have a <a:https://despair-fever.fandom.com/wiki/Despair_Fever_Wiki>Wiki</a>\c5!";
 	}
 
 	for (%i=1; %i<=%count; %i++)

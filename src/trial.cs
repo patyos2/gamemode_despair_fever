@@ -148,7 +148,9 @@ function despairOnKill(%victim, %attacker, %crit)
 		schedule(2500, 0, clearBloodBySource, %player);
 		schedule(2500, 0, clearBloodBySource, %victim.player);
 		%player.setBloody(0, 0, 0);
+		%player.bleedTicks = 0;
 		%victim.player.setBloody(0, 0, 0);
+		%victim.player.bleedTicks = 0;
 
 		messageClient(%victim, '', "<font:Impact:30>You just got RDMed!\c6 Please \c3/report [msg]\c6 the situation leading up to this.");
 		messageClient(%attacker, '', "<font:Impact:30>You just RDMed!\c6 Please \c3/report [msg]\c6 the situation leading up to this.");
@@ -435,8 +437,11 @@ function despairOnMorning()
 		%player = %client.player;
 		if(isObject(%player))
 		{
-			%player.schedule(1000 * (getRandom() * 3), updateStatusEffect, $SE_sleepSlot); //Update all tiredness-related status effects
-			%client.updateBottomprint();
+			if(%player.statusEffect[$SE_sleepSlot] !$= "tired") //This nerd ain't exhausted, don't torture them yet.
+			{
+				%player.schedule(1000 * (getRandom() * 3), updateStatusEffect, $SE_sleepSlot); //Update all tiredness-related status effects
+				%client.updateBottomprint();
+			}
 		}
 	}
 
@@ -560,7 +565,6 @@ function despairOnEvening()
     if ($investigationStart !$= "")
 		return;
 
-	dropFoods();
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
@@ -627,20 +631,25 @@ function despairOnNight()
 
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 	{
-		%client = $DefaultMiniGame.member[%a[%i]];
+		%client = $DefaultMiniGame.member[%i];
 		%player = %client.player;
 		if(isObject(%player))
 		{
-			%player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
-			%client.updateBottomprint();
+			if(%client.charModeIndex !$= "") //We're in character creation mode, end our memery
+			{
+				cleanupCharacterCreation(%client);
+				characterCreationFixPlayer(%client);
+			}
+			// %player.updateStatusEffect($SE_sleepSlot); //Update all tiredness-related status effects
+			// %client.updateBottomprint();
 		}
 	}
 
 	if($days > 0)
 		return;
 
-	ClearFlaggedCharacters(); //call this so joiners-leavers before night 1 are not counted for anything
-
+	if (!$DefaultMiniGame.permaDeath || $DefaultMiniGame.winRounds <= 0)
+		ClearFlaggedCharacters(); //call this so joiners-leavers before night 1 are not counted for anything
 
 	// prepare
 	for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
@@ -736,7 +745,7 @@ function DespairPickKiller(%repick)
 
 function serverCmdKillerBoxAccept(%this)
 {
-	if(%this.prompted["Box"] && $days < 1)
+	if(%this.prompted["Box"] && $days <= 1)
 	{
 		%queue = $Despair::Queue["Killer"];
 		if (findWord(%queue, %this))

@@ -60,22 +60,22 @@ function GameConnection::examineObject(%client, %col)
 				if(%wounds["blunt"] > 0)
 				{
 					%field = %wounds["blunt"] SPC "bruises";
-					%haswounds = true;
+					%fields = setField(%fields, getFieldCount(%fields), %field);
 				}
 				if(%wounds["sharp"] > 0)
 				{
 					%field = %wounds["sharp"] SPC "cuts";
-					%haswounds = true;
+					%fields = setField(%fields, getFieldCount(%fields), %field);
 				}
 				if(%wounds["gun"] > 0)
 				{
 					%field = %wounds["gun"] SPC "bullet holes";
-					%haswounds = true;
+					%fields = setField(%fields, getFieldCount(%fields), %field);
 				}
 
 				//Tissue damage comes first
-				if(%haswounds)
-					%text = %text @ "\n\c6" @ "They have \c3" @ naturalGrammarList(%field) @ "\c6.";
+				if(getFieldCount(%fields) > 0)
+					%text = %text @ "\n\c6" @ "They have \c3" @ naturalGrammarList(%fields) @ "\c6.";
 
 				if(%wounds["choking"] > 0)
 				{
@@ -83,19 +83,29 @@ function GameConnection::examineObject(%client, %col)
 					%haswounds = true;
 				}
 
-				if(%wounds["fall"] > 0)
+				if(%col.attackType[%col.attackCount] $= "fall")
+				{
+					%text = %text @ "\n\c6" @ "They \c3fell to their death\c6.";
+					%haswounds = true;
+				}
+				else if(%wounds["fall"] > 0)
 				{
 					%text = %text @ "\n\c6" @ "There are \c3signs of falling\c6.";
 					%haswounds = true;
 				}
 
-				if(%wounds["bleed"] > 0)
+				if(%col.attackType[%col.attackCount] $= "bleed")
 				{
 					%text = %text @ "\n\c6" @ "They have \c3bled to death\c6.";
 					%haswounds = true;
 				}
+				else if(%wounds["bleed"] > 0)
+				{
+					%text = %text @ "\n\c6" @ "Their wounds had them \c3bleeding\c6.";
+					%haswounds = true;
+				}
 
-				if(!%haswounds)
+				if(getFieldCount(%fields) <= 0 && !%haswounds)
 					%text = %text @ "\n\c6" @ "They have \c3no visible wounds\c6.";
 			}
 		}

@@ -62,12 +62,18 @@ package DespairHealth
 		if (%client.miniGame != $DefaultMiniGame)
 			return;
 
-		%playPain = 1;
+		%playPain = true;
 		%blood = true;
 		if (%type $= "blunt" || %type $= "sharp")
 		{
 			if(%player.character.trait["Extra Tough"])
 				%damage *= 0.9;
+		}
+
+		if (%type $= "bleed")
+		{
+			%blood = false;
+			%playPain = false;
 		}
 
 		if(%player.mood !$= "")
@@ -138,7 +144,7 @@ package DespairHealth
 
 			%fatal = %player.health - %damage <= 0;
 			%sound = %fatal ? fallFatalSound : fallInjurySound;
-			%playPain = 0;
+			%playPain = false;
 			serverPlay3D(%sound, %pos);
 			%type = "fall";
 			if(%fatal)
@@ -355,7 +361,7 @@ package DespairHealth
 
 		%player.isDead = 1;
 		%player.isBody = 1;
-		if(%player.attackSource[%player.attackCount] == %player || %player.attackSource[%player.attackCount] <= 0)
+		if(%player.attackCharacter[%player.attackCount] == %player.character || !isObject(%player.attackCharacter[%player.attackCount]))
 		{
 			%player.suicide = true;
 			%player.pools = 1000;

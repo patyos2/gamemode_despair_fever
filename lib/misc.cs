@@ -48,9 +48,34 @@ function commafy(%s)
 	return %o;
 }
 
-datablock StaticShapeData(PrimitiveLineC)
+datablock StaticShapeData(cubeShape)
+{
+    shapeFile = $Despair::Path @ "res/shapes/cube.dts";
+};
+
+datablock StaticShapeData(lineShape)
 {
 	shapeFile = $Despair::Path @ "res/shapes/line.dts";
+};
+
+datablock StaticShapeData(planeShape)
+{
+    shapeFile = $Despair::Path @ "res/shapes/plane.dts";
+};
+
+datablock StaticShapeData(planeCollisionShape)
+{
+    shapeFile = $Despair::Path @ "res/shapes/plane_collision.dts";
+};
+
+datablock StaticShapeData(planeGlowShape)
+{
+    shapeFile = $Despair::Path @ "res/shapes/plane_glow.dts";
+};
+
+datablock StaticShapeData(planeGlowCollisionShape)
+{
+    shapeFile = $Despair::Path @ "res/shapes/plane_glow_collision.dts";
 };
 
 if (!isObject(LinePool))
@@ -83,7 +108,7 @@ function drawLine(%ref, %a, %b, %color)
 		{
 			%ref = new StaticShape()
 			{
-				datablock = PrimitiveLineC;
+				datablock = lineShape;
 			};
 			
 			PrimitiveSet.add(%ref);

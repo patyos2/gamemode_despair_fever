@@ -38,6 +38,45 @@ datablock AudioProfile(SlipSound3)
 	preload = true;
 };
 
+function Player::setSleepCam(%this)
+{
+	%client = %this.client;
+	if (!isObject(%client))
+		return;
+	%camera = %client.camera;
+	if (!isObject(%camera))
+		return;
+	if (!isObject($KOScreenShape))
+	{
+		$KOScreenShape = new StaticShape()
+		{
+			datablock = PlaneShapeGlowData;
+			scale = "1 1 1";
+			position = "0 0 -400"; //units below ground level, woo
+		};
+		$KOScreenShape.setNodeColor("ALL", "0 0 0 1");
+	}
+	%camera = %client.camera;
+	//aim the camera at the target
+	%pos = vectorAdd($KOScreenShape.position, "0.2 0 0");
+	%delta = vectorSub($KOScreenShape.position, %pos);
+	%deltaX = getWord(%delta, 0);
+	%deltaY = getWord(%delta, 1);
+	%deltaZ = getWord(%delta, 2);
+	%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
+
+	%rotZ = mAtan(%deltaX, %deltaY) * -1; 
+	%rotX = mAtan(%deltaZ, %deltaXYHyp);
+
+	%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
+
+	%camera.setTransform(%pos SPC %aa);
+	%camera.setFlyMode();
+	%camera.mode = "Observer";
+	%client.setControlObject(%camera);
+	%camera.setControlObject(%client.dummyCamera);
+}
+
 function Player::KnockOut(%this, %duration)
 {
 	cancel(%this.wakeUpSchedule);
@@ -49,41 +88,7 @@ function Player::KnockOut(%this, %duration)
 	%client = %this.client;
 	if (isObject(%client) && isObject(%client.camera))
 	{
-		//messageClient(%client, '', 'You will be unconscious for %1 seconds.', %duration / 1000);
-		//if (%client.getControlObject() != %client.camera)
-		//{
-			// %client.camera.setMode("Corpse", %this);
-			// %client.setControlObject(%client.camera);
-			if (!isObject($KOScreenShape))
-			{
-				$KOScreenShape = new StaticShape()
-				{
-					datablock = PlaneShapeGlowData;
-					scale = "1 1 1";
-					position = "0 0 -400"; //units below ground level, woo
-				};
-				$KOScreenShape.setNodeColor("ALL", "0 0 0 1");
-			}
-			%camera = %client.camera;
-			//aim the camera at the target
-			%pos = vectorAdd($KOScreenShape.position, "0.2 0 0");
-			%delta = vectorSub($KOScreenShape.position, %pos);
-			%deltaX = getWord(%delta, 0);
-			%deltaY = getWord(%delta, 1);
-			%deltaZ = getWord(%delta, 2);
-			%deltaXYHyp = vectorLen(%deltaX SPC %deltaY SPC 0);
-
-			%rotZ = mAtan(%deltaX, %deltaY) * -1; 
-			%rotX = mAtan(%deltaZ, %deltaXYHyp);
-
-			%aa = eulerRadToMatrix(%rotX SPC 0 SPC %rotZ); //this function should be called eulerToAngleAxis...
-
-			%camera.setTransform(%pos SPC %aa);
-			%camera.setFlyMode();
-			%camera.mode = "Observer";
-			%client.setControlObject(%camera);
-			%camera.setControlObject(%client.dummyCamera);
-		//}
+		%this.setSleepCam();
 	}
 
 	%this.setArmThread(land);

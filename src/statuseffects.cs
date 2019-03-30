@@ -200,7 +200,14 @@ function Player::updateStatusEffect(%player, %slot)
 			%decal.setScale(%size SPC %size SPC %size);
 			if(getRandom() < 0.45)
 				serverPlay3d(BloodSplat @ getRandom(1,3), getWords(%ray, 1, 3));
-			%player.health = getMax(1, %player.health - 2);
+			if(isObject(%player.client) && %player.client.killer && %player.health - 2 <= 0) //Killers can't get downed from bleeding
+			{
+				%player.bleedTicks = 0;
+				%player.removeStatusEffect(%slot, %effect);
+				return 0;
+			}
+			else
+				%player.damage(%player.attackSource[%player.attackCount], %player.getPosition(), 2, "bleed");
 			%player.setDamageFlash(0.2);
 			%player.statusSchedule[%slot] = %player.schedule(1000, updateStatusEffect, %slot);
 		case "shock":

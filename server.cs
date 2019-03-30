@@ -64,6 +64,7 @@ exec("./src/weapons.cs");
 exec("./src/write.cs");
 exec("./src/inventory.cs"); //Package activation order matters!
 exec("./src/events.cs"); //exec events last 'cuz it takes some variables from statuseffects.cs
+exec("./src/charactercreator.cs"); //Exec after minigame because this one overwrites serverCmdLight
 //items
 exec("./src/items/banana.cs");
 exec("./src/items/box.cs");
