@@ -141,6 +141,11 @@ package DespairChat
 			%time = getTimeString(mFloor($Sim::Time - $DespairTrial));
 		}
 		%name = %client.getPlayerName();
+		if (%client.killerHelper)
+		{
+			serverCmdTeamMessageSent(%client, %text);
+			return;
+		}
 		if (!isObject(%player))
 		{
 			%client.lastSpeakTime = $Sim::Time;
@@ -148,7 +153,7 @@ package DespairChat
 			{
 				%member = ClientGroup.getObject(%i);
 
-				if (!isObject(%member.player) || isEventPending($DefaultMiniGame.restartSchedule) || %member.miniGame != $DefaultMiniGame)
+				if ((!isObject(%member.player) && !%member.killerHelper) || isEventPending($DefaultMiniGame.restartSchedule) || %member.miniGame != $DefaultMiniGame)
 				{
 					messageClient(%member, '', '\c7[%1] <color:808080>%2<color:b0b0b0>: %3', %time, %name, %text);
 				}
@@ -288,9 +293,10 @@ package DespairChat
 			messageClient(%member, '', '\c7[%1] <color:%5>%2 %3<color:%6>, %4', %time, %_name, %type, %_text, %c1, %c2);
 		}
 	}
-	function serverCmdTeamMessageSent(%client, %text) //Adminchat
+	function serverCmdTeamMessageSent(%client, %text) //Adminchat & KillerChat
 	{
-		if(!%client.isAdmin && !%client.killer)
+		%isLegit = !%client.isAdmin && !isObject(%client.player) && %client.killerHelper;
+		if(!%client.isAdmin && !%client.killer && !%isLegit)
 			return;
 		if (%text $= "")
 			return;
@@ -306,6 +312,8 @@ package DespairChat
 			%text = getSubStr(%text, 1, strLen(%text));
 			%killer = true;
 		}
+		if(%isLegit)
+			%killer = true;
 
 		//echo("-+ (" @ (%killer ? "KILLER" : "ADMIN") @ ") " @ %client.getPlayerName() @ ": " @ %text);
 		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used " @ (%killer ? "killer" : "admin") @"chat '" @ %text @ "'", "\c2");
@@ -313,7 +321,7 @@ package DespairChat
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
-			if(%member.isAdmin)
+			if(%member.isAdmin || (!isObject(%member.player) && %member.killerHelper))
 			{
 				if(%killer)
 				{

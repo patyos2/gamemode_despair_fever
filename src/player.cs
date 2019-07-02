@@ -422,13 +422,22 @@ function Player::onLight(%this)
 			return;
 		%client.lastKillerScan = $Sim::Time;
 
+		%close = 0;
 		for (%i = 0; %i < $DefaultMiniGame.numMembers; %i++)
 		{
 			%member = $DefaultMiniGame.member[%i];
 
 			if (%member.player && %member.player != %this)
-				%client.schedule(500 * %i, play3d, HeartBeatSound, %member.player.getEyePoint());
+			{
+				%dist = vectorDist(%this.getEyePoint(), %member.player.getEyePoint());
+				if (%dist <= 32)
+				{
+					%client.schedule(500 * %close, play3d, HeartBeatSound, %member.player.getEyePoint());
+					%close += 1;
+				}
+			}
 		}
+		%client.centerPrint("\c6There are \c3" @ %close @ "\c6 people in talking distance.", 2);
 	}
 }
 

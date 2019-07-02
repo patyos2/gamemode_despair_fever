@@ -153,6 +153,12 @@ datablock AudioProfile(DespairMusicTrialDiscussionLoop4)
 	description = AudioLooping2D;
 	preload = true;
 };
+datablock AudioProfile(DespairMusicTrialDiscussionLoop5)
+{
+	fileName = $Despair::Path @ "res/music/TrialDiscussionloop5.ogg";
+	description = AudioLooping2D;
+	preload = true;
+};
 datablock AudioProfile(DespairMusicInvestigationIntro1)
 {
 	fileName = $Despair::Path @ "res/music/investigationintro1.ogg";

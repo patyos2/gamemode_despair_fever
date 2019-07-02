@@ -263,6 +263,7 @@ function roomPlayers()
 	for (%i = 0; %i < %count; %i++)
 	{
 		%client = $DefaultMiniGame.member[%i];
+		%client.killerHelper = false;
 
 		if (%client.player)
 			%client.player.delete();

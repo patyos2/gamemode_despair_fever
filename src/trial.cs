@@ -188,6 +188,9 @@ function despairOnKill(%victim, %attacker, %crit)
 
 		%attacker.player.aboutToKill = %player; //Attacker can be killed
 		%player.isMurdered = true; //rip they're legit
+		%victim.killerHelper = true; //they gon help da killa
+		%msg = "<color:FF0000>You just got murdered! You will now be able to speak exclusively with the killer. Use /spectate to interact with other dead people instead.";
+		messageClient(%victim, '', "<font:impact:30>" @ %msg);
 
 		//log stuff
 		%tod = getDayCycleTime();
@@ -1050,7 +1053,7 @@ function DespairStartDiscussion()
 	if(%time >= $Despair::DiscussPeriod * 1.5)
 		ServerPlaySong("DespairMusicWorldendDominator");
 	else if(%time >= $Despair::DiscussPeriod && getRandom(0, 1) == 1)
-		ServerPlaySong("DespairMusicTrialDiscussionIntro4");
+		ServerPlaySong("DespairMusicTrialDiscussion" @ (getRandom(0, 1) == 1 ? "Loop5" : "Intro4"));
 	else
 		ServerPlaySong("DespairMusicTrialDiscussionIntro" @ getRandom(1, 3));
 

@@ -67,6 +67,7 @@ exec("./src/events.cs"); //exec events last 'cuz it takes some variables from st
 exec("./src/charactercreator.cs"); //Exec after minigame because this one overwrites serverCmdLight
 //items
 exec("./src/items/banana.cs");
+exec("./src/items/bloodpack.cs");
 exec("./src/items/box.cs");
 exec("./src/items/burger.cs");
 exec("./src/items/cleanspray.cs");
@@ -87,10 +88,10 @@ exec("./src/weapons/axe.cs");
 exec("./src/weapons/bat.cs");
 exec("./src/weapons/katana.cs");
 exec("./src/weapons/knife.cs");
-	exec("./src/weapons/scalpel.cs"); //Reskinned knife
+exec("./src/weapons/scalpel.cs"); //Reskinned knife
 exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
-exec("./src/weapons/revolver.cs");
+// exec("./src/weapons/revolver.cs");
 exec("./src/weapons/wrench.cs");
 exec("./src/weapons/sledgehammer.cs");
 exec("./src/weapons/taser.cs");

@@ -28,7 +28,7 @@ datablock ExplosionData(FlashbangExplosion)
 	lightEndColor = "0 0 0";
 
 	//impulse
-	impulseRadius = 12;
+	impulseRadius = 1;
 	impulseForce = 2000;
 
 	//radius damage

@@ -5,7 +5,6 @@ function serverCmdKeepChar(%this)
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
 	messageClient(%this, '', '\c5You will \c6%1\c5 keep your character between rounds if you survive.', !%this.noPersistance ? "now" : "no longer");
 }
-
 function serverCmdTraits(%this)
 {
 	if(!isObject(%character = %this.character))
@@ -204,6 +203,12 @@ function serverCmdForceVote(%client)
 
 function serverCmdSpectate(%this)
 {
+	if (%this.killerHelper)
+	{
+		%this.killerHelper = false;
+		messageClient(%this, '', '\c5You are no longer eligible for helping the killer. Dead chat enabled.');
+		return;
+	}
 	if ($despairTrial !$= "")
 	{
 		messageClient(%this, '', '\c5You cannot spectate - trial is in progress!');
