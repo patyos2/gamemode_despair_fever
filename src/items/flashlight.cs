@@ -1,4 +1,4 @@
-$Despair::FlashlightRange = 24;
+$Despair::FlashlightRange = 8;
 $Despair::FlashlightRate = 50;
 $Despair::FlashlightSpeed = 0.54;
 $Despair::FlashlightVelIntFactor = 0.2;

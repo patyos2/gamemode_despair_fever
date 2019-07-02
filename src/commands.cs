@@ -39,10 +39,15 @@ function serverCmdCustomChar(%this, %do)
 	}
 	if (%do)
 	{
+		if (!%this.SpendPoints(15))
+		{
+			messageClient(%this, '', '\c5Not enough points.');
+			return;
+		}
         enterCharacterCreation(%this);
 		return;
 	}
-	%message = "\c2Are you sure you want to customize your character? You will need to finish your character before night hits!\nYou also need to use /customname <firstname> <lastname> to rename your character.";
+	%message = "\c2Are you sure you want to customize your character?\nIt costs 15 points!\nYou will need to finish your character before night hits!\nYou can also use /customname <firstname> <lastname> which costs 5 points.";
 	commandToClient(%this, 'messageBoxYesNo', "CustomChar", %message, 'CustomCharAccept');
 }
 function serverCmdCustomCharAccept(%this)
@@ -77,11 +82,16 @@ function serverCmdCustomName(%this, %firstname, %lastname)
 		messageClient(%this, '', '\c5You must use more than a single letter for your name!');
 		return;
 	}
+	if (!%this.SpendPoints(5))
+	{
+		messageClient(%this, '', '\c5Not enough points! You need \c35 points\c5 to use this command.');
+		return;
+	}
 	//Make 'em correct
 	%firstname = strupr(getSubStr(%firstname, 0, 1)) @ strlwr(getSubStr(%firstname, 1, strlen(%lastname)));
 	%lastname = strupr(getSubStr(%lastname, 0, 1)) @ strlwr(getSubStr(%lastname, 1, strlen(%lastname)));
 	%this.character.name = %firstname SPC %lastname;
-	messageClient(%this, '', '\c5Your new name is now %1.', %this.character.name);
+	messageClient(%this, '', '\c5You spent \c35 points\c5 and set your new name to %1.', %this.character.name);
 }
 
 function serverCmdStats(%this, %target)
@@ -99,6 +109,7 @@ function serverCmdStats(%this, %target)
 	messageClient(%this, '', '\c5Here are the stats for %1.', %target.getPlayerName());
 	
 	messageClient(%this, '', '\c2++\c5Points\c6: %1', %target.points);
+	messageClient(%this, '', '\c2++\c5Points Total\c6: %1', %target.pointstotal);
 	messageClient(%this, '', '\c2++\c5Killer Wins\c6: %1', %target.killerWins);
 	messageClient(%this, '', '\c2++\c5Murders\c6: %1', %target.murders);
 	messageClient(%this, '', '\c2++\c5Innocent Wins\c6: %1', %target.innocentWins);

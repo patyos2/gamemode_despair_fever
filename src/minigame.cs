@@ -398,7 +398,7 @@ function despairPrepareGame()
 	}
 
 	//Random items!
-	%choices = "RazorItem RepairkitItem RepairkitItem LockpickItem LockpickItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem CleanSprayItem CleanSprayItem";
+	%choices = "RazorItem RepairkitItem RepairkitItem PenItem PenItem FlashlightItem FlashlightItem RadioItem RadioItem RadioItem";
 	for (%i = 0; %i < BrickGroup_888888.NTObjectCount["_randomItem"]; %i++)
 	{
 		%brick = BrickGroup_888888.NTObject["_randomItem", %i];
@@ -590,7 +590,6 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "Murder weapon and blood contain a lot more information that you may initially think. Don't write them off!";
 		%choice[%high++] = "Once investigation period starts, weapons are disabled, but non-standard murders may still happen!";
 		%choice[%high++] = "You can spamclick people to shove them!";
-		//%choice[%high++] = "\c3Mediums\c6 can hear dead people in their dreams! However, you'll have to decipher what they said.";
 		%choice[%high++] = "\c3Investigatives\c6 are incredibly helpful! They can tell time of death, number and type of cuts, choking victims and all the like!";
 		%choice[%high++] = "If you survive and win as an innocent, you will keep your character AND your room number!";
 		%choice[%high++] = "Cleaning up the crime scene is impossible once investigation starts.";
@@ -603,10 +602,14 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "Fibers can be dropped when you swing your weapon, you get hit or you interact with a body! They also drop if you sleep.";
 		%choice[%high++] = "Fibers take on the color of your hair, your clothes and your shoes. Coats and hair-hiding masks obscure fibers.";
 		%choice[%high++] = "You can fake dying messages if you get your hands bloody and /write!";
+		%choice[%high++] = "Discussing alibis during investigation is a TERRIBLE idea! Use the time you are given to find \c3physical evidence\6!";
+		%choice[%high++] = "Alibi = a person's movements and actions druing a specified period, usually the approximate Time of Death.";
+		%choice[%high++] = "We also have a <a:https://despair-fever.fandom.com/wiki/Despair_Fever_Wiki>Wiki</a>\c6!";
 
 		$DefaultMiniGame.chatMessageAll('', '\c5~~[Day \c3%1\c5]\c6 Good morning, everyone! %2', $days, %choice[getRandom(%high)]);
 		despairOnMorning();
 	}
+	$currTimeStage = %stage;
 }
 
 function GameConnection::updateAFKCheck(%this, %previous)
@@ -628,7 +631,7 @@ function GameConnection::updateAFKCheck(%this, %previous)
 		{
 			%this.afk = true;
 			RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") is afk!", "\c2");
-			messageClient(%this.client, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
+			messageClient(%this, '', '\c2<font:Impact:20>Warning\c6: You are considered AFK. If you don\'t come back until trial you will be considered dead.');
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%member = ClientGroup.getObject(%i);

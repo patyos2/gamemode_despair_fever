@@ -188,9 +188,6 @@ function despairOnKill(%victim, %attacker, %crit)
 
 		%attacker.player.aboutToKill = %player; //Attacker can be killed
 		%player.isMurdered = true; //rip they're legit
-		%victim.killerHelper = true; //they gon help da killa
-		%msg = "<color:FF0000>You just got murdered! You will now be able to speak exclusively with the killer. Use /spectate to interact with other dead people instead.";
-		messageClient(%victim, '', "<font:impact:30>" @ %msg);
 
 		//log stuff
 		%tod = getDayCycleTime();
@@ -202,6 +199,11 @@ function despairOnKill(%victim, %attacker, %crit)
 		{
 			$deathCount++;
 			$lastVictim = %victim.character;
+
+			%victim.killerHelper = true; //they gon help da killa
+			%msg = "<color:FF0000>You just got murdered! You will now be able to speak exclusively with the killer. Use /spectate to interact with other dead people instead.";
+			messageClient(%victim, '', "<font:impact:30>" @ %msg);
+
 			if(%victim.killer && !%attacker.killer)
 			{
 				%attacker.player.aboutToKill = "";
@@ -786,6 +788,42 @@ function DespairSpecialChat(%client, %text)
 		messageClient(%client, '', '\c5You\'re unable to speak\c6!');
 		return 1;
 	}
+
+	if(%player.objecting && $DespairTrialDiscussion !$= "") //Objection time
+	{
+		%player.lastScream = $Sim::Time;
+
+		%player.objected = true;
+		%player.objecting = false;
+		%player.emote(AlarmProjectile);
+		%player.playThread(3, "talk");
+		%player.schedule(strLen(%text) * 35, "playThread", 3, "root");
+		serverPlay2d("ObjectionSound");
+
+		%shape = new Item()
+		{
+			datablock = DespairEmptyFloatItem;
+			position = VectorAdd(%player.position, "0 0 2");
+		};
+		%shape.noExamine = true;
+		%shape.setCollisionTimeout(%player);
+		%shape.setShapeName(%text);
+		%shape.setShapeNameDistance(100);
+		%shape.setShapeNameColor("1 0.3 0.3");
+		%shape.setVelocity("0 0 0.5");
+		%shape.deleteSchedule = %shape.schedule(3000, delete);
+
+		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") objected!", "\c2");
+
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			%member = ClientGroup.getObject(%i);
+			if(%member != %client && isObject(%member.player))
+				%member.timeOut = $Sim::Time + 5;
+			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>,<font:Impact:20> %4', getTimeString(mFloor($Sim::Time - $DespairTrial)), getCharacterName(%client.character, 1), "objects", %text);
+		}
+		return 1;
+	}
 	return 0;
 }
 
@@ -1307,54 +1345,12 @@ function DespairTrialOnAlarm(%client)
 		return;
 	if($DespairTrialDiscussion $= "")
 		return;
+	if ($Sim::Time - %pl.lastScream < 60)
+		return;
 
-	if(%pl.character.trait["Loudmouth"] && !%pl.loudmouthed)
+	if (%pl.character.trait["Loudmouth"] || (!%pl.objected && !%pl.character.trait["Softspoken"]))
 	{
-		%high = -1;
-		%choice[%high++] = "SHUT IT!!!";
-		%choice[%high++] = "LET ME SPEAK GODDAMNIT!!!";
-		%choice[%high++] = "A MOMENT, PLEASE!!!";
-		%choice[%high++] = "ORDER IN THE COURT!!!";
-		%choice[%high++] = "OBJECTION!!!";
-		%choice[%high++] = "YOU'RE ALL STUPID!!!";
-		%choice[%high++] = "SHUT!! UP!!!";
-		//%choice[%high++] = "NO!! THAT'S WRONG!!!";
-		%choice[%high++] = "SHUT YOUR MOUTH ALREADY!!!";
-		%choice[%high++] = "STOP SPOUTING BULLSHIT!!!";
-		%choice[%high++] = "NOW WAIT JUST A SECOND!!!";
-		%choice[%high++] = "KNOW YOUR PLACE!!!";
-		%choice[%high++] = "I'VE HAD ENOUGH!!!";
-
-		%text = %choice[getRandom(%high)];
-
-		%pl.loudmouthed = true; //One-use
-		%pl.emote(AlarmProjectile);
-		%pl.playThread(3, "talk");
-		%pl.schedule(strLen(%text) * 35, "playThread", 3, "root");
-		serverPlay2d("ObjectionSound");
-
-		%shape = new Item()
-		{
-			datablock = DespairEmptyFloatItem;
-			position = VectorAdd(%pl.position, "0 0 2");
-		};
-		%shape.noExamine = true;
-		%shape.setCollisionTimeout(%pl);
-		%shape.setShapeName(%text);
-		%shape.setShapeNameDistance(100);
-		%shape.setShapeNameColor("1 0.3 0.3");
-		%shape.setVelocity("0 0 0.5");
-		%shape.deleteSchedule = %shape.schedule(3000, delete);
-
-		RS_Log(%client.getPlayerName() SPC "(" @ %client.getBLID() @ ") used his loudmouth ability!", "\c2");
-
-		%client.timeOut = $Sim::Time; //Counter-loudmouth
-		for (%i = 0; %i < ClientGroup.getCount(); %i++)
-		{
-			%member = ClientGroup.getObject(%i);
-			if(%member != %client && isObject(%member.player))
-				%member.timeOut = $Sim::Time + 10;
-			messageClient(%member, '', '\c7[%1]<color:ffff80>%2 %3<color:fffff0>,<font:Impact:20> %4', getTimeString(mFloor($Sim::Time - $DespairTrial)), getCharacterName(%client.character, 1), "yells", %text);
-		}
+		%pl.objecting = !%pl.objecting;
+		messageClient(%client, '', '\c5Your next message will %1be an \c3Objection\c5.', %pl.objecting ? "" : "no longer ");
 	}
 }

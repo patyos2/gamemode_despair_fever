@@ -274,7 +274,7 @@ function loadFootstepSounds()
 		{
 			datablock audioProfile( genericFootstepSound )
 			{
-				description = "audioClosest3D";
+				description = "AudioQuiet3d";
 				fileName = %file;
 				preload = true;
 			};
