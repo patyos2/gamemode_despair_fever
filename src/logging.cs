@@ -57,7 +57,7 @@ function serverCmdBanLogs(%this, %targetID)
 		return;
 
 	if(!(%targetID > 0))
-		%targetID = findclientbyname(%targetID).bl_id;
+		%targetID = findclientbyname(%targetID).getBLID();
 
 	if(%targetID $= "")
 		return;
