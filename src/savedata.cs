@@ -52,20 +52,20 @@ function GameConnection::SpendPoints(%client, %num)
 
 function gameConnection::dfSaveData(%this)
 {
-	%name = "config/server/despairfever/data/" @ %this.bl_id @ ".txt";
+	%name = "config/server/despairfever/data/" @ %this.getBLID() @ ".txt";
 
 	%file = new FileObject();
 	%file.openForWrite(%name);
 
 	if(!%file)
 	{
-		error("ERROR: GameConnection::dfSaveData(" @ %this @ " (BLID: " @ %this.bl_id @ ")) - failed to open file '" @ %name @ "' for write");
+		error("ERROR: GameConnection::dfSaveData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for write");
 
 		%file.delete();
 		return;
 	}
 
-	echo("Saving data for BLID " @ %this.bl_id);
+	echo("Saving data for BLID " @ %this.getBLID());
 
 	%file.writeLine("//data for " @ %this.getPlayerName() @ ", generated at " @ getDateTime());
 
@@ -84,20 +84,20 @@ function gameConnection::dfSaveData(%this)
 
 function GameConnection::dfLoadData(%this)
 {
-	%name = "config/server/despairfever/data/" @ %this.bl_id @ ".txt";
+	%name = "config/server/despairfever/data/" @ %this.getBLID() @ ".txt";
 
 	%file = new FileObject();
 	%file.openForRead(%name);
 
 	if(!%file)
 	{
-		error("ERROR: GameConnection::dfLoadData(" @ %this @ " (BLID: " @ %this.bl_id @ ")) - failed to open file '" @ %name @ "' for read");
+		error("ERROR: GameConnection::dfLoadData(" @ %this @ " (BLID: " @ %this.getBLID() @ ")) - failed to open file '" @ %name @ "' for read");
 
 		%file.delete();
 		return;
 	}
 
-	echo("Loading data for BLID " @ %this.bl_id);
+	echo("Loading data for BLID " @ %this.getBLID());
 
 	while(!%file.isEOF())
 	{
