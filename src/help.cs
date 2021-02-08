@@ -66,7 +66,6 @@ function serverCmdHelp(%this, %cat)
 		case "6" or "rules":
 			%text[%count++] = "\c3[RULES]";
 			%text[%count++] = " \c31\c6. \c0Play your role!\c6 Play to survive. Accomplices to murder are strictly forbidden. Do not intentionally and directly help the killer.";
-			%text[%count++] = "           \c6Surviving killer characters are exempt from this rule.";
 			%text[%count++] = " \c32\c6. \c0Keep chat clean!\c6 Don't reference people by their BL usernames. Don't spam chat. Don't abuse emoticons.";
 			%text[%count++] = "           \c6Don't say racial, disability or any other kinds of slurs.";
 			%text[%count++] = " \c33\c6. \c0Don't freekill!\c6 You CANNOT attack people for any other reason than self-defence. Threatening people or warning them is \c0NOT AN EXCUSE.";
