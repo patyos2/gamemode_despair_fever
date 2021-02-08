@@ -65,14 +65,14 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = " \c5Page Up to read the above.";
 		case "6" or "rules":
 			%text[%count++] = "\c3[RULES]";
-			%text[%count++] = " \c31\c6. \c0Don't be a dick!\c6 We're all here to have fun. If you block doorways, lock people in your rooms or break room doors as a non-killer w/o a reason you will be banned.";
-			%text[%count++] = " \c32\c6. \c0Do not gamethrow!\c6 This means don't play at expense of others, deliberately act extra suspicious or pretend to be the culprit. Not taking trials seriously also counts as gamethrowing.";
+			%text[%count++] = " \c31\c6. \c0Play your role!\c6 Play to survive. Accomplices to murder are strictly forbidden. Do not intentionally and directly help the killer.";
 			%text[%count++] = "           \c6Surviving killer characters are exempt from this rule.";
-			%text[%count++] = " \c33\c6. \c0Don't shitpost!\c6 Don't reference people by their in-game names, don't spam chat and please don't abuse emoticons. Being offensive for a meme is also bad.";
-			%text[%count++] = " \c34\c6. \c0Don't freekill!\c6 You CANNOT attack people for any other reason than self-defence. Threatening people or warning them is \c0NOT AN EXCUSE.";
+			%text[%count++] = " \c32\c6. \c0Keep chat clean!\c6 Don't reference people by their BL usernames. Don't spam chat. Don't abuse emoticons.";
+			%text[%count++] = "           \c6Don't say racial, disability or any other kinds of slurs.";
+			%text[%count++] = " \c33\c6. \c0Don't freekill!\c6 You CANNOT attack people for any other reason than self-defence. Threatening people or warning them is \c0NOT AN EXCUSE.";
 			%text[%count++] = "           \c6If they swing their weapon at you or are hiding in your closet with their weapon out it counts as SELF-DEFENCE.";
-			%text[%count++] = " \c35\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
-			%text[%count++] = " \c36\c6. \c0Don't ERP (Erotic RolePlay)!\c6 While romance and relationship are not forbidden, please refrain from acting out explicit details.";
+			%text[%count++] = " \c34\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
+			%text[%count++] = " \c35\c6. \c0Don't ERP (Erotic RolePlay)!\c6 While romance and relationship are not forbidden, please refrain from acting out explicit details.";
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";
 			%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
 			%text[%count++] = " \c5Page Up to read the above.";
@@ -125,7 +125,7 @@ function serverCmdRules(%this)
 
 function serverCmdRegulations(%this, %cat)
 {
-	%text[%count++] = "\c3[SCHOOL REGULATIONS]";
+	%text[%count++] = "\c3[KILLING GAME REGULATIONS]";
 	%text[%count++] = " \c31\c6. The killer, later referred to as the \c7'Wolf'\c6, is a person to deal the final killing blow on their victim.\c6";
 	%text[%count++] = " \c32\c6. Should the current \c7'Wolf'\c6 be murdered, the person to deal the Killing Blow will be the \c7'Wolf'\c6.\c6";
 	%text[%count++] = " \c33\c6. Should the victim's death be caused indirectly, the \c7'Wolf'\c6 is the recent person to push or attack the victim, or the setter of the trap.";
