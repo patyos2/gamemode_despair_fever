@@ -72,6 +72,7 @@ function serverCmdHelp(%this, %cat)
 			%text[%count++] = "           \c6If they swing their weapon at you or are hiding in your closet with their weapon out it counts as SELF-DEFENCE.";
 			%text[%count++] = " \c34\c6. \c0Don't metagame!\c6 Do not relay in-game information to others through out-of-game means! If we determine you are metagaming you will be banned.";
 			%text[%count++] = " \c35\c6. \c0Don't ERP (Erotic RolePlay)!\c6 While romance and relationship are not forbidden, please refrain from acting out explicit details.";
+			%text[%count++] = " \c36\c6. \c0You must participate in the class trial. If someone is referring to you, please at least show that you are there and not AFKing. If you need to be afk, use the /afk command.";
 			%text[%count++] = " \c0    EXAMPLES PROVIDED IN THIS LIST ARE ONLY EXAMPLES. THEY DO NOT ENCAPSULATE THE FULL EXTENT OF THE RULE'S EFFECT.";
 			%text[%count++] = " \c3If someone is breaking the rules, use /report *message* to get an admin's attention!";
 			%text[%count++] = " \c5Page Up to read the above.";
