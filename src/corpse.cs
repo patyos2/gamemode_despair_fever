@@ -88,7 +88,7 @@ function Player::carryTick(%this)
 {
 	cancel(%this.carrySchedule);
 	%player = %this.carryPlayer;
-	if (!isObject(%player) || %player.getState() $= "Dead")
+	if (!isObject(%player) || %player.getState() $= "Dead")//carrying player dies or stops existing
 	{
 		%this.lastTosser = %player;
 		%this.carryEnd = $Sim::Time;
@@ -111,7 +111,7 @@ function Player::carryTick(%this)
 	%normal = %player.getAimVector();
 	if(%player.lastNormal $= "")
 		%player.lastNormal = %normal;
-	if(!%player.startCarrying)
+	if(!%player.startCarrying)//have we started carrying yet?
 	{
 		if(vectorLen(vectorSub(%player.lastNormal, %normal)) > 0.05)
 		{
@@ -133,13 +133,13 @@ function Player::carryTick(%this)
 			return;
 		}
 	}
-
+	//random fibers
 	if($Sim::Time - %this.lastFiber > 2 && getRandom() < 0.005)
 		%this.spawnFiber();
 	if($Sim::Time - %player.lastFiber > 2 && getRandom() < 0.005)
 		%player.spawnFiber();
 
-	if (!%this.isBody)
+	if (!%this.isBody)//have we woken up?
 	{
 		%this.lastTosser = %player;
 		%this.carryEnd = $Sim::Time;
@@ -163,7 +163,7 @@ function Player::carryTick(%this)
 		%this.pools++;
 	}
 
-	if (%player.getMountedImage(0))
+	if (%player.getMountedImage(0))//has the carrier equipped an item?
 	{
 		%player = %this.carryPlayer;
 		%this.lastTosser = %player;
@@ -179,13 +179,16 @@ function Player::carryTick(%this)
 		}
 		return;
 	}
-
+	//carrier's normal but z becomes a range of 0 to -1 instead of 1 to -1
 	%eyeVector = getWords(%normal, 0, 1) SPC (getWord(%normal, 2) * 0.5) - 0.5;
 
+	//our position
 	%center = %this.getPosition();
+	//where our position should be?
 	%target = vectorAdd(%eyePoint, vectorScale(%eyeVector, 3));
 
 	%maxdist = 4;
+	//are we too far away from the carrier, is the carrier choking and they are going to fast, or are we too low relative to the carrier?
 	if (vectorDist(%center, %target) > 4 || (%player.choking && vectorLen(%player.getVelocity()) > 4) || getWord(%center, 2) - getWord(%player.getPosition(), 2) < -1)
 	{
 		%this.lastTosser = %player;
@@ -204,26 +207,27 @@ function Player::carryTick(%this)
 		return;
 	}
 
-	if(%player.choking && $Sim::Time - %player.choking > 6)
+	if(%player.choking && $Sim::Time - %player.choking > 6)//have we been killed by choking?
 	{
-		if(%this.isDead || $deathCount >= $maxDeaths || %player.noWeapons)
+		if(%this.isDead || $deathCount >= $maxDeaths || %player.noWeapons)//finish choke death
 		{
 			%this.stopAudio(0);
 			%player.choking = "";
 			%player.spawnFiber(); //Guaranteed killer fiber
 		}
-		else
+		else//start choke death
 		{
 			%this.health = $Despair::CritThreshold;
 			%this.damage(%player, %this.getPosition(), 5, "choking");
 			%this.pools = 1000;
 		}
 	}
-
+	//set a velocity based on the difference between where we are vs where we should be
 	%vel = vectorScale(vectorSub(%target, %center), 4);
 
 	%this.setVelocity(%vel);
-
+	
+	//is there a difference between our rotation and the carrier's rotation?
 	%rot = getWords(%player.getTransform(), 3, 7);
 	if(%rot !$= getWords(%this.getTransform(), 3, 7))
 		%this.setTransform(getWords(%this.getTransform(), 0, 2) SPC %rot);
@@ -274,7 +278,7 @@ package DespairCorpses
 							%col.caryPlayer.choking = "";
 						}
 					}
-					if(%col.isDead && !(%obj.client.killer && !%col.suicide && $investigationStart $= ""))
+					if(%col.isDead && (!%obj.client.killer || %col.suicide || $investigationStart !$= ""))
 						return;
 					%obj.carryObject = %col;
 					%col.carryPlayer.carryObject = 0;
