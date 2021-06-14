@@ -100,13 +100,13 @@ function RadioItem::onDrop(%this, %player, %slot)
 {
 	%props = %player.getItemProps(%slot);
 	serverPlay3d("radioLoseSound", %player.getHackPosition());
-	%player.tool[%player.currTool] = "";
-	%player.unMountImage(0);
+	
 	if(isObject(%player.client))
 	{
-		messageClient(%player.client, 'MsgItemPickup', '', %player.currTool, "");
+		messageClient(%player.client, 'MsgItemPickup', '', %slot, "");
 		%player.client.centerPrint("\c5Radio disconnected.", 3);
 	}
+	%player.tool[%slot] = "";
 	radioLeft(%player, %props.channel);
 }
 function RadioImage::onUse(%this, %obj, %slot)
