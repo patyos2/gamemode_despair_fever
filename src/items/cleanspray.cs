@@ -202,13 +202,15 @@ function CleanSprayImage::onFire(%this, %obj, %slot)
 
 	if (isObject(firstWord(%ray))) {
 		%pos = getWords( %ray, 1, 3 );
+
+		if (%ray.getType() & $TypeMasks::playerObjectType)
+			%ray.setWhiteOut(0.1);
 	}
 	else {
 		%pos = %stop;
 	}
 
-	if (%ray.getType() & $TypeMasks::playerObjectType)
-		%ray.setWhiteOut(0.1);
+	
 
 	initContainerRadiusSearch(%pos, 0.75,
 		$TypeMasks::StaticShapeObjectType);

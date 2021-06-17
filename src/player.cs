@@ -559,8 +559,8 @@ function player::applyAppearance(%pl,%char)
 		%pl.unHideNode("rhand_blood");
 	if (%pl.bloody["head"])
 		%pl.unHideNode("blood_head");
-	if (%pl.bloody["headshot"])
-		%pl.unHideNode("HeadShot");
+	//if (%pl.bloody["headshot"])
+		//%pl.unHideNode("HeadShot");
 	if(!%hideApp)
 	{
 		if (%pl.bloody["chest_front"])
@@ -605,7 +605,7 @@ function player::applyAppearance(%pl,%char)
 	%pl.setNodeColor("lhand_blood", "0.7 0 0 1");
 	%pl.setNodeColor("rhand_blood", "0.7 0 0 1");
 	%pl.setNodeColor("blood_head", "0.7 0 0 1");
-	%pl.setNodeColor("HeadShot", "0.7 0 0 1");
+	//%pl.setNodeColor("HeadShot", "0.7 0 0 1");
 	%pl.setNodeColor("chest_blood_front", "0.7 0 0 1");
 	%pl.setNodeColor("chest_blood_back", "0.7 0 0 1");
 	%pl.setNodeColor("femchest_blood_front", "0.7 0 0 1");
@@ -618,8 +618,7 @@ package DespairPlayerPackage
 	{
 		if (%this.getDataBlock().getID() != nameToID(PlayerDespairArmor) || %slot != 3)
 		{
-			Parent::playThread(%this, %slot, %sequenceName);
-			return;
+			return Parent::playThread(%this, %slot, %sequenceName);
 		}
 
 		Parent::playThread(%this, %slot, %sequenceName);
@@ -663,6 +662,10 @@ package DespairPlayerPackage
 	{
 		%client = %obj.getControllingClient();
 		%cam = %client.getControlObject();
+
+		if(%cam.getClassName() $= "Player")
+			return;
+			
 		%orbit = %cam.getOrbitObject();
 		if (isObject(%pl = %client.player))
 		{

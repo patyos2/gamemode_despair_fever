@@ -129,7 +129,7 @@ function flashLightImage::onUse(%this, %obj, %slot){
 			enable = 1;
 		};
 
-		missionCleanup.add(%obj.light);
+		//missionCleanup.add(%obj.light);
 		%obj.light.setTransform(%obj.getTransform());
 
 		if (!isEventPending(%obj.flashlightTick))

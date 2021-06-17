@@ -208,6 +208,7 @@ function despairOnKill(%victim, %attacker, %crit)
 			{
 				%attacker.player.aboutToKill = "";
 				%attacker.killer = true;
+				%victim.killer = false;
 				$pickedKiller = %attacker;
 				%attacker.play2d(KillerJingleSound);
 				%msg = "<color:FF0000>You murdered the killer in cold blood! Now it's your turn to get away with it...";
@@ -681,7 +682,7 @@ function serverCmdKillerAccept(%this)
 	if(%this.prompted["Killer"] && !$pickedKiller)
 	{
 		%queue = $Despair::Queue["Killer"];
-		if (findWord(%queue, %this))
+		if (strPos(%queue, %this) > -1)
 			return;
 		%queue = setWord(%queue, getWordCount(%queue), %this);
 		$Despair::Queue["Killer"] = %queue;
@@ -753,7 +754,7 @@ function serverCmdKillerBoxAccept(%this)
 	if(%this.prompted["Box"] && $days <= 1)
 	{
 		%queue = $Despair::Queue["Killer"];
-		if (findWord(%queue, %this))
+		if (strPos(%queue, %this) > -1)
 			return;
 		$spawnKillerBox = true;
 		%this.prompted["Box"] = false;
@@ -1211,7 +1212,7 @@ function DespairEndTrial()
 	{
 		%client = $DefaultMiniGame.member[%i];
 		%player = %client.player;
-		if(%client.killer)
+		if(%client.killer && isObject(%player))
 			continue;
 		if(!%win)
 		{

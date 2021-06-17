@@ -321,20 +321,18 @@ package DespairChat
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 		{
 			%member = ClientGroup.getObject(%i);
-			if(%member.isAdmin || (!isObject(%member.player) && %member.killerHelper))
+			if(((%member.isAdmin && %name $= "Killer") || (!isObject(%member.player) && %member.killerHelper) || %member.killer) && %killer)
+			{ 
+				messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
+				%member.play2d(DespairAdminChatSound);
+			}
+			else if(%member.isAdmin)
 			{
-				if(%killer)
-				{
-					//if(isObject(%member.player) && %member.miniGame == $DefaultMiniGame)
-					//	continue;
-					messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
-				}
-				else
-					messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
+				messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
 				%member.play2d(DespairAdminChatSound);
 			}
 		}
-		if(%killer && isObject($pickedKiller))
+		if(!%killer && isObject($pickedKiller) && isObject(%client.player) && !%client.killerHelper && %client.isAdmin)
 		{
 			messageClient($pickedKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
 			$pickedKiller.play2d(DespairAdminChatSound);

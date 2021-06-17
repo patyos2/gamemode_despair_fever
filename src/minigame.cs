@@ -423,8 +423,8 @@ function despairPrepareGame()
 	}
 
 	//Reset Guest list
-	%brick = BrickGroup_888888.NTObject["_guestlist", 0];
-	%brick.setItem("");
+	//%brick = BrickGroup_888888.NTObject["_guestlist", 0];
+	//%brick.setItem("");
 
 	for (%i = 0; %i < 24; %i++)
 	{
@@ -678,7 +678,7 @@ package DespairFever
 		if (!$DefaultMiniGame.owner && $DefaultMiniGame.numMembers == 2)
 			despairPrepareGame();
 
-		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %this.getPlayerName());
+		messageClient(%client, '', '\c5--> \c4Please read \c3/rules\c4 and \c3/help\c4!', %client.getPlayerName());
 		commandToClient(%client, 'messageBoxOK', "Welcome!", "Please read /rules and /help!");
 		if(!$pickedKiller && (!$defaultMiniGame.permaDeath || $defaultMiniGame.winRounds <= 0))
 			createPlayer(%client);

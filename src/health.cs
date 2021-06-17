@@ -242,7 +242,7 @@ package DespairHealth
 		{
 			if (%type $= "sharp")
 			{
-				%sound = "DescerationSound" @ mCeil(4*%player.health/$Despair::CritThreshold);
+				%sound = "DescerationSound" @ mClamp(mCeil(4*%player.health/$Despair::CritThreshold),1,4);
 				ServerPlay3D(%sound, %pos);
 				if(isObject(%client))
 					%client.play2d(%sound);
@@ -251,7 +251,7 @@ package DespairHealth
 			}
 			else if (%type $= "blunt")
 			{
-				%sound = "BoneSound" @ mCeil(3*%player.health/$Despair::CritThreshold);
+				%sound = "BoneSound" @ mClamp(mCeil(3*%player.health/$Despair::CritThreshold),1,3);
 				ServerPlay3D(%sound, %pos);
 				if(isObject(%client))
 					%client.play2d(%sound);
