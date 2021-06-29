@@ -326,13 +326,13 @@ package DespairChat
 				messageClient(%member, '', '\c2--[<color:FF8080>%1<color:FFF0F0>: %2', %name, %text);
 				%member.play2d(DespairAdminChatSound);
 			}
-			else if(%member.isAdmin)
+			else if(%member.isAdmin && %client.isAdmin)
 			{
 				messageClient(%member, '', '\c2--[<color:80FF80>%1<color:F0FFF0>: %2', %name, %text);
 				%member.play2d(DespairAdminChatSound);
 			}
 		}
-		if(!%killer && isObject($pickedKiller) && isObject(%client.player) && !%client.killerHelper && %client.isAdmin)
+		if(!%killer && isObject($pickedKiller) && isObject(%client.player) && !%client.killerHelper && %client.isAdmin && %name !$= "Killer")
 		{
 			messageClient($pickedKiller, '', '\c2--[ADMIN]<color:FF8080>%1<color:FFF0F0>: %2', "Admin", %text);
 			$pickedKiller.play2d(DespairAdminChatSound);

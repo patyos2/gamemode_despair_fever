@@ -602,7 +602,7 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "Fibers can be dropped when you swing your weapon, you get hit or you interact with a body! They also drop if you sleep.";
 		%choice[%high++] = "Fibers take on the color of your hair, your clothes and your shoes. Coats and hair-hiding masks obscure fibers.";
 		%choice[%high++] = "You can fake dying messages if you get your hands bloody and /write!";
-		%choice[%high++] = "Discussing alibis during investigation is a TERRIBLE idea! Use the time you are given to find \c3physical evidence\6!";
+		%choice[%high++] = "Discussing alibis during investigation is a TERRIBLE idea! Use the time you are given to find \c3physical evidence\c6!";
 		%choice[%high++] = "Alibi = a person's movements and actions druing a specified period, usually the approximate Time of Death.";
 		%choice[%high++] = "We also have a <a:https://despair-fever.fandom.com/wiki/Despair_Fever_Wiki>Wiki</a>\c6!";
 

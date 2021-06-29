@@ -418,7 +418,7 @@ function serverCmdReport(%this, %m1, %m2, %m3, %m4, %m5, %m6, %m7, %m8, %m9, %m1
 {
 	if (getSimTime() - %this.lastReport <= 10000)
 	{
-		messageClient(%this, '', '\c0You have to wait \c3%1\c0 seconds until you can use this again.', mCeil(getSimTime() - %this.lastReport / 10000));
+		messageClient(%this, '', '\c0You have to wait \c3%1\c0 seconds until you can use this again.', mCeil((%this.lastReport - getSimTime()) / 1000 ) + 10);
 		return;
 	}
 	%text = %m1;

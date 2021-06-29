@@ -109,3 +109,59 @@ if (!isObject(TrialDiscussionPath))
 
 
 addExtraResource($Despair::Path @ "res/logo.png");
+
+package Despair_ObjectFix
+{
+	function SimSet::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10,%p11,%p12,%p13)
+	{
+		
+		%added = 0;
+		%total = 0;
+		while(%p[%total] !$= "")
+		{
+			if(!%set.isMember(%p[%total]))
+			{
+				%p[%added] = %p[%total];
+				%added++;
+			}
+			%total++;
+		}
+		switch(%added)
+		{
+			case 0:
+				return;
+			case 1:
+				Parent::add(%set,%p0);
+			case 2:
+				Parent::add(%set,%p0,%p1);
+			case 3:
+				Parent::add(%set,%p0,%p1,%p2);
+			case 4:
+				Parent::add(%set,%p0,%p1,%p2,%p3);
+			case 5:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4);
+			case 6:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5);
+			case 7:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6);
+			case 8:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7);
+			case 9:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8);
+			case 10:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9);
+			case 11:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10);
+			case 12:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10,%p11);
+			case 13:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10,%p11,%p12);
+			case 14:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10,%p11,%p12,%p13);
+			default:
+				Parent::add(%set,%p0,%p1,%p2,%p3,%p4,%p5,%p6,%p7,%p8,%p9,%p10,%p11,%p12,%p13);
+		}
+	}
+};
+deactivatepackage(Despair_ObjectFix);
+activatepackage(Despair_ObjectFix);

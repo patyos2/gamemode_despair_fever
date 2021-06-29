@@ -682,7 +682,7 @@ function serverCmdKillerAccept(%this)
 	if(%this.prompted["Killer"] && !$pickedKiller)
 	{
 		%queue = $Despair::Queue["Killer"];
-		if (strPos(%queue, %this) > -1)
+		if (strPos(%queue, %this) >= 0)
 			return;
 		%queue = setWord(%queue, getWordCount(%queue), %this);
 		$Despair::Queue["Killer"] = %queue;
@@ -754,7 +754,7 @@ function serverCmdKillerBoxAccept(%this)
 	if(%this.prompted["Box"] && $days <= 1)
 	{
 		%queue = $Despair::Queue["Killer"];
-		if (strPos(%queue, %this) > -1)
+		if (strPos(%queue, %this) < 0)
 			return;
 		$spawnKillerBox = true;
 		%this.prompted["Box"] = false;
