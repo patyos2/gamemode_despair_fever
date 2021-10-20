@@ -81,5 +81,5 @@ function BananaImage::onEat(%this, %obj, %slot)
 	%obj.setTool(%obj.currTool, BananaPeelItem);
 	%obj.lastEat = $Sim::Time;
 	serverPlay3d("EatSound", %obj.getEyePoint());
-	%obj.addMood(3, "Mmm, that was tasty!");
+	%obj.upgradeStatusEffect("Mood",3, "Mmm, that was tasty!");
 }

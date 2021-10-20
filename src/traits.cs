@@ -172,13 +172,13 @@ function Player::traitSchedule(%obj)
 				{
 					%level = "\c3pretty ";
 					if ($Sim::Time - %obj.lastMoodChange > 30)
-						%obj.addMood(-2);
+						%obj.upgradeStatusEffect("Mood",-2);
 				}
 				else if(%obj.anxiety >= 3)
 				{
 					%level = "\c0very ";
 					if ($Sim::Time - %obj.lastMoodChange > 30)
-						%obj.addMood(-5);
+						%obj.upgradeStatusEffect("Mood",-5);
 				}
 
 				if (%obj.anxiety >= 2)
@@ -231,7 +231,7 @@ function Player::traitSchedule(%obj)
 			%text = %text[getRandom(%high)];
 			serverCmdMe(%obj.client, %text);
 			if(getRandom() < 0.1)
-				%obj.addMood(-1);
+				%obj.upgradeStatusEffect("Mood",-1);
 		}
 	}
 	if(%obj.character.trait["Chain Smoker"])
@@ -240,7 +240,7 @@ function Player::traitSchedule(%obj)
 		{
 			serverCmdMe(%obj.client, "coughs!");
 			if(getRandom() < 0.1)
-				%obj.addMood(-1);
+				%obj.upgradeStatusEffect("Mood",-1);
 		}
 	}
 	%obj.traitSchedule = %obj.schedule(getMax(500, $Despair::Traits::Tick), traitSchedule, %obj);

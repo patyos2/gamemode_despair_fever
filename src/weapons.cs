@@ -239,6 +239,22 @@ function fireMeleeCheck(%image, %player, %range, %yaw)
 	%image.onMeleeHit(%player, %col, getWords(%ray, 1, 3), getWords(%ray, 4, 6));
 }
 
+function Player::addSwingMod(%player, %tag, %ammount)
+{
+	%player.removeSwingMod(%tag);
+
+	%player.SM[%tag] = %ammount;
+
+	%player.swingSpeedMod += %ammount;
+}
+
+function Player::removeSwingMod(%player, %tag)
+{
+	%prevScale = %player.SM[%tag];
+	%player.swingSpeedMod -= %prevScale;
+	%player.SM[%tag] = "";
+}
+
 package DespairWeapons
 {
 	function Armor::onTrigger(%data, %player, %slot, %state)

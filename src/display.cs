@@ -68,11 +68,14 @@ function GameConnection::updateBottomprint(%this)
 
 	//NAME AND STUFF
 	%name = %name @ "\c6" @ getCharacterName(%client.character, 1);
-
+	//TODO:
+	//Update mood to work with the new status effect system
 	if ((%mood = %client.player.mood) !$= "")
 		%name = %name @ " " @ getMoodSmiley(getMoodName(%mood));
 
 	//STATUS
+	//TODO:
+	//Update this to work with new status effect system
 	if(isObject(%player = %client.player))
 	{
 		for(%i=0; %i<$SE_maxStatusEffects; %i++)

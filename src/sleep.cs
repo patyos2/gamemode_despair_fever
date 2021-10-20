@@ -232,7 +232,7 @@ function Player::WakeUp(%this)
 		else if(%this.freshSleep)
 			%this.setStatusEffect($SE_passiveSlot, "shining");
 		else
-			%this.addMood(4, "You slept undisturbed.");
+			%this.upgradeStatusEffect("Mood",4, "You slept undisturbed.");
 		%this.freshSleep = "";
 	}
 	%this.currResting = false;
@@ -293,7 +293,7 @@ function Player::Slip(%this, %ticks)
 		serverPlay3d(SlipSound @ getRandom(1, 3), %this.getPosition());
 
 		if ($Sim::Time - %this.lastMoodChange > 30)
-			%this.addMood(-3, "You got pranked!");
+			%this.upgradeStatusEffect("Mood",-3, "You got pranked!");
 
 		if(isObject(%this.getMountedImage(0)) && getRandom() < 0.3)
 			%this.dropTool(%this.currTool);

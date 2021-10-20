@@ -217,11 +217,11 @@ function despairOnKill(%victim, %attacker, %crit)
 					%attacker.player.WakeUp();
 				if(%attacker.player.statusEffect[$SE_sleepSlot] !$= "")
 					%attacker.player.removeStatusEffect($SE_sleepSlot);
-				%attacker.player.addMood(-10, "Oh, god... What have you done?");
+				%attacker.player.upgradeStatusEffect("Mood",-10, "Oh, god... What have you done?");
 			}
 			else if ($deathCount <= 0)
 			{
-				%attacker.player.addMood(10, "You did it... Now you finally have a chance of escape!");
+				%attacker.player.upgradeStatusEffect("Mood",10, "You did it... Now you finally have a chance of escape!");
 				%msg = "<color:FF0000>After comitting this crime, you will no longer be able to sprint. Comitting more murder after this is ill-advised.";
 				messageClient(%attacker, '', "<font:impact:30>" @ %msg);
 			}
@@ -286,7 +286,7 @@ function despairCheckInvestigation(%player, %corpse)
 				$EndLog[$EndLogCount++] = "\c6[Day " @ $days @ ", " @ %tod @ "] \c3" @ getCharacterName(%player.client.character, 1, 1) SPC "discovered" SPC %corpse.character.name @ "'s corpse!";
 			}
 			if ($Sim::Time - %player.lastMoodChange > 30 && %player.lastMoodText !$= "You discovered a body!")
-				%player.addMood(-5, "You discovered a body!");
+				%player.upgradeStatusEffect("Mood",-5, "You discovered a body!");
 		}
 		%corpse.checkedBy[%player] = true;
 		%corpse.checked++;
@@ -326,7 +326,7 @@ function despairMakeBodyAnnouncement(%unfound, %kira)
 			%unfound ? "There are UNDISCOVERED CORPSES to be found" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"),
 			"D" @ $days @ "|" @ %time);
 		if(isObject(%cl.player) && %cl.miniGame == $defaultMiniGame)
-			%cl.player.addMood(-2);
+			%cl.player.upgradeStatusEffect("Mood",-2);
 	}
 
 	%msg = "Body Announcement - " @ (%unfound ? "Undiscovered corpses" : ($announcements > 1 ? "Another body has been discovered" : "A body has been discovered"));

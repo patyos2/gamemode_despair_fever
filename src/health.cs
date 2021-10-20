@@ -16,6 +16,12 @@ datablock AudioProfile(fallInjurySound)
 	preload = true;
 };
 
+//loop that handles health related affairs and effects. 
+//This will mainly determine when you are unrecoverable from blood loss and other injuries.
+function healthLoop() {
+
+}
+
 function Player::critLoop(%this)
 {
 	cancel(%this.critLoop);
@@ -185,10 +191,10 @@ package DespairHealth
 		else
 			RS_Log("[DMGLOG]" SPC %client.getPlayerName() SPC "[" @ %client.getBLID() @ "] harmed himself, type " @ %type @ " for " @ %damage @ " damage.", "\c4");
 
-		%player.addMood(-3, $Sim::Time - %this.lastMoodChange > 10 ? "You got hurt!" : "");
+		%player.upgradeStatusEffect("Mood",-3, $Sim::Time - %this.lastMoodChange > 10 ? "You got hurt!" : "");
 
 		if(%attacker && !%attacker.killer && isObject(%attacker.player))
-			%attacker.player.addMood(-2, $Sim::Time - %this.lastMoodChange > 10 ? "You hurt someone!" : "");
+			%attacker.player.upgradeStatusEffect("Mood",-2, $Sim::Time - %this.lastMoodChange > 10 ? "You hurt someone!" : "");
 
 		if (%pos !$= "")
 		{

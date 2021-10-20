@@ -96,6 +96,13 @@ datablock PlayerData(PlayerCorpseArmor : PlayerStandardArmor)
 	disableFootsteps = true;
 };
 
+datablock PlayerData(PlayerUnconsious : PlayerStandardArmor)
+{
+	maxBackwardSpeed = 1;
+
+	maxBackwardCrouchSpeed = 2;
+};
+
 datablock PlayerData(PlayerFrozenArmor : PlayerStandardArmor)
 {
 	shapeFile = "base/data/shapes/player/m_df.dts";
@@ -358,6 +365,7 @@ function Player::dropTool(%obj, %index, %vel)
 function Player::setSpeedScale(%obj, %scale)
 {
 	%db = %obj.getDataBlock();
+	%obj.speedScale = %scale;
 
 	%obj.setMaxForwardSpeed(%db.maxForwardSpeed * %scale);
 	%obj.setMaxBackwardSpeed(%db.maxBackwardSpeed * %scale);
@@ -368,23 +376,20 @@ function Player::setSpeedScale(%obj, %scale)
 	%obj.setMaxCrouchSideSpeed(%db.maxSideCrouchSpeed * %scale);
 }
 
-function Player::updateSpeedScale(%obj, %int)
+function Player::addSpeedScale(%player, %tag, %ammount)
 {
-	%obj.speedScale = %int;
-	if(isObject(%obj.character))
-	{
-		if (%obj.character.trait["Athletic"])
-			%obj.speedScale += 0.1;
-		else if (%obj.character.trait["Sluggish"])
-			%obj.speedScale -= 0.1;
-	}
+	%player.removeSpeedScale(%tag);
 
-	if (getMoodName(%obj.mood) $= "overjoyed")
-		%obj.speedScale += 0.1;
-	else if (getMoodName(%obj.mood) $= "depressed")
-		%obj.speedScale -= 0.1;
+	%player.SS[%tag] = %ammount;
 
-	%obj.setSpeedScale(getMin(%obj.speedScale, 1.2));
+	%player.setSpeedScale(%player.speedScale + %ammount);
+}
+
+function Player::removeSpeedScale(%player, %tag)
+{
+	%prevScale = %player.SS[%tag];
+	%player.setSpeedScale(%player.speedScale - %prevScale);
+	%player.SS[%tag] = "";
 }
 
 function Player::onLight(%this)
