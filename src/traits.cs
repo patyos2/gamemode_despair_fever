@@ -15,6 +15,7 @@ $Despair::Traits::Description["Loudmouth"] = "Louder speech, as well as a Scream
 $Despair::Traits::Description["Pickpocket"] = "Can loot people even if they're conscious! Can't steal weapons and worn items.";
 $Despair::Traits::Description["Optimistic"] = "Nothing will make you feel depressed!";
 $Despair::Traits::Description["Chekhov's Gunman"] = "Spawn with a golden revolver. Every round you survive you will get a bullet. Make sure to conceal it!";
+$Despair::Traits::Description["Repairman"] = "You have a cool Repair kit in the closet.";
 //disabled
 $Despair::Traits::Description["Medium"] = "You're not supposed to have this";//"Hear the dead when sleeping...";
 
@@ -257,6 +258,7 @@ function checkTraitConflicts(%list, %trait)
 	%conflicts[%c++] = "Investigative	Squeamish";
 	%conflicts[%c++] = "Optimistic	Mood Swings	Melancholic	Apathetic";
 	%conflicts[%c++] = "Loudmouth	Softspoken";
+	%conflicts[%c++] = "Repairman	Gang Member";
 
 	%v = -1;
 	while(%v++ <= %c)
