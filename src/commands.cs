@@ -225,6 +225,11 @@ function serverCmdSpectate(%this)
 		messageClient(%this, '', '\c5You cannot spectate - trial is in progress!');
 		return;
 	}
+	if ($investigationStart !$= "")
+	{
+        	messageClient(%this, '', '\c5You cannot spectate - the investigation is in progress!');
+        	return;
+	}
 	%this.spectating = !%this.spectating;
 	messageClient(%this, '', '\c5You are \c6%1\c5 spectating.', %this.spectating ? "now" : "no longer");
 	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /keepchar '" @ (!%this.noPersistance ? "yes" : "no") @ "'", "\c2");
