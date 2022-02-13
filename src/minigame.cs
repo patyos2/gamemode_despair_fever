@@ -163,6 +163,13 @@ function createPlayer(%client)
 			%player.addTool(LockpickItem);
 		HatGangsterRedItem.onPickup("", %player);
 	}
+	if(%character.trait["Repairman"])
+	{
+		if(isObject(%roomCloset))
+			%roomCloset.spawnItem("0 0 1", "RepairkitItem");
+		else
+			%player.addTool(RepairkitItem);
+	}
 
 	if(%character.trait["Chekhov's Gunman"])
 	{
