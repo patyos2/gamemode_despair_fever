@@ -527,18 +527,22 @@ function despairOnMorning()
 		if($spawnKillerBox)
 		{
 			%brick = BrickGroup_888888.NTObject["_r" @ $pickedKiller.character.room @ "_closet", 0];
-			if(isObject(%brick))
+			if($pickedKiller.player.addTool("KillerBoxItem") != -1)
+				messageClient($pickedKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
+			
+			else if(isObject(%brick))
 			{
 				%brick.setItem("KillerBoxItem");
 				messageClient($pickedKiller, '', '<font:Impact:24>  \c3Your closet now contains a \c6box of useful items\c3! Pick it up and open or discard it \c0ASAP\c3!!!');
 				commandToClient($pickedKiller, 'CenterPrint', "\c3Your closet now contains a \c6box of useful items\c3!", 3);
 			}
-			else if($pickedKiller.player.addTool("KillerBoxItem") != -1)
-				messageClient($pickedKiller, '', '<font:Impact:24>\c5You have a box of useful items in your inventory!');
+															   
+																											 
 		}
 		else
 			messageClient($pickedKiller, '', '<font:Impact:24>\c5Killer box didn\'t spawn because you rejected it.');
 	}
+
 
 	if($days % 4 == 2)
 	{
@@ -758,7 +762,7 @@ function serverCmdKillerBoxAccept(%this)
 			return;
 		$spawnKillerBox = true;
 		%this.prompted["Box"] = false;
-		commandToClient(%this, 'messageBoxOK', "Killer Box", "A killer box will now spawn in your room at morning.");
+		commandToClient(%this, 'messageBoxOK', "Killer Box", "A killer box will now spawn in your inventory at morning.");
 	}
 }
 
