@@ -533,13 +533,13 @@ function serverCmdForgive(%this, %target)
  {
 	if (!%this.isAdmin)
 	{
-        return; 
-    }
+		return; 
+	}
 	if ($despairTrial !$= "")
-    {
-        messageClient(%this, '', '\c5A trial is in progress!'); 
-        return; 
-    }
+	{
+		messageClient(%this, '', '\c5A trial is in progress!'); 
+		return; 
+	}
 	if ($investigationStart !$= "")
 	{
 		messageClient(%this, '', '\c5investigation is in progress!');
@@ -547,18 +547,17 @@ function serverCmdForgive(%this, %target)
 	}
 	%target = findclientbyname(%target); 
 	if (!isObject(%target)) 
-    {
+	{
 		messageClient(%this, '', '\c5Invalid target!'); 
 		return; 
-    }
-        
-    RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /forgive '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2"); 
-    messageClient(%this, '', '\c5You have forgiven %1.', %target.getPlayerName()); 
-    messageClient(%target, '', '\c5You were forgiven, and all RDM penalties have been removed.'); 
-    if (isObject(%target.player)) 
-    {
+	}
+	RS_Log(%this.getPlayerName() SPC "(" @ %this.getBLID() @ ") used /forgive '" @ %target.getPlayerName() SPC "(" @ %target.getBLID() @ ")'", "\c2"); 
+	messageClient(%this, '', '\c5You have forgiven %1.', %target.getPlayerName()); 
+	messageClient(%target, '', '\c5You were forgiven, and all RDM penalties have been removed.'); 
+	if (isObject(%target.player)) 
+	{
 		%target.player.noWeapons = false; 
-    }
+	}
  }
  
 package DespairAdmins
