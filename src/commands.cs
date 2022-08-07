@@ -542,7 +542,7 @@ function serverCmdForgive(%this, %target)
 	}
 	if ($investigationStart !$= "")
 	{
-		messageClient(%this, '', '\c5investigation is in progress!');
+		messageClient(%this, '', '\c5A investigation is in progress!');
 		return;
 	}
 	%target = findclientbyname(%target); 
