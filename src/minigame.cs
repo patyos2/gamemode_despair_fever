@@ -590,7 +590,7 @@ function despairCycleStage(%stage)
 	if(%stage $= "MORNING")
 	{
 		%high = -1;
-		%choice[%high++] = "Did you know we have a <a:discord.gg/W4rSDac>Discord</a>\c6 channel? Join the discussion!";
+		%choice[%high++] = "Did you know we have a <a:discord.gg/9gDaarJ>Discord</a>\c6 channel? Join the discussion!";
 		%choice[%high++] = "\c3/help\c6 contains a lot of useful gameplay information and tips. Check it out!";
 		%choice[%high++] = "Sometimes, it's better to team up with someone instead of going solo. Be careful of traitors, though!";
 		%choice[%high++] = "Pay close attention to your surroundings. You never know what could be used as evidence!";
