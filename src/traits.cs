@@ -1,6 +1,5 @@
 $Despair::Traits::Tick = 3000; //miliseconds
-
-$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth	Optimistic"; //Medium
+$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth	Optimistic	Repairman"; //Medium
 $Despair::Traits::Neutral = "Snorer	Feel No Pain	Hatter	Chain Smoker	Apathetic";
 $Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken	Social Anxiety	Mood Swings	Melancholic"; //Schizo Narcoleptic
 
@@ -15,7 +14,7 @@ $Despair::Traits::Description["Loudmouth"] = "Louder speech, as well as a Scream
 $Despair::Traits::Description["Pickpocket"] = "Can loot people even if they're conscious! Can't steal weapons and worn items.";
 $Despair::Traits::Description["Optimistic"] = "Nothing will make you feel depressed!";
 $Despair::Traits::Description["Chekhov's Gunman"] = "Spawn with a golden revolver. Every round you survive you will get a bullet. Make sure to conceal it!";
-$Despair::Traits::Description["Repairman"] = "You have a cool Repair kit in the closet.";
+$Despair::Traits::Description["Repairman"] = "Repairman. Has a cool Repair kit in the closet.";
 //disabled
 $Despair::Traits::Description["Medium"] = "You're not supposed to have this";//"Hear the dead when sleeping...";
 
