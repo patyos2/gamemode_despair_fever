@@ -9,7 +9,7 @@ $Despair::DisableWepsTimer = 30; //How many seconds until the weps are disabled.
 
 $Despair::MinShutters = 2; //How many shutters should be open from the start.
 //Trial
-$Despair::TrialChatDelay = 3; //Chat delay in seconds to prevent spamming
+$Despair::TrialChatDelay = 1; //Chat delay in seconds to prevent spamming
 $Despair::ChatDelay = 0.75; //Chat delay in seconds to prevent spamming
 $Despair::DiscussPeriod = 420; //7 mins
 $Despair::DiscussExtraLength = 90; //+1:30 mins for every body in trial
@@ -20,8 +20,8 @@ $Despair::CanForceTrial = 90; //1 min 30 seconds have to pass before you can for
 //Sleep
 $Despair::SleepOverjoyed = 75;
 $Despair::SleepHappy = 80;
-$Despair::SleepSad = 100;
-$Despair::SleepDepressed = 110;
+$Despair::SleepSad = 120;
+$Despair::SleepDepressed = 130;
 $Despair::SleepDefault = 90;
 $Despair::SleepKnockout = 30;
 
@@ -29,7 +29,7 @@ $Despair::SleepKnockout = 30;
 $Despair::Mood::Enabled = true;
 //Traits
 $Despair::Traits::Enabled = true;
-
+//Change map to school,mansion,motel,syndrome,campdespair or resort depending on the build.
 $map = "school";
 //MOTEL MAP PREFS:
 if($map $= "motel")
