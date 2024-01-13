@@ -210,7 +210,7 @@ function Player::carryTick(%this)
 		{
 			%this.stopAudio(0);
 			%player.choking = "";
-			%player.spawnFiber(); //Guaranteed killer fiber
+			%player.spawnFiber(); //Guaranteed killer fibers
 			%player.startCarrying = false;
 		}
 		else
