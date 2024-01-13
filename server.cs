@@ -91,7 +91,7 @@ exec("./src/weapons/knife.cs");
 exec("./src/weapons/scalpel.cs"); //Reskinned knife
 exec("./src/weapons/leadpipe.cs");
 exec("./src/weapons/machete.cs");
-// exec("./src/weapons/revolver.cs");
+exec("./src/weapons/revolver.cs");
 exec("./src/weapons/wrench.cs");
 exec("./src/weapons/sledgehammer.cs");
 exec("./src/weapons/taser.cs");
