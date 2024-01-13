@@ -1,8 +1,8 @@
 $Despair::Traits::Tick = 3000; //miliseconds
 
-$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth	Optimistic	Repairman	Glutton"; //Medium Chekhov's Gunman
+$Despair::Traits::Positive = "Investigative	Heavy Sleeper	Gang Member	Extra Tough	Bodybuilder	Athletic	Loudmouth	Optimistic	Repairman	Glutton	Medium"; //Medium
 $Despair::Traits::Neutral = "Snorer	Feel No Pain	Hatter	Chain Smoker	Apathetic";
-$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken	Social Anxiety	Mood Swings	Melancholic"; //Schizo Narcoleptic
+$Despair::Traits::Negative = "Clumsy	Paranoid	Nervous	Frail	Cold	Sluggish	Hemophiliac	Squeamish	Softspoken	Social Anxiety	Mood Swings	Melancholic	Schizo	Narcoleptic"; //Schizo Narcoleptic
 
 //positive
 $Despair::Traits::Description["Investigative"] = "You will get more information from corpses.";
@@ -16,7 +16,7 @@ $Despair::Traits::Description["Pickpocket"] = "Can loot people even if they're c
 $Despair::Traits::Description["Optimistic"] = "Nothing will make you feel depressed!";
 $Despair::Traits::Description["Chekhov's Gunman"] = "Spawn with a golden revolver. Every round you survive you will get a bullet. Make sure to conceal it!";
 $Despair::Traits::Description["Bodybuilder"] = "Faster weapon swings!";
-$Despair::Traits::Description["Repairman"] = "Repairman. Has a cool Repair kit in the closet.";
+$Despair::Traits::Description["Repairman"] = "You have a cool Repair kit in the closet.";
 $Despair::Traits::Description["Glutton"] = "Burgers recover more health when eating.";
 //disabled
 $Despair::Traits::Description["Medium"] = "Hear the dead when sleeping...";
@@ -69,7 +69,7 @@ function GenerateTraits(%character, %client)
 			%typeStr = "positive";
 			%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 		}
-		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.1)
+		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.03)
 		{
 			%trait = "Chekhov's Gunman";
 			$gunmanChar = %character;
