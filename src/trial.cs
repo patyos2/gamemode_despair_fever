@@ -272,7 +272,7 @@ function despairCheckInvestigation(%player, %corpse)
 		if(isObject(%player.client))
 		{
 			if(!%player.client.killer && %player.client.TempPoints <= 0) //Atm only discovering the body gives you a point during investigation
-				%player.client.AddPoints(2); //Body found
+				%player.client.AddPoints(1); //Body found
 			%player.client.play2d(DespairBodyDiscoverySound @ (%corpse.mangled ? 5 : getRandom(1, 4)));
 			%player.client.despairCorpseVignette(%corpse.mangled ? 300 : 200);
 			if(!%corpse.discovered)
@@ -1236,7 +1236,7 @@ function DespairEndTrial()
 	{
 		serverPlay2d("DespairMusicKillerWin");
 		$defaultMiniGame.winRounds = 0;
-		$pickedKiller.AddPoints(12);
+		$pickedKiller.AddPoints(10);
 		$pickedKiller.killerWins++;
 
 		$shuttersOpen = "";
