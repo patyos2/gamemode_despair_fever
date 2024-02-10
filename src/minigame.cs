@@ -611,6 +611,7 @@ function despairCycleStage(%stage)
 		%choice[%high++] = "You can fake dying messages if you get your hands bloody and /write!";
 		%choice[%high++] = "Discussing alibis during investigation is a TERRIBLE idea! Use the time you are given to find \c3physical evidence\6!";
 		%choice[%high++] = "Alibi = a person's movements and actions druing a specified period, usually the approximate Time of Death.";
+		%choice[%high++] = "Did you know Killer can fake speed with /fakespeed tired or exhausted command.";
 		%choice[%high++] = "We also have a <a:https://despair-fever.fandom.com/wiki/Despair_Fever_Wiki>Wiki</a>\c6!";
 
 		$DefaultMiniGame.chatMessageAll('', '\c5~~[Day \c3%1\c5]\c6 Good morning, everyone! %2', $days, %choice[getRandom(%high)]);
