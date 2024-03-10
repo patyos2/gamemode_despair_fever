@@ -65,289 +65,287 @@ This is a Blockland save file.  You probably shouldn't modify it cause you'll sc
 0.419608 0.258824 0.149020 1.000000
 0.247059 0.137255 0.066667 1.000000
 1.000000 0.000000 1.000000 0.000000
-Linecount 24954
+Linecount 24974
 64x64 Base" -75 -185.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -43 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 6.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 -25.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -43 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -75 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -75 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -43 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -11 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -11 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 6.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 -25.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 6.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -107 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -107 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -11 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 -25.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 53 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -11 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -43 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -75 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -107 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 134.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 102.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 70.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 38.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 6.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 -25.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 -57.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 -89.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -267 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -235 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -203 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -171 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -139 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -107 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -11 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" 21 -153.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 64x64 Base" -43 -185.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
 32x32 Base" -188.5 7.5 0.1 0 1 41  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -39.5 19 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 16x32 Base" -170 7.5 0.1 0 1 28  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 16x16 Base" -174 -9.5 0.1 0 1 41  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 32x32 Base" -188.5 -24.5 0.1 0 1 41  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 32x32 Base" -188.5 -8.5 0.1 0 1 41  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 6x12F" -89 -114 0.1 0 1 59  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 2x2 Disc" -70.25 -126.25 0.1 0 1 50  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 16x16 Base" -174.5 -28.5 0.1 0 1 41  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 8x16F" -71 -117 0.1 1 1 45  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 16x16 Base" -78.5 -127 0.1 0 1 59  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -39.5 -45 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 8x Water" -79.5 -33.5 2 1 1 14  0 2 0 0 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -71.5 -77 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -103.5 -77 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -71.5 19 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -103.5 19 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 32x32 Base" -48.5 -150 0.1 0 1 48  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -71.5 -45 0.1 0 1 24  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -71.5 -13 0.1 0 1 60  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -103.5 -45 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -39.5 -13 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -103.5 -13 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -39.5 -77 0.1 0 1 47  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 16x16 Base" -78.5 -137.5 0.1 0 1 60  0 0 1 1 1
-+-OWNER 4189
++-OWNER 999999
 64x64 Base" -107 -121.5 0.1 1 1 57  0 0 0 1 0
-+-OWNER 4189
++-OWNER 999999
 +-EVENT	0	1	onPlayerTouch	0	-1	_Out_Of_Bounds	doPlayerTeleport	Out_Of_Bounds	1	0	0
-1x1F" -79.25 -17.25 9.9 0 1 47  0 0 1 1 1
-+-OWNER 4189
-1x1F" -79.25 -15.75 8.7 0 1 47  0 0 1 1 1
-+-OWNER 4189
+1x2F" -79 -6.25 0.3 3 0 48  0 0 1 1 1
+1x4F" -58.5 -18.75 0.3 1 0 3  0 0 1 1 1
 1x4F" -61.5 -42.25 0.3 1 0 40  0 0 1 1 1
 1x2F" -62 -42.75 0.3 1 0 0  0 0 1 1 1
 1x4F" -62.75 -42 0.3 0 0 0  0 0 1 1 1
@@ -457,7 +455,7 @@ Linecount 24954
 2x2F" -78 -5 0.3 0 0 59  0 0 1 1 1
 2x2F" -77.5 -6.5 0.3 0 0 60  0 0 1 1 1
 1x1F" -79.25 -7.25 0.3 0 0 60  0 0 1 1 1
-1x2F" -79 -6.75 0.3 1 0 24  0 0 1 1 1
+1x2F" -79 -6.75 0.3 1 0 48  0 0 1 1 1
 1x1F" -78.25 -6.75 0.3 0 0 60  0 0 1 1 1
 -45° Ramp 2x" -187 -5 0.5 1 0 57  0 0 1 1 1
 -45° Ramp 2x" -187 -6 0.5 1 0 57  0 0 1 1 1
@@ -970,12 +968,12 @@ Linecount 24954
 1x4x5" -77.75 -33 3.1 0 0 60  0 0 1 1 1
 1x3F" -78.75 -33.75 1.1 1 0 60  0 0 1 1 1
 1x1F" -73.75 -14.75 0.3 1 0 57  0 0 0 0 0
-+-EVENT	0	1	onMiniGameReset	0	Self		setItem	HatDogeItem			
-+-EVENT	1	0	onMiniGameReset	0	Self		setItem	CoatItem			
++-EVENT	0	0	onMiniGameReset	0	Self		setItem	HatDogeItem			
++-EVENT	1	1	onMiniGameReset	0	Self		setItem	CoatItem			
 +-EVENT	2	1	onMiniGameReset	0	Self		toggleEventEnabled	0 1			
-+-ITEM Coat" 0 5 4000
++-ITEM Hat Doge" 0 5 4000
 2x4F" -61.5 -41.5 0.3 1 0 40  0 0 1 1 1
-1x4F" -58.5 -18.75 0.3 1 0 3  0 0 1 1 1
+1x2F" -79 -6.25 0.5 3 0 48  0 0 1 1 1
 1x1x5" -23.75 3.25 4.7 0 0 47  0 0 1 1 1
 2x4x3" -175.5 -28.5 4.9 0 0 58  0 0 1 1 1
 1x16F" -185.75 -18.5 0.7 0 0 59  0 0 1 1 1
@@ -1412,10 +1410,10 @@ Spawn Point" -63.75 -70.75 1.9 0 0 0  0 0 0 0 0
 1x4" -75.75 -23 0.7 2 0 54  0 0 1 1 1
 1x4" -75.75 -25 0.7 2 0 54  0 0 1 1 1
 1x1F" -65.25 -35.25 0.5 1 0 57  0 0 0 0 0
-+-EVENT	0	1	onMiniGameReset	0	Self		setItem	CleanSprayItem			
-+-EVENT	1	0	onMiniGameReset	0	Self		setItem	LockpickItem			
++-EVENT	0	0	onMiniGameReset	0	Self		setItem	CleanSprayItem			
++-EVENT	1	1	onMiniGameReset	0	Self		setItem	LockpickItem			
 +-EVENT	2	1	onMiniGameReset	0	Self		toggleEventEnabled	0 1			
-+-ITEM Lockpick"  2 4000
++-ITEM Clean Spray"  2 4000
 1x1x5" -119.25 -29.25 4.7 0 0 47  0 0 1 1 1
 1x4" -58.25 -33.5 0.7 0 0 49  0 0 1 1 1
 1x4" -58.25 -35.5 0.7 0 0 49  0 0 1 1 1
@@ -1638,10 +1636,17 @@ House Door" -68.25 -4 2.2 3 0 59  0 0 1 1 1
 -25° Ramp 1x" -189.25 -0.25 1.5 0 0 57  0 0 1 1 1
 72° Ramp 2x" -186.5 -6 3.5 1 0 57  0 0 1 1 1
 1x1" -79.75 -7.25 0.7 0 0 39  0 0 1 1 1
++-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
 1x2" -79 -6.75 0.7 1 0 39  0 0 1 1 1
++-NTOBJECTNAME _CessSecrit
++-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
 -72° Ramp 2x" -186.5 -7 1.7 1 0 57  0 0 1 1 1
 1x1" -78.25 -6.25 0.7 0 0 39  0 0 1 1 1
 1x2" -78.5 -7.25 0.7 1 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
 1x2F" -79 -7.75 0.5 1 0 60  0 0 1 1 1
 72° Ramp 2x" -186.5 -7 3.5 1 0 57  0 0 1 1 1
 -72° Ramp 2x" -186.5 -6 1.7 1 0 57  0 0 1 1 1
@@ -1960,6 +1965,7 @@ House Door" -66 -30.25 2.2 2 0 59  0 0 1 1 1
 1x2F" -76.5 -26.25 0.5 1 0 38  0 0 1 1 1
 2x4x3" -76.5 -25 2.9 0 0 40  0 0 1 1 1
 1x2" -76.25 -27 0.7 0 0 61  0 0 1 1 1
++-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
 0.25x1F" -74.75 -28.25 0.5 0 0 37  0 0 1 1 1
 1x4" -74.5 -30.75 0.7 1 0 40  0 0 1 1 1
 1x4" -74.5 -29.25 0.7 1 0 40  0 0 1 1 1
@@ -2048,6 +2054,7 @@ House Door" -66 -30.25 2.2 2 0 59  0 0 1 1 1
 1x1" -83.25 -5.25 1.3 0 0 39  0 0 1 1 1
 1x1" -82.75 -5.75 1.3 0 0 39  0 0 1 1 1
 1x1F" -80.25 -7.75 1.1 0 0 60  0 0 1 1 1
++-NTOBJECTNAME _CessSecrit
 1x1F Round" -63.25 -53.25 1.1 0 0 51  0 0 1 1 1
 1x1" -81.75 -6.75 1.3 0 0 39  0 0 1 1 1
 1x1" -81.25 -6.75 1.3 0 0 39  0 0 1 1 1
@@ -2060,7 +2067,7 @@ House Door" -66 -30.25 2.2 2 0 59  0 0 1 1 1
 1x2" -56 -55.25 1.3 1 0 40  0 0 1 1 1
 1x2" -80 -7.25 1.3 1 0 39  0 0 1 1 1
 +-NTOBJECTNAME _CessSecrit
-+-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	6		
++-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
 +-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
 2x4F" -79.5 -124 0.7 0 0 59  0 0 1 1 1
 1x4" -63.5 -48.75 1.3 1 0 49  0 0 1 1 1
@@ -2390,6 +2397,7 @@ House Door" -63.25 -17 2.4 3 0 59  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
 1x1" -76.25 -26.75 1.3 0 0 61  0 0 1 1 1
 +-NTOBJECTNAME _WineSecrit
++-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
 1x2" -76.5 -26.25 0.9 1 0 38  0 0 1 1 1
 0.25x1F" -74.75 -28.25 0.7 0 0 37  0 0 1 1 1
 1F 1x1F Vertical Print" -173.75 12.25 1.1 2 0 26 Letters/-space 0 0 1 1 1
@@ -2565,7 +2573,11 @@ House Door" -63.25 -17 2.4 3 0 59  0 0 1 1 1
 1x2F" -78.25 -5.5 0.7 0 0 59  0 0 1 0 1
 1x12x5" -87.5 -35.75 2.5 1 0 46  0 0 1 1 1
 1x1F" -78.25 -7.25 1.1 0 0 60  0 0 1 1 1
++-NTOBJECTNAME _CessSecrit
 1x2F" -79.25 -7.5 0.7 0 0 60  0 0 1 1 1
++-NTOBJECTNAME _CessSecrit
++-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
 1x1" -79.25 -6.75 1.3 0 0 39  0 0 1 1 1
 +-NTOBJECTNAME _CessSecrit
 +-EVENT	0	1	onActivate	0	-1	_CessSecrit	fakeKillBrick	0 0 0	5		
@@ -4347,7 +4359,7 @@ House Door" -87.25 -28 8.2 3 0 59  0 0 1 1 1
 1x2" -90 -111.25 1.5 1 0 58  0 0 1 1 1
 45° Ramp 1x" -89 -111.25 1.5 1 0 58  0 0 1 1 1
 2x4F" -50.5 -54.5 6.5 0 0 49  0 0 1 1 1
-1x6F" -50 -55.75 6.5 1 0 49  0 0 1 1 1
+0.25x1F" -25.25 -77.25 6.5 0 0 37  0 0 1 1 1
 1x4F" -51.25 -54.5 6.5 0 0 49  0 0 1 1 1
 4x4F" -49 -54.5 6.5 0 0 38  0 0 1 1 1
 1x6F" -50.5 -53.25 6.5 1 0 57  0 0 1 1 1
@@ -4738,11 +4750,11 @@ House Door" -87.25 -28 8.2 3 0 59  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Self		spawnProjectile	-0 0 7	basketballProjectile	-0 0 9	1
 +-EVENT	1	1	onActivate	0	Self		disappear	300			
 +-EVENT	2	1	onMiniGameReset	0	Self		disappear	0			
-1x4x5" -71.25 -42.5 10.9 0 0 40  0 0 1 1 1
-1x2x5" -71.25 -41 10.9 0 0 40  0 0 1 1 1
-1x1x5" -55.25 -25.75 8.5 0 0 60  0 0 1 1 1
-1x1x5" -55.75 -24.75 8.1 0 0 59  0 0 1 1 1
-1x12x5" -54.75 -29 8.5 0 0 35  0 0 1 1 1
+1x1F Tile" -25.25 -76.75 6.5 3 0 37  0 0 1 1 1
+0.25x1F" -25.75 -76.75 6.5 1 0 37  0 0 1 1 1
+0.25x1F" -24.75 -76.75 6.5 3 0 37  0 0 1 1 1
+0.25x1F" -25.25 -76.25 6.5 2 0 37  0 0 1 1 1
+1x6F" -50 -55.75 6.5 1 0 49  0 0 1 1 1
 1x3x5" -64.25 -43.25 10.9 1 0 40  0 0 1 1 1
 1x3x5" -59.75 -21.75 8.1 1 0 46  0 0 1 1 1
 1x6x5" -57.5 -21.75 8.1 1 0 46  0 0 1 1 1
@@ -4814,6 +4826,7 @@ House Door" -64.75 -47 8.4 1 0 59  0 0 1 1 1
 1x2" -76.5 -28.75 2.7 1 0 38  0 0 1 1 1
 1x1" -76.25 -28.25 2.5 0 0 61  0 0 1 1 1
 +-NTOBJECTNAME _WineSecrit
++-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
 1x2" -76.25 -28 3.1 0 0 61  0 0 1 1 1
 +-NTOBJECTNAME _WineSecrit
 +-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
@@ -5145,6 +5158,7 @@ Spawn Point" -28.25 28.75 8.1 2 0 0  0 0 0 0 0
 +-ITEM Coat" 0 5 4000
 1x1" -76.25 -26.75 2.5 0 0 61  0 0 1 1 1
 +-NTOBJECTNAME _WineSecrit
++-EVENT	0	1	onActivate	0	-1	_WineSecrit	fakeKillBrick	0 0 0	6		
 1x1F Round" -85.25 24.25 6.7 3 0 33  0 0 0 0 1
 -45° Ramp 2x" -88.5 8.5 7.3 3 0 34  0 0 1 1 1
 -45° Ramp Corner" -88.5 10.5 7.3 3 0 34  0 0 1 1 1
@@ -5238,12 +5252,18 @@ Spawn Point" -28.25 28.75 8.1 2 0 0  0 0 0 0 0
 1x12F" -71.75 -68.5 3.9 0 0 59  0 0 1 1 1
 1x3" -27.75 29.75 6.9 1 0 59  0 0 1 1 1
 1x6F" -59 3.25 7.1 1 0 47  0 0 1 1 1
-2x2F Round" -72 28 7.3 3 0 33  0 2 0 0 1
+2x2F Round" -72 28 7.3 3 0 33  0 2 1 0 1
++-EVENT	0	1	onActivate	0	Self		playSound	exitWaterSound			
++-EVENT	1	1	onActivate	0	Player		setBloody	0	0	0	
 1x6" -72.75 28.5 6.9 0 0 47  0 0 1 1 1
 2x6F" -73 28.5 7.3 0 0 40  0 0 1 1 1
 1x1F Round" -67.75 15.25 6.7 0 0 34  0 0 0 0 1
 1x4" -71.5 26.75 6.9 1 0 47  0 0 1 1 1
-2x2F Round" -71 27.5 7.3 3 0 33  0 2 0 0 1
+2x2F Round" -71 27.5 7.3 3 0 33  0 2 1 0 1
++-EVENT	0	1	onActivate	0	Self		setEmitter	PlayerFoamDropletsEmitter			
++-EVENT	1	1	onActivate	200	Self		setEmitter	-1			
++-EVENT	2	1	onActivate	0	Self		playSound	exitWaterSound			
++-EVENT	3	1	onActivate	0	Player		setBloody	0	0	0	
 1x6" -70.25 28.5 6.9 0 0 47  0 0 1 1 1
 2x6F" -70 28.5 7.3 0 0 40  0 0 1 1 1
 1x4" -71.5 30.25 6.9 1 0 47  0 0 1 1 1
@@ -5755,6 +5775,9 @@ House Door" -83.5 -2.25 8.4 2 0 59  0 0 1 1 1
 1x1" -64.75 28.75 6.9 0 0 40  0 0 1 1 1
 1x2" -64 28.75 6.9 1 0 40  0 0 1 1 1
 2x2x2 Cone" -71.5 29 7.2 3 0 40  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Self		setEmitter	PlayerFoamDropletsEmitter			
++-EVENT	1	1	onActivate	0	Self		playSound	exitWaterSound			
++-EVENT	2	1	onActivate	0	Player		setBloody	0	0	0	
 +-EMITTER Player Foam Droplets" 0
 1x2F" -71.5 30.75 6.7 1 0 47  0 0 1 1 1
 1x2F" -70.5 30.75 6.7 1 0 47  0 0 1 1 1
@@ -6532,16 +6555,21 @@ House Door" -74 -35.25 2.2 2 0 59  0 0 1 1 1
 +-ITEM Lockpick" 0 2 4000
 1x3x5" -55.25 -25.25 8.5 1 0 46  0 0 1 1 1
 2x10F" -38.5 26.5 6.7 1 0 62  0 0 1 1 1
-1x4F" -95.75 -4.5 7.3 0 0 47  0 0 1 1 1
-1x4F" -95.75 -7.5 7.3 0 0 47  0 0 1 1 1
-1x4F" -77 -126.75 2.1 1 0 57  0 0 1 1 1
-1x2" -79.5 -123.25 1.5 1 0 59  0 0 1 1 1
-1x2" -79.5 -124.75 1.5 1 0 59  0 0 1 1 1
-2x2" -79.5 -124 1.5 0 0 59  0 0 1 1 1
-1x8F" -50.5 -69.25 7.7 1 0 59  0 0 1 1 1
-1x4" -54 -68.75 7.5 1 0 40  0 0 1 1 1
-1x2x5" -87.5 -38.25 13.9 1 0 58  0 0 1 1 1
-1x1" -82.25 -6.25 3.1 0 0 39  0 0 1 1 1
+0.25x1F" -25.25 -77.25 6.7 0 0 37  0 0 1 1 1
+1x4x5" -71.25 -42.5 10.9 0 0 40  0 0 1 1 1
+1x1" -25.25 -76.75 6.9 0 0 14  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Self		disappear	15			
++-EVENT	1	1	onActivate	0	Self		setEmitter	PlayerFoamDropletsEmitter			
++-EVENT	2	1	onActivate	200	Self		setEmitter	-1			
++-EVENT	3	1	onActivate	0	Self		playSound	exitWaterSound			
++-EVENT	4	1	onActivate	0	Player		setBloody	0	0	0	
+1x2x5" -71.25 -41 10.9 0 0 40  0 0 1 1 1
+0.25x1F" -25.75 -76.75 6.7 1 0 37  0 0 1 1 1
+1x1x5" -55.25 -25.75 8.5 0 0 60  0 0 1 1 1
+0.25x1F" -24.75 -76.75 6.7 3 0 37  0 0 1 1 1
+1x1x5" -55.75 -24.75 8.1 0 0 59  0 0 1 1 1
+0.25x1F" -25.25 -76.25 6.7 2 0 37  0 0 1 1 1
+1x12x5" -54.75 -29 8.5 0 0 35  0 0 1 1 1
 1x2" -80.5 -7.25 3.1 1 0 39  0 0 1 1 1
 1x2" -81.5 -6.75 3.1 1 0 39  0 0 1 1 1
 1x2" -81 -7.75 3.1 1 0 60  0 0 1 1 1
@@ -6608,7 +6636,7 @@ House Door" -74 -35.25 2.2 2 0 59  0 0 1 1 1
 1x1F" -75.75 -12.75 2.1 0 0 60  0 0 1 1 1
 1x6" -75.75 -14.5 3.1 0 0 60  0 0 1 1 1
 1x6F" -75.75 -14.5 2.1 0 0 60  0 0 1 1 1
-2x2x3" -88 -37.5 9.7 0 0 57  0 0 1 1 1
+1x1" -82.25 -6.25 3.1 0 0 39  0 0 1 1 1
 2x2x3" -88 -33.5 9.7 0 0 57  0 0 1 1 1
 2x4F" -79 -8 3.3 1 0 60  0 0 1 1 1
 1x1F" -78.25 -8.75 2.9 0 0 60  0 0 1 1 1
@@ -8459,20 +8487,20 @@ House Door" -78.25 2 8.2 1 0 62  0 0 1 1 1
 2x4x3" -69 -63 12.7 1 0 57  0 0 1 1 1
 1x16F" -94.75 -15 7.3 0 0 60  0 0 1 1 1
 1x1F Round" -74.25 14.75 6.9 2 0 1  0 0 0 0 1
-1x1F" -107.75 -79.75 7.5 0 0 59  0 0 1 1 1
-2x8F" -93.5 -84.5 11.9 1 0 38  0 0 1 1 1
-1x4" -58.25 -40.5 3.7 0 0 49  0 0 1 1 1
-1x4" -58.25 -42.5 3.7 0 0 49  0 0 1 1 1
--25° Ramp 2x" -75.25 -21 5.3 1 0 46  0 0 1 1 1
--25° Ramp 2x" -75.25 -22.5 5.3 1 0 46  0 0 1 1 1
-1x2" -59 -42.75 3.7 1 0 49  0 0 1 1 1
-1x2" -56 -69.25 8.1 1 0 40  0 0 1 1 1
-1x2" -57 -69.25 8.1 1 0 40  0 0 1 1 1
-1x2x5" -78.25 -8.5 8.5 0 0 36  0 0 1 1 1
-1x1" -56.25 -47.25 7.7 0 0 46  0 0 1 1 1
-1x1" -73.75 -36.25 6.9 0 0 59  0 0 1 1 1
-1x3" -57.25 -45.25 7.7 1 0 58  0 0 1 1 1
-1x1F" -107.75 -73.75 7.5 0 0 59  0 0 1 1 1
+0.5x1" -25.25 -76.25 7.1 2 0 37  0 0 1 1 1
+1x2x5" -87.5 -38.25 13.9 1 0 58  0 0 1 1 1
+1x4" -54 -68.75 7.5 1 0 40  0 0 1 1 1
+0.5x1" -24.75 -76.75 7.1 3 0 37  0 0 1 1 1
+1x8F" -50.5 -69.25 7.7 1 0 59  0 0 1 1 1
+2x2" -79.5 -124 1.5 0 0 59  0 0 1 1 1
+0.5x1" -25.75 -76.75 7.1 1 0 37  0 0 1 1 1
+1x2" -79.5 -124.75 1.5 1 0 59  0 0 1 1 1
+1x2" -79.5 -123.25 1.5 1 0 59  0 0 1 1 1
+1x4F" -77 -126.75 2.1 1 0 57  0 0 1 1 1
+1x4F" -95.75 -7.5 7.3 0 0 47  0 0 1 1 1
+1x4F" -95.75 -4.5 7.3 0 0 47  0 0 1 1 1
+2x2x3" -88 -37.5 9.7 0 0 57  0 0 1 1 1
+0.5x1" -25.25 -77.25 7.1 0 0 37  0 0 1 1 1
 -25° Ramp 1x" -30.75 23.25 10.5 1 0 60  0 0 1 1 1
 1x1" -28.75 22.25 10.5 0 0 60  0 0 1 1 1
 1x4" -58.25 -34.5 3.7 0 0 49  0 0 1 1 1
@@ -10063,20 +10091,20 @@ House Door" -60 -51.25 8.4 0 0 59  0 0 1 1 1
 1x3" -79.25 -21.25 7.3 0 0 47  0 0 1 1 1
 1x1" -79.75 -20.25 7.3 0 0 47  0 0 1 1 1
 4x6F" -82.5 -124 1.5 1 0 47  0 0 0 0 1
-2x2 Round" -63 -69 13.1 3 0 57  0 0 1 1 1
-45° Crest 4x" -24 21 12.3 1 0 39  0 0 1 1 1
-1x2F" -63.25 -68 12.9 0 0 34  0 0 1 1 1
-2x4" -55 -34.5 8.3 0 0 57  0 0 1 1 1
-1x4F" -100 -71.75 6.5 1 0 24  0 0 1 1 1
-45° Crest 4x" -24 -45 12.3 1 0 39  0 0 1 1 1
-1x4x4 Print" -83.5 -1.75 11.4 0 0 61 Letters/-space 0 0 1 1 1
-45° Crest 4x" -24 -13 12.3 1 0 39  0 0 1 1 1
-45° Crest 4x" -24 -11 12.3 1 0 39  0 0 1 1 1
-45° Crest 4x" -24 -9 12.3 1 0 39  0 0 1 1 1
-45° Crest 4x" -24 -17 12.3 1 0 39  0 0 1 1 1
-45° Crest 4x" -24 -1 12.3 1 0 39  0 0 1 1 1
-1x12F" -60 3.75 13.7 1 0 57  0 0 1 1 1
-2x8F" -58.5 1.5 12.9 1 0 7  0 0 1 1 1
+1x1" -73.75 -36.25 6.9 0 0 59  0 0 1 1 1
+1x1" -56.25 -47.25 7.7 0 0 46  0 0 1 1 1
+1x2x5" -78.25 -8.5 8.5 0 0 36  0 0 1 1 1
+1x2" -57 -69.25 8.1 1 0 40  0 0 1 1 1
+1x2" -56 -69.25 8.1 1 0 40  0 0 1 1 1
+1x2" -59 -42.75 3.7 1 0 49  0 0 1 1 1
+-25° Ramp 2x" -75.25 -22.5 5.3 1 0 46  0 0 1 1 1
+-25° Ramp 2x" -75.25 -21 5.3 1 0 46  0 0 1 1 1
+1x4" -58.25 -42.5 3.7 0 0 49  0 0 1 1 1
+1x4" -58.25 -40.5 3.7 0 0 49  0 0 1 1 1
+2x8F" -93.5 -84.5 11.9 1 0 38  0 0 1 1 1
+1x1F" -107.75 -79.75 7.5 0 0 59  0 0 1 1 1
+1x1F" -107.75 -73.75 7.5 0 0 59  0 0 1 1 1
+1x3" -57.25 -45.25 7.7 1 0 58  0 0 1 1 1
 2x8" -59 3.5 12.7 1 0 57  0 0 1 1 1
 1x8 Arch" -59 2.25 10.9 3 0 61  0 0 1 1 1
 45° Crest 4x" -24 -3 12.3 1 0 39  0 0 1 1 1
@@ -10814,21 +10842,19 @@ Spawn Point" -67.25 -11.75 14.9 3 0 0  0 0 0 0 0
 2x3F" -80.25 -30 5.5 1 0 38  0 0 1 1 1
 1x1F" -77.75 5.75 10.5 0 0 60  0 0 1 1 1
 25° Crest End" -80.5 -10.25 7.1 3 0 59  0 0 1 0 1
-2x2F" -80.5 -11 6.9 0 0 59  0 0 1 1 1
+2x2F" -80.5 -11 6.9 0 0 59  0 0 1 0 1
 +-EVENT	0	1	onActivate	33	Self		fireRelay				
 +-EVENT	1	1	onRelay	0	Self		toggleEventEnabled	2 3 4 5 6 7 8 9 10 11			
-+-EVENT	2	0	onRelay	0	Self		setLight	OrangeDimAmbientLight			
-+-EVENT	3	0	onRelay	0	Self		setEmitter	BurnEmitterA			
-+-EVENT	4	0	onRelay	0	Self		setColliding	1			
-+-EVENT	5	1	onRelay	0	Self		setLight	-1			
-+-EVENT	6	1	onRelay	0	Self		setEmitter	-1			
-+-EVENT	7	1	onRelay	0	Self		setColliding	0			
-+-EVENT	8	0	onActivate	0	Self		playSound	lightOnSound			
-+-EVENT	9	1	onActivate	0	Self		playSound	lightOffSound			
-+-EVENT	10	0	onMiniGameReset	33	Self		fireRelay				
-+-EVENT	11	1	onPlayerTouch	0	Player		AddVelocity	-15 0 1			
-+-EMITTER Fire A" 0
-+-LIGHT Orange Amb. Dim" 1
++-EVENT	2	1	onRelay	0	Self		setLight	OrangeDimAmbientLight			
++-EVENT	3	1	onRelay	0	Self		setEmitter	BurnEmitterA			
++-EVENT	4	1	onRelay	0	Self		setColliding	1			
++-EVENT	5	0	onRelay	0	Self		setLight	-1			
++-EVENT	6	0	onRelay	0	Self		setEmitter	-1			
++-EVENT	7	0	onRelay	0	Self		setColliding	0			
++-EVENT	8	1	onActivate	0	Self		playSound	lightOnSound			
++-EVENT	9	0	onActivate	0	Self		playSound	lightOffSound			
++-EVENT	10	1	onMiniGameReset	33	Self		fireRelay				
++-EVENT	11	0	onPlayerTouch	0	Player		AddVelocity	-15 0 1			
 25° Crest End" -80.5 -11.75 7.1 1 0 59  0 0 1 0 1
 1x4x2 Fence" -83.25 -11 7.4 3 0 38  0 0 1 1 1
 +-EVENT	0	1	onRelay	0	Self		toggleEventEnabled	1 2 3 4 5 6			
@@ -11235,7 +11261,7 @@ House Door" -87.25 -30 8.2 1 0 59  0 0 1 1 1
 6x6F" -101 -65.5 6.5 0 0 24  0 0 1 1 1
 1F 2x2F Vertical Print" -64.5 -31.25 8.5 0 0 0 Letters/-space 0 0 1 0 1
 1F 2x2F Vertical Print" -65.5 -31.25 8.5 0 0 0 Letters/-space 0 0 1 0 1
-1F 2x2F Vertical Print" -66.5 -31.25 8.5 0 0 0 Letters/-space 0 0 1 0 1
+2x8F" -58.5 1.5 12.9 1 0 7  0 0 1 1 1
 1F 2x2F Vertical Print" -67.5 -31.25 8.5 0 0 0 Letters/-space 0 0 1 0 1
 2x4x3" -58.5 3 15.7 1 0 24  0 0 1 1 1
 1x4" -81.75 -3 10.7 0 0 40  0 0 1 1 1
@@ -11503,20 +11529,20 @@ House Door" -87.25 -30 8.2 1 0 59  0 0 1 1 1
 1x3" -56.25 -51.75 8.7 1 0 40  0 0 1 1 1
 1x1" -56.25 -49.75 8.3 0 0 46  0 0 1 1 1
 1x6F" -81.75 -16 7.7 0 0 62  0 0 1 1 1
-1x4F" -64.5 -13.75 5.1 1 0 49  0 0 1 1 1
-1x4F" -64.5 -15.75 5.1 1 0 49  0 0 1 1 1
-1x12x5" -70.5 -36.25 14.1 1 0 46  0 0 1 1 1
-1x6" -30 28.25 11.7 1 0 60  0 0 1 1 1
-1x4F" -64.5 -11.75 5.1 1 0 49  0 0 1 1 1
--25° Ramp 2x" -28.25 23.5 11.1 3 0 59  0 0 1 1 1
--25° Ramp 2x" -31.75 23.5 11.1 1 0 59  0 0 1 1 1
-1x2" -64.25 -13.5 11.7 0 0 7  0 0 1 1 1
-1x2x5" -64.25 -12.5 10.5 0 0 7  0 0 1 1 1
-2x2" -87 -47 9.7 0 0 57  0 0 1 1 1
-1x6" -86.25 -44.5 11.7 0 0 24  0 0 1 1 1
-2x2" -87 -47 10.9 0 0 57  0 0 1 1 1
-1x6" -30 29.75 11.7 1 0 59  0 0 1 1 1
-1x1" -91.75 -19.75 10.9 0 0 57  0 0 1 1 1
+2x2 Round" -63 -69 13.1 3 0 57  0 0 1 1 1
+45° Crest 4x" -24 21 12.3 1 0 39  0 0 1 1 1
+1x2F" -63.25 -68 12.9 0 0 34  0 0 1 1 1
+2x4" -55 -34.5 8.3 0 0 57  0 0 1 1 1
+1x4F" -100 -71.75 6.5 1 0 24  0 0 1 1 1
+45° Crest 4x" -24 -45 12.3 1 0 39  0 0 1 1 1
+1x4x4 Print" -83.5 -1.75 11.4 0 0 61 Letters/-space 0 0 1 1 1
+45° Crest 4x" -24 -13 12.3 1 0 39  0 0 1 1 1
+45° Crest 4x" -24 -11 12.3 1 0 39  0 0 1 1 1
+45° Crest 4x" -24 -9 12.3 1 0 39  0 0 1 1 1
+45° Crest 4x" -24 -17 12.3 1 0 39  0 0 1 1 1
+45° Crest 4x" -24 -1 12.3 1 0 39  0 0 1 1 1
+1x12F" -60 3.75 13.7 1 0 57  0 0 1 1 1
+1F 2x2F Vertical Print" -66.5 -31.25 8.5 0 0 0 Letters/-space 0 0 1 0 1
 1x3" -88.25 -19.75 10.9 1 0 57  0 0 1 1 1
 25° Crest 1x" -91.5 -17.75 8.5 3 0 59  0 0 1 1 1
 25° Crest End" -91.75 -17 8.5 2 0 59  0 0 1 1 1
@@ -12019,7 +12045,7 @@ House Door" -75.5 -21.75 8.4 2 0 59  0 0 1 1 1
 1x2" -62 -69.25 10.1 1 0 40  0 0 1 1 1
 1x2F" -62 -69.25 9.1 1 0 59  0 0 1 1 1
 1x2" -62.5 -68.75 9.3 1 0 40  0 0 1 1 1
-1x1F" -175.25 -8.25 1.9 0 0 61  0 0 1 1 1
+1x1" -91.75 -19.75 10.9 0 0 57  0 0 1 1 1
 1x2" -56 -58.75 8.5 1 0 40  0 0 1 1 1
 1x4" -58.75 -58 9.3 0 0 40  0 0 1 1 1
 1x4" -73.5 -40.75 10.5 1 0 24  0 0 1 1 1
@@ -12745,25 +12771,24 @@ House Door" -71.25 -38.5 23.2 3 0 59  0 0 1 1 1
 +-ITEM Handhammer" 0 2 4000
 1x2x5" -82.25 -45 16.1 0 0 58  0 0 1 1 1
 1x4" -78.5 -38.25 10.5 1 0 24  0 0 1 1 1
-1x1" -81.75 -17.25 9.9 0 0 57  0 0 1 1 1
-1x1 Round" -63.25 -68.25 13.9 0 0 34  0 0 1 1 1
-1x4x2 Fence" -60.5 -68.75 13.4 0 0 59  0 0 1 1 1
-1x1F" -81.75 -16.75 10.1 0 0 28  0 0 1 1 1
-House Door" -59 -61.25 14.6 0 0 59  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Self		door	0			
-1x2" -54.5 -60.75 9.1 1 0 40  0 0 1 1 1
--25° Ramp 2x" -54.25 -60 10.3 3 0 38  0 0 1 1 1
-1x2F" -81.75 -16 8.5 0 0 24  0 0 1 1 1
-1x1" -81.75 -17.25 8.7 0 0 59  0 0 1 1 1
-1x1F" -81.75 -16.75 8.5 0 0 28  0 0 1 1 1
-4x4F" -56.5 -37.5 19.3 0 0 33  0 0 1 1 1
--25° Ramp 2x" -60 -34.25 17.1 0 0 46  0 0 1 1 1
-45° Ramp 2x" -53 -60 10.3 1 0 38  0 0 1 1 1
-1x2" -55.25 -60.5 9.1 0 0 40  0 0 1 1 1
+1x4F" -64.5 -13.75 5.1 1 0 49  0 0 1 1 1
+1x4F" -64.5 -15.75 5.1 1 0 49  0 0 1 1 1
+1x12x5" -70.5 -36.25 14.1 1 0 46  0 0 1 1 1
+1x6" -30 28.25 11.7 1 0 60  0 0 1 1 1
+1x4F" -64.5 -11.75 5.1 1 0 49  0 0 1 1 1
+-25° Ramp 2x" -28.25 23.5 11.1 3 0 59  0 0 1 1 1
+-25° Ramp 2x" -31.75 23.5 11.1 1 0 59  0 0 1 1 1
+1x2" -64.25 -13.5 11.7 0 0 7  0 0 1 1 1
+1x2x5" -64.25 -12.5 10.5 0 0 7  0 0 1 1 1
+2x2" -87 -47 9.7 0 0 57  0 0 1 1 1
+1x6" -86.25 -44.5 11.7 0 0 24  0 0 1 1 1
+2x2" -87 -47 10.9 0 0 57  0 0 1 1 1
+1x6" -30 29.75 11.7 1 0 59  0 0 1 1 1
+1x1F" -175.25 -8.25 1.9 0 0 61  0 0 1 1 1
 1x1" -53.75 -60.75 9.1 0 0 40  0 0 1 1 1
 -25° Ramp 2x" -63.5 -34.25 17.1 0 0 46  0 0 1 1 1
 1x2" -54.5 -60.75 10.3 1 0 38  0 0 1 1 1
-1x4" -55 -61.25 9.9 1 0 40  0 0 1 1 1
+1x2" -55.25 -60.5 9.1 0 0 40  0 0 1 1 1
 1x2" -53.5 -61.25 9.9 1 0 40  0 0 1 1 1
 1x1" -61.75 -68.75 13.1 0 0 59  0 0 1 1 1
 1x4" -48.25 -62.5 9.9 0 0 40  0 0 1 1 1
@@ -13260,7 +13285,7 @@ House Door" -71.5 -2.25 15.2 0 0 50  0 0 1 1 1
 -25° Ramp 2x" -54.25 -54 10.3 3 0 38  0 0 1 1 1
 2x4x3" -55 -52 25.3 0 0 58  0 0 1 1 1
 1x1" -53.75 -53.25 9.1 0 0 40  0 0 1 1 1
-1x1" -47.75 -67.75 9.5 0 0 40  0 0 1 1 1
+45° Ramp 2x" -53 -60 10.3 1 0 38  0 0 1 1 1
 1x1" -47.75 -64.75 9.5 0 0 40  0 0 1 1 1
 1x1" -47.75 -67.25 9.5 0 0 40  0 0 1 1 1
 1x1" -81.75 -7.25 8.7 0 0 40  0 0 1 1 1
@@ -13983,20 +14008,21 @@ House Door" -71.5 -2.25 15.2 0 0 50  0 0 1 1 1
 +-EVENT	0	1	onMiniGameReset	0	Self		setItem	CleanSprayItem			
 +-ITEM Clean Spray" 0 3 4000
 -25° Ramp 2x" -54.25 -55 10.3 3 0 38  0 0 1 1 1
-1x2F" -86.5 -38.25 13.5 1 0 58  0 0 1 1 1
-1x8" -82.75 -11 12.7 0 0 60  0 0 1 1 1
-1x4" -57.75 -8 8.1 0 0 46  0 0 1 1 1
-1x1F" -175.25 -10.75 2.3 0 0 61  0 0 1 1 1
-1F 1x1F Vertical Print" -59.25 -27.75 8.3 0 0 26 Letters/-space 0 0 1 1 1
-1x1F" -90.75 -18.75 12.1 0 0 57  0 0 1 1 1
-2x4F" -88.5 -19.5 12.1 1 0 57  0 0 1 1 1
-1x1F" -90.25 -18.25 12.1 0 0 57  0 0 1 1 1
-4x8F" -84 -11 12.5 0 0 59  0 0 1 1 1
-2x2F" -91 -18 12.1 0 0 57  0 0 1 1 1
-2x2F" -90 -19 12.1 0 0 57  0 0 1 1 1
-2x3F" -91.5 -16.75 12.1 0 0 57  0 0 1 1 1
-1x12" -94.75 -16 11.5 0 0 40  0 0 1 1 1
-1x8F" -80.5 -9.25 12.5 1 0 47  0 0 1 1 1
+-25° Ramp 2x" -60 -34.25 17.1 0 0 46  0 0 1 1 1
+4x4F" -56.5 -37.5 19.3 0 0 33  0 0 1 1 1
+1x1F" -81.75 -16.75 8.5 0 0 28  0 0 1 1 1
+1x1" -81.75 -17.25 8.7 0 0 59  0 0 1 1 1
+1x2F" -81.75 -16 8.5 0 0 24  0 0 1 1 1
+-25° Ramp 2x" -54.25 -60 10.3 3 0 38  0 0 1 1 1
+1x2" -54.5 -60.75 9.1 1 0 40  0 0 1 1 1
+House Door" -59 -61.25 14.6 0 0 59  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Self		door	0			
+1x1F" -81.75 -16.75 10.1 0 0 28  0 0 1 1 1
+1x4x2 Fence" -60.5 -68.75 13.4 0 0 59  0 0 1 1 1
+1x1 Round" -63.25 -68.25 13.9 0 0 34  0 0 1 1 1
+1x1" -81.75 -17.25 9.9 0 0 57  0 0 1 1 1
+1x4" -55 -61.25 9.9 1 0 40  0 0 1 1 1
+1x1" -47.75 -67.75 9.5 0 0 40  0 0 1 1 1
 1x1F" -89.25 -59.75 19.9 0 0 60  0 0 1 1 1
 1x10F" -84.75 -15.5 12.5 0 0 59  0 0 1 1 1
 1x2" -94.75 -6 9.7 0 0 40  0 0 1 1 1
@@ -14078,6 +14104,11 @@ House Door" -71.5 -2.25 15.2 0 0 50  0 0 1 1 1
 1x1" -80.75 -12.25 9.7 0 0 40  0 0 1 1 1
 +-NTOBJECTNAME _Chimneybreak
 1x1" -80.75 -12.75 9.7 0 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
++-EVENT	0	1	onActivate	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	11		
++-EVENT	1	1	onActivate	0	-1	_Chimneybreak	playSound	BrickBreakSound			
++-EVENT	2	1	onPlayerTouch	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	5		
++-EVENT	3	1	onPlayerTouch	0	Self		playSound	BrickBreakSound			
 8x16F" -87.5 -11 12.5 0 0 61  0 0 1 1 1
 1x2" -81 -12.25 8.5 1 0 40  0 0 1 1 1
 1x1F Round" -107.75 -17.75 8.3 0 0 48  0 0 1 1 1
@@ -14752,11 +14783,15 @@ House Door" -85.5 -19.25 14.2 2 0 60  0 0 1 1 1
 1x3" -80.75 -20.25 9.7 1 0 47  0 0 1 1 1
 1x1" -81.75 -20.25 10.9 0 0 47  0 0 1 1 1
 1x2" -79.5 -12.25 11.5 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
 1x1" -72.25 -63.25 16.9 0 0 60  0 0 1 1 1
 1x2x5" -78 2.75 15.5 1 0 46  0 0 1 1 1
 1x4" -78.75 -14.5 8.5 0 0 40  0 0 1 1 1
 1x1" -79.25 -12.75 9.7 0 0 39  0 0 1 1 1
 +-NTOBJECTNAME _Chimneybreak
++-EVENT	0	1	onActivate	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	-1	_Chimneybreak	playSound	BrickBreakSound			
++-EVENT	2	1	onPlayerTouch	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	9		
 1x2" -77.75 -12 9.7 0 0 40  0 0 1 1 1
 1x2" -79 -12.25 9.7 1 0 40  0 0 1 1 1
 +-NTOBJECTNAME _Chimneybreak
@@ -14962,18 +14997,20 @@ House Door" -85.5 -19.25 14.2 2 0 60  0 0 1 1 1
 1x8F" -89 -17.75 7.9 1 0 59  0 0 1 1 1
 1x3" -86.75 -25.25 10.9 0 0 47  0 0 1 1 1
 1x1" -86.75 -26.25 10.9 0 0 47  0 0 1 1 1
-2x2F" -78.5 -11 13.7 0 0 59  0 0 1 0 1
-+-EVENT	0	0	onPlayerTouch	0	Client		CenterPrint		3		
-+-EVENT	1	0	onPlayerTouch	0	Player		BurnPlayer	4			
-+-EVENT	2	0	onPlayerTouch	0	Player		AddVelocity	0 0 10			
-+-EVENT	3	0	onActivate	0	Self		setEmitter	-1			
-+-EVENT	4	0	onActivate	0	Self		setLight	-1			
-+-EVENT	5	1	onActivate	0	Self		setLight	PlayerLight			
-+-EVENT	6	1	onActivate	0	Self		setEmitter	AdminWandEmitterB			
-+-EVENT	7	0	onActivate	0	Self		setColliding	0			
-+-EVENT	8	1	onActivate	0	Self		setColliding	1			
+2x2F" -78.5 -11 13.7 0 0 59  0 0 1 1 1
++-EVENT	0	1	onPlayerTouch	0	Client		CenterPrint		3		
++-EVENT	1	1	onPlayerTouch	0	Player		BurnPlayer	4			
++-EVENT	2	1	onPlayerTouch	0	Player		AddVelocity	11 0 10			
++-EVENT	3	1	onActivate	0	Self		setEmitter	-1			
++-EVENT	4	1	onActivate	0	Self		setLight	-1			
++-EVENT	5	0	onActivate	0	Self		setLight	PlayerLight			
++-EVENT	6	0	onActivate	0	Self		setEmitter	AdminWandEmitterB			
++-EVENT	7	1	onActivate	0	Self		setColliding	0			
++-EVENT	8	0	onActivate	0	Self		setColliding	1			
 +-EVENT	9	1	onActivate	0	Self		toggleEventEnabled	0 1 2 3 4 5 6 7 8			
 +-EVENT	10	1	onActivate	0	Self		playSound	lightOnSound			
++-EMITTER Destructo Wand Attack" 
++-LIGHT Player's Light" 1
 2x2F Round" -64 -66.5 11.1 3 0 34  0 0 1 1 1
 45° Ramp 1x" -53.75 -30.5 15.7 0 0 57  0 0 1 1 1
 1x1" -86.75 -26.25 9.7 0 0 47  0 0 1 1 1
@@ -15171,25 +15208,20 @@ House Door" -85.5 -19.25 14.2 2 0 60  0 0 1 1 1
 1x1F" -175.25 -11.25 3.5 0 0 38  0 0 1 1 1
 45° Ramp 1x" -57.25 -9.5 10.5 2 0 47  0 0 1 1 1
 2x4" -57 -8 10.5 0 0 47  0 0 1 1 1
-1x2" -80.5 -9.75 10.3 1 0 40  0 0 1 1 1
-1x1" -81.25 -9.75 9.1 0 0 40  0 0 1 1 1
-1x1F" -172.75 -8.25 2.5 0 0 61  0 0 1 1 1
-1x2F" -172.25 -9 2.5 0 0 61  0 0 1 1 1
-25° Crest 1x" -82.25 -10.5 9.5 0 0 60  0 0 1 1 1
-1x6" -81.75 -11 9.5 0 0 24  0 0 1 1 1
-1x1" -62.25 -68.75 16.7 0 0 58  0 0 1 1 1
-1x3F" -78.25 -8.75 14.7 0 0 28  0 0 1 1 1
-1x1F" -71.75 -53.25 13.1 0 0 51  0 0 1 1 1
-1x1" -62.75 -68.25 16.7 0 0 58  0 0 1 1 1
-1x2F" -81.75 -53 21.3 0 0 58  0 0 1 1 1
-1x6" -54.75 -48.5 19.9 0 0 57  0 0 1 1 1
-1x1" -79.75 -8.25 13.1 0 0 14  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Self		disappear	15			
-+-EVENT	1	1	onActivate	0	Self		setEmitter	PlayerFoamDropletsEmitter			
-+-EVENT	2	1	onActivate	200	Self		setEmitter	-1			
-+-EVENT	3	1	onActivate	0	Self		playSound	exitWaterSound			
-+-EVENT	4	1	onActivate	0	Player		setBloody	0	0	0	
-1x1" -48.25 -68.25 16.7 0 0 58  0 0 1 1 1
+1x4" -57.75 -8 8.1 0 0 46  0 0 1 1 1
+1x1F" -175.25 -10.75 2.3 0 0 61  0 0 1 1 1
+1F 1x1F Vertical Print" -59.25 -27.75 8.3 0 0 26 Letters/-space 0 0 1 1 1
+1x1F" -90.75 -18.75 12.1 0 0 57  0 0 1 1 1
+1x8F" -80.5 -9.25 12.5 1 0 47  0 0 1 1 1
+2x4F" -88.5 -19.5 12.1 1 0 57  0 0 1 1 1
+1x1F" -90.25 -18.25 12.1 0 0 57  0 0 1 1 1
+4x8F" -84 -11 12.5 0 0 59  0 0 1 1 1
+2x2F" -91 -18 12.1 0 0 57  0 0 1 1 1
+2x2F" -90 -19 12.1 0 0 57  0 0 1 1 1
+2x3F" -91.5 -16.75 12.1 0 0 57  0 0 1 1 1
+1x12" -94.75 -16 11.5 0 0 40  0 0 1 1 1
+1x2F" -86.5 -38.25 13.5 1 0 58  0 0 1 1 1
+1x8" -82.75 -11 12.7 0 0 60  0 0 1 1 1
 1x12F" -71.25 -56.5 13.1 0 0 51  0 0 1 1 1
 1x2" -78.75 -34.5 19.5 0 0 24  0 0 1 1 1
 1x1F" -71.75 -50.75 13.1 0 0 51  0 0 1 1 1
@@ -16086,6 +16118,7 @@ House Door" -60.5 -52.75 21 0 0 59  0 0 1 1 1
 1x1F" -65.25 4.75 18.3 0 0 57  0 0 1 1 1
 1x4" -81.25 -13.5 9.1 0 0 40  0 0 1 1 1
 1x2" -79 -12.25 10.9 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
 1x3F" -81.75 -15.75 9.3 0 0 24  0 0 1 1 1
 1x2" -78.25 -12.5 10.9 0 0 40  0 0 1 1 1
 1x2" -77.75 -12 10.9 0 0 40  0 0 1 1 1
@@ -16109,7 +16142,7 @@ House Door" -64.25 0 15 3 0 59  0 0 1 1 1
 4x16" -60.5 -13.5 13.1 1 0 24  0 0 1 1 1
 1x16" -60.5 -8.75 9.1 1 0 24  0 0 1 1 1
 1x2F" -90 -2.75 13.1 1 0 60  0 0 1 1 1
-2x2" -80.5 -12.5 10.3 0 0 40  0 0 1 1 1
+1x2" -80 -12.25 10.9 1 0 40  0 0 1 1 1
 +-NTOBJECTNAME _Chimneybreak
 1x1F" -81.75 -15.25 9.7 0 0 45  1 0 1 1 1
 1x2" -56.5 -54.25 9.5 1 0 47  0 0 0 0 0
@@ -16117,7 +16150,7 @@ House Door" -64.25 0 15 3 0 59  0 0 1 1 1
 1x2" -57.5 -55.25 9.1 1 0 40  0 0 1 1 1
 1x3" -56.75 -54.75 9.9 1 0 40  0 0 1 1 1
 -25° Ramp 2x" -58 -32.25 18.3 0 0 46  0 0 1 1 1
-2x2" -79.5 -12.5 10.3 0 0 40  0 0 1 1 1
+1x2" -80.5 -12.25 10.3 1 0 40  0 0 1 1 1
 +-NTOBJECTNAME _Chimneybreak
 -25° Ramp 2x" -68 -34.25 17.1 0 0 46  0 0 1 1 1
 -25° Ramp 2x" -57 -32.25 18.3 0 0 46  0 0 1 1 1
@@ -16127,8 +16160,12 @@ House Door" -64.25 0 15 3 0 59  0 0 1 1 1
 1x2x5" -78.75 -3 15.1 0 0 46  0 0 1 1 1
 1x4" -78.75 -13.5 9.1 0 0 40  0 0 1 1 1
 -45° Ramp 2x" -60.5 -8 9.1 0 0 47  0 0 1 1 1
-2x2" -80 -12.5 10.9 0 0 40  0 0 1 1 1
-+-NTOBJECTNAME _Chimneybreak
+1x1" -79.75 -8.25 13.1 0 0 14  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Self		disappear	15			
++-EVENT	1	1	onActivate	0	Self		setEmitter	PlayerFoamDropletsEmitter			
++-EVENT	2	1	onActivate	200	Self		setEmitter	-1			
++-EVENT	3	1	onActivate	0	Self		playSound	exitWaterSound			
++-EVENT	4	1	onActivate	0	Player		setBloody	0	0	0	
 1x12F" -48.25 -57 14.1 0 0 59  0 0 1 1 1
 1x1" -81.25 -12.25 9.1 0 0 40  0 0 1 1 1
 1x16" -72.75 -41 17.9 0 0 46  0 0 1 1 1
@@ -16178,25 +16215,27 @@ House Door" -64.25 0 15 3 0 59  0 0 1 1 1
 +-ITEM Hat Wizard" 0 3 1000
 1x1" -82.75 -8.75 13.1 0 0 36  0 0 1 1 1
 1x2F" -80 -9.25 12.7 1 0 36  0 0 1 1 1
-1x1 Round" -77.75 4.75 17.9 1 0 40  0 0 1 1 1
-House Door" -83.5 -38.25 8.4 0 0 59  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Self		door	0			
-1x12F" -71.25 -56 13.3 0 0 51  0 0 1 1 1
-1x1F" -71.25 -59.25 13.3 0 0 51  0 0 1 1 1
-45° Ramp 1x" -63.75 -3.5 14.1 2 0 47  0 0 1 1 1
-1x12F" -71.25 -47.5 13.3 0 0 51  0 0 1 1 1
-1x2" -56.75 -3.5 14.1 0 0 7  0 0 1 1 1
-45° Ramp 1x" -57.25 -3.5 14.1 2 0 47  0 0 1 1 1
-1x2" -81.25 -13 9.7 0 0 40  0 0 1 1 1
-1x1F" -81.75 -15.25 9.5 0 0 51  1 0 1 1 1
-1x6" -63.25 -39 16.9 0 0 59  0 0 1 1 1
-1x3" -61.75 -36.75 16.9 1 0 59  0 0 1 1 1
-1x6" -57 -36.75 12.1 1 0 59  0 0 1 1 1
-2x2 Round" -59 -37 12.1 3 0 59  0 0 1 1 1
-2x6" -56 -38.5 12.1 0 0 59  0 0 1 1 1
+1x2" -80 -12.75 10.3 3 0 23  0 0 1 0 0
++-EVENT	0	1	onActivate	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	10		
++-EVENT	1	1	onActivate	0	Self		playSound	BrickBreakSound			
+1x6" -54.75 -48.5 19.9 0 0 57  0 0 1 1 1
+1x2F" -81.75 -53 21.3 0 0 58  0 0 1 1 1
+1x1" -62.75 -68.25 16.7 0 0 58  0 0 1 1 1
+1x1F" -71.75 -53.25 13.1 0 0 51  0 0 1 1 1
+1x3F" -78.25 -8.75 14.7 0 0 28  0 0 1 1 1
+1x1" -62.25 -68.75 16.7 0 0 58  0 0 1 1 1
+1x6" -81.75 -11 9.5 0 0 24  0 0 1 1 1
+25° Crest 1x" -82.25 -10.5 9.5 0 0 60  0 0 1 1 1
+1x2F" -172.25 -9 2.5 0 0 61  0 0 1 1 1
+1x1F" -172.75 -8.25 2.5 0 0 61  0 0 1 1 1
+1x1" -81.25 -9.75 9.1 0 0 40  0 0 1 1 1
+1x2" -80.5 -9.75 10.3 1 0 40  0 0 1 1 1
+1x1" -48.25 -68.25 16.7 0 0 58  0 0 1 1 1
+1x2" -79.5 -12.25 10.3 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
 1x1F" -81.75 -15.75 9.1 0 0 61  1 0 1 1 1
 1x2" -81.25 -14 9.7 0 0 40  0 0 1 1 1
-1x2" -81 -12.75 10.9 1 0 40  0 0 1 1 1
+2x2 Round" -59 -37 12.1 3 0 59  0 0 1 1 1
 1x2F" -79.5 -37.75 12.7 1 0 24  0 0 1 1 1
 2x2 Round" -60 -37 16.9 3 0 59  0 0 1 1 1
 1x2F" -72.25 4.5 18.3 0 0 57  0 0 1 1 1
@@ -16206,6 +16245,7 @@ House Door" -83.5 -38.25 8.4 0 0 59  0 0 1 1 1
 1x1 Round" -72.25 4.75 17.9 1 0 40  0 0 1 1 1
 1x1F" -62.75 -36.75 19.9 0 0 49  0 0 1 1 1
 1x2" -81 -12.25 10.9 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
 1x2x5" -87 -19.25 14.5 1 0 46  0 0 1 1 1
 1x3x5" -78.75 2.75 22.5 1 0 57  0 0 1 1 1
 1x1F" -56.25 -36.75 19.9 0 0 49  0 0 1 1 1
@@ -16224,7 +16264,8 @@ House Door" -83.5 -38.25 8.4 0 0 59  0 0 1 1 1
 1x4F" -55.25 -34.5 10.3 0 0 58  0 0 1 1 1
 1x4F" -82 -37.25 11.9 1 0 24  0 0 1 1 1
 1x2" -80.5 -12.25 11.5 1 0 40  0 0 1 1 1
--45° Ramp 1x" -81.25 -12 9.7 0 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
+-45° Ramp 1x" -81.25 -12 9.7 0 0 40  0 0 1 0 1
 72° Ramp 2x" -56 -19 24.7 1 0 58  0 0 1 1 1
 72° Ramp 2x" -56 -17 24.7 1 0 58  0 0 1 1 1
 45° Ramp 4x" -70 4 19.3 0 0 51  0 0 1 1 1
@@ -16236,7 +16277,9 @@ House Door" -83.5 -38.25 8.4 0 0 59  0 0 1 1 1
 1x1F" -65.25 5.75 12.7 0 0 60  0 0 1 1 1
 1x1F" -65.75 6.25 12.7 0 0 60  0 0 1 1 1
 4x10F" -73.5 0.5 18.9 0 0 47  0 0 1 1 1
-1x4" -80 -12.75 11.5 1 0 40  0 0 1 1 1
+1x2" -80 -12.75 10.9 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
++-EVENT	0	1	onPlayerTouch	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	11		
 1x3F" -81.75 -6.25 9.1 0 0 26  0 0 1 1 1
 1x1F" -81.75 -6.75 9.5 0 0 52  3 0 1 1 1
 1x1F" -81.75 -6.25 9.5 0 0 24  0 0 1 1 1
@@ -16268,10 +16311,10 @@ House Door" -80.5 -20.75 14.4 2 0 60  0 0 1 1 1
 1x2" -77.5 -34.25 18.9 1 0 24  0 0 1 1 1
 4x16" -60.5 -12.5 13.7 1 0 24  0 0 1 1 1
 1x1F" -57.75 -41.75 11.9 1 0 57  0 0 0 0 0
-+-EVENT	0	1	onMiniGameReset	0	Self		setItem	CoatItem			
-+-EVENT	1	0	onMiniGameReset	0	Self		setItem	-1			
++-EVENT	0	0	onMiniGameReset	0	Self		setItem	CoatItem			
++-EVENT	1	1	onMiniGameReset	0	Self		setItem	-1			
 +-EVENT	2	1	onMiniGameReset	0	Self		toggleEventEnabled	0 1			
-+-ITEM NONE"  2 1000
++-ITEM Coat"  2 1000
 1x2" -78.75 -37 20.1 0 0 24  0 0 1 1 1
 1x1" -88.75 -66.75 23.3 0 0 24  0 0 1 1 1
 1x2F" -70.75 4.5 18.3 0 0 57  0 0 1 1 1
@@ -16364,7 +16407,7 @@ House Door" -80.5 -20.75 14.4 2 0 60  0 0 1 1 1
 -72° Ramp 1x" -88 -37.25 17.5 3 0 58  0 0 1 1 1
 1x4F" -60.5 -68.75 10.7 1 0 40  0 0 1 1 1
 1x8 Arch" -54.75 -38.5 23.5 0 0 57  0 0 1 1 1
--45° Ramp 1x" -81.25 -10 9.7 2 0 40  0 0 1 1 1
+-45° Ramp 1x" -81.25 -10 9.7 2 0 40  0 0 1 0 1
 1x3" -81.75 -11.75 8.9 0 0 24  0 0 1 1 1
 1x1 Round" -82.25 -11.75 9.3 3 0 3  2 0 1 1 1
 2x4F" -58 -20.5 12.7 1 0 24  0 0 1 1 1
@@ -16672,7 +16715,7 @@ House Door" -59.5 -51.75 14.2 0 0 59  0 0 1 1 1
 1x2F" -73.75 -22.5 14.7 0 0 59  0 0 1 1 1
 1x1F Round" -63.75 -8.25 11.5 2 0 46  0 0 1 1 1
 1x4" -78.75 -14.5 9.7 0 0 40  0 0 1 1 1
-1x2" -79 -12.75 10.9 1 0 48  0 0 1 1 1
+1x6" -57 -36.75 12.1 1 0 59  0 0 1 1 1
 1x8" -54.25 -57 12.5 0 0 58  0 0 1 1 1
 1x4" -54.25 -57 14.9 0 0 57  0 0 1 1 1
 1x2" -54 -58.25 14.9 1 0 57  0 0 1 1 1
@@ -17052,26 +17095,27 @@ House Door" -85.5 -2.25 14.8 2 0 60  0 0 1 1 1
 1x1" -90.25 -64.25 23.3 0 0 24  0 0 1 1 1
 -25° Ramp 1x" -76.75 4.75 17.9 1 0 57  0 0 1 1 1
 1x2" -76.5 4.25 18.1 1 0 60  0 0 1 1 1
-1x2" -78.75 -10.5 15.7 0 0 40  0 0 1 1 1
-1x1x5" -79.25 -9.25 15.1 0 0 46  0 0 1 1 1
-1x2" -74.5 -15.75 15.7 1 0 7  0 0 1 1 1
-1x1" -73.25 -15.75 15.7 0 0 46  0 0 1 1 1
-1x1F" -73.75 -15.75 15.5 0 0 7  0 0 1 1 1
-4x12F" -76.5 -33 20.5 0 0 60  0 0 1 1 1
-1x1" -83.75 -60.25 15.1 0 0 58  0 0 1 1 1
-1x12F" -77.75 -33 20.5 0 0 60  0 0 1 1 1
-1x1" -83.25 -38.25 17.7 0 0 57  0 0 1 1 1
-1x2F" -175 -10.75 2.9 1 0 61  0 0 1 1 1
-1x2F" -175.75 -10 2.9 0 0 61  0 0 1 1 1
-1x1" -83.25 -38.25 17.1 0 0 57  0 0 1 1 1
-1x4F" -69 -15.75 17.9 1 0 49  0 0 1 1 1
+1x1 Round" -77.75 4.75 17.9 1 0 40  0 0 1 1 1
+House Door" -83.5 -38.25 8.4 0 0 59  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Self		door	0			
+1x12F" -71.25 -56 13.3 0 0 51  0 0 1 1 1
+1x1F" -71.25 -59.25 13.3 0 0 51  0 0 1 1 1
+45° Ramp 1x" -63.75 -3.5 14.1 2 0 47  0 0 1 1 1
+1x12F" -71.25 -47.5 13.3 0 0 51  0 0 1 1 1
+1x2" -56.75 -3.5 14.1 0 0 7  0 0 1 1 1
+45° Ramp 1x" -57.25 -3.5 14.1 2 0 47  0 0 1 1 1
+1x2" -81.25 -13 9.7 0 0 40  0 0 1 1 1
+1x1F" -81.75 -15.25 9.5 0 0 51  1 0 1 1 1
+1x6" -63.25 -39 16.9 0 0 59  0 0 1 1 1
+1x3" -61.75 -36.75 16.9 1 0 59  0 0 1 1 1
+2x6" -56 -38.5 12.1 0 0 59  0 0 1 1 1
 -25° Ramp 2x" -68.5 -15.25 18.9 0 0 46  0 0 1 1 1
-1x2" -79.5 -12.75 12.1 1 0 40  0 0 1 1 1
+1x1" -83.25 -38.25 17.1 0 0 57  0 0 1 1 1
 1x4x5" -62.5 -52.75 21.5 1 0 6  0 0 1 1 1
 -25° Ramp 2x" -70.5 -15.25 18.9 0 0 46  0 0 1 1 1
 -25° Ramp 2x" -71.5 -15.25 18.9 0 0 46  0 0 1 1 1
 1x1x5" -78.25 -20.25 14.3 0 0 59  0 0 1 1 1
-1x4" -78.75 -13.5 11.5 0 0 40  0 0 1 1 1
+1x2F" -175.75 -10 2.9 0 0 61  0 0 1 1 1
 1x4" -78.75 -15.5 10.3 0 0 40  0 0 1 1 1
 1x4" -78.75 -13.5 10.3 0 0 40  0 0 1 1 1
 -25° Ramp 2x" -69.5 -15.25 18.9 0 0 46  0 0 1 1 1
@@ -17262,7 +17306,7 @@ House Door" -80.5 -36.75 14.6 0 0 60  0 0 1 1 1
 2x4" -55 -23.5 10.7 0 0 57  0 0 1 1 1
 72° Ramp 2x" -55 -38 25.3 1 0 58  0 0 1 1 1
 72° Ramp 2x" -55 -37 25.3 1 0 58  0 0 1 1 1
-1x2" -80.5 -12.75 12.1 1 0 40  0 0 1 1 1
+1x2F" -175 -10.75 2.9 1 0 61  0 0 1 1 1
 1x2" -81 -12.25 12.1 1 0 40  0 0 1 1 1
 1x2" -81 -12.25 14.5 1 0 40  0 0 1 1 1
 1x2" -81 -12.25 15.7 1 0 40  0 0 1 1 1
@@ -17339,7 +17383,7 @@ House Door" -80.5 -36.75 14.6 0 0 60  0 0 1 1 1
 -45° Ramp 1x" -62.75 -63 17.5 2 0 58  0 0 1 1 1
 1x1F" -60.75 -62.25 17.7 0 0 58  0 0 1 1 1
 -45° Ramp 2x" -61.5 -62 17.5 2 0 57  0 0 1 1 1
--45° Ramp 1x" -62.25 -62 17.5 2 0 57  0 0 1 1 1
+1x1" -83.25 -38.25 17.7 0 0 57  0 0 1 1 1
 1x2" -62.75 -62 17.5 0 0 58  0 0 1 1 1
 4x8F" -77.5 0 19.1 0 0 49  0 0 1 1 1
 1x12x5" -75.5 -2.25 16.5 1 0 28  0 0 1 1 1
@@ -17822,17 +17866,18 @@ House Door" -72.75 -39.5 8.4 3 0 59  0 0 1 1 1
 -25° Ramp 2x" -77.75 -8 18.9 1 0 46  0 0 1 1 1
 1x4x5" -78.25 -8.5 16.5 0 0 28  0 0 1 1 1
 2x4" -68.5 -42 18.7 0 0 47  0 0 1 1 1
-2x6F" -83.5 -14 16.9 0 0 45  0 0 1 1 1
-1x1" -82.25 -14.75 16.7 0 0 47  0 0 1 1 1
-1x1" -82.75 -15.25 16.7 0 0 47  0 0 1 1 1
-25° Ramp 1x" -72.25 -61.25 22.9 2 0 60  0 0 1 1 1
-45° Ramp 1x" -72.25 -63 21.7 2 0 60  0 0 1 1 1
-1x12F" -73.75 -32 14.7 0 0 59  0 0 1 1 1
-2x4F" -61.5 -5 24.7 1 0 59  0 0 1 1 1
--25° Ramp 2x" -63.5 -5.75 24.1 0 0 46  0 0 1 1 1
-1x16F" -63.75 -50 13.3 0 0 51  0 0 1 1 1
--25° Ramp 2x" -59.5 -5.75 24.1 0 0 46  0 0 1 1 1
--25° Ramp 2x" -58.5 -5.75 24.1 0 0 46  0 0 1 1 1
+1x12F" -77.75 -33 20.5 0 0 60  0 0 1 1 1
+1x1" -83.75 -60.25 15.1 0 0 58  0 0 1 1 1
+4x12F" -76.5 -33 20.5 0 0 60  0 0 1 1 1
+1x1F" -73.75 -15.75 15.5 0 0 7  0 0 1 1 1
+1x1" -73.25 -15.75 15.7 0 0 46  0 0 1 1 1
+1x2" -74.5 -15.75 15.7 1 0 7  0 0 1 1 1
+1x1x5" -79.25 -9.25 15.1 0 0 46  0 0 1 1 1
+1x2" -78.75 -10.5 15.7 0 0 40  0 0 1 1 1
+1x4" -80 -12.75 11.5 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
+1x4F" -69 -15.75 17.9 1 0 49  0 0 1 1 1
+-45° Ramp 1x" -62.25 -62 17.5 2 0 57  0 0 1 1 1
 -25° Ramp 2x" -57.5 -5.75 24.1 0 0 46  0 0 1 1 1
 1x2F" -73.75 -35.5 14.7 0 0 59  0 0 1 1 1
 1x1" -83.25 -15.75 16.7 0 0 47  0 0 1 1 1
@@ -18086,8 +18131,8 @@ House Door" -72.75 -39.5 8.4 3 0 59  0 0 1 1 1
 1x1" -83.75 -60.25 19.3 0 0 60  0 0 1 1 1
 1x4" -78.75 -14.5 10.9 0 0 40  0 0 1 1 1
 1x1" -78.75 -13.25 10.9 0 0 40  0 0 1 1 1
-1x4" -78.75 -14.5 12.1 0 0 40  0 0 1 1 1
-1x1" -78.75 -13.25 12.1 0 0 40  0 0 1 1 1
+1x16F" -63.75 -50 13.3 0 0 51  0 0 1 1 1
+-25° Ramp 2x" -63.5 -5.75 24.1 0 0 46  0 0 1 1 1
 1x2F" -174.5 -10.75 3.1 1 0 61  0 0 1 1 1
 1x1F" -175.25 -10.75 3.1 0 0 61  0 0 1 1 1
 1x1F" -68.25 -15.75 16.1 0 0 3  0 0 1 1 1
@@ -18531,19 +18576,24 @@ House Door" -56.75 -15.5 16 1 0 59  0 0 1 1 1
 1x1" -73.25 -15.75 16.3 0 0 46  0 0 1 1 1
 1x2F" -74 -15.75 16.1 1 0 24  0 0 1 1 1
 1x12" -58.75 -3.5 24.9 0 0 51  0 0 1 1 1
--45° Ramp 1x" -78.75 -35 25.1 0 0 60  0 0 1 1 1
-4x8F" -81.5 0.5 18.9 0 0 47  0 0 1 1 1
-1x1F" -56.75 -20.25 17.7 0 0 40  0 0 1 1 1
-4x16F" -61 1 24.9 1 0 58  0 0 1 1 1
-1x16" -60.5 2.25 23.9 1 0 40  0 0 1 1 1
-1x16" -60.5 2.25 19.1 1 0 58  0 0 1 1 1
--25° Ramp 2x" -74.5 -2.75 18.9 2 0 46  0 0 1 1 1
--25° Ramp 2x" -73.5 -2.75 18.9 2 0 46  0 0 1 1 1
--25° Ramp 2x" -75.5 -2.75 18.9 2 0 46  0 0 1 1 1
-1x12F" -61.5 0.25 25.3 1 0 60  0 0 1 1 1
-1x2" -74.75 -36 19.5 0 0 24  0 0 1 1 1
-1x12F" -61.5 0.75 25.3 1 0 58  0 0 1 1 1
-1x16" -83 -20.75 16.9 1 0 49  0 0 1 1 1
+2x4F" -61.5 -5 24.7 1 0 59  0 0 1 1 1
+1x12F" -73.75 -32 14.7 0 0 59  0 0 1 1 1
+45° Ramp 1x" -72.25 -63 21.7 2 0 60  0 0 1 1 1
+25° Ramp 1x" -72.25 -61.25 22.9 2 0 60  0 0 1 1 1
+1x1" -82.75 -15.25 16.7 0 0 47  0 0 1 1 1
+1x1" -82.25 -14.75 16.7 0 0 47  0 0 1 1 1
+2x6F" -83.5 -14 16.9 0 0 45  0 0 1 1 1
+1x2" -80.5 -12.75 12.1 1 0 40  0 0 1 1 1
+1x2" -79.5 -12.75 12.1 1 0 40  0 0 1 1 1
+1x2" -79 -12.75 10.9 1 0 48  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
++-EVENT	0	1	onActivate	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	5		
++-EVENT	1	1	onActivate	0	-1	_Chimneybreak	playSound	BrickBreakSound			
++-EVENT	2	1	onPlayerTouch	0	-1	_Chimneybreak	fakeKillBrick	0 0 0	9		
+1x2" -81 -12.75 10.9 1 0 40  0 0 1 1 1
++-NTOBJECTNAME _Chimneybreak
+-25° Ramp 2x" -58.5 -5.75 24.1 0 0 46  0 0 1 1 1
+-25° Ramp 2x" -59.5 -5.75 24.1 0 0 46  0 0 1 1 1
 1x6F" -56.75 -16.5 17.9 0 0 40  0 0 1 1 1
 1x1" -56.75 1.75 23.9 0 0 40  0 0 1 1 1
 1x2F" -175.75 -9 3.3 0 0 61  0 0 1 1 1
@@ -19293,7 +19343,7 @@ House Door" -71.5 -2.75 21.2 2 0 50  0 0 1 1 1
 4x6F" -74 -23 20.5 1 0 60  0 0 1 1 1
 4x8F" -79.5 -5 17.7 0 0 60  0 0 1 1 1
 1x12F" -78.25 -6 19.5 0 0 50  0 0 1 1 1
-1x12F" -75.5 -2.75 19.5 1 0 50  0 0 1 1 1
+1x16" -83 -20.75 16.9 1 0 49  0 0 1 1 1
 1x12F" -74.5 -3.25 19.5 1 0 50  0 0 1 1 1
 1x12" -75.5 -2.25 20.1 1 0 40  0 0 1 1 1
 1x12F" -77.75 -6 19.5 0 0 50  0 0 1 1 1
@@ -19313,27 +19363,24 @@ House Door" -71.5 -2.75 21.2 2 0 50  0 0 1 1 1
 1x1" -78.75 -35.75 25.1 0 0 60  0 0 1 1 1
 House Door" -72.75 -54.5 23.8 3 0 59  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Self		door	0			
-1x4F" -48.25 -57.5 18.7 0 0 60  0 0 1 1 1
-2x2F" -91 -3 16.9 0 0 51  0 0 1 1 1
-4x16" -84.5 -5 24.9 1 0 58  0 0 1 1 1
-2x3F" -88.75 -2.5 17.7 1 0 57  0 0 1 1 1
-2x2F" -90 -2.5 16.9 0 0 51  0 0 1 1 1
-1x6F" -53.25 -57 17.9 0 0 57  0 0 1 1 1
-1x2" -88.25 -63 11.3 0 0 60  0 0 1 0 0
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x1" -88.25 -62.25 11.3 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x1" -88.25 -63.75 11.3 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-2x2F" -91.5 -4 16.9 0 0 51  0 0 1 1 1
-1x3F" -91.75 -5.25 16.5 0 0 60  0 0 1 1 1
-8x8F" -77 -46 21.1 0 0 39  0 0 1 1 1
-1x16F" -78.5 0.25 25.5 1 0 60  0 0 1 1 1
-1x10" -79.25 -24 16.9 0 0 49  0 0 1 1 1
-1x1F Round" -69.25 -10.25 19.7 2 0 39  0 0 1 1 1
-1x2" -75.25 -43 20.1 0 0 24  0 0 1 1 1
-4x8F" -80.5 -8 17.9 1 0 60  0 0 1 1 1
-1x1 Print" -75.25 -43.75 20.1 1 0 52 Letters/-space 0 0 1 1 1
+1x4" -78.75 -14.5 12.1 0 0 40  0 0 1 1 1
+1x1" -78.75 -13.25 12.1 0 0 40  0 0 1 1 1
+1x1" -81.25 -12.75 12.1 0 0 56  0 0 1 1 1
+1x1" -81.25 -12.75 11.5 0 0 56  0 0 1 1 1
+-45° Ramp 1x" -78.75 -35 25.1 0 0 60  0 0 1 1 1
+4x8F" -81.5 0.5 18.9 0 0 47  0 0 1 1 1
+1x1F" -56.75 -20.25 17.7 0 0 40  0 0 1 1 1
+4x16F" -61 1 24.9 1 0 58  0 0 1 1 1
+1x16" -60.5 2.25 23.9 1 0 40  0 0 1 1 1
+1x16" -60.5 2.25 19.1 1 0 58  0 0 1 1 1
+-25° Ramp 2x" -74.5 -2.75 18.9 2 0 46  0 0 1 1 1
+-25° Ramp 2x" -73.5 -2.75 18.9 2 0 46  0 0 1 1 1
+1x4" -78.75 -13.5 11.5 0 0 40  0 0 1 1 1
+-25° Ramp 2x" -75.5 -2.75 18.9 2 0 46  0 0 1 1 1
+1x12F" -61.5 0.25 25.3 1 0 60  0 0 1 1 1
+1x2" -74.75 -36 19.5 0 0 24  0 0 1 1 1
+1x12F" -61.5 0.75 25.3 1 0 58  0 0 1 1 1
+1x12F" -75.5 -2.75 19.5 1 0 50  0 0 1 1 1
 1x4 Arch" -75.75 -46 20.1 0 0 24  0 0 1 1 1
 1x4" -73.75 -55 27.7 0 0 24  0 0 1 1 1
 1x4F" -61 -68.75 18.7 1 0 60  0 0 1 1 1
@@ -19406,6 +19453,7 @@ House Door" -72.75 -54.5 23.8 3 0 59  0 0 1 1 1
 1x2" -75.25 -41.5 19.5 0 0 24  0 0 1 1 1
 1x2" -75.25 -42.5 19.5 0 0 24  0 0 1 1 1
 2x6" -75 -47.5 21.7 1 0 47  0 0 1 1 1
++-EVENT	0	1	onPlayerTouch	0	Player		setBloody	0	0	0	
 1x2" -78.75 -40.5 19.5 0 0 24  0 0 1 1 1
 1x2" -78.75 -41.5 19.5 0 0 24  0 0 1 1 1
 1x2" -78.75 -42.5 19.5 0 0 24  0 0 1 1 1
@@ -19637,7 +19685,7 @@ House Door" -64.25 -0.5 20.8 1 0 59  0 0 1 1 1
 1x1F" -73.25 -26.75 12.7 0 0 51  0 0 1 1 1
 1x1F" -74.25 -26.75 12.7 0 0 51  0 0 1 1 1
 1x2" -76.75 -36.5 20.1 0 0 24  0 0 1 1 1
-1x2" -76 -36.25 20.1 1 0 24  0 0 1 1 1
+1x1 Print" -75.25 -43.75 20.1 1 0 52 Letters/-space 0 0 1 1 1
 1x1" -75.25 -36.25 20.1 0 0 24  0 0 1 1 1
 1x3F" -73.25 -26.25 12.3 0 0 51  0 0 1 1 1
 2x3F" -74 -26.25 12.3 0 0 51  0 0 1 1 1
@@ -20070,24 +20118,27 @@ Spawn Point" -67.25 -11.75 21.1 3 0 0  0 0 0 0 0
 6x10F" -77 0 24.7 0 0 45  0 0 1 1 1
 1x8F" -75.5 -22.25 20.7 1 0 60  0 0 1 1 1
 1x2" -81.25 -10.5 16.9 0 0 40  0 0 1 1 1
-1x8F" -60 -22.25 20.9 1 0 60  0 0 1 1 1
-2x8F" -62.5 -16 18.5 1 0 46  0 0 1 1 1
-1x1" -48.25 -65.75 24.7 0 0 60  0 0 1 1 1
-45° Ramp 1x" -72.75 -56.5 27.1 2 0 58  0 0 1 1 1
-1x1" -48.25 -53.75 24.7 0 0 60  0 0 1 1 1
-1x1" -48.75 -53.25 24.7 0 0 60  0 0 1 1 1
-25° Ramp 2x" -75 -56.25 28.3 2 0 58  0 0 1 1 1
-45° Ramp Corner" -74 -56 28.3 1 0 58  0 0 1 1 1
-45° Ramp Corner" -76 -56 28.3 2 0 58  0 0 1 1 1
-1x1" -78.75 -27.25 31.1 0 0 60  0 0 1 1 1
-45° Ramp 1x" -78.75 -24.5 28.7 0 0 60  0 0 1 1 1
-1x1" -78.75 -25.25 28.7 0 0 60  0 0 1 1 1
--45° Ramp 1x" -78.75 -26 28.7 2 0 60  0 0 1 1 1
-1x2F" -88.75 -61.5 24.1 0 0 51  0 0 1 1 1
-1x2F" -88 -60.75 24.1 1 0 51  0 0 1 1 1
-1x1F" -89.25 -60.75 24.1 0 0 51  0 0 1 1 1
-2x2 Round" -58.5 -65 19.5 2 0 59  0 0 1 1 1
-1x4x5" -50 -68.25 20.3 1 0 24  0 0 1 1 1
+1x4F" -48.25 -57.5 18.7 0 0 60  0 0 1 1 1
+2x2F" -91 -3 16.9 0 0 51  0 0 1 1 1
+4x16" -84.5 -5 24.9 1 0 58  0 0 1 1 1
+2x3F" -88.75 -2.5 17.7 1 0 57  0 0 1 1 1
+2x2F" -90 -2.5 16.9 0 0 51  0 0 1 1 1
+1x6F" -53.25 -57 17.9 0 0 57  0 0 1 1 1
+1x2" -88.25 -63 11.3 0 0 60  0 0 1 0 0
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x1" -88.25 -62.25 11.3 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x1" -88.25 -63.75 11.3 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+2x2F" -91.5 -4 16.9 0 0 51  0 0 1 1 1
+1x3F" -91.75 -5.25 16.5 0 0 60  0 0 1 1 1
+8x8F" -77 -46 21.1 0 0 39  0 0 1 1 1
+1x16F" -78.5 0.25 25.5 1 0 60  0 0 1 1 1
+1x10" -79.25 -24 16.9 0 0 49  0 0 1 1 1
+1x1F Round" -69.25 -10.25 19.7 2 0 39  0 0 1 1 1
+1x2" -75.25 -43 20.1 0 0 24  0 0 1 1 1
+4x8F" -80.5 -8 17.9 1 0 60  0 0 1 1 1
+1x2" -76 -36.25 20.1 1 0 24  0 0 1 1 1
 -25° Ramp 2x" -61.5 -8.75 22.3 0 0 46  0 0 1 1 1
 1x1F" -79.25 -2.75 13.3 0 0 59  0 0 1 1 1
 -25° Ramp 2x" -62.5 -8.75 22.3 0 0 46  0 0 1 1 1
@@ -20751,24 +20802,24 @@ Spawn Point" -59.75 -25.25 22.3 3 0 0  0 0 0 0 0
 1x12" -75.5 2.25 24.3 1 0 46  0 0 1 1 1
 8x16F" -67.5 -46.5 19.9 1 0 59  0 0 1 1 1
 1x6x1 Arch" -54.25 -65 19.5 0 0 60  0 0 1 1 1
-1x4x5" -80.25 -45 24.1 0 0 47  0 0 1 1 1
-1x1F" -69.25 -15.75 16.9 0 0 33  0 0 1 1 1
-1x4x5" -80.25 -47 24.1 0 0 46  0 0 1 1 1
-1x1F" -69.25 -15.75 16.5 0 0 41  0 0 1 1 1
-1x1F" -68.75 -15.75 16.5 0 0 3  0 0 1 1 1
-1x4x5" -80.25 -39 24.1 0 0 46  0 0 1 1 1
-2x4F" -85 -19.5 22.1 1 0 57  0 0 1 1 1
-1x4x5" -61.75 -60.5 24.1 0 0 46  0 0 1 1 1
-1x8" -78.75 -15 16.7 0 0 47  0 0 1 1 1
-1x8 Arch" -55.75 -48.5 23.5 0 0 6  0 0 1 1 1
-1x4F" -60.5 -63.25 19.5 1 0 60  0 0 1 1 1
-72° Ramp 1x" -81.5 -38.25 24.1 3 0 58  0 0 1 1 1
-1x1" -78.75 -32.25 29.3 0 0 60  0 0 1 1 1
-1x4F" -55.25 -34.5 12.7 0 0 58  0 0 1 1 1
-2x8F" -66 -45.5 20.1 1 0 3  0 0 1 1 1
-2x8F" -66 -46.5 20.1 1 0 3  0 0 1 1 1
-2x8F" -66 -47.5 20.1 1 0 3  0 0 1 1 1
-1x3" -67.25 -44.75 20.3 1 0 39  0 0 1 1 1
+1x1F" -89.25 -60.75 24.1 0 0 51  0 0 1 1 1
+1x2F" -88 -60.75 24.1 1 0 51  0 0 1 1 1
+1x2F" -88.75 -61.5 24.1 0 0 51  0 0 1 1 1
+-45° Ramp 1x" -78.75 -26 28.7 2 0 60  0 0 1 1 1
+1x1" -78.75 -25.25 28.7 0 0 60  0 0 1 1 1
+45° Ramp 1x" -78.75 -24.5 28.7 0 0 60  0 0 1 1 1
+1x1" -78.75 -27.25 31.1 0 0 60  0 0 1 1 1
+45° Ramp Corner" -76 -56 28.3 2 0 58  0 0 1 1 1
+45° Ramp Corner" -74 -56 28.3 1 0 58  0 0 1 1 1
+25° Ramp 2x" -75 -56.25 28.3 2 0 58  0 0 1 1 1
+1x1" -48.75 -53.25 24.7 0 0 60  0 0 1 1 1
+1x1" -48.25 -53.75 24.7 0 0 60  0 0 1 1 1
+45° Ramp 1x" -72.75 -56.5 27.1 2 0 58  0 0 1 1 1
+1x1" -48.25 -65.75 24.7 0 0 60  0 0 1 1 1
+2x8F" -62.5 -16 18.5 1 0 46  0 0 1 1 1
+1x8F" -60 -22.25 20.9 1 0 60  0 0 1 1 1
+2x2 Round" -58.5 -65 19.5 2 0 59  0 0 1 1 1
+1x4x5" -50 -68.25 20.3 1 0 24  0 0 1 1 1
 1x3" -65.75 -44.75 20.3 1 0 39  0 0 1 1 1
 1x3" -64.25 -44.75 20.3 1 0 39  0 0 1 1 1
 1x1x5" -61.25 -67.75 24.1 0 0 46  0 0 1 1 1
@@ -21408,25 +21459,24 @@ House Door" -63.75 -49.5 21.8 1 0 50  0 0 1 1 1
 1x4x5" -80.25 -41 24.1 0 0 47  0 0 1 1 1
 45° Ramp 1x" -56.75 -23 26.9 0 0 60  0 0 1 1 1
 1x3x5" -62.25 -67.25 23.7 0 0 24  0 0 1 1 1
-1x4x5" -63.75 -45.5 22.1 0 0 47  0 0 1 1 1
-1x4x5" -63.75 -47.5 22.1 0 0 47  0 0 1 1 1
-1x2F" -89.75 -19 17.1 0 0 51  0 0 1 1 1
-1x2F" -90.5 -17.75 16.9 1 0 45  0 0 1 1 1
-1x1" -82.25 -3.25 29.1 0 0 60  0 0 1 1 1
-1x2x5" -70.5 -20.25 20.3 1 0 60  0 0 1 1 1
-1x6F" -65.75 -9 20.3 0 0 57  0 0 1 1 1
-1x8" -58.75 -55.5 19.5 0 0 62  0 0 1 1 1
-1x6" -64.25 -11 20.3 0 0 40  0 0 1 1 1
-1x6" -64.25 -9 21.5 0 0 40  0 0 1 1 1
-1x2F" -64.25 -9 22.5 0 0 40  0 0 1 1 1
-1x8" -62.25 -55.5 19.5 0 0 62  0 0 1 1 1
-1x1" -71.75 -61.75 20.5 0 0 60  0 0 1 1 1
-4x6F" -88 -64 23.7 0 0 60  0 0 1 1 1
-Spawn Point" -65.75 -46.25 21.7 2 0 0  0 0 0 0 0
-+-NTOBJECTNAME _r11_spawn
-1x4x5" -67 -44.75 22.1 1 0 47  0 0 1 1 1
-1x4x5" -65 -44.75 22.1 1 0 47  0 0 1 1 1
-1x2x5" -51.5 -55.25 21.1 1 0 46  0 0 1 1 1
+2x8F" -66 -46.5 20.1 1 0 3  0 0 1 1 1
+2x8F" -66 -45.5 20.1 1 0 3  0 0 1 1 1
+1x4F" -55.25 -34.5 12.7 0 0 58  0 0 1 1 1
+1x1" -78.75 -32.25 29.3 0 0 60  0 0 1 1 1
+72° Ramp 1x" -81.5 -38.25 24.1 3 0 58  0 0 1 1 1
+1x4F" -60.5 -63.25 19.5 1 0 60  0 0 1 1 1
+1x8 Arch" -55.75 -48.5 23.5 0 0 6  0 0 1 1 1
+1x8" -78.75 -15 16.7 0 0 47  0 0 1 1 1
+1x4x5" -61.75 -60.5 24.1 0 0 46  0 0 1 1 1
+2x4F" -85 -19.5 22.1 1 0 57  0 0 1 1 1
+1x4x5" -80.25 -39 24.1 0 0 46  0 0 1 1 1
+1x1F" -68.75 -15.75 16.5 0 0 3  0 0 1 1 1
+1x1F" -69.25 -15.75 16.5 0 0 41  0 0 1 1 1
+1x4x5" -80.25 -47 24.1 0 0 46  0 0 1 1 1
+1x1F" -69.25 -15.75 16.9 0 0 33  0 0 1 1 1
+1x4x5" -80.25 -45 24.1 0 0 47  0 0 1 1 1
+1x3" -67.25 -44.75 20.3 1 0 39  0 0 1 1 1
+2x8F" -66 -47.5 20.1 1 0 3  0 0 1 1 1
 1x1F Round" -67.75 -45.25 20.3 0 0 39  0 0 1 1 1
 1x2x5" -49.5 -54.25 21.1 1 0 46  0 0 1 1 1
 1x2" -58.75 -2.5 30.3 0 0 24  0 0 1 1 1
@@ -21639,7 +21689,7 @@ Spawn Point" -65.75 -46.25 21.7 2 0 0  0 0 0 0 0
 4x8F" -51.5 -57.5 19.3 1 0 60  0 0 1 1 1
 -25° Ramp 2x" -68.5 -3.25 25.1 2 0 46  0 0 1 1 1
 1x12x5" -68.5 -22.25 22.7 1 0 24  0 0 1 1 1
-2x2 Round" -88.5 -7.5 23.9 1 0 58  0 0 1 1 1
+1x2x5" -51.5 -55.25 21.1 1 0 46  0 0 1 1 1
 1x1" -88.25 -63.75 12.3 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x2" -65 -51.75 20.5 1 0 57  0 0 1 1 1
@@ -22007,25 +22057,25 @@ House Door" -78.25 -29 23 1 0 50  0 0 1 1 1
 1x1x5" -49.25 -56.25 24.1 0 0 46  0 0 1 1 1
 1x2x5" -64.5 -20.25 20.3 1 0 60  0 0 1 1 1
 45° Ramp 2x" -88.5 -19.5 19.1 3 0 57  0 0 1 1 1
-1x2F" -79 -9.25 18.3 1 0 39  0 0 1 1 1
-1x6x5" -57.25 -31.5 25.7 0 0 24  0 0 1 1 1
-1x3" -71.75 -58.25 23.5 0 0 24  0 0 1 1 1
-1x6x5" -57.25 -26.5 25.7 0 0 24  0 0 1 1 1
-6x6F" -52.5 -65 20.3 0 0 46  0 0 0 0 1
-+-NTOBJECTNAME _bed
-1x8" -55.5 -68.25 23.3 1 0 24  0 0 1 1 1
-4x8F" -60.5 -65 20.3 0 0 60  0 0 1 1 1
-1x2" -65 -51.75 21.1 1 0 57  0 0 1 1 1
-1x3F" -68.75 -36.25 25.1 0 0 60  0 0 1 1 1
-1x4F" -78.5 -9.75 20.9 1 0 40  0 0 1 1 1
-1x1F" -79.25 -29.75 14.7 0 0 24  0 0 1 1 1
-1x1F" -79.25 -29.25 14.7 0 0 51  0 0 1 1 1
-1x3x5" -71.75 -24.25 22.9 0 0 57  0 0 0 0 1
-1x3x5" -71.25 -24.25 22.9 0 0 57  0 0 0 0 1
-1x2x5" -70.5 -24.75 22.9 1 0 57  0 0 0 0 1
-1x4x5" -69.75 -24 22.9 0 0 58  0 0 1 1 1
-1x1F" -79.25 -28.75 14.7 0 0 24  0 0 1 1 1
-2x10F" -48.5 -61 25.5 0 0 60  0 0 1 1 1
+1x4x5" -63.75 -45.5 22.1 0 0 47  0 0 1 1 1
+1x4x5" -63.75 -47.5 22.1 0 0 47  0 0 1 1 1
+1x2F" -89.75 -19 17.1 0 0 51  0 0 1 1 1
+1x2F" -90.5 -17.75 16.9 1 0 45  0 0 1 1 1
+1x1" -82.25 -3.25 29.1 0 0 60  0 0 1 1 1
+1x2x5" -70.5 -20.25 20.3 1 0 60  0 0 1 1 1
+1x6F" -65.75 -9 20.3 0 0 57  0 0 1 1 1
+1x8" -58.75 -55.5 19.5 0 0 62  0 0 1 1 1
+1x6" -64.25 -11 20.3 0 0 40  0 0 1 1 1
+1x6" -64.25 -9 21.5 0 0 40  0 0 1 1 1
+1x2F" -64.25 -9 22.5 0 0 40  0 0 1 1 1
+1x8" -62.25 -55.5 19.5 0 0 62  0 0 1 1 1
+1x1" -71.75 -61.75 20.5 0 0 60  0 0 1 1 1
+4x6F" -88 -64 23.7 0 0 60  0 0 1 1 1
+Spawn Point" -65.75 -46.25 21.7 2 0 0  0 0 0 0 0
++-NTOBJECTNAME _r11_spawn
+1x4x5" -67 -44.75 22.1 1 0 47  0 0 1 1 1
+1x4x5" -65 -44.75 22.1 1 0 47  0 0 1 1 1
+2x2 Round" -88.5 -7.5 23.9 1 0 58  0 0 1 1 1
 4x6F" -85.5 -61.5 23.9 1 0 60  0 0 1 1 1
 1x2" -58.25 -58 16.9 0 0 40  0 0 1 1 1
 1x2" -58.25 -58 18.1 0 0 40  0 0 1 1 1
@@ -22093,7 +22143,7 @@ House Door" -78.25 -29 23 1 0 50  0 0 1 1 1
 1x1x5" -75.75 -15.25 22.7 0 0 60  0 0 1 1 1
 1x6F" -74 -15.25 21.3 1 0 60  0 0 1 1 1
 1x4x5" -48.75 -67 23.7 0 0 24  0 0 1 1 1
-25° Ramp 4x" -63 -4.75 32.1 0 0 51  0 0 1 1 1
+1x1F" -79.25 -28.75 14.7 0 0 24  0 0 1 1 1
 1x2F" -172.75 -10 4.3 0 0 61  0 0 1 1 1
 25° Ramp 4x" -67 -57.75 24.7 2 0 51  0 0 1 1 1
 1x4" -58.25 -8.5 33.3 0 0 60  0 0 1 1 1
@@ -22498,25 +22548,25 @@ House Door" -78.75 -17.5 20.2 3 0 59  0 0 1 1 1
 1x2F" -172.75 -9 4.3 0 0 61  0 0 1 1 1
 1x1" -57.25 -33.25 24.5 0 0 24  0 0 1 1 1
 1x8" -78.75 -14.5 18.7 0 0 39  0 0 1 1 1
-1x2" -58.25 -56.5 17.5 0 0 40  0 0 1 1 1
-1x6x5" -57.25 -29 28.7 0 0 24  0 0 1 1 1
-6x10F" -70.5 -18.5 24.9 0 0 45  0 0 1 1 1
-1x8" -61.25 -65 20.7 0 0 60  0 0 1 1 1
-1x4" -87.25 -3 19.5 0 0 39  0 0 1 1 1
-6x10F" -67.5 -18.5 24.9 0 0 45  0 0 1 1 1
-1x16F" -70.5 -17.25 25.7 1 0 60  0 0 1 1 1
-1x2" -87.75 -4.5 19.5 0 0 39  0 0 1 1 1
-1x6x5" -88.75 -5.5 23.9 0 0 57  0 0 1 1 1
-1x16F" -68.5 -21.75 25.7 1 0 58  0 0 1 1 1
-1x6F" -74 -15.25 21.5 1 0 60  0 0 1 1 1
-4x6F" -78.5 -11 21.1 0 0 40  0 0 1 1 1
-1x8F" -78.75 -14.5 19.1 0 0 39  0 0 1 1 1
-1x1 Cone" -60.25 -66.25 20.7 0 0 38  0 0 1 1 1
-1x1" -88.25 -14.25 19.5 0 0 39  0 0 1 1 1
-1x2" -88.75 -3.5 22.7 0 0 57  0 0 1 1 1
-1x4" -60.75 -65 20.7 0 0 56  0 0 0 0 0
-1x4F" -88.25 -63 12.9 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x4x5" -69.75 -24 22.9 0 0 58  0 0 1 1 1
+1x2x5" -70.5 -24.75 22.9 1 0 57  0 0 0 0 1
+1x3x5" -71.25 -24.25 22.9 0 0 57  0 0 0 0 1
+1x3x5" -71.75 -24.25 22.9 0 0 57  0 0 0 0 1
+1x1F" -79.25 -29.25 14.7 0 0 51  0 0 1 1 1
+1x1F" -79.25 -29.75 14.7 0 0 24  0 0 1 1 1
+1x4F" -78.5 -9.75 20.9 1 0 40  0 0 1 1 1
+1x3F" -68.75 -36.25 25.1 0 0 60  0 0 1 1 1
+1x2" -65 -51.75 21.1 1 0 57  0 0 1 1 1
+4x8F" -60.5 -65 20.3 0 0 60  0 0 1 1 1
+1x8" -55.5 -68.25 23.3 1 0 24  0 0 1 1 1
+6x6F" -52.5 -65 20.3 0 0 46  0 0 0 0 1
++-NTOBJECTNAME _bed
+1x6x5" -57.25 -26.5 25.7 0 0 24  0 0 1 1 1
+1x3" -71.75 -58.25 23.5 0 0 24  0 0 1 1 1
+1x6x5" -57.25 -31.5 25.7 0 0 24  0 0 1 1 1
+1x2F" -79 -9.25 18.3 1 0 39  0 0 1 1 1
+2x10F" -48.5 -61 25.5 0 0 60  0 0 1 1 1
+25° Ramp 4x" -63 -4.75 32.1 0 0 51  0 0 1 1 1
 1x12x5" -67.5 -20.75 20.3 1 0 47  0 0 1 1 1
 1x12x5" -67.5 -16.25 20.3 1 0 47  0 0 1 1 1
 1x1" -57.25 -27.25 27.5 0 0 24  0 0 1 1 1
@@ -22950,24 +23000,25 @@ House Door" -78.75 -17.5 20.2 3 0 59  0 0 1 1 1
 1x3" -71.75 -58.25 22.9 0 0 24  0 0 1 1 1
 6x10F" -76.5 -18.5 24.9 0 0 45  0 0 1 1 1
 2x4" -63.5 -55 25.1 0 0 58  0 0 1 1 1
-1x12F" -60 -35.25 25.1 1 0 60  0 0 1 1 1
-1x10F" -64.75 -9 24.1 0 0 60  0 0 1 1 1
-6x24F" -71.5 -7.5 25.5 1 0 46  0 0 1 1 1
-1x12F" -60 -22.75 25.1 1 0 60  0 0 1 1 1
-1x3" -88.25 -8.75 22.5 0 0 24  0 0 1 1 1
-2x4x3" -64 -56.5 25.3 1 0 58  0 0 1 1 1
-1x6x5" -88.25 -11 21.3 0 0 24  0 0 1 1 1
-2x4" -69.5 -54.5 25.1 0 0 46  0 0 1 1 1
-1x6" -70.5 -55.75 25.1 1 0 46  0 0 1 1 1
-2x4x3" -71 -56.5 23.5 1 0 58  0 0 1 1 1
-1x16F" -61.25 -62.5 24.7 0 0 62  0 0 1 1 1
-1x2F" -61.25 -67 24.7 0 0 62  0 0 1 1 1
--25° Ramp 2x" -58.75 -59 26.5 1 0 46  0 0 1 1 1
-25° Ramp 4x" -60.25 -59.5 26.5 3 0 51  0 0 1 1 1
--25° Ramp 2x" -58.75 -60 26.5 1 0 46  0 0 1 1 1
-25° Ramp 4x" -60.25 -61.5 26.5 3 0 51  0 0 1 1 1
-1x3" -88.25 -13.25 22.5 0 0 24  0 0 1 1 1
-1x12x5" -66.5 -0.75 27.3 1 0 47  0 0 1 1 1
+1x2" -88.75 -3.5 22.7 0 0 57  0 0 1 1 1
+1x1" -88.25 -14.25 19.5 0 0 39  0 0 1 1 1
+1x1 Cone" -60.25 -66.25 20.7 0 0 38  0 0 1 1 1
+1x8F" -78.75 -14.5 19.1 0 0 39  0 0 1 1 1
+4x6F" -78.5 -11 21.1 0 0 40  0 0 1 1 1
+1x6F" -74 -15.25 21.5 1 0 60  0 0 1 1 1
+1x16F" -68.5 -21.75 25.7 1 0 58  0 0 1 1 1
+1x6x5" -88.75 -5.5 23.9 0 0 57  0 0 1 1 1
+1x2" -87.75 -4.5 19.5 0 0 39  0 0 1 1 1
+1x16F" -70.5 -17.25 25.7 1 0 60  0 0 1 1 1
+6x10F" -67.5 -18.5 24.9 0 0 45  0 0 1 1 1
+1x4" -87.25 -3 19.5 0 0 39  0 0 1 1 1
+1x8" -61.25 -65 20.7 0 0 60  0 0 1 1 1
+6x10F" -70.5 -18.5 24.9 0 0 45  0 0 1 1 1
+1x6x5" -57.25 -29 28.7 0 0 24  0 0 1 1 1
+1x2" -58.25 -56.5 17.5 0 0 40  0 0 1 1 1
+1x4F" -88.25 -63 12.9 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x4" -60.75 -65 20.7 0 0 56  0 0 0 0 0
 1x6x5" -67 -0.25 27.3 1 0 24  0 0 1 1 1
 1x4" -78.25 -26.5 28.1 0 0 24  0 0 1 1 1
 1x12x5" -78.75 -3.5 27.3 0 0 47  0 0 1 1 1
@@ -23218,7 +23269,7 @@ House Door" -78.75 -17.5 20.2 3 0 59  0 0 1 1 1
 -25° Ramp 2x" -51.25 -56 25.9 3 0 46  0 0 1 1 1
 45° Crest 1x" -78.75 -29 34.1 2 0 60  0 0 1 1 1
 -25° Ramp 2x" -68.5 -14.75 25.1 0 0 46  0 0 1 1 1
-25° Ramp 1x" -82.25 -17.25 29.7 2 0 60  0 0 1 1 1
+1x12x5" -66.5 -0.75 27.3 1 0 47  0 0 1 1 1
 1x4F" -68.5 -15.25 24.1 1 0 60  0 0 1 1 1
 1x6x5" -58.75 -15.5 27.3 0 0 24  0 0 1 1 1
 25° Ramp 4x" -58.25 -63.5 27.7 3 0 51  0 0 1 1 1
@@ -23424,24 +23475,24 @@ House Door" -63.25 -3 27.6 3 0 50  0 0 1 1 1
 6x6F" -69.5 -46.5 20.9 0 0 47  0 0 0 0 1
 25° Ramp 1x" -58.25 -17.25 29.7 2 0 60  0 0 1 1 1
 25° Ramp 1x" -51.25 -53.25 26.9 1 0 60  0 0 1 1 1
-1x1" -55.75 -57.75 19.5 0 0 38  0 0 1 1 1
-2x10F" -79.5 -17.5 29.3 1 0 60  0 0 1 1 1
-1x8F" -79.5 -16.75 25.7 1 0 24  0 0 1 1 1
-1x1F" -175.25 -8.75 4.9 0 0 61  0 0 1 1 1
-1x1F" -55.75 -57.25 19.3 0 0 38  0 0 1 1 1
-1x1F" -173.25 -10.75 4.9 0 0 61  0 0 1 1 1
-1x1F" -172.75 -10.25 4.9 0 0 61  0 0 1 1 1
-25° Ramp 4x" -71 -6.25 32.7 0 0 51  0 0 1 1 1
-1x1" -53.25 -56.25 27.1 0 0 62  0 0 1 1 1
-25° Ramp 4x" -69 -6.25 32.7 0 0 51  0 0 1 1 1
--25° Ramp 2x" -52.25 -56.5 26.5 3 0 46  0 0 1 1 1
-25° Ramp 4x" -52.75 -63.5 27.7 1 0 51  0 0 1 1 1
-1x2" -55.75 -56.5 19.9 0 0 40  0 0 1 1 1
-1x16F" -62.5 -17.25 28.9 1 0 60  0 0 1 1 1
-25° Ramp 4x" -67 -6.25 32.7 0 0 51  0 0 1 1 1
-25° Ramp 4x" -73 -6.25 32.7 0 0 51  0 0 1 1 1
--25° Ramp 2x" -52.25 -63.5 26.5 3 0 46  0 0 1 1 1
--25° Ramp 2x" -52.25 -62.5 26.5 3 0 46  0 0 1 1 1
+1x12F" -60 -35.25 25.1 1 0 60  0 0 1 1 1
+1x10F" -64.75 -9 24.1 0 0 60  0 0 1 1 1
+6x24F" -71.5 -7.5 25.5 1 0 46  0 0 1 1 1
+1x12F" -60 -22.75 25.1 1 0 60  0 0 1 1 1
+1x3" -88.25 -8.75 22.5 0 0 24  0 0 1 1 1
+2x4x3" -64 -56.5 25.3 1 0 58  0 0 1 1 1
+1x6x5" -88.25 -11 21.3 0 0 24  0 0 1 1 1
+2x4" -69.5 -54.5 25.1 0 0 46  0 0 1 1 1
+1x6" -70.5 -55.75 25.1 1 0 46  0 0 1 1 1
+25° Ramp 1x" -82.25 -17.25 29.7 2 0 60  0 0 1 1 1
+2x4x3" -71 -56.5 23.5 1 0 58  0 0 1 1 1
+1x16F" -61.25 -62.5 24.7 0 0 62  0 0 1 1 1
+1x2F" -61.25 -67 24.7 0 0 62  0 0 1 1 1
+-25° Ramp 2x" -58.75 -59 26.5 1 0 46  0 0 1 1 1
+25° Ramp 4x" -60.25 -59.5 26.5 3 0 51  0 0 1 1 1
+-25° Ramp 2x" -58.75 -60 26.5 1 0 46  0 0 1 1 1
+25° Ramp 4x" -60.25 -61.5 26.5 3 0 51  0 0 1 1 1
+1x3" -88.25 -13.25 22.5 0 0 24  0 0 1 1 1
 -25° Ramp 2x" -52.25 -60.5 26.5 3 0 46  0 0 1 1 1
 1x6F" -78.25 -11 25.5 0 0 40  0 0 1 1 1
 1x16F" -62.5 -8.75 33.7 1 0 51  0 0 1 1 1
@@ -23599,8 +23650,7 @@ House Door" -63.25 -3 27.6 3 0 50  0 0 1 1 1
 -45° Ramp 2x" -72 -23 25.5 2 0 24  0 0 1 1 1
 1x3" -78.25 -26.75 28.7 0 0 24  0 0 1 1 1
 1x1" -78.25 -25.75 28.7 0 0 24  0 0 1 1 1
-1x1x5" -62.75 -31.25 23.9 0 0 58  0 0 1 1 1
-+-NTOBJECTNAME _bed
+-25° Ramp 2x" -52.25 -62.5 26.5 3 0 46  0 0 1 1 1
 1x2F" -62.75 -30.5 22.5 0 0 58  0 0 1 1 1
 +-NTOBJECTNAME _bed
 -25° Ramp 2x" -66 -1.25 29.1 2 0 46  0 0 1 1 1
@@ -23877,24 +23927,25 @@ House Door" -63.25 -3 27.6 3 0 50  0 0 1 1 1
 2x2 Disc" -86.75 -62.75 25.3 3 0 50  0 0 1 1 1
 1x2" -81 -9.75 22.9 1 0 40  0 0 1 1 1
 2x4x3" -68 -56.5 25.3 1 0 58  0 0 1 1 1
-1x1F" -57.75 -57.25 19.5 0 0 38  0 0 1 1 1
-1x1" -54.25 -68.75 22.5 0 0 60  0 0 1 1 1
-1x6x5" -67 -16.75 27.3 1 0 24  0 0 1 1 1
-1x6x5" -70.5 -16.75 27.3 1 0 24  0 0 1 1 1
-1x16F" -70 -17.25 29.1 1 0 60  0 0 1 1 1
-25° Ramp 1x" -82.25 -14.75 30.9 2 0 60  0 0 1 1 1
-1x6x5" -63.5 -16.75 27.3 1 0 24  0 0 1 1 1
-25° Ramp 4x" -53.75 -65.5 28.3 1 0 51  0 0 1 1 1
-1x1F" -61.25 -64.25 21.9 0 0 60  0 0 1 1 1
-1x1F" -61.25 -65.75 21.9 0 0 60  0 0 1 1 1
--25° Ramp 2x" -78 -2.25 29.7 2 0 46  0 0 1 1 1
-1x1" -56.75 -68.75 22.5 0 0 60  0 0 1 1 1
-1x2F" -172.75 -9 5.1 0 0 61  0 0 1 1 1
-1x2F" -173.5 -8.25 5.1 1 0 61  0 0 1 1 1
-25° Ramp 4x" -56.25 -65.5 28.9 3 0 51  0 0 1 1 1
--25° Ramp 2x" -77 -2.25 29.7 2 0 46  0 0 1 1 1
-1x6F" -78.25 -11 25.7 0 0 40  0 0 1 1 1
--25° Ramp 2x" -76 -2.25 29.7 2 0 46  0 0 1 1 1
+-25° Ramp 2x" -52.25 -63.5 26.5 3 0 46  0 0 1 1 1
+25° Ramp 4x" -73 -6.25 32.7 0 0 51  0 0 1 1 1
+25° Ramp 4x" -67 -6.25 32.7 0 0 51  0 0 1 1 1
+1x16F" -62.5 -17.25 28.9 1 0 60  0 0 1 1 1
+1x2" -55.75 -56.5 19.9 0 0 40  0 0 1 1 1
+25° Ramp 4x" -52.75 -63.5 27.7 1 0 51  0 0 1 1 1
+-25° Ramp 2x" -52.25 -56.5 26.5 3 0 46  0 0 1 1 1
+1x1" -53.25 -56.25 27.1 0 0 62  0 0 1 1 1
+25° Ramp 4x" -71 -6.25 32.7 0 0 51  0 0 1 1 1
+1x1F" -172.75 -10.25 4.9 0 0 61  0 0 1 1 1
+1x1F" -173.25 -10.75 4.9 0 0 61  0 0 1 1 1
+1x1F" -55.75 -57.25 19.3 0 0 38  0 0 1 1 1
+1x1F" -175.25 -8.75 4.9 0 0 61  0 0 1 1 1
+1x8F" -79.5 -16.75 25.7 1 0 24  0 0 1 1 1
+2x10F" -79.5 -17.5 29.3 1 0 60  0 0 1 1 1
+1x1" -55.75 -57.75 19.5 0 0 38  0 0 1 1 1
+25° Ramp 4x" -69 -6.25 32.7 0 0 51  0 0 1 1 1
+1x1x5" -62.75 -31.25 23.9 0 0 58  0 0 1 1 1
++-NTOBJECTNAME _bed
 1x2" -54.5 -56.75 27.7 1 0 46  0 0 1 1 1
 1x16" -77.5 -5.75 32.1 1 0 51  0 0 1 1 1
 10x20" -73.5 -8.5 32.1 1 0 46  0 0 1 1 1
@@ -24246,24 +24297,24 @@ Spawn Point" -66.25 -11.75 27.3 3 0 0  0 0 0 0 0
 25° Ramp 4x" -51.75 -61.5 27.1 1 0 51  0 0 1 1 1
 1x1F" -55.75 -57.75 19.9 0 0 38  0 0 1 1 1
 1x2" -58.75 -13 29.7 0 0 24  0 0 1 1 1
-1x2" -57.5 -55.25 21.1 1 0 40  0 0 1 1 1
-1x2" -56.5 -55.25 21.1 1 0 40  0 0 1 1 1
--45° Ramp 2x" -69.5 -34 26.7 0 0 24  0 0 1 1 1
-2x3F" -70.25 0 28.5 1 0 60  0 0 1 1 1
-1x3F" -70.25 -0.75 28.5 1 0 47  0 0 1 1 1
--45° Ramp 2x" -68.5 -34 26.7 0 0 24  0 0 1 1 1
--25° Ramp 2x" -71 -3.25 30.3 2 0 46  0 0 1 1 1
-25° Ramp 4x" -71 -3.75 31.5 0 0 51  0 0 1 1 1
-25° Ramp 4x" -54.75 -55.5 28.9 1 0 51  0 0 1 1 1
--25° Ramp 2x" -65 -13.75 30.3 0 0 46  0 0 1 1 1
-1x1 Round" -86.75 -62.75 26.3 3 0 50  0 0 1 1 1
--25° Ramp 2x" -67 -13.75 30.3 0 0 46  0 0 1 1 1
-1x12F" -74.5 -33.25 26.9 1 0 60  0 0 1 1 1
--45° Ramp 2x" -75.5 -34 26.7 0 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -35 26.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -75.5 -35 26.7 2 0 51  0 0 1 1 1
--45° Ramp 2x" -72.5 -34 26.7 0 0 24  0 0 1 1 1
-1x2" -78.25 -29 32.3 0 0 24  0 0 1 1 1
+-25° Ramp 2x" -77 -2.25 29.7 2 0 46  0 0 1 1 1
+25° Ramp 4x" -56.25 -65.5 28.9 3 0 51  0 0 1 1 1
+1x2F" -173.5 -8.25 5.1 1 0 61  0 0 1 1 1
+1x2F" -172.75 -9 5.1 0 0 61  0 0 1 1 1
+1x1" -56.75 -68.75 22.5 0 0 60  0 0 1 1 1
+-25° Ramp 2x" -78 -2.25 29.7 2 0 46  0 0 1 1 1
+1x1F" -61.25 -65.75 21.9 0 0 60  0 0 1 1 1
+1x1F" -61.25 -64.25 21.9 0 0 60  0 0 1 1 1
+25° Ramp 4x" -53.75 -65.5 28.3 1 0 51  0 0 1 1 1
+1x6F" -78.25 -11 25.7 0 0 40  0 0 1 1 1
+1x6x5" -63.5 -16.75 27.3 1 0 24  0 0 1 1 1
+25° Ramp 1x" -82.25 -14.75 30.9 2 0 60  0 0 1 1 1
+1x16F" -70 -17.25 29.1 1 0 60  0 0 1 1 1
+1x6x5" -70.5 -16.75 27.3 1 0 24  0 0 1 1 1
+1x6x5" -67 -16.75 27.3 1 0 24  0 0 1 1 1
+1x1" -54.25 -68.75 22.5 0 0 60  0 0 1 1 1
+1x1F" -57.75 -57.25 19.5 0 0 38  0 0 1 1 1
+-25° Ramp 2x" -76 -2.25 29.7 2 0 46  0 0 1 1 1
 1x1F" -63.25 -33.25 26.9 0 0 60  0 0 1 1 1
 1x1" -57.25 -26.75 29.9 0 0 24  0 0 1 1 1
 -45° Ramp 2x" -62.5 -34 26.7 0 0 24  0 0 1 1 1
@@ -24495,7 +24546,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 6x10F" -65.5 -8.5 26.5 0 0 59  0 0 1 1 1
 +-NTOBJECTNAME _bed
 45° Ramp 4x" -75.5 -23 26.7 0 0 51  0 0 1 1 1
-1x12F" -60 -33.25 26.9 1 0 60  0 0 1 1 1
+1x2" -78.25 -29 32.3 0 0 24  0 0 1 1 1
 45° Ramp 4x" -77.5 -23 26.7 0 0 51  0 0 1 1 1
 -45° Ramp 2x" -65 -24 26.7 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -64 -24 26.7 2 0 24  0 0 1 1 1
@@ -24608,24 +24659,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x4F" -61.5 -16.25 22.9 1 0 47  0 0 1 1 1
 1x2" -55.75 -55.5 21.1 0 0 40  0 0 1 1 1
 1x2" -81 -9.75 24.1 1 0 40  0 0 1 1 1
-1x1F" -67.75 -15.25 22.5 0 0 0  0 0 1 1 1
-25° Ramp 4x" -71.5 -12.25 32.1 2 0 51  0 0 1 1 1
-1x1 Cone" -86.75 -62.75 26.9 0 0 50  0 0 1 1 1
-25° Ramp 4x" -71.5 -9.75 33.3 2 0 51  0 0 1 1 1
-25° Crest End" -79 -11.75 26.3 1 0 59  0 0 1 0 1
-1x4" -81.75 -15 29.7 0 0 24  0 0 1 1 1
-25° Ramp 4x" -56.25 -61.5 28.9 3 0 51  0 0 1 1 1
-25° Ramp 4x" -56.25 -59.5 28.9 3 0 51  0 0 1 1 1
-1x1" -55.75 -57.75 27.7 0 0 62  0 0 1 1 1
--25° Ramp 2x" -78 -14.75 29.7 0 0 46  0 0 1 1 1
--25° Ramp 2x" -77 -14.75 29.7 0 0 46  0 0 1 1 1
--25° Ramp 2x" -76 -14.75 29.7 0 0 46  0 0 1 1 1
-1x6" -78.75 -14 29.7 0 0 47  0 0 1 1 1
-25° Ramp 1x" -57.25 -54.75 28.3 3 0 51  0 0 1 1 1
-45° Crest 1x" -55.5 -54.75 29.5 1 0 51  0 0 1 1 1
-45° Crest 2x" -55.5 -58 29.5 1 0 51  0 0 1 1 1
-45° Crest 4x" -55.5 -59.5 29.5 1 0 51  0 0 1 1 1
-25° Ramp 4x" -53.75 -61.5 28.3 1 0 51  0 0 1 1 1
+-45° Ramp 2x" -72.5 -34 26.7 0 0 24  0 0 1 1 1
+45° Ramp 4x" -75.5 -35 26.7 2 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -35 26.7 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -75.5 -34 26.7 0 0 24  0 0 1 1 1
+1x12F" -74.5 -33.25 26.9 1 0 60  0 0 1 1 1
+-25° Ramp 2x" -67 -13.75 30.3 0 0 46  0 0 1 1 1
+1x1 Round" -86.75 -62.75 26.3 3 0 50  0 0 1 1 1
+25° Ramp 4x" -54.75 -55.5 28.9 1 0 51  0 0 1 1 1
+25° Ramp 4x" -71 -3.75 31.5 0 0 51  0 0 1 1 1
+-25° Ramp 2x" -71 -3.25 30.3 2 0 46  0 0 1 1 1
+-45° Ramp 2x" -68.5 -34 26.7 0 0 24  0 0 1 1 1
+1x3F" -70.25 -0.75 28.5 1 0 47  0 0 1 1 1
+2x3F" -70.25 0 28.5 1 0 60  0 0 1 1 1
+-45° Ramp 2x" -69.5 -34 26.7 0 0 24  0 0 1 1 1
+1x2" -56.5 -55.25 21.1 1 0 40  0 0 1 1 1
+1x2" -57.5 -55.25 21.1 1 0 40  0 0 1 1 1
+-25° Ramp 2x" -65 -13.75 30.3 0 0 46  0 0 1 1 1
+1x12F" -60 -33.25 26.9 1 0 60  0 0 1 1 1
 25° Ramp 4x" -75 -4.75 32.1 0 0 51  0 0 1 1 1
 25° Ramp 4x" -79 -7.25 33.3 0 0 51  0 0 1 1 1
 1x1" -55.25 -57.25 28.3 0 0 46  0 0 1 1 1
@@ -24915,25 +24966,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 45° Ramp 4x" -71.5 -23.5 27.3 0 0 51  0 0 1 1 1
 45° Ramp 4x" -65.5 -23.5 27.3 0 0 51  0 0 1 1 1
 45° Ramp 4x" -67.5 -23.5 27.3 0 0 51  0 0 1 1 1
-1x2" -81.25 -10.5 25.3 0 0 40  0 0 1 1 1
--45° Ramp 2x" -60.5 -33 27.9 0 0 24  0 0 1 1 1
-1x2" -81.75 -14.5 30.3 0 0 24  0 0 1 1 1
-45° Crest 4x" -55.5 -61.5 29.5 1 0 51  0 0 1 1 1
-1x1" -55.75 -57.75 27.1 0 0 62  0 0 1 1 1
-25° Ramp 1x" -56.25 -54.75 28.9 3 0 51  0 0 1 1 1
-25° Ramp 4x" -54.75 -61.5 28.9 1 0 51  0 0 1 1 1
-45° Ramp 4x" -63.5 -24 27.9 0 0 51  0 0 1 1 1
--25° Ramp 2x" -74 -13.75 30.3 0 0 46  0 0 1 1 1
-45° Ramp 4x" -61.5 -24 27.9 0 0 51  0 0 1 1 1
-1x2" -80 -9.75 25.3 1 0 40  0 0 1 1 1
-2x2F Vertical Double Print" -78.25 -7.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
-2x2F Vertical Double Print" -78.25 -6.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
-2x2F Vertical Double Print" -78.25 -5.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
-1x4F" -77.5 -4.75 29.7 1 0 59  0 0 1 1 1
-25° Ramp 4x" -77 -3.75 31.5 0 0 51  0 0 1 1 1
-1x1F Round" -69.75 -6.25 27.3 0 0 60  0 0 1 1 1
-+-NTOBJECTNAME _bed
-25° Ramp 4x" -65 -15.75 30.3 2 0 51  0 0 1 1 1
+45° Crest 2x" -55.5 -58 29.5 1 0 51  0 0 1 1 1
+45° Crest 1x" -55.5 -54.75 29.5 1 0 51  0 0 1 1 1
+25° Ramp 1x" -57.25 -54.75 28.3 3 0 51  0 0 1 1 1
+1x6" -78.75 -14 29.7 0 0 47  0 0 1 1 1
+-25° Ramp 2x" -76 -14.75 29.7 0 0 46  0 0 1 1 1
+-25° Ramp 2x" -77 -14.75 29.7 0 0 46  0 0 1 1 1
+-25° Ramp 2x" -78 -14.75 29.7 0 0 46  0 0 1 1 1
+1x1" -55.75 -57.75 27.7 0 0 62  0 0 1 1 1
+25° Ramp 4x" -56.25 -59.5 28.9 3 0 51  0 0 1 1 1
+25° Ramp 4x" -56.25 -61.5 28.9 3 0 51  0 0 1 1 1
+1x4" -81.75 -15 29.7 0 0 24  0 0 1 1 1
+25° Crest End" -79 -11.75 26.3 1 0 59  0 0 1 0 1
+25° Ramp 4x" -71.5 -9.75 33.3 2 0 51  0 0 1 1 1
+1x1 Cone" -86.75 -62.75 26.9 0 0 50  0 0 1 1 1
+25° Ramp 4x" -71.5 -12.25 32.1 2 0 51  0 0 1 1 1
+1x1F" -67.75 -15.25 22.5 0 0 0  0 0 1 1 1
+25° Ramp 4x" -53.75 -61.5 28.3 1 0 51  0 0 1 1 1
+45° Crest 4x" -55.5 -59.5 29.5 1 0 51  0 0 1 1 1
 25° Ramp 1x" -56.75 -53.25 28.7 3 0 60  0 0 1 1 1
 -45° Ramp 2x" -68 -25 27.9 2 0 24  0 0 1 1 1
 1x2" -57 -68.25 27.5 1 0 24  0 0 1 1 1
@@ -24942,8 +24992,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x1" -59.25 -14.75 30.3 0 0 51  0 0 1 1 1
 4x10F" -68.5 -8.5 26.9 0 0 24  0 0 0 0 1
 +-NTOBJECTNAME _bed
-1x10F" -64.25 -8.5 27.3 0 0 59  0 0 1 1 1
-+-NTOBJECTNAME _bed
+25° Ramp 4x" -65 -15.75 30.3 2 0 51  0 0 1 1 1
 6x10F" -66 -8.5 26.9 0 0 24  0 0 0 0 1
 +-NTOBJECTNAME _bed
 25° Crest 1x" -55.5 -68.75 29.9 1 0 60  0 0 1 1 1
@@ -25099,24 +25148,26 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -79 -9.75 25.3 1 0 40  0 0 1 1 1
 -45° Ramp 2x" -79 -10.5 25.3 3 0 40  0 0 1 1 1
 -45° Ramp 2x" -79 -11.5 25.3 3 0 40  0 0 1 1 1
--45° Ramp 2x" -69.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -60 -25.5 28.5 2 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -33.5 28.5 2 0 51  0 0 1 1 1
--45° Ramp 2x" -63 -25.5 28.5 2 0 24  0 0 1 1 1
--45° Ramp 2x" -76 -25.5 28.5 2 0 24  0 0 1 1 1
-45° Ramp 4x" -77.5 -33.5 28.5 2 0 51  0 0 1 1 1
-45° Ramp 4x" -77.5 -24.5 28.5 0 0 51  0 0 1 1 1
-1x2" -79.25 -17 4.5 0 0 39  0 0 1 1 1
--45° Ramp 2x" -77 -25.5 28.5 2 0 24  0 0 1 1 1
--45° Ramp 2x" -62 -25.5 28.5 2 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -24.5 28.5 0 0 51  0 0 1 1 1
--45° Ramp 2x" -64.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -59.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -66.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -67.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -58.5 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 1x" -57.75 -32.5 28.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -76.5 -32.5 28.5 0 0 24  0 0 1 1 1
+1x2" -81.25 -10.5 25.3 0 0 40  0 0 1 1 1
+-45° Ramp 2x" -60.5 -33 27.9 0 0 24  0 0 1 1 1
+1x2" -81.75 -14.5 30.3 0 0 24  0 0 1 1 1
+45° Crest 4x" -55.5 -61.5 29.5 1 0 51  0 0 1 1 1
+1x1" -55.75 -57.75 27.1 0 0 62  0 0 1 1 1
+25° Ramp 1x" -56.25 -54.75 28.9 3 0 51  0 0 1 1 1
+25° Ramp 4x" -54.75 -61.5 28.9 1 0 51  0 0 1 1 1
+45° Ramp 4x" -63.5 -24 27.9 0 0 51  0 0 1 1 1
+-25° Ramp 2x" -74 -13.75 30.3 0 0 46  0 0 1 1 1
+45° Ramp 4x" -61.5 -24 27.9 0 0 51  0 0 1 1 1
+1x2" -80 -9.75 25.3 1 0 40  0 0 1 1 1
+2x2F Vertical Double Print" -78.25 -7.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
+2x2F Vertical Double Print" -78.25 -6.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
+2x2F Vertical Double Print" -78.25 -5.5 28.9 3 0 59 Letters/-space 0 0 1 1 1
+1x4F" -77.5 -4.75 29.7 1 0 59  0 0 1 1 1
+25° Ramp 4x" -77 -3.75 31.5 0 0 51  0 0 1 1 1
+1x1F Round" -69.75 -6.25 27.3 0 0 60  0 0 1 1 1
++-NTOBJECTNAME _bed
+1x10F" -64.25 -8.5 27.3 0 0 59  0 0 1 1 1
++-NTOBJECTNAME _bed
 45° Ramp 4x" -59.5 -33.5 28.5 2 0 51  0 0 1 1 1
 45° Ramp 1x" -58.25 -33.5 28.5 2 0 51  0 0 1 1 1
 45° Ramp 2x" -57.5 -33.5 28.5 2 0 51  0 0 1 1 1
@@ -25159,7 +25210,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x1" -78.75 -9.75 25.9 0 0 40  0 0 1 1 1
 1x2" -79.5 -9.75 25.9 1 0 40  0 0 1 1 1
-1x2" -80.5 -12.25 25.9 1 0 40  0 0 1 1 1
+-45° Ramp 1x" -57.75 -32.5 28.5 0 0 24  0 0 1 1 1
 1x2" -81.25 -12 25.9 0 0 40  0 0 1 1 1
 -45° Ramp 2x" -69 -25.5 28.5 2 0 24  0 0 1 1 1
 45° Ramp 4x" -75.5 -24.5 28.5 0 0 51  0 0 1 1 1
@@ -25226,26 +25277,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 -25° Ramp 2x" -61 -15.25 24.9 0 0 24  0 0 1 1 1
 1x1F Round" -64.25 -10.75 27.5 0 0 60  0 0 1 1 1
 +-NTOBJECTNAME _bed
--45° Ramp 2x" -76.5 -32 29.1 0 0 24  0 0 1 1 1
--45° Ramp 2x" -62 -26 29.1 2 0 24  0 0 1 1 1
-1x2" -81.25 -17.5 5.1 0 0 39  0 0 1 1 1
--45° Ramp 2x" -63 -26 29.1 2 0 24  0 0 1 1 1
--45° Ramp 2x" -75 -26 29.1 2 0 24  0 0 1 1 1
-25° Crest 1x" -65 -9.25 27.5 3 0 24  0 0 0 0 1
-+-NTOBJECTNAME _bed
-1x4F" -88.25 -63 15.7 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
--45° Ramp 2x" -68 -26 29.1 2 0 24  0 0 1 1 1
-1x12" -57 -53.25 26.3 1 0 60  0 0 1 1 1
--45° Ramp 1x" -57.75 -32 29.1 0 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -33 29.1 2 0 51  0 0 1 1 1
-1x1x5" -55.75 -57.75 24.1 0 0 62  0 0 1 1 1
-45° Ramp 4x" -65.5 -33 29.1 2 0 51  0 0 1 1 1
-45° Ramp 4x" -67.5 -33 29.1 2 0 51  0 0 1 1 1
-45° Ramp 4x" -59.5 -33 29.1 2 0 51  0 0 1 1 1
-45° Ramp 1x" -58.25 -33 29.1 2 0 51  0 0 1 1 1
-45° Ramp 2x" -57.5 -33 29.1 2 0 51  0 0 1 1 1
-25° Ramp 1x" -58.75 -53.25 27.5 3 0 60  0 0 1 1 1
+-45° Ramp 2x" -58.5 -32.5 28.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -67.5 -32.5 28.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -66.5 -32.5 28.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -59.5 -32.5 28.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -64.5 -32.5 28.5 0 0 24  0 0 1 1 1
+45° Ramp 4x" -73.5 -24.5 28.5 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -62 -25.5 28.5 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -77 -25.5 28.5 2 0 24  0 0 1 1 1
+1x2" -79.25 -17 4.5 0 0 39  0 0 1 1 1
+45° Ramp 4x" -77.5 -24.5 28.5 0 0 51  0 0 1 1 1
+45° Ramp 4x" -77.5 -33.5 28.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -76 -25.5 28.5 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -63 -25.5 28.5 2 0 24  0 0 1 1 1
+45° Ramp 4x" -73.5 -33.5 28.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -60 -25.5 28.5 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -69.5 -32.5 28.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -76.5 -32.5 28.5 0 0 24  0 0 1 1 1
+1x2" -80.5 -12.25 25.9 1 0 40  0 0 1 1 1
 -45° Ramp 2x" -74 -26 29.1 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -60.5 -32 29.1 0 0 24  0 0 1 1 1
 25° Ramp 2x" -57.25 -54 28.3 3 0 51  0 0 1 1 1
@@ -25332,25 +25381,26 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 +-NTOBJECTNAME _bed
 45° Ramp 4x" -77.5 -33 29.1 2 0 51  0 0 1 1 1
 -45° Ramp 2x" -77.5 -32 29.1 0 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -32.5 29.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -59.5 -25.5 29.7 0 0 51  0 0 1 1 1
-1x2" -79.5 -12.25 27.1 1 0 40  0 0 1 1 1
-1x1" -78.75 -12.25 27.1 0 0 40  0 0 1 1 1
--45° Ramp 1x" -77.75 -26.5 29.7 2 0 24  0 0 1 1 1
--45° Ramp 2x" -59.5 -31.5 29.7 0 0 24  0 0 1 1 1
-1x1" -57.75 -53.25 25.7 0 0 60  0 0 1 1 1
-1x4F" -88.25 -63 15.9 0 0 60  0 0 1 1 1
+45° Ramp 1x" -58.25 -33 29.1 2 0 51  0 0 1 1 1
+45° Ramp 4x" -59.5 -33 29.1 2 0 51  0 0 1 1 1
+45° Ramp 4x" -67.5 -33 29.1 2 0 51  0 0 1 1 1
+45° Ramp 4x" -65.5 -33 29.1 2 0 51  0 0 1 1 1
+1x1x5" -55.75 -57.75 24.1 0 0 62  0 0 1 1 1
+45° Ramp 4x" -73.5 -33 29.1 2 0 51  0 0 1 1 1
+-45° Ramp 1x" -57.75 -32 29.1 0 0 24  0 0 1 1 1
+1x12" -57 -53.25 26.3 1 0 60  0 0 1 1 1
+-45° Ramp 2x" -68 -26 29.1 2 0 24  0 0 1 1 1
+1x4F" -88.25 -63 15.7 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
--45° Ramp 2x" -75.5 -31.5 29.7 0 0 24  0 0 1 1 1
--45° Ramp 2x" -76.5 -31.5 29.7 0 0 24  0 0 1 1 1
-1x2" -79.5 -9.75 27.1 1 0 40  0 0 1 1 1
-45° Ramp 4x" -71.5 -32.5 29.7 2 0 51  0 0 1 1 1
-25° Ramp 1x" -59.75 -53.25 26.9 3 0 60  0 0 1 1 1
-25° Ramp 2x" -58.25 -54 27.7 3 0 51  0 0 1 1 1
-45° Ramp 4x" -71.5 -25.5 29.7 0 0 51  0 0 1 1 1
--45° Ramp 1x" -58.5 -53.25 26.9 1 0 60  0 0 1 1 1
-1x2" -57.5 -57.25 24.1 1 0 40  0 0 1 1 1
-1x2" -56.5 -57.25 24.1 1 0 40  0 0 1 1 1
+25° Crest 1x" -65 -9.25 27.5 3 0 24  0 0 0 0 1
++-NTOBJECTNAME _bed
+-45° Ramp 2x" -75 -26 29.1 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -63 -26 29.1 2 0 24  0 0 1 1 1
+1x2" -81.25 -17.5 5.1 0 0 39  0 0 1 1 1
+-45° Ramp 2x" -62 -26 29.1 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -76.5 -32 29.1 0 0 24  0 0 1 1 1
+25° Ramp 1x" -58.75 -53.25 27.5 3 0 60  0 0 1 1 1
+45° Ramp 2x" -57.5 -33 29.1 2 0 51  0 0 1 1 1
 1x2" -55.75 -56 24.1 0 0 40  0 0 1 1 1
 1x2" -55.75 -57 24.1 0 0 40  0 0 1 1 1
 1x2" -57.75 -55.5 24.1 0 0 40  0 0 1 1 1
@@ -25427,24 +25477,25 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -57.75 -56.5 24.1 0 0 40  0 0 1 1 1
 -45° Ramp 2x" -69.5 -31.5 29.7 0 0 24  0 0 1 1 1
 -45° Ramp 2x" -63 -26.5 29.7 2 0 24  0 0 1 1 1
--45° Ramp 2x" -77.5 -31 30.3 0 0 24  0 0 1 1 1
--45° Ramp 2x" -66 -27 30.3 2 0 24  0 0 1 1 1
--45° Ramp 2x" -67 -27 30.3 2 0 24  0 0 1 1 1
-45° Ramp 4x" -59.5 -26 30.3 0 0 51  0 0 1 1 1
--45° Ramp 2x" -64 -27 30.3 2 0 24  0 0 1 1 1
-45° Ramp 4x" -61.5 -32 30.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -65.5 -26 30.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -67.5 -26 30.3 0 0 51  0 0 1 1 1
--45° Ramp 2x" -67.5 -31 30.3 0 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -26 30.3 0 0 51  0 0 1 1 1
--45° Ramp 2x" -59.5 -31 30.3 0 0 24  0 0 1 1 1
--45° Ramp 2x" -58.5 -31 30.3 0 0 24  0 0 1 1 1
--45° Ramp 2x" -63 -27 30.3 2 0 24  0 0 1 1 1
-45° Ramp 4x" -63.5 -26 30.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -61.5 -26 30.3 0 0 51  0 0 1 1 1
--45° Ramp 2x" -73.5 -31 30.3 0 0 24  0 0 1 1 1
-1x2" -79 -12.25 27.7 1 0 40  0 0 1 1 1
-45° Ramp 2x" -57.5 -26 30.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -71.5 -25.5 29.7 0 0 51  0 0 1 1 1
+25° Ramp 2x" -58.25 -54 27.7 3 0 51  0 0 1 1 1
+25° Ramp 1x" -59.75 -53.25 26.9 3 0 60  0 0 1 1 1
+45° Ramp 4x" -71.5 -32.5 29.7 2 0 51  0 0 1 1 1
+1x2" -79.5 -9.75 27.1 1 0 40  0 0 1 1 1
+-45° Ramp 2x" -76.5 -31.5 29.7 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -75.5 -31.5 29.7 0 0 24  0 0 1 1 1
+1x4F" -88.25 -63 15.9 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x1" -57.75 -53.25 25.7 0 0 60  0 0 1 1 1
+-45° Ramp 2x" -59.5 -31.5 29.7 0 0 24  0 0 1 1 1
+-45° Ramp 1x" -77.75 -26.5 29.7 2 0 24  0 0 1 1 1
+1x1" -78.75 -12.25 27.1 0 0 40  0 0 1 1 1
+1x2" -56.5 -57.25 24.1 1 0 40  0 0 1 1 1
+1x2" -79.5 -12.25 27.1 1 0 40  0 0 1 1 1
+45° Ramp 4x" -59.5 -25.5 29.7 0 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -32.5 29.7 2 0 51  0 0 1 1 1
+-45° Ramp 1x" -58.5 -53.25 26.9 1 0 60  0 0 1 1 1
+1x2" -57.5 -57.25 24.1 1 0 40  0 0 1 1 1
 45° Ramp 4x" -75.5 -26 30.3 0 0 51  0 0 1 1 1
 -45° Ramp 2x" -59 -27 30.3 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -58 -27 30.3 2 0 24  0 0 1 1 1
@@ -25521,24 +25572,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 -45° Ramp 2x" -76.5 -31 30.3 0 0 24  0 0 1 1 1
 -45° Ramp 2x" -60 -27 30.3 2 0 24  0 0 1 1 1
 45° Ramp 4x" -63.5 -32 30.3 2 0 51  0 0 1 1 1
-1x2" -56.5 -57.25 25.3 1 0 40  0 0 1 1 1
--45° Ramp 2x" -63.5 -30.5 30.9 0 0 24  0 0 1 1 1
-45° Ramp 4x" -77.5 -31.5 30.9 2 0 51  0 0 1 1 1
-1x16F" -58.5 -53.25 25.1 1 0 60  0 0 1 1 1
--45° Ramp 2x" -62.5 -30.5 30.9 0 0 24  0 0 1 1 1
--45° Ramp 2x" -61.5 -30.5 30.9 0 0 24  0 0 1 1 1
-45° Ramp 4x" -63.5 -31.5 30.9 2 0 51  0 0 1 1 1
-1x2F" -54.25 -53 25.5 0 0 58  0 0 1 1 1
-1x2F" -54 -53.25 25.1 1 0 60  0 0 1 1 1
-45° Ramp 4x" -65.5 -26.5 30.9 0 0 51  0 0 1 1 1
--45° Ramp 2x" -77.5 -30.5 30.9 0 0 24  0 0 1 1 1
-1x2" -56 -55.25 25.3 1 0 40  0 0 1 1 1
-1x2" -57.75 -55.5 25.3 0 0 40  0 0 1 1 1
-1x2" -57 -55.25 25.3 1 0 40  0 0 1 1 1
-1x2" -55.75 -57 25.3 0 0 40  0 0 1 1 1
-1x2" -55.75 -56 25.3 0 0 40  0 0 1 1 1
-1x2" -57.5 -57.25 25.3 1 0 40  0 0 1 1 1
-1x2" -57.75 -56.5 25.3 0 0 40  0 0 1 1 1
+45° Ramp 2x" -57.5 -26 30.3 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -73.5 -31 30.3 0 0 24  0 0 1 1 1
+45° Ramp 4x" -61.5 -26 30.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -63.5 -26 30.3 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -58.5 -31 30.3 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -59.5 -31 30.3 0 0 24  0 0 1 1 1
+45° Ramp 4x" -73.5 -26 30.3 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -67.5 -31 30.3 0 0 24  0 0 1 1 1
+45° Ramp 4x" -67.5 -26 30.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -65.5 -26 30.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -61.5 -32 30.3 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -64 -27 30.3 2 0 24  0 0 1 1 1
+45° Ramp 4x" -59.5 -26 30.3 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -67 -27 30.3 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -66 -27 30.3 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -77.5 -31 30.3 0 0 24  0 0 1 1 1
+1x2" -79 -12.25 27.7 1 0 40  0 0 1 1 1
+-45° Ramp 2x" -63 -27 30.3 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -74.5 -30.5 30.9 0 0 24  0 0 1 1 1
 45° Ramp 4x" -73.5 -31.5 30.9 2 0 51  0 0 1 1 1
 -45° Ramp 2x" -73.5 -30.5 30.9 0 0 24  0 0 1 1 1
@@ -25613,24 +25664,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 45° Ramp 2x" -57.5 -31.5 30.9 2 0 51  0 0 1 1 1
 1x2" -81.25 -11 28.3 0 0 40  0 0 1 1 1
 1x2" -81.25 -10 28.3 0 0 40  0 0 1 1 1
--45° Ramp 2x" -73.5 -30 31.5 0 0 24  0 0 1 1 1
-45° Ramp 4x" -73.5 -31 31.5 2 0 51  0 0 1 1 1
--45° Ramp 2x" -74.5 -30 31.5 0 0 24  0 0 1 1 1
--45° Ramp 2x" -75 -28 31.5 2 0 24  0 0 1 1 1
--45° Ramp 2x" -75.5 -30 31.5 0 0 24  0 0 1 1 1
-45° Ramp 4x" -75.5 -31 31.5 2 0 51  0 0 1 1 1
--45° Ramp 2x" -72 -28 31.5 2 0 24  0 0 1 1 1
-45° Ramp 4x" -67.5 -27 31.5 0 0 51  0 0 1 1 1
-45° Ramp 4x" -77.5 -31 31.5 2 0 51  0 0 1 1 1
--45° Ramp 2x" -77.5 -30 31.5 0 0 24  0 0 1 1 1
-1x2" -54.25 -52.5 25.9 0 0 58  0 0 1 1 1
--45° Ramp 2x" -63.5 -30 31.5 0 0 24  0 0 1 1 1
-45° Ramp 4x" -63.5 -31 31.5 2 0 51  0 0 1 1 1
--45° Ramp 2x" -62.5 -30 31.5 0 0 24  0 0 1 1 1
-45° Ramp 4x" -61.5 -31 31.5 2 0 51  0 0 1 1 1
-45° Ramp 1x" -58.25 -27 31.5 0 0 51  0 0 1 1 1
-45° Ramp 2x" -57.5 -27 31.5 0 0 51  0 0 1 1 1
-1x2" -79 -12.25 28.9 1 0 40  0 0 1 1 1
+1x2" -57.5 -57.25 25.3 1 0 40  0 0 1 1 1
+1x2" -55.75 -56 25.3 0 0 40  0 0 1 1 1
+1x2" -55.75 -57 25.3 0 0 40  0 0 1 1 1
+1x2" -57 -55.25 25.3 1 0 40  0 0 1 1 1
+1x2" -57.75 -55.5 25.3 0 0 40  0 0 1 1 1
+1x2" -56 -55.25 25.3 1 0 40  0 0 1 1 1
+-45° Ramp 2x" -77.5 -30.5 30.9 0 0 24  0 0 1 1 1
+45° Ramp 4x" -65.5 -26.5 30.9 0 0 51  0 0 1 1 1
+1x2F" -54 -53.25 25.1 1 0 60  0 0 1 1 1
+1x2F" -54.25 -53 25.5 0 0 58  0 0 1 1 1
+45° Ramp 4x" -63.5 -31.5 30.9 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -61.5 -30.5 30.9 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -62.5 -30.5 30.9 0 0 24  0 0 1 1 1
+1x16F" -58.5 -53.25 25.1 1 0 60  0 0 1 1 1
+45° Ramp 4x" -77.5 -31.5 30.9 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -63.5 -30.5 30.9 0 0 24  0 0 1 1 1
+1x2" -57.75 -56.5 25.3 0 0 40  0 0 1 1 1
+1x2" -56.5 -57.25 25.3 1 0 40  0 0 1 1 1
 -45° Ramp 2x" -61.5 -30 31.5 0 0 24  0 0 1 1 1
 -45° Ramp 2x" -74 -28 31.5 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -63 -28 31.5 2 0 24  0 0 1 1 1
@@ -25705,24 +25756,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 -45° Ramp 2x" -73 -28 31.5 2 0 24  0 0 1 1 1
 1x2" -55.75 -56.5 25.9 0 0 40  0 0 1 1 1
 45° Ramp 4x" -63.5 -27 31.5 0 0 51  0 0 1 1 1
-45° Ramp 4x" -69.5 -30.5 32.1 2 0 51  0 0 1 1 1
-1x2" -80.5 -9.75 29.5 1 0 40  0 0 1 1 1
-45° Ramp 4x" -61.5 -30.5 32.1 2 0 51  0 0 1 1 1
--45° Ramp 2x" -68 -28.5 32.1 2 0 24  0 0 1 1 1
--45° Ramp 2x" -61.5 -29.5 32.1 0 0 24  0 0 1 1 1
-45° Ramp 4x" -59.5 -27.5 32.1 0 0 51  0 0 1 1 1
--45° Ramp 2x" -75.5 -29.5 32.1 0 0 24  0 0 1 1 1
-1x2" -80.5 -12.25 29.5 1 0 40  0 0 1 1 1
--45° Ramp 2x" -62.5 -29.5 32.1 0 0 24  0 0 1 1 1
--45° Ramp 2x" -60 -28.5 32.1 2 0 24  0 0 1 1 1
--45° Ramp 2x" -61 -28.5 32.1 2 0 24  0 0 1 1 1
-1x2" -78.75 -11 28.3 0 0 40  0 0 1 1 1
-1x2" -78.75 -10 29.5 0 0 40  0 0 1 1 1
-1x2" -78.75 -11 29.5 0 0 40  0 0 1 1 1
-1x2" -79.5 -9.75 29.5 1 0 40  0 0 1 1 1
--45° Ramp 2x" -67 -28.5 32.1 2 0 24  0 0 1 1 1
--45° Ramp 2x" -66 -28.5 32.1 2 0 24  0 0 1 1 1
--45° Ramp 2x" -66.5 -29.5 32.1 0 0 24  0 0 1 1 1
+45° Ramp 1x" -58.25 -27 31.5 0 0 51  0 0 1 1 1
+45° Ramp 4x" -61.5 -31 31.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -62.5 -30 31.5 0 0 24  0 0 1 1 1
+45° Ramp 4x" -63.5 -31 31.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -63.5 -30 31.5 0 0 24  0 0 1 1 1
+1x2" -54.25 -52.5 25.9 0 0 58  0 0 1 1 1
+-45° Ramp 2x" -77.5 -30 31.5 0 0 24  0 0 1 1 1
+45° Ramp 4x" -77.5 -31 31.5 2 0 51  0 0 1 1 1
+45° Ramp 4x" -67.5 -27 31.5 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -72 -28 31.5 2 0 24  0 0 1 1 1
+45° Ramp 4x" -75.5 -31 31.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -75.5 -30 31.5 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -75 -28 31.5 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -74.5 -30 31.5 0 0 24  0 0 1 1 1
+45° Ramp 4x" -73.5 -31 31.5 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -73.5 -30 31.5 0 0 24  0 0 1 1 1
+1x2" -79 -12.25 28.9 1 0 40  0 0 1 1 1
+45° Ramp 2x" -57.5 -27 31.5 0 0 51  0 0 1 1 1
 -45° Ramp 2x" -60.5 -29.5 32.1 0 0 24  0 0 1 1 1
 -45° Ramp 2x" -62 -28.5 32.1 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -58 -28.5 32.1 2 0 24  0 0 1 1 1
@@ -25744,7 +25795,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 45° Ramp 4x" -63.5 -27.5 32.1 0 0 51  0 0 1 1 1
 45° Ramp 4x" -61.5 -27.5 32.1 0 0 51  0 0 1 1 1
 1x2" -79.25 -20 4.5 0 0 39  0 0 1 1 1
-1x2" -55.75 -56 26.5 0 0 40  0 0 1 1 1
+-45° Ramp 2x" -66.5 -29.5 32.1 0 0 24  0 0 1 1 1
 45° Ramp 4x" -71.5 -30.5 32.1 2 0 51  0 0 1 1 1
 -45° Ramp 2x" -69 -28.5 32.1 2 0 24  0 0 1 1 1
 -45° Ramp 2x" -63.5 -29.5 32.1 0 0 24  0 0 1 1 1
@@ -25798,25 +25849,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 45° Ramp 1x" -58.25 -27.5 32.1 0 0 51  0 0 1 1 1
 45° Ramp 1x" -58.25 -30.5 32.1 2 0 51  0 0 1 1 1
 -45° Ramp 2x" -70 -28.5 32.1 2 0 24  0 0 1 1 1
-45° Ramp 4x" -69.5 -28 32.7 0 0 51  0 0 1 1 1
-1x2" -78.75 -11.5 30.1 0 0 40  0 0 1 1 1
-45° Ramp 4x" -75.5 -30 32.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -73.5 -28 32.7 0 0 51  0 0 1 1 1
-45° Ramp 4x" -73.5 -30 32.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -65.5 -30 32.7 2 0 51  0 0 1 1 1
-1x2" -79 -9.75 30.1 1 0 40  0 0 1 1 1
-45° Ramp 4x" -69.5 -30 32.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -67.5 -28 32.7 0 0 51  0 0 1 1 1
-1x2" -81.25 -20.5 5.1 0 0 39  0 0 1 1 1
-1x4F" -88.25 -63 17.7 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-45° Ramp 4x" -65.5 -28 32.7 0 0 51  0 0 1 1 1
-45° Ramp 4x" -77.5 -30 32.7 2 0 51  0 0 1 1 1
-1x2" -81 -12.25 30.1 1 0 40  0 0 1 1 1
-1x2" -80 -12.25 30.1 1 0 40  0 0 1 1 1
-45° Ramp 4x" -71.5 -30 32.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -71.5 -28 32.7 0 0 51  0 0 1 1 1
-1x2" -81 -9.75 30.1 1 0 40  0 0 1 1 1
+45° Ramp 4x" -69.5 -30.5 32.1 2 0 51  0 0 1 1 1
+1x2" -80.5 -9.75 29.5 1 0 40  0 0 1 1 1
+45° Ramp 4x" -61.5 -30.5 32.1 2 0 51  0 0 1 1 1
+-45° Ramp 2x" -68 -28.5 32.1 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -61.5 -29.5 32.1 0 0 24  0 0 1 1 1
+45° Ramp 4x" -59.5 -27.5 32.1 0 0 51  0 0 1 1 1
+-45° Ramp 2x" -75.5 -29.5 32.1 0 0 24  0 0 1 1 1
+1x2" -80.5 -12.25 29.5 1 0 40  0 0 1 1 1
+-45° Ramp 2x" -62.5 -29.5 32.1 0 0 24  0 0 1 1 1
+-45° Ramp 2x" -60 -28.5 32.1 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -61 -28.5 32.1 2 0 24  0 0 1 1 1
+1x2" -78.75 -11 28.3 0 0 40  0 0 1 1 1
+1x2" -78.75 -10 29.5 0 0 40  0 0 1 1 1
+1x2" -78.75 -11 29.5 0 0 40  0 0 1 1 1
+1x2" -79.5 -9.75 29.5 1 0 40  0 0 1 1 1
+-45° Ramp 2x" -67 -28.5 32.1 2 0 24  0 0 1 1 1
+-45° Ramp 2x" -66 -28.5 32.1 2 0 24  0 0 1 1 1
+1x2" -55.75 -56 26.5 0 0 40  0 0 1 1 1
 45° Ramp 4x" -61.5 -28 32.7 0 0 51  0 0 1 1 1
 45° Ramp 4x" -63.5 -30 32.7 2 0 51  0 0 1 1 1
 1x2" -79.25 -20.5 5.1 0 0 39  0 0 1 1 1
@@ -25844,24 +25894,25 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -57.75 -56 27.1 0 0 40  0 0 1 1 1
 1x2" -55.75 -55.5 27.1 0 0 40  0 0 1 1 1
 45° Ramp 4x" -61.5 -30 32.7 2 0 51  0 0 1 1 1
-45° Ramp 4x" -63.5 -29.5 33.3 2 0 51  0 0 1 1 1
-1x2" -57.75 -55.5 27.7 0 0 40  0 0 1 1 1
-45° Ramp 4x" -67.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -77.5 -29.5 33.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -73.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -73.5 -29.5 33.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -75.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -61.5 -29.5 33.3 2 0 51  0 0 1 1 1
-1x2" -78.75 -12 30.7 0 0 40  0 0 1 1 1
-1x2" -79.5 -12.25 30.7 1 0 40  0 0 1 1 1
-45° Ramp 4x" -61.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -77.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -75.5 -29.5 33.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -67.5 -29.5 33.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -69.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -71.5 -28.5 33.3 0 0 51  0 0 1 1 1
-45° Ramp 4x" -71.5 -29.5 33.3 2 0 51  0 0 1 1 1
-45° Ramp 4x" -69.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -71.5 -30 32.7 2 0 51  0 0 1 1 1
+1x2" -80 -12.25 30.1 1 0 40  0 0 1 1 1
+1x2" -81 -12.25 30.1 1 0 40  0 0 1 1 1
+45° Ramp 4x" -77.5 -30 32.7 2 0 51  0 0 1 1 1
+45° Ramp 4x" -65.5 -28 32.7 0 0 51  0 0 1 1 1
+1x4F" -88.25 -63 17.7 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x2" -81.25 -20.5 5.1 0 0 39  0 0 1 1 1
+45° Ramp 4x" -67.5 -28 32.7 0 0 51  0 0 1 1 1
+45° Ramp 4x" -69.5 -30 32.7 2 0 51  0 0 1 1 1
+1x2" -79 -9.75 30.1 1 0 40  0 0 1 1 1
+45° Ramp 4x" -65.5 -30 32.7 2 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -30 32.7 2 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -28 32.7 0 0 51  0 0 1 1 1
+45° Ramp 4x" -75.5 -30 32.7 2 0 51  0 0 1 1 1
+1x2" -78.75 -11.5 30.1 0 0 40  0 0 1 1 1
+45° Ramp 4x" -69.5 -28 32.7 0 0 51  0 0 1 1 1
+1x2" -81 -9.75 30.1 1 0 40  0 0 1 1 1
+45° Ramp 4x" -71.5 -28 32.7 0 0 51  0 0 1 1 1
 1x4F" -88.25 -63 17.9 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x2" -81.25 -21 4.5 0 0 39  0 0 1 1 1
@@ -25890,25 +25941,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -78.75 -11 30.7 0 0 40  0 0 1 1 1
 1x2" -78.75 -10 30.7 0 0 40  0 0 1 1 1
 45° Ramp 4x" -63.5 -28.5 33.3 0 0 51  0 0 1 1 1
-1x2" -80 -12.25 31.3 1 0 40  0 0 1 1 1
-45° Crest 4x" -74 -29 33.9 0 0 51  0 0 1 1 1
-45° Crest 4x" -72 -29 33.9 0 0 51  0 0 1 1 1
-1x2" -78.75 -10.5 31.3 0 0 40  0 0 1 1 1
-1x2" -79 -9.75 31.3 1 0 40  0 0 1 1 1
-1x2" -57 -57.25 28.3 1 0 40  0 0 1 1 1
-1x2" -55.75 -55.5 28.3 0 0 40  0 0 1 1 1
-1x2" -56 -57.25 28.3 1 0 40  0 0 1 1 1
-45° Crest 4x" -62 -29 33.9 0 0 51  0 0 1 1 1
-45° Crest 1x" -78.25 -29 33.9 2 0 51  0 0 1 1 1
-1x2" -56.5 -55.25 28.3 1 0 40  0 0 1 1 1
-45° Crest 4x" -60 -29 33.9 0 0 51  0 0 1 1 1
-1x2" -79 -12.25 31.3 1 0 40  0 0 1 1 1
-45° Crest 4x" -76 -29 33.9 0 0 51  0 0 1 1 1
-45° Crest 2x" -77.5 -29 33.9 2 0 51  0 0 1 1 1
-1x1" -88.25 -62.25 18.3 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -81.25 -21.5 5.1 0 0 39  0 0 1 1 1
-1x2" -57.5 -55.25 28.3 1 0 40  0 0 1 1 1
+45° Ramp 4x" -71.5 -28.5 33.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -69.5 -28.5 33.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -67.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -75.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -77.5 -28.5 33.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -61.5 -28.5 33.3 0 0 51  0 0 1 1 1
+1x2" -79.5 -12.25 30.7 1 0 40  0 0 1 1 1
+1x2" -78.75 -12 30.7 0 0 40  0 0 1 1 1
+45° Ramp 4x" -61.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -75.5 -28.5 33.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -73.5 -28.5 33.3 0 0 51  0 0 1 1 1
+45° Ramp 4x" -77.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -67.5 -28.5 33.3 0 0 51  0 0 1 1 1
+1x2" -57.75 -55.5 27.7 0 0 40  0 0 1 1 1
+45° Ramp 4x" -63.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -69.5 -29.5 33.3 2 0 51  0 0 1 1 1
+45° Ramp 4x" -71.5 -29.5 33.3 2 0 51  0 0 1 1 1
 1x2" -81 -12.25 31.3 1 0 40  0 0 1 1 1
 45° Crest 4x" -64 -29 33.9 0 0 51  0 0 1 1 1
 1x2" -79.25 -21.5 5.1 0 0 39  0 0 1 1 1
@@ -25928,120 +25978,139 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -80 -9.75 31.3 1 0 40  0 0 1 1 1
 1x2" -57.75 -56 28.3 0 0 40  0 0 1 1 1
 1x2" -55.75 -56.5 28.3 0 0 40  0 0 1 1 1
-1x2" -79.5 -12.25 31.9 1 0 40  0 0 1 1 1
-1x2" -57 -55.25 28.9 1 0 40  0 0 1 1 1
-1x2" -81.25 -22 4.5 0 0 39  0 0 1 1 1
-1x2" -79.5 -9.75 31.9 1 0 40  0 0 1 1 1
-1x2" -78.75 -10 31.9 0 0 40  0 0 1 1 1
-1x2" -79.25 -22 4.5 0 0 39  0 0 1 1 1
-1x2" -55.75 -57 28.9 0 0 40  0 0 1 1 1
-1x2" -56 -55.25 28.9 1 0 40  0 0 1 1 1
-1x2" -57.75 -55.5 28.9 0 0 40  0 0 1 1 1
-1x2" -56.5 -57.25 28.9 1 0 40  0 0 1 1 1
-1x4F" -88.25 -63 18.7 0 0 60  0 0 1 1 1
+1x1" -88.25 -62.25 18.3 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -57.5 -57.25 28.9 1 0 40  0 0 1 1 1
-1x2" -81.25 -12 31.9 0 0 40  0 0 1 1 1
-1x2" -55.75 -56 28.9 0 0 40  0 0 1 1 1
-1x2" -78.75 -11 31.9 0 0 40  0 0 1 1 1
-1x2" -57.75 -56.5 28.9 0 0 40  0 0 1 1 1
-1x2" -78.75 -12 31.9 0 0 40  0 0 1 1 1
-1x2" -80.5 -9.75 31.9 1 0 40  0 0 1 1 1
+45° Crest 2x" -77.5 -29 33.9 2 0 51  0 0 1 1 1
+45° Crest 4x" -76 -29 33.9 0 0 51  0 0 1 1 1
+1x2" -79 -12.25 31.3 1 0 40  0 0 1 1 1
+45° Crest 4x" -60 -29 33.9 0 0 51  0 0 1 1 1
+1x2" -56.5 -55.25 28.3 1 0 40  0 0 1 1 1
+45° Crest 1x" -78.25 -29 33.9 2 0 51  0 0 1 1 1
+45° Crest 4x" -62 -29 33.9 0 0 51  0 0 1 1 1
+1x2" -56 -57.25 28.3 1 0 40  0 0 1 1 1
+1x2" -55.75 -55.5 28.3 0 0 40  0 0 1 1 1
+1x2" -81.25 -21.5 5.1 0 0 39  0 0 1 1 1
+1x2" -57 -57.25 28.3 1 0 40  0 0 1 1 1
+1x2" -79 -9.75 31.3 1 0 40  0 0 1 1 1
+1x2" -78.75 -10.5 31.3 0 0 40  0 0 1 1 1
+45° Crest 4x" -72 -29 33.9 0 0 51  0 0 1 1 1
+45° Crest 4x" -74 -29 33.9 0 0 51  0 0 1 1 1
+1x2" -80 -12.25 31.3 1 0 40  0 0 1 1 1
+1x2" -57.5 -55.25 28.3 1 0 40  0 0 1 1 1
 1x2" -81.25 -10 31.9 0 0 40  0 0 1 1 1
 1x2" -80.5 -12.25 31.9 1 0 40  0 0 1 1 1
-1x2" -81.25 -11 31.9 0 0 40  0 0 1 1 1
-1x2" -79.25 -22.5 5.1 0 0 39  0 0 1 1 1
-1x2" -81.25 -11.5 32.5 0 0 40  0 0 1 1 1
-1x2" -81 -12.25 32.5 1 0 40  0 0 1 1 1
-1x2" -57 -57.25 29.5 1 0 40  0 0 1 1 1
-1x2" -80 -12.25 32.5 1 0 40  0 0 1 1 1
-1x2" -80 -9.75 32.5 1 0 40  0 0 1 1 1
-1x2" -55.75 -56.5 29.5 0 0 40  0 0 1 1 1
-1x4F" -88.25 -63 18.9 0 0 60  0 0 1 1 1
+1x2" -80.5 -9.75 31.9 1 0 40  0 0 1 1 1
+1x2" -78.75 -12 31.9 0 0 40  0 0 1 1 1
+1x2" -57.75 -56.5 28.9 0 0 40  0 0 1 1 1
+1x2" -78.75 -11 31.9 0 0 40  0 0 1 1 1
+1x2" -55.75 -56 28.9 0 0 40  0 0 1 1 1
+1x2" -81.25 -12 31.9 0 0 40  0 0 1 1 1
+1x2" -57.5 -57.25 28.9 1 0 40  0 0 1 1 1
+1x2" -56.5 -57.25 28.9 1 0 40  0 0 1 1 1
+1x2" -57.75 -55.5 28.9 0 0 40  0 0 1 1 1
+1x2" -56 -55.25 28.9 1 0 40  0 0 1 1 1
+1x2" -55.75 -57 28.9 0 0 40  0 0 1 1 1
+1x2" -79.25 -22 4.5 0 0 39  0 0 1 1 1
+1x2" -78.75 -10 31.9 0 0 40  0 0 1 1 1
+1x2" -79.5 -9.75 31.9 1 0 40  0 0 1 1 1
+1x2" -81.25 -22 4.5 0 0 39  0 0 1 1 1
+1x2" -57 -55.25 28.9 1 0 40  0 0 1 1 1
+1x2" -79.5 -12.25 31.9 1 0 40  0 0 1 1 1
+1x4F" -88.25 -63 18.7 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -78.75 -11.5 32.5 0 0 40  0 0 1 1 1
-1x2" -81.25 -22.5 5.1 0 0 39  0 0 1 1 1
-1x2" -79 -9.75 32.5 1 0 40  0 0 1 1 1
-1x2" -81.25 -10.5 32.5 0 0 40  0 0 1 1 1
-1x2" -57.75 -56 29.5 0 0 40  0 0 1 1 1
-1x2" -57.75 -57 29.5 0 0 40  0 0 1 1 1
-1x2" -57.5 -55.25 29.5 1 0 40  0 0 1 1 1
-1x2" -55.75 -55.5 29.5 0 0 40  0 0 1 1 1
-1x2" -81 -9.75 32.5 1 0 40  0 0 1 1 1
-1x2" -56.5 -55.25 29.5 1 0 40  0 0 1 1 1
+1x2" -81.25 -11 31.9 0 0 40  0 0 1 1 1
 1x2" -78.75 -10.5 32.5 0 0 40  0 0 1 1 1
 1x2" -56 -57.25 29.5 1 0 40  0 0 1 1 1
 1x2" -79 -12.25 32.5 1 0 40  0 0 1 1 1
-1x2" -81.25 -10 33.1 0 0 40  0 0 1 1 1
-1x1" -88.25 -62.25 19.3 0 0 60  0 0 1 1 1
+1x2" -57.5 -55.25 29.5 1 0 40  0 0 1 1 1
+1x2" -56.5 -55.25 29.5 1 0 40  0 0 1 1 1
+1x2" -57.75 -57 29.5 0 0 40  0 0 1 1 1
+1x2" -81 -9.75 32.5 1 0 40  0 0 1 1 1
+1x2" -57.75 -56 29.5 0 0 40  0 0 1 1 1
+1x2" -81.25 -10.5 32.5 0 0 40  0 0 1 1 1
+1x2" -79 -9.75 32.5 1 0 40  0 0 1 1 1
+1x2" -81.25 -22.5 5.1 0 0 39  0 0 1 1 1
+1x2" -78.75 -11.5 32.5 0 0 40  0 0 1 1 1
+1x4F" -88.25 -63 18.9 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -88.25 -63 19.3 0 0 60  0 0 1 0 0
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -78.75 -12 33.1 0 0 40  0 0 1 1 1
-1x1" -88.25 -63.75 19.3 0 0 60  0 0 1 1 1
-+-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -78.75 -11 33.1 0 0 40  0 0 1 1 1
-1x2" -80.5 -12.25 33.1 1 0 40  0 0 1 1 1
-1x2" -56 -55.25 30.1 1 0 40  0 0 1 1 1
-1x2" -79.5 -9.75 33.1 1 0 40  0 0 1 1 1
-1x2" -81.25 -12 33.1 0 0 40  0 0 1 1 1
-1x2" -79.25 -23 4.5 0 0 39  0 0 1 1 1
-1x2" -80.5 -9.75 33.1 1 0 40  0 0 1 1 1
-1x2" -55.75 -56 30.1 0 0 40  0 0 1 1 1
-1x2" -55.75 -57 30.1 0 0 40  0 0 1 1 1
-1x2" -56.5 -57.25 30.1 1 0 40  0 0 1 1 1
-1x2" -57.5 -57.25 30.1 1 0 40  0 0 1 1 1
-1x2" -57.75 -56.5 30.1 0 0 40  0 0 1 1 1
-1x2" -57 -55.25 30.1 1 0 40  0 0 1 1 1
+1x2" -55.75 -56.5 29.5 0 0 40  0 0 1 1 1
+1x2" -80 -9.75 32.5 1 0 40  0 0 1 1 1
+1x2" -80 -12.25 32.5 1 0 40  0 0 1 1 1
+1x2" -57 -57.25 29.5 1 0 40  0 0 1 1 1
+1x2" -81 -12.25 32.5 1 0 40  0 0 1 1 1
+1x2" -81.25 -11.5 32.5 0 0 40  0 0 1 1 1
+1x2" -79.25 -22.5 5.1 0 0 39  0 0 1 1 1
+1x2" -55.75 -55.5 29.5 0 0 40  0 0 1 1 1
 1x2" -57.75 -55.5 30.1 0 0 40  0 0 1 1 1
-1x2" -79.5 -12.25 33.1 1 0 40  0 0 1 1 1
+1x2" -57 -55.25 30.1 1 0 40  0 0 1 1 1
 1x2" -78.75 -10 33.1 0 0 40  0 0 1 1 1
 1x2" -81.25 -11 33.1 0 0 40  0 0 1 1 1
 1x2" -81.25 -23 4.5 0 0 39  0 0 1 1 1
-1x2" -81.25 -10.5 33.7 0 0 40  0 0 1 1 1
-1x2" -81 -12.25 33.7 1 0 40  0 0 1 1 1
-1x2" -79.25 -23.5 5.1 0 0 39  0 0 1 1 1
-1x2" -81 -9.75 33.7 1 0 40  0 0 1 1 1
-1x2" -78.75 -10.5 33.7 0 0 40  0 0 1 1 1
-1x4F" -88.25 -63 19.7 0 0 60  0 0 1 1 1
+1x2" -57.75 -56.5 30.1 0 0 40  0 0 1 1 1
+1x2" -57.5 -57.25 30.1 1 0 40  0 0 1 1 1
+1x2" -56.5 -57.25 30.1 1 0 40  0 0 1 1 1
+1x2" -55.75 -57 30.1 0 0 40  0 0 1 1 1
+1x2" -55.75 -56 30.1 0 0 40  0 0 1 1 1
+1x2" -80.5 -9.75 33.1 1 0 40  0 0 1 1 1
+1x1" -88.25 -62.25 19.3 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
-1x2" -81.25 -23.5 5.1 0 0 39  0 0 1 1 1
-1x2" -80 -9.75 33.7 1 0 40  0 0 1 1 1
-1x2" -79 -9.75 33.7 1 0 40  0 0 1 1 1
-1x2" -57.75 -57 30.7 0 0 40  0 0 1 1 1
-1x2" -57.5 -55.25 30.7 1 0 40  0 0 1 1 1
-1x2" -56.5 -55.25 30.7 1 0 40  0 0 1 1 1
-1x2" -55.75 -55.5 30.7 0 0 40  0 0 1 1 1
-1x2" -56 -57.25 30.7 1 0 40  0 0 1 1 1
-1x2" -55.75 -56.5 30.7 0 0 40  0 0 1 1 1
-1x2" -57 -57.25 30.7 1 0 40  0 0 1 1 1
-1x2" -79 -12.25 33.7 1 0 40  0 0 1 1 1
-1x2" -81.25 -11.5 33.7 0 0 40  0 0 1 1 1
+1x2" -79.25 -23 4.5 0 0 39  0 0 1 1 1
+1x2" -81.25 -12 33.1 0 0 40  0 0 1 1 1
+1x2" -79.5 -9.75 33.1 1 0 40  0 0 1 1 1
+1x2" -56 -55.25 30.1 1 0 40  0 0 1 1 1
+1x2" -80.5 -12.25 33.1 1 0 40  0 0 1 1 1
+1x2" -78.75 -11 33.1 0 0 40  0 0 1 1 1
+1x1" -88.25 -63.75 19.3 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x2" -78.75 -12 33.1 0 0 40  0 0 1 1 1
+1x2" -88.25 -63 19.3 0 0 60  0 0 1 0 0
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x2" -81.25 -10 33.1 0 0 40  0 0 1 1 1
+1x2" -79.5 -12.25 33.1 1 0 40  0 0 1 1 1
 1x2" -57.75 -56 30.7 0 0 40  0 0 1 1 1
 1x2" -80 -12.25 33.7 1 0 40  0 0 1 1 1
 1x2" -78.75 -11.5 33.7 0 0 40  0 0 1 1 1
-1x2" -79.25 -24 4.5 0 0 39  0 0 1 1 1
+1x2" -81.25 -11.5 33.7 0 0 40  0 0 1 1 1
+1x2" -79 -12.25 33.7 1 0 40  0 0 1 1 1
+1x2" -57 -57.25 30.7 1 0 40  0 0 1 1 1
+1x2" -56 -57.25 30.7 1 0 40  0 0 1 1 1
+1x2" -55.75 -55.5 30.7 0 0 40  0 0 1 1 1
+1x2" -56.5 -55.25 30.7 1 0 40  0 0 1 1 1
+1x2" -57.5 -55.25 30.7 1 0 40  0 0 1 1 1
+1x2" -57.75 -57 30.7 0 0 40  0 0 1 1 1
+1x2" -79 -9.75 33.7 1 0 40  0 0 1 1 1
+1x2" -80 -9.75 33.7 1 0 40  0 0 1 1 1
+1x4F" -88.25 -63 19.7 0 0 60  0 0 1 1 1
++-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
+1x2" -78.75 -10.5 33.7 0 0 40  0 0 1 1 1
+1x2" -81 -9.75 33.7 1 0 40  0 0 1 1 1
+1x2" -79.25 -23.5 5.1 0 0 39  0 0 1 1 1
+1x2" -81 -12.25 33.7 1 0 40  0 0 1 1 1
+1x2" -81.25 -10.5 33.7 0 0 40  0 0 1 1 1
+1x2" -81.25 -23.5 5.1 0 0 39  0 0 1 1 1
+1x2" -55.75 -56.5 30.7 0 0 40  0 0 1 1 1
 1x4F" -88.25 -63 19.9 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x2" -81.25 -24 4.5 0 0 39  0 0 1 1 1
-1x2" -79.25 -24.5 5.1 0 0 39  0 0 1 1 1
+1x2" -79.25 -24 4.5 0 0 39  0 0 1 1 1
 1x1" -88.25 -63.75 20.3 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x1" -88.25 -62.25 20.3 0 0 60  0 0 1 1 1
 +-EVENT	0	1	onActivate	0	Player		SetVelocity	0 0 10			
 1x2" -81.25 -24.5 5.1 0 0 39  0 0 1 1 1
+1x2" -79.25 -24.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -25 4.5 0 0 39  0 0 1 1 1
 1x2" -79.25 -25 4.5 0 0 39  0 0 1 1 1
-1x2" -79.25 -25.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -25.5 5.1 0 0 39  0 0 1 1 1
-1x2" -79.25 -26 4.5 0 0 39  0 0 1 1 1
+1x2" -79.25 -25.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -26 4.5 0 0 39  0 0 1 1 1
-1x2" -81.25 -26.5 5.1 0 0 39  0 0 1 1 1
+1x2" -79.25 -26 4.5 0 0 39  0 0 1 1 1
 1x2" -79.25 -26.5 5.1 0 0 39  0 0 1 1 1
-1x2" -79.25 -27 4.5 0 0 39  0 0 1 1 1
+1x2" -81.25 -26.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -27 4.5 0 0 39  0 0 1 1 1
-1x2" -81.25 -27.5 5.1 0 0 39  0 0 1 1 1
+1x2" -79.25 -27 4.5 0 0 39  0 0 1 1 1
 1x2" -79.25 -27.5 5.1 0 0 39  0 0 1 1 1
+1x2" -81.25 -27.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -28 4.5 0 0 39  0 0 1 1 1
 1x2" -79.25 -28 4.5 0 0 39  0 0 1 1 1
 1x2" -81.25 -28.5 5.1 0 0 39  0 0 1 1 1
@@ -26055,29 +26124,11 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x2" -79.25 -30.5 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -30.5 5.1 0 0 39  0 0 1 1 1
 1x3F" -81.25 -31.25 5.5 0 0 39  0 0 1 1 1
-1x2" -79.25 -31 4.5 0 0 39  0 0 1 1 1
 1x2" -81.25 -31 4.5 0 0 39  0 0 1 1 1
+1x2" -79.25 -31 4.5 0 0 39  0 0 1 1 1
 1x1" -79.25 -31.25 5.1 0 0 39  0 0 1 1 1
 1x2" -81.25 -31.5 5.1 0 0 39  0 0 1 1 1
 1x1" -81.25 -31.75 4.5 0 0 39  0 0 1 1 1
-1x 1x2F Vertical Print" -73.25 -39.25 10.5 1 0 58 Letters/T 0 0 1 1 1
-1x 1x2F Vertical Print" -79.75 -29.25 10.5 1 0 58 Letters/R 0 0 1 1 1
-8x Cube Steep" -21.5 -79 10.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Ramp Steep" -121.5 -42 10.4 0 0 59 Letters/-space 0 0 1 1 1
-8x Cube Steep" -21.5 -3 10.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Ramp" -49.5 37 4.4 1 0 41 Letters/-space 0 0 1 1 1
-8x Cube Steep" -21.5 -31 10.4 0 0 45 Letters/-space 0 0 1 1 0
-1x1" -73.25 -36.75 13.7 0 0 59  0 0 1 1 1
-0.25x0.25 Edge" -71.25 -25.25 23.1 0 0 58  0 0 0 0 1
-0.25x0.25 Edge" -51.75 -58.75 21.1 3 0 60  0 0 0 0 1
-8x Cube Steep" -121.5 -51 18.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -21.5 -35 10.4 0 0 45 Letters/-space 0 0 1 1 0
-1x10F" -55.5 -68.25 8.5 1 0 60  0 0 1 1 1
-8x Cube Steep" -21.5 1 10.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -121.5 -67 18.4 0 0 45 Letters/-space 0 0 1 1 0
-1x6x3" -51.5 -56.25 23.7 1 0 60  0 0 1 1 0
-8x Cube Steep" -21.5 -59 18.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -57.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -101.5 37 10.4 0 0 45 Letters/-space 0 0 1 1 0
 -45° Ramp 2x" -75.5 -21 10.5 0 0 46  0 0 1 1 1
 8x Cube Steep" -121.5 -23 10.4 0 0 45 Letters/-space 0 0 1 1 0
@@ -26129,7 +26180,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 8x Cube Steep" -29.5 37 10.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -21.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -25.5 37 10.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -29.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Cube Steep" -57.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Ramp" -25.5 37 4.4 1 0 41 Letters/-space 0 0 1 1 1
 8x Cube Steep" -21.5 33 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Ramp" -29.5 37 4.4 1 0 41 Letters/-space 0 0 1 1 1
@@ -26143,7 +26194,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 8x Cube Steep" -121.5 29 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -121.5 13 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -121.5 1 18.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -121.5 5 18.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Cube Steep" -21.5 -59 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -121.5 9 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -121.5 29 10.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -121.5 21 10.4 0 0 45 Letters/-space 0 0 1 1 0
@@ -26221,7 +26272,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 8x Cube Steep" -41.5 37 10.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -41.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
 1x 1x2F Vertical Print" -68.75 -64.75 4.5 2 0 58 Letters/B 0 0 1 1 1
-1x 1x2F Vertical Print" -62.75 -64.75 4.3 2 0 58 Letters/B 0 0 1 1 1
+8x Cube Steep" -121.5 5 18.4 0 0 45 Letters/-space 0 0 1 1 0
 1x 1x2F Vertical Print" -63.25 -64.75 4.3 2 0 58 Letters/7 0 0 1 1 1
 1x4F" -57 -68.25 9.3 1 0 60  0 0 1 1 1
 +-ITEM Hat Chef" 0 2 4000
@@ -26232,7 +26283,7 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x 1x2F Vertical Print" -65.25 0.75 17.1 1 0 58 Letters/S 0 0 1 1 1
 8x Ramp" -97.5 37 4.4 1 0 41 Letters/-space 0 0 1 1 1
 8x Cube Steep" -21.5 -43 18.4 0 0 45 Letters/-space 0 0 1 1 0
-8x Cube Steep" -89.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Cube Steep" -121.5 -67 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -93.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -21.5 -47 18.4 0 0 45 Letters/-space 0 0 1 1 0
 8x Cube Steep" -21.5 -55 18.4 0 0 45 Letters/-space 0 0 1 1 0
@@ -26376,4 +26427,24 @@ House Door" -61.5 -15.75 21 2 0 59  0 0 1 1 1
 1x 1x2F Vertical Print" -65.25 -53.75 10.5 1 0 58 Letters/F 0 0 1 1 1
 1x 1x2F Vertical Print" -65.25 -53.25 10.5 1 0 58 Letters/E 0 0 1 1 1
 1x 1x2F Vertical Print" -83.25 -47.25 4.3 3 0 58 Letters/2 0 0 1 1 1
+1x6x3" -51.5 -56.25 23.7 1 0 60  0 0 1 1 0
+8x Cube Steep" -21.5 1 10.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Cube Steep" -21.5 -35 10.4 0 0 45 Letters/-space 0 0 1 1 0
+1x10F" -55.5 -68.25 8.5 1 0 60  0 0 1 1 1
+0.25x0.25 Edge" -51.75 -58.75 21.1 3 0 60  0 0 0 0 1
+8x Cube Steep" -121.5 -51 18.4 0 0 45 Letters/-space 0 0 1 1 0
+1x1" -73.25 -36.75 13.7 0 0 59  0 0 1 1 1
+0.25x0.25 Edge" -71.25 -25.25 23.1 0 0 58  0 0 0 0 1
+8x Ramp" -49.5 37 4.4 1 0 41 Letters/-space 0 0 1 1 1
+8x Cube Steep" -21.5 -31 10.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Ramp Steep" -121.5 -42 10.4 0 0 59 Letters/-space 0 0 1 1 1
+8x Cube Steep" -21.5 -3 10.4 0 0 45 Letters/-space 0 0 1 1 0
+1x 1x2F Vertical Print" -79.75 -29.25 10.5 1 0 58 Letters/R 0 0 1 1 1
+8x Cube Steep" -21.5 -79 10.4 0 0 45 Letters/-space 0 0 1 1 0
+8x Cube Steep" -89.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
+1x 1x2F Vertical Print" -73.25 -39.25 10.5 1 0 58 Letters/T 0 0 1 1 1
+1x 1x2F Vertical Print" -62.75 -64.75 4.3 2 0 58 Letters/B 0 0 1 1 1
 1x 1x2F Vertical Print" -83.25 -47.75 4.3 3 0 58 Letters/B 0 0 1 1 1
+1x1F" -79.25 -15.75 8.7 0 0 47  0 0 1 1 1
+1x1F" -79.25 -17.25 9.9 0 0 47  0 0 1 1 1
+8x Cube Steep" -29.5 37 18.4 0 0 45 Letters/-space 0 0 1 1 0
