@@ -20,8 +20,8 @@ $Despair::CanForceTrial = 90; //1 min 30 seconds have to pass before you can for
 //Sleep
 $Despair::SleepOverjoyed = 75;
 $Despair::SleepHappy = 80;
-$Despair::SleepSad = 120;
-$Despair::SleepDepressed = 130;
+$Despair::SleepSad = 130;
+$Despair::SleepDepressed = 150;
 $Despair::SleepDefault = 90;
 $Despair::SleepKnockout = 30;
 
