@@ -64,6 +64,7 @@ ADDON Weapon_Gun
 ADDON Item_Skis
 ADDON Item_Sports
 //ADDON Server_SportsBallExploitFix
+//ADDON Support_Updater_Privacy
 //ADDON Weapon_Guns_Akimbo
 
 //Add-ons required for the build
