@@ -55,7 +55,7 @@ function BurgerImage::onEat(%this, %obj, %slot)
     }
 	if(%obj.character.trait["Glutton"])
 	{	
-		%obj.health = getMin(%obj.health + 40, %obj.maxHealth);
+		%obj.health = getMin(%obj.health + 25, %obj.maxHealth);
 		%obj.unMountImage(0);
 		%obj.removeTool(%obj.currTool);
 		%obj.lastEat = $Sim::Time;
