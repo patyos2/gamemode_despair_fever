@@ -29,7 +29,7 @@ $Despair::SleepKnockout = 30;
 $Despair::Mood::Enabled = true;
 //Traits
 $Despair::Traits::Enabled = true;
-//Change map to school,mansion,motel,syndrome,campdespair or resort depending on the build.
+//Change map to school,mansion,motel,syndrome,campdespair,resort or hood depending on the build.
 $map = "school";
 //MOTEL MAP PREFS:
 if($map $= "motel")
