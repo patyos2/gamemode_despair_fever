@@ -213,7 +213,7 @@ if($map $= "resort")
 
 
 }
-/HOOD MAP PREFS:
+//HOOD MAP PREFS:
 if($map $= "hood")
 {
 	//Allow sandstorms
