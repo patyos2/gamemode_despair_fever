@@ -213,3 +213,26 @@ if($map $= "resort")
 
 
 }
+/HOOD MAP PREFS:
+if($map $= "hood")
+{
+	//Allow sandstorms
+	$Despair::Sandstorm = true;
+
+	$Despair::RoomCount = 13;
+	//Houses
+	$roomNum[1] = "1 Beige House";
+	$roomNum[2] = "2 Dark Green House";
+	$roomNum[3] = "3 Violet House";
+	$roomNum[4] = "4 Yellow House";
+	$roomNum[5] = "5 Orange House";
+	$roomNum[6] = "6 Blue House";
+	$roomNum[7] = "7 Green House";
+	$roomNum[8] = "8 Red House";
+	$roomNum[9] = "9 Pink House";
+	$roomNum[10] = "10 Lime House";
+	$roomNum[11] = "11 White House";
+	//Shack and campervan
+	$roomNum[12] = "Shack";
+	$roomNum[13] = "Camper Van";
+}
