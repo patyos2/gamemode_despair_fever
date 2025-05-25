@@ -63,7 +63,10 @@ ADDON Brick_ModTer_BasicPack
 ADDON Weapon_Gun
 ADDON Item_Skis
 ADDON Item_Sports
-//ADDON Server_SportsBallExploitFix
+
+//ADDON Server_SportsBallExploitFix  
+//https://gitlab.com/Queuenard/blockland-glass-purgatory/-/blob/main/Server_SportsBallExploitFix.zip
+
 //ADDON Support_Updater_Privacy
 //ADDON Weapon_Guns_Akimbo
 
