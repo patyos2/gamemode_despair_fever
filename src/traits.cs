@@ -69,7 +69,7 @@ function GenerateTraits(%character, %client)
 			%typeStr = "positive";
 			%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 		}
-		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.01)
+		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.02)
 		{
 			%trait = "Chekhov's Gunman";
 			$gunmanChar = %character;
@@ -303,35 +303,35 @@ function Player::traitSchedule(%obj)
 
 function checkTraitConflicts(%list, %trait)
 {
-	if (%trait $= "" || %list $= "")
-		return false;
+    if (%trait $= "" || %list $= "")
+        return false;
 
-	%c = -1;
-	%conflicts[%c++] = "Extra Tough	Frail";
-	%conflicts[%c++] = "Athletic	Sluggish";
-	%conflicts[%c++] = "Investigative	Squeamish";
-	%conflicts[%c++] = "Optimistic	Mood Swings	Melancholic	Apathetic";
-	%conflicts[%c++] = "Loudmouth	Softspoken";
-	%conflicts[%c++] = "Repairman	Gang Member";
-	%conflicts[%c++] = "Narcoleptic	Social Anxiety";
-	%conflicts[%c++] = "Narcoleptic	Squeamish";
+    %c = -1;
+    %conflicts[%c++] = "Extra Tough    Frail";
+    %conflicts[%c++] = "Athletic    Sluggish";
+    %conflicts[%c++] = "Investigative    Squeamish";
+    %conflicts[%c++] = "Optimistic    Mood Swings    Melancholic    Apathetic";
+    %conflicts[%c++] = "Loudmouth    Softspoken";
+    %conflicts[%c++] = "Repairman    Gang Member";
+    %conflicts[%c++] = "Narcoleptic    Social Anxiety";
+    %conflicts[%c++] = "Narcoleptic    Squeamish";
 
-	%v = -1;
-	while(%v++ <= %c)
-	{
-		if (findField(%conflicts[%v], %trait) != -1)
-		{
-			%conflist = %conflicts[%v];
-			break;
-		}
-	}
+    %v = -1;
+    while(%v++ <= %c)
+    {
+        if (findField(%conflicts[%v], %trait) != -1)
+        {
+            %conflist = %conflist TAB %conflicts[%v];
+        }
+    }
+    %conflist = trim(%conflist);
 
-	for(%i = 0; %i < getFieldCount(%list); %i++)
-	{
-		%a = getField(%list, %i);
-		if(%a $= %trait || findField(%conflist, %a) != -1)
-			return true;
-	}
+    for(%i = 0; %i < getFieldCount(%list); %i++)
+    {
+        %a = getField(%list, %i);
+        if(%a $= %trait || findField(%conflist, %a) != -1)
+            return true;
+    }
 
-	return false;
+    return false;
 }
