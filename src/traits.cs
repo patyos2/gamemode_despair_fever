@@ -69,7 +69,7 @@ function GenerateTraits(%character, %client)
 			%typeStr = "positive";
 			%traitCount++; //Positive-Negative combinations count as a single trait essentialy
 		}
-		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.02)
+		if(%typeStr $= "positive" && !isObject($gunmanChar) && getRandom() <= 0.01)
 		{
 			%trait = "Chekhov's Gunman";
 			$gunmanChar = %character;
